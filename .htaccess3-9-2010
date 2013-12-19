@@ -1,0 +1,2 @@
+AuthName "Zidisha Site"
+AuthUserFile "/home4/semfundc/.htpasswds/public_html/zidisha/passwd"

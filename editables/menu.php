@@ -1,0 +1,29 @@
+<?php  
+$lang['menu']['home']='Home'; 
+$lang['menu']['terms_use']='Terms of Use';
+$lang['menu']['gift_cards']='Gift Cards';
+$lang['menu']['newsletter']='Newsletter';
+$lang['menu']['zidisha_in_news']='Press';
+$lang['menu']['contact_us']='Contact Us'; 
+$lang['menu']['Lend']='Lend'; 
+$lang['menu']['h_it_w']='How It Works'; 
+$lang['menu']['FAQ']='FAQ'; 
+$lang['menu']['abt_zidisha']='About Us';
+$lang['menu']['user_forum']='Member Forum';
+$lang['menu']['copy_right']='2009-2010 Zidisha Inc. All rights reserved.';
+$lang['menu']['please_reg']='To bid on loan applications, please sign in or';
+$lang['menu']['reg']='create a lender account.';
+$lang['menu']['interns']='Volunteer';
+$lang['menu']['donate']='Donate';
+$lang['menu']['borrow']='Borrow';
+$lang['menu']['why_zidisha']='Why Zidisha?';
+$lang['menu']['meet_the_team']='Meet the Team';
+$lang['menu']['language']='Language';
+$lang['menu']['join_fb']='Join Us on Facebook';
+$lang['menu']['join_twt']='Follow Us on Twitter';
+$lang['menu']['blog']='Blog';
+$lang['menu']['abt_microfinance']='About Microfinance';
+$lang['menu']['lending_group'] = 'Lending Groups';
+$lang['menu']['join_lending_group'] = 'Join a Lending Group';
+$lang['menu']['ebook'] = 'Book';
+?>

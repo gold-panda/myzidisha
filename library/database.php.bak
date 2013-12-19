@@ -1,0 +1,3430 @@
+<?php
+include("init.php");
+class genericClass
+{
+	var $connection;         //The MySQL database connection
+	var $num_active_guests;  //Number of active guests viewing site
+	var $num_members;        //Number of signed-up users
+	var $errorcatcher;
+	/* Class constructor */
+	var $flag=0;
+	function MySQLDB()
+	{
+		traceCalls(__METHOD__, __LINE__);
+	}
+	/**
+	* confirmUserPass - Checks whether or not the given
+	* username is in the database, if so it checks if the
+	* given password is the same password in the database
+	* for that user. If the user doesn't exist or if the
+	* passwords don't match up, it returns an error code
+	* (1 or 2). On success it returns 0.
+	*/
+
+	/* -------------------General Section Start----------------------- */
+
+	function confirmUserPass($username, $password)
+	{
+		traceCalls(__METHOD__, __LINE__);
+		global $db;
+		$passw=md5("$password");
+		$q="SELECT password, salt FROM ! WHERE username=?";
+		$res = $db->getRow($q, array('users',$username));
+		if(empty($res))
+			return false;
+		else {
+			if(empty($res['salt'])) {
+				if($res['password']==$passw) {
+					$salt = $this->makeSalt();
+					$newpass= $this->makePassword($password, $salt);
+					$q="UPDATE ! SET password=?, salt=? WHERE username=?";
+					$db->query($q, array('users', $newpass, $salt, $username));
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				$passw=$this->makePassword($password, $res['salt']);
+				if($res['password']==$passw)
+					return true;
+				else
+					return false;
+			}
+		}
+		return false;
+	}
+	function makePassword($password, $salt)
+	{
+		$newpass= md5(md5($password).md5($salt));
+		return $newpass;
+	}
+	function makeSalt()
+	{
+		$rand = mt_rand(0, 32);
+		$salt = md5($rand . time());
+		return $salt;
+	}
+   /**
+	* confirmUserID - Checks whether or not the given
+	* username is in the database, if so it checks if the
+	* given userid is the same userid in the database
+	* for that user. If the user doesn't exist or if the
+	* userids don't match up, it returns an error code
+	* (1 or 2). On success it returns 0.
+	*/
+	function confirmUserID($username, $userid)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		/* Verify that user is in database */
+		$q = "SELECT userid FROM ! WHERE username = ?";
+		$id = $db->getOne($q, array('users',$username));
+		if(empty($id) ){
+			return false;
+		}
+		/* Validate that userid is correct */
+		if($userid == $id){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	* usernameTaken - Returns true if the username has
+	* been taken by another user, false otherwise.
+	*/
+	function usernameTaken($username)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q = "SELECT COUNT(*) FROM ! WHERE username = ?";
+		$result=$db->getOne($q, array('users', $username));
+		return ($result > 0);
+	}
+	function getUserId($username)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$dbarray=array();
+		$q = "SELECT userid FROM ! WHERE username = ?";
+		return $db->getOne($q, array('users', $username)) ;
+	}
+	function getUserNameById($id)
+	{
+		global $db;
+		$q='SELECT username from ! WHERE userid=?';
+		$result=$db->getOne($q,array('users',$id));
+		return $result;
+	}
+	function getNameById($id)
+	{
+		global $db;
+		$q= 'SELECT userlevel FROM ! where userid = ?';
+		$r1 = $db->getOne($q, array('users',$id));
+		$result = '';
+		$result1 = '';
+		if(!empty($r1))
+		{
+			if($r1==ADMIN_LEVEL)
+			{
+				$q="SELECT username FROM ".TBL_USERS." WHERE userid='$id'";
+				$result=$db->getOne($q);
+			}
+			else if($r1==PARTNER_LEVEL)
+			{
+				$q="SELECT name FROM ".TBL_PARTNER." WHERE userid='$id'";
+				$result=$db->getOne($q);
+			}
+			else if($r1==LENDER_LEVEL)
+			{
+				$q="SELECT  FirstName, LastName  FROM ".TBL_LENDERS." WHERE userid='$id'";
+				$result1=$db->getRow($q);
+			}
+			else if($r1==BORROWER_LEVEL)
+			{
+				$q="SELECT FirstName,LastName FROM ".TBL_BORROWER." WHERE userid='$id'";
+				$result1=$db->getRow($q);
+			}
+			if(!empty($result))
+				return $result;
+			if(!empty($result1)){
+				$result=$result1['FirstName']." ".$result1['LastName'];
+				return $result;
+			}
+		}
+		return "no name";
+	}
+	function getUserById($id)
+	{
+		global $db;
+		$q= 'SELECT * FROM ! where userid = ?';
+		$res = $db->getRow($q, array('users',$id));
+		$rtn=array();
+		if(!empty($res))
+		{
+			$rtn['username']=$res['username'];
+			$rtn['userlevel']=$res['userlevel'];
+			$rtn['lastname']="";
+			$rtn['subscribe_newsletter']=0;
+			if($res['userlevel']==ADMIN_LEVEL)
+			{
+				$rtn['name']=$res['username'];
+				$rtn['firstname']=$res['username'];
+				$rtn['email']=ADMIN_EMAIL_ADDR;
+				$rtn['userlevel']==ADMIN_LEVEL;
+			}
+			else if($res['userlevel']==PARTNER_LEVEL)
+			{
+				$q="SELECT name, email, City FROM ! WHERE userid=?";
+				$result=$db->getRow($q, array('partners', $id));
+				$rtn['name']=$result['name'];
+				$rtn['firstname']=$result['name'];
+				$rtn['email']=$result['email'];
+				$rtn['City']=$result['City'];
+				$rtn['TelMobile']='';
+				$rtn['userlevel']==PARTNER_LEVEL;
+			}
+			else if($res['userlevel']==LENDER_LEVEL)
+			{
+				$q="SELECT FirstName, LastName, Email, subscribe_newsletter, City FROM ! WHERE userid=?";
+				$result=$db->getRow($q, array('lenders', $id));
+				$rtn['firstname']=$result['FirstName'];
+				$rtn['lastname']=$result['LastName'];
+				$rtn['subscribe_newsletter']=$result['subscribe_newsletter'];
+				$rtn['name']=$result['FirstName']." ".$result['LastName'];
+				$rtn['email']=$result['Email'];
+				$rtn['City']=$result['City'];
+				$rtn['TelMobile']='';
+				$rtn['userlevel']==LENDER_LEVEL;
+			}
+			else if($res['userlevel']==BORROWER_LEVEL)
+			{
+				$q="SELECT FirstName, LastName, Email, City ,TelMobile FROM ! WHERE userid=?";
+				$result=$db->getRow($q, array('borrowers', $id));
+				$rtn['firstname']=$result['FirstName'];
+				$rtn['lastname']=$result['LastName'];
+				$rtn['name']=$result['FirstName']." ".$result['LastName'];
+				$rtn['email']=$result['Email'];
+				$rtn['City']=$result['City'];
+				$rtn['TelMobile']=$result['TelMobile'];
+				$rtn['userlevel']==BORROWER_LEVEL;
+			}
+		}
+		return $rtn;
+	}
+	function getActivationKey($id)
+	{
+		global $db;
+		$q='SELECT password, salt from ! WHERE userid=?';
+		$res=$db->getRow($q,array('users',$id));
+		return md5(md5($res['password']).$res['salt']);
+	}
+	function emailVerified($id)
+	{
+		global $db;
+		$q='UPDATE ! set emailVerified = ? WHERE userid=?';
+		$res=$db->query($q,array('users',1, $id));
+		$user_level = $this->getUserLevelbyid($id);
+		if($user_level==BORROWER_LEVEL) {
+			$q1='UPDATE ! set completed_on = ? WHERE userid=?';
+			$res1=$db->query($q1,array('borrowers',time(), $id));
+		}
+		if($res===DB_OK)
+			return true;
+		else
+			return false;
+	}
+	function query($query)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		return (($db->query($query))===DB_OK);
+	}
+	function setLoginTime($userid, $timer)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="UPDATE ".TBL_USERS." SET last_login=? WHERE userid=?";
+		$db->query($q, array($timer, $userid));
+	}
+	function countryList($activated=false)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$result1=array();
+		if($activated)
+		{
+			$qq="SELECT * FROM ! WHERE name <> ? AND code IN (SELECT country_code FROM ! WHERE active=?) order by name";
+			$result1=$db->getAll($qq,array('countries','All Countries', 'currency', 1));
+		}
+		else
+		{
+			$qq="SELECT * FROM ! WHERE name <> ? order by name";
+			$result1=$db->getAll($qq,array('countries','All Countries'));
+		}
+		return $result1;
+	}
+	function countryListWithAll($activated=false)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		if($activated) {
+			$qq="SELECT * FROM ! WHERE code IN (SELECT country_code FROM ! WHERE active=?) OR name = ? order by name";
+			$result1=$db->getAll($qq,array('countries', 'currency', 1,'All Countries'));
+		} else {
+			$qq="SELECT * FROM ! order by name";
+			$result1=$db->getAll($qq,array('countries'));
+		}
+		return $result1;
+	}
+
+//added by Julia 23 Oct 2013
+
+	function LcountryListWithAll()
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$qq="SELECT * FROM ! order by name";
+		$result1=$db->getAll($qq,array('countries'));
+		return $result1;
+	}
+
+	function stateList()
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$qq="SELECT * FROM ! where enabled =? order by name";
+		$result1=$db->getAll($qq,array('state','Y'));
+		return $result1;
+	}
+	function getUserLevel($username)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT userlevel FROM ".TBL_USERS." WHERE username='$username'";
+		$r= $db->getOne($q);
+		return $r;
+	}
+	function getUserLevelbyid($uid)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT userlevel FROM ".TBL_USERS." WHERE userid='$uid'";
+		$r= $db->getOne($q);
+		return $r;
+	}
+	function getUserInfo($username)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$dbarray=array();
+		$q = "SELECT userid, username, userlevel, lang, salt, emailVerified,sublevel FROM ".TBL_USERS." WHERE username = ?";
+		$result = $db->getRow($q, array($username)) or die();
+		if(!$result )
+		{
+			return NULL;
+		}
+		$dbarray=$result;
+		$userlevel=$dbarray['userlevel'];
+		$userid=$dbarray['userid'];
+		$username=$dbarray['username'];
+		$dbarray['country']='';
+		$dbarray['email']='';
+
+		if($userlevel==PARTNER_LEVEL)
+		{
+			$p="SELECT name, email FROM ".TBL_PARTNER." WHERE userid=$userid";
+			$result=$db->getRow($p);
+			$dbarray['name']=$result['name'];
+			$dbarray['email']=$result['email'];
+		}
+		if($userlevel==LENDER_LEVEL)
+		{
+			$l="SELECT firstname, lastname, Email FROM ".TBL_LENDERS." WHERE userid=$userid";
+			$result=$db->getRow($l);
+			$larray=$result;
+			$name=$larray['firstname']." ".$larray['lastname'];
+			$dbarray['name']=$name;
+			$dbarray['email']=$result['Email'];
+		}
+		if($userlevel==BORROWER_LEVEL)
+		{
+			$b="SELECT firstname, lastname, Country, Email FROM ".TBL_BORROWER." WHERE userid=$userid";
+			$result=$db->getRow($b);
+			$barray=$result;
+			$name=$barray['firstname']." ".$barray['lastname'];
+			$dbarray['name']=$name;
+			$dbarray['country']=$barray['Country'];
+			$dbarray['email']=$result['Email'];
+		}
+		if($userlevel==ADMIN_LEVEL)
+		{
+			$dbarray['name']=$username;
+		}
+		if($userlevel==GUEST_LEVEL)
+		{
+			$dbarray['name']="GUEST";
+		}
+		return $dbarray;
+	}
+	function forgotPassword($submail, $subuser)
+	{
+		global $db;
+		if($subuser===0)
+		{
+			$p="SELECT username FROM ! WHERE userid IN (SELECT userid from ! where Email=? UNION SELECT userid from ! where Email=? UNION SELECT userid from ! where Email=?)";
+			$usernames = $db->getAll($p, array(TBL_USERS,TBL_LENDERS,$submail,TBL_PARTNER,$submail,TBL_BORROWER,$submail));
+			if(count($usernames)==0)
+				return 0; /* user does not exist for this email id*/
+			else if(count($usernames) >1)
+				return 2;  /* more than one user exist for this email id*/
+			else
+				$subuser = $usernames[0]['username'];
+		}
+		$q="SELECT userid FROM ! WHERE username=?";
+		$userid = $db->getOne($q, array(TBL_USERS, $subuser));
+		$uname = $this->getNameById($userid);
+		$r1['userid']=$userid;
+		$r1['username']=$subuser;
+		$r1['uname'] = $uname;
+		$rand = mt_rand(0, 32);
+		$newpass = md5($rand . time());
+		$newpass = substr($newpass, 0,7);
+		$salt = $this->makeSalt();
+		$mdpass=$this->makePassword($newpass, $salt);
+		$sql2="UPDATE ! SET password =?, salt =? WHERE username = ? LIMIT 1";
+		$r3 = $db->query($sql2, array('users', $mdpass, $salt, $subuser));
+		if($r3===DB_OK)
+		{
+			$r1['email']=$submail;
+			$r1['pass']=$newpass;
+			return $r1;
+		}
+		else
+			return 3;//db error
+	}
+	function getUserNamesByEmail($submail)
+	{
+		global $db;
+		$usernames=array();
+		if(!empty($submail)) {
+			$p="SELECT username FROM ! WHERE userid IN (SELECT userid from ! where Email=? UNION SELECT userid from ! where Email=? UNION SELECT userid from ! where Email=?)";
+			$usernames = $db->getAll($p, array(TBL_USERS,TBL_LENDERS,$submail,TBL_PARTNER,$submail,TBL_BORROWER,$submail));
+		}
+		return $usernames;
+	}
+	function totalAmountLent()
+	{
+		global $db;
+		$q= 'select Sum(givenamount) from ! where active = ? AND loanid IN (select l.loanid from ! as l where l.adminDelete = ? )';
+		$sum1 = $db->getOne($q, array('loanbids',1, 'loanapplic', 0)); 
+		return $sum1;
+	}
+	function businessFinanced($uid = 0)
+	{
+		global $db;
+		if($uid == 0)
+		{
+			$q= 'select count(borrowerid) from loanapplic where active in (?, ? , ?, ?) AND adminDelete = ?';
+			return $db->getOne($q, array(LOAN_ACTIVE, LOAN_REPAID, LOAN_DEFAULTED,LOAN_FUNDED, 0));
+		}
+		else
+		{
+			$q= 'select count(distinct (loanid)) from loanbids where active = 1 and lenderid = ? ';
+			return $db->getOne($q, array($uid));
+		}
+	}
+	function avgLendRate()
+	{
+		global $db;
+		$q= 'select avg(finalrate) from loanapplic where active in (?, ? , ?) AND adminDelete = ?';
+		return $db->getOne($q, array(LOAN_ACTIVE, LOAN_REPAID, LOAN_DEFAULTED , 0));
+	}
+	function getAllCurrency1()
+	{
+		global $db;
+		$q="SELECT *  FROM currency";
+		$result=$db->getAll($q );
+		return $result;
+	}
+	function getAllCurrency($active=1)
+	{
+		global $db;
+		if(empty($active))
+		{
+			$q="SELECT *  FROM currency order by active desc, country";
+			$result=$db->getAll($q );
+		}
+		else
+		{
+			$q="SELECT *  FROM currency WHERE active = ? ";
+			$result=$db->getAll($q ,array($active));
+		}
+		return $result;
+	}
+	function mysetCurrency($id)
+	{
+		global $db;
+		$q="SELECT currencyname FROM currency WHERE id = ? ";
+		$result=$db->getOne($q ,array($id));
+		if(empty($result)){
+			return "Not set yet";
+		}
+		return $result;
+	}
+	function mysetCountry($id)
+	{
+		global $db;
+		$q="SELECT name FROM countries WHERE code = ? ";
+		$result=$db->getOne($q ,array($id));
+		if(empty($result)){
+			return "Not set yet";
+		}
+		return $result;
+	}
+	function mysetState($id)
+	{
+		global $db;
+		$q="SELECT name FROM state WHERE code = ? ";
+		$result=$db->getOne($q ,array($id));
+		if(empty($result)){
+			return "Not set yet";
+		}
+		return $result;
+	}
+	function getUserCityCountry($userid)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$dbarray=array();
+		$q = "SELECT userid, username, userlevel FROM ".TBL_USERS." WHERE userid = '$userid'";
+		$result = $db->getRow($q) or die();
+		if(!$result ){
+			return NULL;
+		}
+		$dbarray=$result;
+		$userlevel=$dbarray['userlevel'];
+		$userid=$dbarray['userid'];
+		$username=$dbarray['username'];
+		if($userlevel==PARTNER_LEVEL)
+		{
+			$p="SELECT City,Country FROM ".TBL_PARTNER." WHERE userid=$userid";
+			$result=$db->getRow($p);
+			return $result;
+		}
+		if($userlevel==LENDER_LEVEL)
+		{
+			$l="SELECT City,Country FROM ".TBL_LENDERS." WHERE userid=$userid";
+			$result=$db->getRow($l);
+			return $result;
+		}
+		if($userlevel==BORROWER_LEVEL)
+		{
+			$b="SELECT City,Country FROM ".TBL_BORROWER." WHERE userid=$userid";
+			$result=$db->getRow($b);
+			return $result;
+		}
+		if($userlevel==ADMIN_LEVEL)
+		{
+			$a="SELECT City,Country FROM ".TBL_PARTNER." WHERE userid=$userid";
+			$result=$db->getRow($a);
+			return $result;
+		}
+	}
+	function getCountryCodeById($userid)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+
+		$dbarray=array();
+		$q = "SELECT userid, username, userlevel FROM ".TBL_USERS." WHERE userid = '$userid'";
+		$result = $db->getRow($q) or die();
+		if(!$result ){
+			return NULL;
+		}
+		$dbarray=$result;
+		$userlevel=$dbarray['userlevel'];
+		$userid=$dbarray['userid'];
+		if($userlevel==PARTNER_LEVEL)
+		{
+			$p="SELECT Country FROM ".TBL_PARTNER." WHERE userid=$userid";
+			$result=$db->getOne($p);
+			return $result;
+		}
+		if($userlevel==LENDER_LEVEL)
+		{
+			$l="SELECT Country FROM ".TBL_LENDERS." WHERE userid=$userid";
+			$result=$db->getOne($l);
+			return $result;
+		}
+		if($userlevel==BORROWER_LEVEL)
+		{
+			$b="SELECT Country FROM ".TBL_BORROWER." WHERE userid=$userid";
+			$result=$db->getOne($b);
+			return $result;
+		}
+		if($userlevel==ADMIN_LEVEL)
+		{
+			$a="SELECT Country FROM ".TBL_PARTNER." WHERE userid=$userid";
+			$result=$db->getOne($a);
+			return $result;
+		}
+	}
+	function getPreferredLang($userid)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT lang FROM ! WHERE userid=?";
+		$res= $db->getOne($q , array('users', $userid));
+		if(is_string($res))
+			return $res;
+		else
+			return 0;
+	}
+	function getActiveLanguages()
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT * FROM ! WHERE active=?";
+		$res= $db->getAll($q , array('language',1));
+		return $res;
+	}
+	function getAllLanguages()
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT * FROM ! WHERE 1 order by active desc,id asc";
+		$res= $db->getAll($q , array('language'));
+		return $res;
+	}
+	function setActiveLanguage($id, $act)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="UPDATE  ! set active=? WHERE id=?";
+		$res= $db->query($q , array('language',$act,$id));
+		if($res===DB_OK)
+			return 1;
+		else
+			return 0;
+	}
+	function isActiveLanguage($language)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT active FROM ! WHERE langcode=?";
+		$res= $db->getOne($q , array('language',$language));
+		if($res==1)
+				return 1;
+		else
+			return 0;
+	}
+	function getLanguageByCode($langcode)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT lang FROM ! WHERE langcode=?";
+		$res= $db->getOne($q , array('language',$langcode));
+		return $res;
+	}
+	function getCurrencyIdByCountryCode($countryCode)
+	{
+		global $db,$session;
+		$q="SELECT * FROM ! WHERE country_code =? ";
+		$res = $db->getRow($q, array('currency', $countryCode));
+		if(!empty($res))
+			return $res['id'];
+		else
+			return -1;
+	}
+	function getCurrencyNameByCurrencyId($currency)
+	{
+		global $db;
+		$q="SELECT Currency FROM ! WHERE id =? ";
+		$res = $db->getOne($q, array('currency', $currency));
+		return $res;
+	}
+	function getCurrentRateByCurrency($currency)
+	{
+		global $db;
+		$q="SELECT rate FROM excrate WHERE start=(SELECT max(start) FROM excrate where currency = ?)";
+		$result=$db->getOne($q , array($currency));
+		if(empty($result)){
+			return 0;
+		}
+		return $result;
+	}
+	function getRepayRate($country='')
+	{
+		global $db;
+		$repayRate=100;
+		$defaultRate=0;
+		$sixMonthsAgoDate=strtotime(date("Y-m-d H:i:s",time())." -6 month");
+		$loanids=array();
+		if($country=='')
+		{
+			$t="SELECT group_concat(loanid) as loanid from (SELECT loanid, max(duedate) as date from ! group by loanid) as r where r.date < ?";
+			$loanids=$db->getRow($t,array('repaymentschedule', $sixMonthsAgoDate));
+		}
+		else
+		{
+			$t="SELECT group_concat(loanid) as loanid from (SELECT loanid, max(duedate) as date from ! as rp join ! as br on rp.userid= br.userid where br.Country=?  group by loanid) as r where r.date < ?";
+			$loanids=$db->getRow($t,array('repaymentschedule', 'borrowers', $country, $sixMonthsAgoDate));
+		}
+		if($loanids['loanid'])
+		{
+			if($country==''){
+				$t="SELECT loanid, borrowerid from ! where active = ? ";//AND loanid IN (".$loanids['loanid'].") ";
+				$defaultedLoanids=$db->getAll($t,array('loanapplic', LOAN_DEFAULTED));
+			}else{
+				$t="SELECT loanid, borrowerid from ! as l join ! as br on l.borrowerid=br.userid where l.active = ? AND br.Country=?";//AND loanid IN (".$loanids['loanid'].") ";
+				$defaultedLoanids=$db->getAll($t,array('loanapplic', 'borrowers', LOAN_DEFAULTED, $country));
+			}
+			if(!empty($defaultedLoanids))
+			{
+				$AmountGot=0;
+				$s="SELECT AmountGot, loanid, borrowerid from ! where loanid IN (".$loanids['loanid'].") ";
+				$loanData=$db->getAll($s,array('loanapplic'));
+				foreach($loanData as $row)
+				{
+					$exrate=$this->getCurrentRate($row['borrowerid']);
+					$AmountGot +=($row['AmountGot']/$exrate);
+				}
+				$defaultAmountUsd=0;
+				foreach($defaultedLoanids as $row)
+				{
+					$res=$this->getTotalPayment($row['borrowerid'], $row['loanid']);
+					if($res['amttotal'] > $res['paidtotal'])
+					{
+						$amount=$res['amttotal'] - $res['paidtotal'];
+						$ratio=$this->getPrincipalRatio($row['loanid']);
+						$exrate=$this->getCurrentRate($row['borrowerid']);
+						$defaultAmount =($amount * $ratio);
+						$defaultAmountUsd += ($defaultAmount/$exrate);
+						$forgiveAmount=$this->getForgiveAmountUsd($row['borrowerid'], $row['loanid']);
+						if($forgiveAmount)
+						{
+							$AmountGot -= ($forgiveAmount * $ratio);
+						}
+					}
+				}
+				$defaultRate=($defaultAmountUsd / $AmountGot) * 100;
+			}
+		}
+		$repay['repayRate']= ($repayRate - $defaultRate);
+		$repay['default_amount']= $defaultAmountUsd ;
+		return $repay;
+	}
+	function getVerifiedPartnerCountries()
+	{
+		global $db;
+		$q = "SELECT DISTINCT(b.Country), c.Currency, cc.name,cc.code  from ! b join ! c on b.currency=c.id join ! as cc on b.Country=cc.code join ! as la on la.borrowerid =b.userid Where b.Active=?";
+		$result = $db->getAll($q, array('borrowers','currency','countries','loanapplic',1));
+		$contries=array();
+		foreach($result as $row)
+		{
+			$contries[$row['code']]=$row['name'];
+		}
+		return $contries;
+	}
+	function getCumulativeLoanStatistics($country)
+	{
+		global $db;
+		$cumStat=array();
+		$date= time();
+		if($country=='')
+		{
+			$q= 'select count(borrowerid) from ! where active in (?, ? , ?, ?) AND adminDelete = ?';
+			$count1=$db->getOne($q, array('loanapplic',LOAN_ACTIVE, LOAN_REPAID, LOAN_DEFAULTED,LOAN_FUNDED, 0));
+			$cumStat['bfinanced']=$count1;
+
+			$q= 'select Sum(givenamount) from ! where active = ? AND loanid IN (select l.loanid from ! as l  where l.adminDelete = ? )';
+			$sum1= $db->getOne($q, array('loanbids',1, 'loanapplic', 0));
+			$cumStat['lraised']=$sum1;
+			
+			$q= 'select avg(finalrate) from loanapplic where active in (?, ? , ?) AND adminDelete = ?';
+			$avg= $db->getOne($q, array(LOAN_ACTIVE, LOAN_REPAID, LOAN_DEFAULTED , 0));
+			$cumStat['avgintr']=$avg;
+
+			$q= 'select count(userid) from ! where userid NOT IN(SELECT userid from ! where emailVerified=?)';
+			$count2=$db->getOne($q,array('lenders', 'users', 0));
+			$cumStat['lenders']=$count2;
+
+			$q="select count(borrowers.userid) from !, ! where borrowers.partnerid=partners.userid";
+			$cumStat['borrower']=$result=$db->getOne($q, array('borrowers', 'partners'));
+
+			$q= 'select DISTINCT Country from ! where Active = ? UNION select DISTINCT Country from ! where Active = ?';
+			$count3=count($db->getAll($q, array('borrowers', 1, 'lenders',1)));
+			$cumStat['countries']=$count3;
+
+			$repay= $this->getRepayRate();
+			$cumStat['default_amount']=$repay['default_amount'];
+			$cumStat['repayRate']=$repay['repayRate'];
+			
+			$q='SET SESSION group_concat_max_len = 12000;';
+			$db->query($q);
+
+			$t="SELECT group_concat(loanid) as loanid from (SELECT loanid, max(duedate) as date from ! group by loanid) as r where r.date <=?";
+			$loanids=$db->getRow($t, array('repaymentschedule', $date)); 
+
+			$q="SELECT AmountGot, loanid, borrowerid from ! where active in (?, ? , ?) AND adminDelete = ? AND loanid IN (".$loanids['loanid'].")";
+			$disb_data=$db->getAll($q, array('loanapplic', LOAN_ACTIVE, LOAN_REPAID, LOAN_DEFAULTED , 0));
+			$disb_amount=0;
+			foreach($disb_data as $row){
+				$exrate=$this->getCurrentRate($row['borrowerid']);
+				$disb_amount +=($row['AmountGot']/$exrate);
+			} 
+			$q="SELECT AmountGot, loanid, borrowerid from ! where active=? AND adminDelete = ? AND loanid IN (".$loanids['loanid'].")";
+			$repaid_data=$db->getAll($q, array('loanapplic', LOAN_REPAID, 0));
+			$repaid_amount=0;
+			$forgiveAmountUsd=0;
+			$forgiveAmount=0;
+			foreach($repaid_data as $row){
+				$exrate=$this->getCurrentRate($row['borrowerid']);
+				$isforgive=$this->loanAlreadyInForgiveness($row['loanid']);
+				if($isforgive){
+					$forgiveAmount+=$this->getForgiveAmountUsd($row['borrowerid'], $row['loanid']);
+				}
+				$repaid_amount +=($row['AmountGot']/$exrate);
+			}
+			$forgiveAmountUsd+=$forgiveAmount;
+			$repaid_amountUsd=($repaid_amount- $forgiveAmount);
+
+			$q="SELECT AmountGot, loanid, borrowerid from ! where active=? AND adminDelete = ? AND loanid IN (".$loanids['loanid'].")";
+			$due_data=$db->getAll($q, array('loanapplic', LOAN_ACTIVE, 0));
+			$due_forgiveAmount=0;
+			$due_paidamountUsd=0;
+			$due_amtUsd=0;
+			foreach($due_data as $row){
+				$res=$this->getTotalPayment($row['borrowerid'], $row['loanid']);
+				if($res['amttotal'] > $res['paidtotal'])
+				{
+					$due_amount=$res['amttotal'] - $res['paidtotal'];
+					$exrate=$this->getCurrentRate($row['borrowerid']);
+					$ratio=$this->getPrincipalRatio($row['loanid']);
+					$due_paidamount=($res['paidtotal']*$ratio);
+					$due_paidamountUsd += ($due_paidamount/$exrate);
+					$due_amt=($due_amount * $ratio);
+					$due_amtUsd+= ($due_amt/$exrate);
+					$isforgive=$this->loanAlreadyInForgiveness($row['loanid']);
+					if($isforgive){
+						$due_forgiveAmount+=$this->getForgiveAmountUsd($row['borrowerid'], $row['loanid']);
+					}
+				}
+			}
+			$forgiveAmountUsd+=$due_forgiveAmount;
+
+			$q="SELECT AmountGot, loanid, borrowerid from ! where active=? AND adminDelete = ? AND loanid IN (".$loanids['loanid'].")";
+			$writeoff_data=$db->getAll($q, array('loanapplic', LOAN_DEFAULTED, 0));
+			$defaultAmountUsd=0;
+			$defaultpaidamountUsd =0;
+			foreach($writeoff_data as $row){
+				$res=$this->getTotalPayment($row['borrowerid'], $row['loanid']);
+				if($res['amttotal'] > $res['paidtotal'])
+				{
+						$amount=$res['amttotal'] - $res['paidtotal'];
+						$ratio=$this->getPrincipalRatio($row['loanid']);
+						$paidamount=$res['paidtotal'];
+						$exrate=$this->getCurrentRate($row['borrowerid']);
+						$defaultAmount =($amount * $ratio);
+						$defaultAmountUsd += ($defaultAmount/$exrate);
+						$defaultpaidamount =($paidamount* $ratio);
+						$defaultpaidamountUsd += ($defaultpaidamount/$exrate);
+						$forgiveAmount=$this->getForgiveAmountUsd($row['borrowerid'], $row['loanid']);
+						$netforgiveAmount=($forgiveAmount* $ratio);
+						$forgiveAmountUsd+=$netforgiveAmount;
+
+				}
+			}
+
+		/*	$amount_total=0;
+			$due_amt=0;
+			$loanid_forlate=explode(',', $loanids['loanid']); 
+			foreach($loanid_forlate as $loanid){
+				$result=$this->getTotalPayment($userid=0, $loanid); 
+				$due_amt+=$result['amttotal']-$result['paidtotal'];
+			}*/ 
+			//$cumStat['defaultRate']=100-$repay['repayRate'];
+			$cumStat['end_repaid_rate']=(($repaid_amountUsd+$defaultpaidamountUsd+$due_paidamountUsd)/$disb_amount)*100;
+			$cumStat['hist_loss']= ($defaultAmountUsd/$disb_amount)*100; 
+			$cumStat['repay_late_rate']=($due_amtUsd/$disb_amount)*100;
+			$cumStat['end_forgive_rate']=($forgiveAmountUsd/$disb_amount)*100;
+		}
+		else
+		{
+			$q= 'select count(l.borrowerid) from ! as l join ! as b on l.borrowerid= b.userid where l.active in (?, ? , ?, ?) AND l.adminDelete = ? AND b.Country=?';
+			$count1=$db->getOne($q, array('loanapplic','borrowers',LOAN_ACTIVE, LOAN_REPAID, LOAN_DEFAULTED,LOAN_FUNDED, 0, $country));
+			$cumStat['bfinanced']=$count1;
+
+			$q= 'select Sum(givenamount) from ! where active = ? AND loanid IN (select l.loanid from ! as l join ! as b on l.borrowerid= b.userid where l.adminDelete = ? AND b.Country=?)';
+			$sum1= $db->getOne($q, array('loanbids',1, 'loanapplic','borrowers', 0, $country));
+			$cumStat['lraised']=$sum1;
+
+			$q= 'select avg(l.finalrate) from ! as l join ! as b on l.borrowerid= b.userid where l.active in (?, ? , ?) AND l.adminDelete = ? AND b.Country=?';
+			$avg=$db->getOne($q, array('loanapplic','borrowers',LOAN_ACTIVE, LOAN_REPAID, LOAN_DEFAULTED, 0, $country));
+			$cumStat['avgintr']=$avg;		
+
+			$repay= $this->getRepayRate($country);
+			$cumStat['default_amount']=$repay['default_amount'];
+			$cumStat['repayRate']=$repay['repayRate'];
+
+			$t="SELECT group_concat(loanid) as loanid from (SELECT loanid, max(duedate) as date from ! as rp join ! as br on rp.userid= br.userid where br.Country=?  group by loanid) as r where r.date < ?";
+			$loanids=$db->getRow($t, array('repaymentschedule', 'borrowers', $country, $date));
+
+			$q="SELECT AmountGot, loanid, borrowerid from ! where active in (?, ? , ?) AND adminDelete = ? AND loanid IN (".$loanids['loanid'].")";
+			$disb_data=$db->getAll($q, array('loanapplic', LOAN_ACTIVE, LOAN_REPAID, LOAN_DEFAULTED , 0));
+			$disb_amount=0;
+			foreach($disb_data as $row){
+				$exrate=$this->getCurrentRate($row['borrowerid']);
+				$disb_amount +=($row['AmountGot']/$exrate);
+			}
+
+			$q="SELECT AmountGot, loanid, borrowerid from ! where active=? AND adminDelete = ? AND loanid IN (".$loanids['loanid'].")";
+			$repaid_data=$db->getAll($q, array('loanapplic', LOAN_REPAID, 0));
+			$repaid_amount=0;
+			$forgiveAmountUsd=0;
+			$forgiveAmount=0;
+			foreach($repaid_data as $row){
+				$exrate=$this->getCurrentRate($row['borrowerid']);
+				$isforgive=$this->loanAlreadyInForgiveness($row['loanid']);
+				if($isforgive){
+					$forgiveAmount+=$this->getForgiveAmountUsd($row['borrowerid'], $row['loanid']);
+				}
+				$repaid_amount +=($row['AmountGot']/$exrate);
+			}
+			$forgiveAmountUsd+=$forgiveAmount;
+			$repaid_amountUsd=($repaid_amount- $forgiveAmount);
+
+			$q="SELECT AmountGot, loanid, borrowerid from ! where active=? AND adminDelete = ? AND loanid IN (".$loanids['loanid'].")";
+			$due_data=$db->getAll($q, array('loanapplic', LOAN_ACTIVE, 0));
+			$due_forgiveAmount=0;
+			$due_paidamountUsd=0;
+			$due_amtUsd=0;
+			foreach($due_data as $row){
+				$res=$this->getTotalPayment($row['borrowerid'], $row['loanid']);
+				if($res['amttotal'] > $res['paidtotal'])
+				{
+					$due_amount=$res['amttotal'] - $res['paidtotal'];
+					$exrate=$this->getCurrentRate($row['borrowerid']);
+					$ratio=$this->getPrincipalRatio($row['loanid']);
+					$due_paidamount=($res['paidtotal']*$ratio);
+					$due_paidamountUsd += ($due_paidamount/$exrate);
+					$due_amt=($due_amount * $ratio);
+					$due_amtUsd+= ($due_amt/$exrate);
+					$isforgive=$this->loanAlreadyInForgiveness($row['loanid']);
+					if($isforgive){
+						$due_forgiveAmount+=$this->getForgiveAmountUsd($row['borrowerid'], $row['loanid']);
+					}
+				}
+			}
+			$forgiveAmountUsd+=$due_forgiveAmount;
+
+			$q="SELECT AmountGot, loanid, borrowerid from ! where active=? AND adminDelete = ? AND loanid IN (".$loanids['loanid'].")";
+			$writeoff_data=$db->getAll($q, array('loanapplic', LOAN_DEFAULTED, 0));
+			$defaultAmountUsd=0;
+			$defaultpaidamountUsd =0;
+			foreach($writeoff_data as $row){
+				$res=$this->getTotalPayment($row['borrowerid'], $row['loanid']);
+				if($res['amttotal'] > $res['paidtotal'])
+				{
+						$amount=$res['amttotal'] - $res['paidtotal'];
+						$ratio=$this->getPrincipalRatio($row['loanid']);
+						$paidamount=$res['paidtotal'];
+						$exrate=$this->getCurrentRate($row['borrowerid']);
+						$defaultAmount =($amount * $ratio);
+						$defaultAmountUsd += ($defaultAmount/$exrate);
+						$defaultpaidamount =($paidamount* $ratio);
+						$defaultpaidamountUsd += ($defaultpaidamount/$exrate);
+						$forgiveAmount=$this->getForgiveAmountUsd($row['borrowerid'], $row['loanid']);
+						$netforgiveAmount=($forgiveAmount* $ratio);
+						$forgiveAmountUsd+=$netforgiveAmount;
+
+				}
+			}
+
+		/*	$amount_total=0;
+			$due_amt=0;
+			$loanid_forlate=explode(',', $loanids['loanid']); 
+			foreach($loanid_forlate as $loanid){
+				$result=$this->getTotalPayment($userid=0, $loanid); 
+				$due_amt+=$result['amttotal']-$result['paidtotal'];
+			}*/ 
+			//$cumStat['defaultRate']=100-$repay['repayRate'];
+			$cumStat['end_repaid_rate']=(($repaid_amountUsd+$defaultpaidamountUsd+$due_paidamountUsd)/$disb_amount)*100;
+			$cumStat['hist_loss']= ($defaultAmountUsd/$disb_amount)*100; 
+			$cumStat['repay_late_rate']=($due_amtUsd/$disb_amount)*100;
+			$cumStat['end_forgive_rate']=($forgiveAmountUsd/$disb_amount)*100;
+		}
+		return $cumStat;
+	}
+	function getActiveLoanStatistics($country)
+	{
+		/* This code is taken from pfreportnew function please take care of this thing */
+		global $db;
+		$date1='01/01/2009';
+		$dateArr1  = explode("/",$date1);
+		$date3=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
+		$date4=mktime(0,0,0,date('m',time()),date('d',time()),date('Y',time()));
+
+		/* We have excluded five loan ids (39,42,44,59,60) from portfolio report because these loan amount was theft by someone. Please do not change the code without permission */
+		if($country=='') { 
+			$q="SELECT  t.id, l.loanid,  l.borrowerid, l.AmountGot, b.FirstName, b.LastName, b.Country, b.Currency from transactions t join loanapplic l on t.loanid = l.loanid join borrowers b on  b.userid = t.userid where t.txn_type  =6 AND l.active  =2 AND l.adminDelete =0 AND b.active !=0 AND t.trDate >=$date3 AND t.trDate <=$date4 AND l.loanid NOT IN (39,42,44,59,60) order by b.Country ";
+		} else {
+			$q="SELECT  t.id, l.loanid,  l.borrowerid, l.AmountGot, b.FirstName, b.LastName, b.Country, b.Currency from transactions t join loanapplic l on t.loanid = l.loanid join borrowers b on  b.userid = t.userid where t.txn_type  =6 AND l.active  =2 AND l.adminDelete =0 AND b.active !=0 AND t.trDate >=$date3 AND t.trDate <=$date4 AND l.loanid NOT IN (39,42,44,59,60) AND b.Country='$country'";
+		}
+
+		$result=$db->getAll($q);
+		$pfReport=array();
+		$threshold=10; /* here is the threshold USD 10 fixed */
+		$pfReport[1]['prinOut']=0;
+		$pfReport[2]['prinOut']=0;
+		$pfReport[3]['prinOut']=0;
+		$pfReport[4]['prinOut']=0;
+		$pfReport[5]['prinOut']=0;
+		$pfReport[1]['prinOutResch']=0;
+		$pfReport[2]['prinOutResch']=0;
+		$pfReport[3]['prinOutResch']=0;
+		$pfReport[4]['prinOutResch']=0;
+		$pfReport[5]['prinOutResch']=0;
+		$pfReport['totPrinOut']=0;
+		$pfReport['totPrinOutResch']=0;
+		$pfReport['allTotPrinOut']=0;
+		$pfReport['allTotPrinOutResch']=0;
+		$rate=array();
+		foreach($result as $row)
+		{
+			$o="SELECT max(id) from ! where loanid = ? AND userid=?";
+			$maxid=$db->getOne($o,array('repaymentschedule',$row['loanid'],$row['borrowerid']));
+			
+			$p="SELECT SUM(amount) as totamt from ! where loanid = ? AND userid=? AND duedate < ?";
+			$totamt=$db->getOne($p,array('repaymentschedule',$row['loanid'],$row['borrowerid'],$date4));
+
+			$q="SELECT SUM(paidamt) as totpaidamt from ! where loanid = ? AND userid=? AND paiddate < ?";
+			$totpaidamt=$db->getOne($q,array('repaymentschedule_actual',$row['loanid'],$row['borrowerid'],$date4));
+			
+			$r="SELECT rid from ! where loanid = ? AND userid=? AND paiddate < ? order by id desc";
+			$rid=$db->getOne($r,array('repaymentschedule_actual',$row['loanid'],$row['borrowerid'],$date4));
+			if(!empty($rid)) {
+				$s="SELECT SUM(amount) from ! where loanid = ? AND userid=? AND id <= ?";
+				$totAmtToRid=$db->getOne($s,array('repaymentschedule',$row['loanid'],$row['borrowerid'],$rid));
+			}
+			
+			$t="SELECT sum(amount) from ! where loan_id = ? AND borrower_id=? AND date < ?";
+			$forgiveAmount=$db->getOne($t,array('forgiven_loans',$row['loanid'],$row['borrowerid'], $date4));
+
+			$ratio = $this->getPrincipalRatio($row['loanid']);
+			$rate=$this->getCurrentRateByCurrency($row['Currency']);
+			$thresholdNative=$threshold * $rate;
+			if($forgiveAmount) {
+				$forgivePrinAmount=$forgiveAmount * $ratio;
+				$row['prinAmount']=$row['AmountGot']-$forgivePrinAmount;
+			} else {
+				$row['prinAmount']=$row['AmountGot'];
+			}
+			$row['principlePaid']= ($totpaidamt * $ratio);
+			$row['principleOutstanding']= $row['prinAmount']-$row['principlePaid'];
+			$row['dueAmount']= $totamt-$totpaidamt;
+			$row['dueAmountUSD']= ($row['dueAmount'] / $rate);
+
+			$country = $row['Country'];
+			$resch=$this->isRescheduledBeforeDate($row['loanid'], $date4);
+			if($resch) {
+				$pfReport['allTotPrinOutResch'] +=$row['principleOutstanding'] / $rate;
+			} else {
+				$pfReport['allTotPrinOut'] +=$row['principleOutstanding'] / $rate;
+			}
+			if($row['dueAmountUSD'] <$threshold) {
+				// this amount will not considor in repayrepot using threshold functionality
+				continue;
+			}
+			$duedate='';
+			if($rid==$maxid) {
+				$r="SELECT max(duedate) as duedate from ! where loanid = ? AND userid=?";
+				$duedate=$db->getOne($r,array('repaymentschedule',$row['loanid'],$row['borrowerid']));
+			} elseif(empty($rid)) {
+				$r="SELECT duedate from ! where loanid = ? AND userid=? AND amount > ? AND paidamt is NULL order by id";
+				$duedate=$db->getOne($r,array('repaymentschedule',$row['loanid'],$row['borrowerid'],0));
+			} else {
+				$flag=0;
+				if(($totpaidamt + $thresholdNative) < $totAmtToRid) {
+					$r="SELECT duedate from ! where loanid = ? AND userid=? AND id=?";
+					$duedate=$db->getOne($r,array('repaymentschedule',$row['loanid'],$row['borrowerid'],$rid));
+				} else {
+					$r="SELECT * from ! where loanid = ? AND userid=?";
+					$repayAll=$db->getAll($r,array('repaymentschedule',$row['loanid'],$row['borrowerid']));
+					$reducedAmount=$totAmtToRid - $totpaidamt;
+					foreach($repayAll as $repay) {
+						if($repay['id'] >$rid) {
+							if(($repay['amount']) >($thresholdNative -$reducedAmount)) {
+								$duedate=$repay['duedate'];
+								break;
+							} else {
+								$duedate=$repay['duedate'];
+								$reducedAmount += $repay['amount'];
+							}
+						}
+					}
+				}
+			}
+			$dateDiff = $date4 - $duedate;
+			$fullDays = floor($dateDiff/(60*60*24));
+			$j=0;
+			if($fullDays <0) {
+				continue;
+			}
+			if($fullDays <31) {
+				$j=1;
+			} else if($fullDays <91) {
+				$j=2;
+			} else if($fullDays <181) {
+				$j=3;
+			} else {
+				$j=4;
+			}
+			if($resch) {
+				$pfReport[$j]['prinOutResch'] += $row['principleOutstanding'] / $rate;
+				$pfReport['totPrinOutResch'] +=$row['principleOutstanding'] / $rate;
+			} else {
+				$pfReport[$j]['prinOut'] += $row['principleOutstanding'] / $rate;
+				$pfReport['totPrinOut'] +=$row['principleOutstanding'] / $rate;
+			}
+		}
+		return $pfReport;
+	}
+	function getLastLogin($userid)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT last_login FROM ! where userid=?";
+		$result=$db->getOne($q, array('users', $userid));
+			if(empty($result)){
+			return 0;
+		}
+		return  $result ;
+
+	}
+	function getUserSublevelById($id)
+	{
+		global $db;
+		$q='SELECT sublevel from ! WHERE userid=?';
+		$result=$db->getOne($q,array('users',$id));
+		return $result;
+	}
+	function confirmUserEmailPass($useremail, $password)
+	{
+		traceCalls(__METHOD__, __LINE__);
+		global $db;
+		$passw=md5("$password");
+		$q="select * from ! where userid IN (select userid from lenders where email='$useremail') OR userid IN (select userid from borrowers where email='$useremail') OR userid IN (select userid from partners where email='$useremail')";
+		$results = $db->getAll($q, array('users'));
+
+		if(empty($results))
+			return false;
+		else {
+			foreach($results  as $res){
+			if(empty($res['salt'])) {
+				if($res['password']==$passw) {
+					$username=$res['username'];
+					$salt = $this->makeSalt();
+					$newpass= $this->makePassword($password, $salt);
+					$q="UPDATE ! SET password=?, salt=? WHERE username=?";
+					$db->query($q, array('users', $newpass, $salt, $username));
+					return $res['username'];
+				}
+			}
+	else {
+				$passw=$this->makePassword($password, $res['salt']);
+				if($res['password']==$passw)
+					return $res['username'];
+			}
+		}
+	}
+		return false;
+	}
+	function IsEmailExist($useremail, $userid = 0)
+	{
+		global $db;
+		$where='';
+		if($userid>0) {
+			$where="AND userid<>$userid AND userid NOT IN(select endorserid from endorser where borrowerid=$userid)";
+		}
+		$q="select count(*) exist  from ! where (userid IN (select userid from lenders where email='$useremail') OR userid IN (select userid from borrowers where email='$useremail') OR userid IN (select userid from partners where email='$useremail')) $where";
+		$result=$db->getOne($q, array('users'));
+		return $result;
+
+	}
+	function loanAlreadyInForgiveness($loanid)
+	{
+		global $db;
+		$q="select count(*) exist  from ! where loanid=?";
+		$result=$db->getOne($q, array('loans_to_forgive',$loanid));
+		return $result;
+
+	}
+	function getAllregFee()
+	{
+		global $db;
+		$q="SELECT cr.country, rf.currency, rf.currency_name, rf.Amount FROM ! as cr join ! as rf on cr.id = rf.currency_id where cr.Active =?";
+		$result = $db->getAll($q,array('currency', 'registration_fee', 1));
+		return $result;
+
+	}
+	function deletecredit($parentid, $senderid)
+	{
+		global $db;
+		$p="DELETE from ! where ref_id = ? AND borrower_id = ?";
+		$res1=$db->query($p, array('credits_earned',$parentid, $senderid));
+		return $res1;
+
+	}
+	function IsMobileExist($mobile,$countrycode)
+	{
+		global $db;
+		$q="select count(*)   from !  where TelMobile=$mobile AND iscomplete_later = ? AND Country = ?";
+		$result=$db->getOne($q, array('borrowers',0, $countrycode));
+		return $result;
+	}
+	function IsUserinvited($userid) {
+		
+		global $db;
+		if(isset($_COOKIE["invtduserjoins"])) {
+			$cookie_val = $_COOKIE["invtduserjoins"];
+			$q="select id,userid from ! where cookie_value = ?";
+			$result=$db->getRow($q, array('invites',$cookie_val));
+			$q1="UPDATE invites SET invitee_id = ? Where cookie_value = ? LIMIT 1";
+			$res=$db->query($q1, array($userid, $cookie_val));
+			setcookie ("invtduserjoins", "", time() - 3600);
+		}
+	}
+function getco_Organizers_Country() {
+		global $db;
+		$q = 'select distinct(country),c.name from ! as co,! as c where co.country=c.code and co.status=1 ORDER BY c.name';
+		$countries = $db->getAll($q, array('community_organizers','countries')); 
+		foreach($countries as $key => $country) {
+			$q1 = 'select user_id from ! where country = ? and status=?';
+			$countries[$key]['co'] = $db->getAll($q1, array('community_organizers',$country['country'], 1)); 
+		}
+		return $countries;
+	}
+	function getUserStatus($userid){
+		global $db,$session;
+		$user_level = $this->getUserLevelbyid($userid);
+		if($user_level==BORROWER_LEVEL){
+			$q= "select Active from ! where userid=?";
+			$status=$db->getOne($q, array('borrowers', $userid));
+		}
+		if($user_level==LENDER_LEVEL){
+			$q= "select Active from ! where userid=?";
+			$status=$db->getOne($q, array('lenders', $userid));
+		}
+		if($user_level==PARTNER_LEVEL){ 
+			$q= "select Active from ! where userid=?";
+			$status=$db->getOne($q, array('partners', $userid));
+		}
+		if($session->userlevel == ADMIN_LEVEL){
+			$status=1;
+		}
+		return $status;
+	}
+
+	function IsNationIdExist($bnationid, $country, $userid){
+		global $db, $session;
+		$where='';
+		if(!empty($country)){
+			$where= " AND Country ='$country' ";
+		}
+		if($userid>0){ 
+			$where .= " AND userid<>$userid ";
+		}
+		$q="select count(*) from ! where nationId='$bnationid' $where";
+		$result=$db->getOne($q, array('borrowers'));
+		return $result;
+	}
+	
+	function IsFacebookIdExist($facebook_id, $userid=0){
+		global $db;
+		$where='';
+		if(!empty($userid)){
+			$where="AND userid<>$userid";
+		}
+		$q="select count(*) from ! where facebook_id='$facebook_id' $where";
+		$result=$db->getOne($q, array('users'));
+		return $result;
+	}
+
+	function setFBPost($id, $post_id){
+		global $db;
+		$q="update ! set fb_post=? where userid=?"; 
+		$result= $db->query($q, array('users', $post_id, $id));
+		return $result;
+	}
+
+	function getFBPost($id){
+		global $db;
+		$q="select fb_post from ! where userid=?";
+		$result= $db->getOne($q, array('users', $id));
+		return $result;
+	}
+
+	function setStatistics($name, $value, $country=''){ 
+		global $db;
+		$date=time();
+		$q="INSERT INTO ! (Name, value, date, country) VALUES (?,?,?,?)";
+		$result=$db->query($q, array('statistics', $name, $value, $date, $country)); 
+		return 1;
+	}
+
+	function getStatistics($name, $date, $country=''){
+		global $db;
+		$q="select max(date) as date from ! where Name=? and country=?";
+		$maxdate=$db->getOne($q, array('statistics', $name, $country)); 
+		if($date-$maxdate> 24*60*60){
+			return false;
+		}else{
+			$q="select value from ! where Name=? and country=? and date=?";
+			$result=$db->getOne($q, array('statistics', $name, $country, $maxdate));
+			return $result;
+		}
+	}
+
+	function getEndorserForEmail($id, $endorser_name, $endorser_email){
+		global $db;
+		$q="select id, validation_code, message from ! where borrowerid=? and ename=? and e_email=?";
+		$res= $db->getRow($q, array('endorser', $id, $endorser_name, $endorser_email));
+		return $res;
+	}
+
+	function updateEndorserAfterEmail($id, $endorser_name, $endorser_email, $message){ 
+		global $db;
+		$q="update ! set message=? where borrowerid=? and ename=? and e_email=?";
+		$res= $db->query($q, array('endorser', $message, $id, $endorser_name, $endorser_email));
+		return $res;
+	}
+
+	function IsEndorseEmailExist($endorser_email, $userid=0){
+		global $db;
+		$where='';
+		if($userid>0) {
+			$where="AND borrowerid<>$userid";
+		}
+		$q="select count(*) exist  from !  where e_email='$endorser_email' $where";
+		$result=$db->getOne($q, array('endorser'));
+		return $result;
+	}
+	function getEndorserForResendMail($id){
+		global $db;
+		$q="select * from ! where id=?";
+		$result=$db->getRow($q, array('endorser', $id));
+		return $result;
+	}
+	/* -------------------General Section End----------------------- */
+
+	/* -------------------Admin Section Start----------------------- */
+
+	function getMinimumFund()
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT value FROM settings where name='minAmount'";
+		$result=$db->getOne($q);
+		if(empty($result)){
+			return 0;
+		}
+		return  $result ;
+	}
+	function setMinFund($amount)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="UPDATE settings SET value=? where name=?";
+		return (($db->query($q, array($amount, 'minAmount')))===DB_OK);
+	}
+	/*if second argument ie $addCreditearned is set to true we will return max amount with addition of credit earned by borrower on his previous loan. if third argument ie $nextloan we assume borrower current loan is on time and return expected max borrow amount on his next loan*/
+	function getAdminSetting($name, $addCreditearned=true, $nextloan=false, $amtthrshldchek = 0)
+	{	
+		global $db,$session;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT value FROM ! where name=?";
+		$result=$db->getOne($q, array('settings', $name));
+		if(empty($result)){
+			return 0;
+		}
+		else
+		{
+			if($name=='maxBorrowerAmt')
+			{
+				/* Please note only max borrower amount is returning in native currency */
+
+				if($session->userlevel == ADMIN_LEVEL)
+				{
+					return  $result;
+				}
+				else
+				{
+					$loancountdecreases= false;
+					$borrowerid=  $session->userid;
+					$loanCountArray=$this->getLoanCount($borrowerid,true); 
+					$loanCount= $loanCountArray[0]; 
+					if($loanCount >= 0) {
+						$isfogven=0;
+						$last_loanid = $this->getLastRepaidloanId($borrowerid);
+						$disbdate = $this->getLoanDisburseDate($last_loanid);
+						$currenttime = time();
+						$months = $this->IntervalMonths($disbdate, $currenttime);
+						if($amtthrshldchek==1){
+							$timethrshld = $this->getAdminSetting('TimeThrshld_above');
+							if($months < $timethrshld) {
+								if(!$loancountdecreases){
+									$loancountdecreases= true;
+								}
+							}
+						}else{
+							$timethrshld = $this->getAdminSetting('TimeThrshld');
+							if($months < $timethrshld) {
+								if(!$loancountdecreases){
+									$loancountdecreases= true;
+								}
+							}
+						}
+						$ontime = $this->isRepaidOntime($borrowerid, $last_loanid);
+						if(!$ontime){
+							$loancountdecreases = true;
+						}
+						$adminRepayRate= $this->getAdminSetting('MinRepayRate'); 
+						$borrowRepayRate= $session->RepaymentRate($borrowerid);
+						if($adminRepayRate > $borrowRepayRate){
+							if(!$loancountdecreases){
+								$loancountdecreases = true;
+							}
+						}
+					}
+					if($nextloan) {
+						$loan_status = $this->getLoanStatus($borrowerid);
+						if($loan_status == LOAN_ACTIVE || $loan_status == LOAN_FUNDED || $loan_status == LOAN_OPEN) {
+							$loanCount++;
+						}
+					}
+					$excludeLoanIds = $loanCountArray[1];
+					$amount=$this->getPreviousLoanAmount($borrowerid,$loanCountArray, $excludeLoanIds);
+					$rate=$this->getCurrentRate($borrowerid);
+					$q="SELECT applydate from ! where borrowerid = ? AND active = ? AND adminDelete =? order by loanid desc";
+					$applydate=$db->getOne($q,array('loanapplic',$borrowerid, LOAN_OPEN,0));
+					if(!empty($applydate))
+					{
+						$rate=$this->getExRateById($applydate, $borrowerid);
+					}
+					
+					$resultNative=convertToNative($result, $rate);
+					if($loanCount==0)
+					{
+						$val=$this->getAdminSetting('firstLoanValue');
+						$resultNative=convertToNative($val, $rate);
+						$creditearned= $this->getCreditEarned($borrowerid);
+						$resultNative=($resultNative+$creditearned);
+						/* it means it is first loan */
+						/*$per=$this->getAdminSetting('firstLoanPercentage');
+						$ramount=($amount * $per)/100;
+						$ramount=number_format($ramount, 2, ".", "");
+						 if($resultNative >= $ramount)
+							return $ramount;
+						else*/
+							return $resultNative;
+					}
+					else if($loanCount==1 || $loanCount==2)
+					{	
+						/* it means it is second loan or third loan*/
+						if($loanCount==1){
+							$val=$this->getAdminSetting('secondLoanValue');
+							$resultNative=convertToNative($val, $rate);
+						}else{
+							$val=$this->getAdminSetting('thirdLoanValue');
+							$resultNative=convertToNative($val, $rate);
+						}
+						if($loancountdecreases) { 
+							//$resultNative = $this->getLastRepaidAmount($borrowerid, true);
+							$resultNative= $amount;
+						}
+						$per=$this->getAdminSetting('secondLoanPercentage');
+						$ramount=($amount * $per)/100;
+						$ramount=number_format($ramount, 2, ".", "");
+						
+						if($addCreditearned) {
+							$creditearned = $this->getCreditEarned($borrowerid);
+							$resultNative = $resultNative + $creditearned;
+							$ramount = $ramount + $creditearned;
+						}
+						if($resultNative >= $ramount) 
+							return $ramount;
+						else
+							return $resultNative;
+					}
+					else
+					{	
+						/* it means it is not next loan */
+						$val=$this->getAdminSetting('nextLoanValue');
+						$resultNative=convertToNative($val, $rate);
+						if($loancountdecreases) {
+							//$resultNative = $this->getLastRepaidAmount($borrowerid, true);
+							$resultNative= $amount;
+						}
+						$per=$this->getAdminSetting('nextLoanPercentage');
+						$ramount=($amount * $per)/100;
+						
+						$ramount=number_format($ramount, 2, ".", "");
+						if($addCreditearned) {
+							$creditearned = $this->getCreditEarned($borrowerid);
+							$resultNative = $resultNative + $creditearned;
+							$ramount = $ramount + $creditearned;
+						}
+						if($resultNative >= $ramount) {
+							return $ramount;
+						}
+						else { 
+							return $resultNative;
+						}
+					}
+				}
+			}
+			return $result;
+		}
+	}
+	function setAdminSetting($name, $value)
+	{
+		global $db,$session;
+		traceCalls(__METHOD__, __LINE__);
+		if($session->userlevel == ADMIN_LEVEL) {
+			$q="UPDATE ! SET value=? where name=?";
+			return (($db->query($q, array('settings', $value, $name)))===DB_OK);
+		}
+		return 0;
+	}
+	function getEditAmount($currencyid)
+	{
+		global $db;
+		$q="SELECT Amount FROM ! WHERE currency_id=? ";
+		$result=$db->getOne($q,array('registration_fee',$currencyid));
+		if(empty($result)){
+			return 0;
+		}
+		else{
+			return $result;
+		}
+	}
+	function setEditAmount($amount,$currencyid)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="UPDATE ! SET Amount=? WHERE currency_id=?";
+		$result=$db->query($q,array('registration_fee',$amount,$currencyid));
+		if($result)
+		{
+			//$qq="SELECT Amount FROM registration_fee WHERE currency_id=$currencyid ";
+			return 1;
+		}
+	}
+	function getInactiveBorrowers($sort, $ord, $userlevel, $userid)
+	{
+		global $db;
+		$result=array();
+		if($sort=='FirstName')
+			$sort='name ';
+		if($userlevel==ADMIN_LEVEL)
+		{
+			$q="SELECT b.*, u.regdate, concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as name, onb.name as postedby, bext.rec_form_offcr_name, bext.rec_form_offcr_num, bext.fb_data FROM ! as b join ! as u on b.userid= u.userid left join ! as onb on b.borrower_behalf_id= onb.id join ! as bext on b.userid = bext.userid WHERE (b.active=? || b.active=?) AND b.Assigned_status<>? AND u.emailVerified=? AND b.iscomplete_later=? order by $sort  $ord";
+			$result = $db->getAll($q, array('borrowers', 'users','on_borrower_behalf','borrowers_extn',0,-1, 2, 1,0));
+			return $result;
+		}
+		elseif($userlevel==PARTNER_LEVEL)
+		{
+			$q="SELECT b.*,u.regdate, concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as name, onb.name as postedby, bext.rec_form_offcr_name, bext.rec_form_offcr_num, bext.fb_data FROM ! as b join ! as u on b.userid= u.userid left join ! as onb on b.borrower_behalf_id= onb.id join ! as bext on b.userid = bext.userid  WHERE b.active=? AND b.Assigned_status<>? AND u.emailVerified=? AND b.Assigned_to =? AND b.iscomplete_later=? order by $sort  $ord";
+			$result = $db->getAll($q, array('borrowers', 'users','on_borrower_behalf','borrowers_extn', 0,2, 1,$userid,0));
+			return $result;
+		}
+		else
+			return $result;
+	}
+	function activateBorrower($partid, $borrowerid, $pcomment, $addmore, $cid, $ofclName, $OfclNumber, $complete_later)
+	{	
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$date1 =time();
+		$rate = $this->getCurrentRate($borrowerid);
+		if($cid==0)
+		{
+			
+			$q2="INSERT INTO comments (partid, userid, feedback, editDate, rate, refOfficial_name, refOfficial_number)"." VALUES (?,?,?,?,?,?,?)";
+			$res1=$db->query($q2, array($partid,$borrowerid, 2, $date1,$rate,$ofclName,$OfclNumber));
+			if($res1===DB_OK)
+			{
+				$q = 'SELECT id from ! where partid =? and  userid = ? and editDate = ?';
+				$feedbackid = $db->getOne($q , array('comments',$partid,$borrowerid,$date1));
+				if($complete_later!=1){
+					$qb="UPDATE borrowers SET Active=?, PartnerId=?, Assigned_date=?, Assigned_status =? WHERE userid=?";
+					$resultb= $db->query($qb, array(1, $partid, $date1, 1, $borrowerid));
+				}
+				$this->subFeedback($borrowerid,$partid,$pcomment, $feedbackid,0);
+				return true;
+			}
+			return false;
+		}
+		else
+		{
+			$q2="UPDATE comments SET editDate=?,refOfficial_name=?,refOfficial_number=?"." WHERE id=?";
+			$res1=$db->query($q2, array($date1, $ofclName, $OfclNumber,$cid)); 
+			if($res1==DB_OK)
+			{
+				
+				if($complete_later!=1){
+					$qb="UPDATE borrowers SET Active=?, PartnerId=?, Assigned_date=?, Assigned_status =? WHERE userid=?";
+					$resultb= $db->query($qb, array(1, $partid, $date1, 1, $borrowerid));
+				}
+				$q3="UPDATE b_comments SET comment = ?, editdate= ? WHERE type = ? AND reply = ? LIMIT 1";
+				$res2=$db->query($q3, array($pcomment, $date1, $cid, 0));
+				if($res2===DB_OK)
+					return true;
+			}
+			return false;
+		}
+	}
+	function getAllBorrowers($sort='FirstName', $dir='asc', $start=0, $limit='', $country, $brwr_type, $search)
+	{
+		global $db;
+		if($sort=='FirstName')
+			$sort='sortname';
+		if($country=='AA'){
+			if($brwr_type=='all'){
+			if(empty($search)){
+				$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+				$result=$db->getAll($q, array('borrowers','partners'));
+			}else{
+				$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+				$result=$db->getAll($q, array('borrowers','partners'));
+			}
+		    }
+		    elseif($brwr_type=='endorser'){
+				if(empty($search)){
+					
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.endorser=?  order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 1));
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.endorser=? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 1));
+				}
+			}
+		    elseif($brwr_type=='pndng_sub'){
+				if(empty($search)){
+
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.iscomplete_later=? AND b.endorser<>?  order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 1, 1));	
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.iscomplete_later=? AND b.endorser<>? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 1, 1));	
+				}
+			}
+			elseif($brwr_type=='pndng_act'){
+				if(empty($search)){
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p, ! as u where b.partnerid=p.userid AND  b.userid=u.userid  AND  b.iscomplete_later=? AND b.Active<>? AND b.Assigned_status<>? AND u.emailVerified=? order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 'users', 0, 1, 2, 1));			
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p, as u where b.partnerid=p.userid AND  b.userid=u.userid  AND  b.iscomplete_later=? AND b.Active<>? AND b.Assigned_status<>? AND u.emailVerified=? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 'users', 0, 1, 2, 1));
+				}
+			}
+
+			elseif($brwr_type=='decline'){
+				if(empty($search)){
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.Assigned_status=? order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 2));					
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.Assigned_status=? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 2));
+				}
+			}
+			elseif($brwr_type=='active'){
+				if(empty($search)){
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.Active=? order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 1));		
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.Active=? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 1));
+				}
+			}
+		}else{
+			if($brwr_type=='all'){
+			if(empty($search)){
+				$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+				$result=$db->getAll($q, array('borrowers','partners', $country));
+			}else{
+				$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? AND (b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%') group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+				$result=$db->getAll($q, array('borrowers','partners', $country));
+			}
+		    }	
+		    
+		     elseif($brwr_type=='endorser'){
+				if(empty($search)){
+					
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? AND b.endorser=?  order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', $country, 1));
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? AND b.endorser=? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', $country, 1));
+				}
+			}
+		    elseif($brwr_type=='pndng_sub'){
+				if(empty($search)){
+
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? AND b.iscomplete_later=? AND b.endorser<>?  order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', $country, 1, 1));	
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? AND b.iscomplete_later=? AND b.endorser<>? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', $country, 1, 1));	
+				}
+			}
+			elseif($brwr_type=='pndng_act'){
+				if(empty($search)){
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p, ! as u where b.partnerid=p.userid AND  b.userid=u.userid  AND b.country=? AND  b.iscomplete_later=? AND b.Active<>? AND b.Assigned_status<>? AND u.emailVerified=? order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 'users', $country, 0, 1, 2, 1));			
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p, as u where b.partnerid=p.userid AND  b.userid=u.userid AND b.country=?  AND  b.iscomplete_later=? AND b.Active<>? AND b.Assigned_status<>? AND u.emailVerified=? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', 'users',$country, 0, 1, 2, 1));
+				}
+			}
+
+			elseif($brwr_type=='decline'){
+				if(empty($search)){
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? AND b.Assigned_status=? order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', $country, 2));					
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? AND b.Assigned_status=? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners',$country, 2));
+				}
+			}
+			elseif($brwr_type=='active'){
+
+				if(empty($search)){
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? AND b.Active=? order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners', $country, 1));	
+				
+				}else{
+					$q="select b.userid, b.Active, firstname, lastname, paddress, b.city, b.country, telmobile, b.email, p.name AS pname, activeloan AS loanactive, activeloanid,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname  from ! as b, ! as p where b.partnerid=p.userid AND b.country=? AND b.Active=? AND b.firstname like '%$search%' || b.firstname like '%$search%' || b.TelMobile like '%$search%' || b.email like '%$search%'group by b.userid order BY ".$sort. " " .$dir." limit ".$start. ", " .$limit;
+					$result=$db->getAll($q, array('borrowers','partners',$country, 1));
+				}
+			}
+
+		}
+		return $result;
+	}
+	function getAllBorrowersCount()
+	{
+		global $db;
+		$q="select count(borrowers.userid) from !, ! where borrowers.partnerid=partners.userid";
+		$result=$db->getOne($q, array('borrowers', 'partners'));
+		return $result;
+	}
+	function getAllBorroweres_Active_Deactive()
+	{
+		global $db;
+		$q="SELECT b.FirstName, b.LastName, l.loanid, l.borrowerid, l.Amount, l.active, l.reqdamt, l.adminDelete FROM ! as b, ! as l WHERE b.userid = l.borrowerid AND l.active = ?";
+		$result=$db->getAll($q, array('borrowers', 'loanapplic', LOAN_OPEN));
+		return $result;
+	}
+	function getAllEmails()
+	{
+		global $db;
+		$q="SELECT Email FROM ! UNION SELECT Email FROM ! UNION SELECT Email FROM !";
+		$resultAll=$db->getAll($q,array('borrowers','lenders','partners'));
+		$emails="select emails_notify from ! where emails_notify is NOT NULL AND emails_notify <> ''";
+		$resultEmails=$db->getAll($emails,array('partners'));
+		foreach($resultEmails as $row)
+		{
+			$nf_emails=explode(',',$row['emails_notify']);
+			foreach($nf_emails as $email)
+			{
+				$resultAll[]['Email']=$email;
+			}
+		}
+		return $resultAll;
+	}
+	function getAllLender($sort='FirstName', $dir='asc', $start=0, $limit='')
+	{
+		global $db;
+		if($sort=='FirstName')
+			$sort='sortname';
+		$q="SELECT lenders.userid, lenders.FirstName, lenders.LastName, lenders.City, lenders.Country, lenders.Email, lenders.Active, concat(REPLACE(`FirstName`,' ',''), REPLACE(`LastName`,' ','')) as sortname, users.username  FROM ! join users on users.userid = lenders.userid where users.userid NOT IN(SELECT userid from ! where emailVerified=?) order by ".$sort." ".$dir." limit ".$start.", ".$limit;
+		$result=$db->getAll($q,array('lenders', 'users', 0));	
+			
+		return $result;
+	}
+
+	function getAllLenderCount()
+	{
+		global $db;
+		$q="SELECT count(*) FROM ! where userid NOT IN(SELECT userid from ! where emailVerified=?)";
+		$result=$db->getOne($q,array('lenders', 'users', 0));
+		return $result;
+	}
+// added by Julia 23 Oct 2013
+
+	function getActiveLenderCount()
+	{
+		global $db;
+		$q="SELECT count(*) FROM ! where userid NOT IN(SELECT userid from ! where emailVerified=?) AND Active=1";
+		$result=$db->getOne($q,array('lenders', 'users', 0));
+		return $result;
+	}
+
+	function getRecentLenderCount()
+	{ 
+		global $db;
+
+		/* Added by Julia & comment by mohit on date 24-10-13
+		$since_login=time() - strtotime(last_login);  
+		$q="SELECT count(*) FROM ! where userid NOT IN(SELECT userid from ! where emailVerified=?) AND Active=1 AND $since_login<(60*24*60*60)";
+		$result=$db->getOne($q,array('lenders', 'users', 0));
+		*/
+		$q="SELECT count(*) FROM ! as l inner join ! as u on u.userid=l.userid where u.emailVerified=? AND l.Active=? AND u.last_login>(UNIX_TIMESTAMP() -60*24*60*60)";
+		$result=$db->getOne($q,array('lenders', 'users',1,1));
+		return $result;
+
+	}
+
+	function getAllPartners()
+	{
+		global $db;
+		$q="SELECT userid, name, postaddress, city, country, website, active FROM ! where userid NOT IN(SELECT userid from ! where emailVerified=?) order by active";
+		$result=$db->getAll($q,array('partners', 'users', 0));
+		return $result;
+	}
+	function getRegistrationFeeData()
+	{
+		global $db;
+		$q="SELECT * FROM !";
+		$result=$db->getAll($q,array('registration_fee'));
+		return $result;
+	}
+	function addRates($amount,$currency, $time)
+	{
+		global $db;
+		$q="SELECT max(id) FROM excrate WHERE currency =?";
+		$q1="UPDATE excrate SET stop= ? WHERE id=?";
+		$q2="INSERT INTO excrate (rate, start, currency) VALUES (?, ?, ?)";
+		$r1=$db->getOne($q,array($currency));
+		if(empty($r1))
+		{
+			$r2= $db->query($q2, array($amount , $time, $currency));
+			if($r2===DB_OK)
+				return 1;
+		}
+		else
+		{
+			$db->query($q2, array($amount , $time, $currency));
+			$r2= $db->query($q1, array($time , $r1));
+			if($r2===DB_OK)
+				return 1;
+		}
+		return 0;
+	}
+	function activeBorrowers($sort, $ord, $userlevel, $userid, $start=0, $limit='', $prt=0)
+	{
+		global $db;
+		$country = $this->getUserCityCountry($userid);
+		if($sort=='FirstName')
+			$sort='sortname ';
+		else if($sort =='Country')
+			$sort='Country, City';
+		$result=array();
+		if($userlevel==ADMIN_LEVEL)
+		{
+			$q="SELECT b.*, c.editDate ,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname FROM ! as b join ! as c on b.userid=c.userid WHERE active=? group by c.userid order by $sort  $ord";
+			$result=$db->getAll($q,array('borrowers', 'comments', 1));
+		}elseif($prt==1){
+			$q="SELECT b.*, c.editDate ,  concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname FROM ! as b join ! as c on b.userid=c.userid WHERE active=? AND b.Country=? group by c.userid order by $sort  $ord";
+			$result=$db->getAll($q,array('borrowers', 'comments', 1, $country['Country']));
+		}
+		else if($userlevel==PARTNER_LEVEL || $userlevel==BORROWER_LEVEL || $userlevel==LENDER_LEVEL)
+		{
+			$q="SELECT b.*, c.editDate, concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as sortname FROM ! as b join ! as c on b.userid=c.userid join ! as bext on b.userid = bext.userid WHERE active=? AND b.Country=? AND bext.mentor_id = ? group by c.userid order by $sort  $ord ";
+			$result=$db->getAll($q,array('borrowers', 'comments', 'borrowers_extn',1, $country['Country'], $userid));
+		
+		}
+		for ($i = 0; $i < count($result) ; $i++) {
+			$q="SELECT lastVisited, note from ! WHERE borrowerid = ?";
+			$res=$db->getRow($q,array('repay_report_detail',$result[$i]['userid']));
+			$result[$i]['admin_notes'] = $res['note'];
+			$result[$i]['lastVisited'] = $res['lastVisited'];
+		}
+		return $result;
+	}
+	function activeBorrowersCount($userlevel, $userid, $prt=0)
+	{
+		global $db;
+		$result=0;
+		$country = $this->getUserCityCountry($userid);
+		if($userlevel==ADMIN_LEVEL)
+		{
+			$q="SELECT count(*)  FROM ( SELECT b.*, c.editDate FROM ! as b join ! as c on b.userid=c.userid WHERE active=? group by c.userid) as d";
+			$result=$db->getOne($q,array('borrowers', 'comments', 1));
+		}elseif($prt==1){
+			$q="SELECT count(*)  FROM ( SELECT b.*, c.editDate FROM ! as b join ! as c on b.userid=c.userid WHERE active=? AND b.Country =? group by c.userid) as d";
+			$result=$db->getOne($q,array('borrowers', 'comments', 1, $country['Country']));
+		}
+		else if($userlevel==PARTNER_LEVEL || $userlevel==BORROWER_LEVEL || $userlevel==LENDER_LEVEL )
+		{
+			$q="SELECT count(*)  FROM ( SELECT b.*, c.editDate FROM ! as b join ! as c on b.userid=c.userid WHERE active=? AND b.Country =? group by c.userid) as d";
+			$result=$db->getOne($q,array('borrowers', 'comments', 1, $country['Country']));
+
+		}
+		return $result;
+	}
+	function activateLender($id)
+	{
+		global $db;
+		$q="UPDATE ! SET Active=1 WHERE userid=?";
+		return $db->query($q, array('lenders',$id));
+	}
+	function deactivateLender($id)
+	{
+		global $db;
+		$q="UPDATE ! SET Active=0 WHERE userid=?";
+		return $db->query($q, array('lenders',$id));
+	}
+	function activatePartner($id)
+	{
+		global $db;
+		$adate=time();
+		$q="UPDATE ! SET active=1, activedate=? WHERE userid=?";
+		return $db->query($q, array('partners',$adate,$id));
+	}
+	function deactivatePartner($id)
+	{
+		global $db;
+		$q="UPDATE ! SET active=0, activedate=0 WHERE userid=?";
+		return $db->query($q, array('partners', $id));
+	}
+	function deactivateBorrower($id,$set)
+	{
+		global $db;
+		$q="UPDATE ! SET Active=? WHERE userid=?";
+		return $db->query($q, array('borrowers', $set, $id));
+	}
+	function getExchangeRate($currency=0)
+	{
+		global $db;
+		$q="SELECT rate, date(from_unixtime(start)) as start, date(from_unixtime(stop)) as stop FROM excrate  WHERE currency = ? ORDER BY id DESC";
+		$result=$db->getAll($q, array($currency));
+		return $result;
+	}
+	function madePayment($id,$amount, $paidd)
+	{
+		global $db;
+		if(!empty($id) && !empty($amount))
+		{
+			$p = "select paidamt from ! where id = ?";
+			$paidamt = $db->getOne($p, array('repaymentschedule', $id));
+			if(empty($paidamt))
+				$q = "UPDATE ! SET paiddate = ?, paidamt = ? WHERE id = ? LIMIT 1";
+			else
+				$q = "UPDATE ! SET paiddate = ?, paidamt = paidamt + ? WHERE id = ? LIMIT 1";
+
+			$data = $db->query($q, array('repaymentschedule',$paidd, $amount , $id));
+			if($data===DB_OK)
+				return 1;
+		}
+		return 0; //added by pranjal
+	}
+	function madePayment_Actual($amount, $paidd, $loanid, $borrowerid,$rid)
+	{
+		global $db;
+		$q = "INSERT into ! (rid, userid, loanid, paiddate, paidamt) values (?,?,?,?,?)";
+		$data = $db->query($q, array('repaymentschedule_actual',$rid, $borrowerid,$loanid,$paidd,$amount));
+		if($data===DB_OK)
+			return 1;
+		return false;
+	}
+	function loanpaidback($borrowerid,$loanid)
+	{
+		global $db;
+		$q= 'update ! set active = ? where loanid = ? and borrowerid = ?'; //AND b.adminDelete = ?
+		$res1= $db->query($q, array('loanapplic', LOAN_REPAID ,$loanid, $borrowerid));
+		if($res1=== DB_OK){
+				$startdate=time();
+				$this->setLoanStage($loanid, $borrowerid, LOAN_REPAID, $startdate, LOAN_ACTIVE);
+		}
+		$q= 'update ! set activeLoanID = ?, activeLoan = ? where userid = ?';
+		$res2= $db->query($q, array('borrowers', 0, NO_LOAN , $borrowerid));
+		if($res1=== DB_OK && $res2=== DB_OK)
+			return 1;
+		else
+			return 0;
+	}
+	function setExpireInLoan()
+	{
+		global $db, $session;
+		$deadline=$this->getAdminSetting('deadline');
+		$expireTime= time() - ($deadline * 3600 *24);
+		$q="SELECT loanid, borrowerid, reqdamt  FROM ! WHERE active =? AND applydate < ? AND adminDelete = ?";
+		$result=$db->getAll($q, array('loanapplic ' ,LOAN_OPEN, $expireTime, 0));
+		foreach($result as $row) {
+			$status = $session->getStatusBar($row['borrowerid'],$row['loanid'],5);
+			if($status < 100) {
+				$this->setExpired($row['borrowerid'],$row['loanid']);
+			}
+		}
+	}
+	function setExpired($borrowerid,$loanid)
+	{
+		$today=time();
+		global $db, $session;
+		$loanstatus = $this->getBorrowerCurrentLoanStatus($borrowerid);
+		$sql1 = "UPDATE ! SET active =?, expires = ? WHERE loanid = ? AND borrowerid =? limit 1";
+		$r1= $db->query($sql1 , array('loanapplic', LOAN_EXPIRED , $today ,$loanid,$borrowerid));
+		if($r1===DB_OK) {
+			$sql2= 'update ! set activeLoanID = ?, activeLoan = ? where userid = ?';
+			$r2= $db->query($sql2, array('borrowers', 0, NO_LOAN , $borrowerid));
+			if($r2===DB_OK) {
+				$session->sendLoanExpiredMail($borrowerid,$loanid);
+				$this->setLoanStage($loanid, $borrowerid, LOAN_EXPIRED, $today, LOAN_OPEN);
+				$r3= $this->creditBackOfLoan($loanid, LOAN_EXPIRED);
+				if($r3==1) {
+					/*if loan has been funded ie bids accepted by borrower and if admin wants to close that loan and credit back to lenders we should also update loanbids ,givenamount to 0*/
+					if($loanstatus == LOAN_FUNDED) {
+						$q="UPDATE ! SET active = ?, givenamount =? WHERE loanid = ?";
+						$result=$db->query($q, array('loanbids',0,0,$loanid));
+					}
+					return 1;
+				}
+			}
+		}
+		return 0;
+	}
+	function creditBackOfLoan($loanid, $status=LOAN_EXPIRED) {
+		global $db;
+		$txn_type=LOAN_OUTBID;
+		$txn_sub_type=LOAN_BID_EXPIRED;
+		$desc = 'Loan bid expired';
+		if($status==LOAN_CANCELED) {
+			$txn_sub_type=LOAN_BID_CANCELED;
+			$desc = 'Loan bid cancelled';
+		}
+		$q="SELECT userid, sum(amount) as amount FROM ! WHERE loanid = ? AND txn_type IN (?, ?) group by userid";
+		$result=$db->getAll($q, array('transactions', $loanid, LOAN_BID, LOAN_OUTBID));
+		foreach($result as $row) {
+			if($row['amount'] < 0) {
+				$txnAmt = $row['amount'] * -1;
+				$ret=$this->setTransaction($row['userid'],$txnAmt,$desc,$loanid, 0,$txn_type, 0, 0, $txn_sub_type);
+				if(!$ret) {
+					return 0;
+				}
+			}
+		}
+		return 1;
+	}
+	function setDefultInLoan($borrowerid,$loanid)
+	{
+
+		global $db;
+		$today=time();
+		$sql2 = 'update ! set activeLoanID = ?, activeLoan = ? where userid = ?';
+		$r1 = $db->query($sql2, array('borrowers', 0, NO_LOAN , $borrowerid));
+		if($r1===DB_OK)
+		{
+			$sql1 = "UPDATE ! SET active =?, expires = ? WHERE (loanid = ? AND borrowerid =?  )LIMIT 1";//AND b.adminDelete = ?
+			$r2 = $db->query($sql1 , array('loanapplic', LOAN_DEFAULTED , $today ,$loanid,$borrowerid));
+			if($r2===DB_OK){
+				$this->setLoanStage($loanid, $borrowerid, LOAN_DEFAULTED, $today, LOAN_ACTIVE);
+				return 1;
+			}
+		}
+		return 0;
+	}
+	function undoDefultInLoan($borrowerid,$loanid)
+	{
+		global $db;
+		$sql2 = 'update ! set activeLoanID = ?, activeLoan = ? where userid = ?';
+		$r1 = $db->query($sql2, array('borrowers', $loanid, LOAN_ACTIVE , $borrowerid));
+		if($r1===DB_OK)
+		{
+			$sql1 = "UPDATE ! SET active =?, expires = ? WHERE (loanid = ? AND borrowerid =?  )LIMIT 1";//AND b.adminDelete = ?
+			$r2 = $db->query($sql1 , array('loanapplic', LOAN_ACTIVE , NULL ,$loanid,$borrowerid));
+			if($r2===DB_OK){
+				$startdate=time();
+				$this->revertLoanStage($loanid, $borrowerid, LOAN_DEFAULTED, LOAN_ACTIVE);
+				return 1;
+			}
+		}
+		return 0;
+	}
+	function setCancelInLoan($borrowerid,$loanid)
+	{
+		$today=time();
+		global $db;
+		$sql1 = "UPDATE ! SET active =?, expires = ? WHERE loanid = ? AND borrowerid =? limit 1";
+		$r1= $db->query($sql1 , array('loanapplic', LOAN_CANCELED , $today ,$loanid,$borrowerid));
+		if($r1===DB_OK) {
+			$sql2= 'update ! set activeLoanID = ?, activeLoan = ? where userid = ?';
+			$db->query($sql2, array('borrowers', 0, NO_LOAN , $borrowerid));
+			$this->setLoanStage($loanid, $borrowerid, LOAN_CANCELED, $today, LOAN_OPEN);
+			$r3= $this->creditBackOfLoan($loanid, LOAN_CANCELED);
+			if($r3==1) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+	function pendingPartners()
+	{
+		global $db;
+		$q= 'select count(*) from partners where active = 0';
+		return $db->getOne($q);
+	}
+	function totalPartners()
+	{
+		global $db;
+		$q= 'select count(*) from partners ';
+		return $db->getOne($q);
+	}
+	function updateGotAmount($loanid, $amount)
+	{
+		global $db;
+		$q1="UPDATE ! SET AmountGot = ? WHERE loanid=?";
+		$result= $db->query($q1,array('loanapplic',$amount,$loanid));
+		if($result===DB_OK){
+			return $result;
+		}
+		return 0 ;
+	}
+	function saveRegistrationFee($currency_id,$currency_name,$currency,$amount)
+	{
+		global $db;
+		$qq="SELECT currency_id FROM ! WHERE currency_id=? ";
+		$result1=$db->getAll($qq,array('registration_fee',$currency_id));
+		if($result1){
+			return 2;//if currency is already addede
+		}
+		if(empty($result1))
+		{
+			$q="INSERT INTO registration_fee (currency_id , currency , currency_name , Amount) VALUES (?, ?, ?, ?)";
+			$result=$db->query($q,array($currency_id,$currency_name,$currency,$amount));
+			if($result===DB_OK)
+				return 1;
+		}
+		return 0;
+	}
+	function getAllLenders()
+	{
+		global $db;
+		$sql = 'select username, userid from ! where userlevel = ?';
+		$r1 = $db->getAll($sql, array('users',LENDER_LEVEL));
+		return $r1;
+	}
+	function getAllUsers()
+	{
+		global $db;
+		$sql = 'select username, userid from ! order by username';
+		$r1 = $db->getAll($sql, array('users'));
+		return $r1;
+	}
+	function activateNewCurrency($id,$active)
+	{
+
+		global $db;
+		$sql = 'UPDATE currency SET active = ? WHERE id = ? LIMIT 1;';
+		$result=$db->query($sql, array($active, $id));
+		if($result===DB_OK){
+			return 1;
+		}
+
+		return 0;
+	}
+	function ac_detivateLoan($lid,$deactive,$loanstatus,$borrowerid)
+	{
+		global $db;
+		if($loanstatus==LOAN_OPEN || $loanstatus==LOAN_FUNDED)
+		{
+			$activelid = $this->getUNClosedLoanid($borrowerid);
+			if($deactive)
+			{
+				if($activelid == $lid)
+				{
+					$sql = 'UPDATE ! SET ActiveLoan = ? , activeLoanID = ? WHERE userid = ? LIMIT 1;';
+					$result=$db->query($sql, array( TBL_BORROWER , NO_LOAN , 0  ,$borrowerid));
+				}
+				else
+					return false;
+			}
+			else
+			{
+				if($activelid == 0)
+				{
+					$sql = 'UPDATE ! SET  ActiveLoan = ? , activeLoanID = ? WHERE userid  = ? LIMIT 1;';
+					$result=$db->query($sql, array( TBL_BORROWER , LOAN_OPEN , $lid ,$borrowerid));
+				}
+				else
+					return false;
+			}
+		}
+		$sql1 = 'UPDATE ! SET adminDelete = ? WHERE loanid  = ? LIMIT 1;'; //AND b.adminDelete = ?
+		$result1=$db->query($sql1, array('loanapplic', $deactive, $lid));
+		if($result1===DB_OK)
+			return 1;
+		return 0;
+	}
+	function registerEmail($email)
+	{
+		global $db;
+		$q="INSERT INTO email_register (email, posted) VALUES  (?,?)";
+		$r=$db->query($q, array($email,0));
+		if($r===DB_OK){
+			return 1;
+		}
+		return 0;
+	}
+	function getRegisteredEmails()
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT * from email_register ";
+		return $db->getAll($q);
+	}
+	function registerEmailSent($id)
+	{
+		global $db;
+		$q="Update email_register set posted = ? where id = ?";
+		$db->query($q, array(1, $id));
+		if($r===DB_OK){
+			return 1;
+		}
+		return 0;
+	}
+	function pfreport($date1, $date2)
+	{
+		global $db;
+		$dateArr1  = explode("/",$date1);
+		$dateArr2  = explode("/",$date2);
+		$date3=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
+		$date4=mktime(0,0,0,(int)$dateArr2[0],(int)$dateArr2[1],(int)$dateArr2[2]);
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT  l.userid borrowerid, l.amount AmountGot, l.trDate AcceptDate, b.Country, b.Currency from transactions l join borrowers b on l.userid = b.userid where l.txn_type =6 AND b.active !=0 AND l.trDate >=$date3 AND l.trDate <=$date4 order by b.Country ";
+
+		$result=$db->getAll($q);
+		$p="SELECT  b.userid,r.paiddate, r.paidamt, b.Country, b.currency, r.loanid from repaymentschedule r join borrowers b on r.userid = b.userid where b.active !=0 AND r.paiddate >= $date3 AND r.paiddate <= $date4 order by b.Country";
+		$result1=$db->getAll($p);
+
+		$country = '';
+		$prevCountry = '';
+		$pa = array();
+		$arr = array();
+		$arr['Amt'] = 0;
+		$arr['UsAmt'] = 0;
+		$arr['AmtNew'] = 0;
+		$arr['UsAmtNew'] = 0;
+		$arr['CN'] = '';
+
+		for ($i = 0; $i < count($result) ; $i++)
+		{
+			$country = $result[$i]['Country'];
+			if($prevCountry == '')
+				$prevCountry = $country;
+			if($prevCountry != $country)
+			{
+				$pa[$arr['CN']] = $arr;
+				$arr = array();
+				$arr['Amt'] = 0;
+				$arr['UsAmt'] = 0;
+				$arr['AmtNew'] = 0;
+				$arr['UsAmtNew'] = 0;
+				$arr['CR'] = '';
+				$prevCountry = $country;
+			}
+			if($prevCountry == $country)
+			{
+
+				$arr['CN'] = $result[$i]['Country'];
+				$arr['Amt'] += $result[$i]['AmountGot'];
+				/*$arr['UsAmt'] += ($result[$i]['AmountGot'] /   $this->getExRateByDate($result[$i]['AcceptDate'], $result[$i]['Currency']) );*/
+				$arr['UsAmt'] += ($result[$i]['AmountGot'] /   $this->getCurrentRate($result[$i]['borrowerid']));
+				if($arr['CR'] == '')
+					$arr['CR'] = $this->getUserCurrency($result[$i]['borrowerid']);
+				$prevCountry = $country;
+			}
+		}
+		if($arr['CN'] != '')
+			$pa[$arr['CN']] = $arr;
+		$country = '';
+		$prevCountry = '';
+		$panew = array();
+		$arr = array();
+		$arr['AmtNew'] = 0;
+		$arr['UsAmtNew'] = 0;
+		$arr['CNNew'] = '';
+		for ($i = 0; $i < count($result1) ; $i++)
+		{
+			$country = $result1[$i]['Country'];
+			if($prevCountry == '')
+				$prevCountry = $country;
+			if($prevCountry != $country)
+			{
+				if($pa[$arr['CNNew']]){
+					$pa[$arr['CNNew']]['AmtNew'] = $arr['AmtNew'];
+					$pa[$arr['CNNew']]['UsAmtNew'] = $arr['UsAmtNew'];
+
+				}else{
+					$pa[$arr['CNNew']]['AmtNew'] = $arr['AmtNew'];
+					$pa[$arr['CNNew']]['UsAmtNew'] = $arr['UsAmtNew'];
+					$pa[$arr['CNNew']]['UsAmt'] = 0;
+					$pa[$arr['CNNew']]['Amt'] = 0;
+					$pa[$arr['CNNew']]['CR'] = $this->getUserCurrency($result1[$i-1]['userid']);
+					$pa[$arr['CNNew']]['CN'] = $arr['CNNew'];
+
+				}
+				$prevCountry = $country;
+			}
+			if($prevCountry == $country)
+			{
+				$ratio = $this->getPrincipalRatio($result1[$i]['loanid']);
+				$arr['CNNew'] = $result1[$i]['Country'];
+				$arr['AmtNew'] += ($result1[$i]['paidamt'] * $ratio);
+				/*$arr['UsAmtNew'] += ( ($result1[$i]['paidamt'] * $ratio ) /  $this->getExRateByDate($result1[$i]['paiddate'], $result1[$i]['currency']) );*/
+				$arr['UsAmtNew'] += ( ($result1[$i]['paidamt'] * $ratio ) /  $this->getCurrentRate($result1[$i]['userid']));
+				$prevCountry = $country;
+			}
+		}
+		if($pa[$arr['CNNew']])
+		{
+			$pa[$arr['CNNew']]['AmtNew'] = $arr['AmtNew'];
+			$pa[$arr['CNNew']]['UsAmtNew'] = $arr['UsAmtNew'];
+
+		}
+		else if(count($result1)!=0 && $arr['CNNew']!="")
+		{
+			$pa[$arr['CNNew']]['AmtNew'] = $arr['AmtNew'];
+			$pa[$arr['CNNew']]['UsAmtNew'] = $arr['UsAmtNew'];
+			$pa[$arr['CNNew']]['AmtNew'] = $arr['AmtNew'];
+			$pa[$arr['CNNew']]['UsAmtNew'] = $arr['UsAmtNew'];
+			$pa[$arr['CNNew']]['UsAmt'] = 0;
+			$pa[$arr['CNNew']]['Amt'] = 0;
+			$pa[$arr['CNNew']]['CR'] = $this->getUserCurrency($result1[$i -1]['userid']);
+			$pa[$arr['CNNew']]['CN'] = $arr['CNNew'];
+
+		}
+		return $pa;
+	}
+	function pfreportnew($date1, $date2)
+	{
+		global $db;
+		logger('call in database');
+		$dateArr1  = explode("/",$date1);
+		$dateArr2  = explode("/",$date2);
+		$date3=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
+		$date4=mktime(0,0,0,(int)$dateArr2[0],(int)$dateArr2[1],(int)$dateArr2[2]);
+
+		/*$date1='01/01/2009';
+		$dateArr1  = explode("/",$date1);
+		$date3=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
+		$date4=mktime(0,0,0,date('m',time()),date('d',time()),date('Y',time()));*/
+
+		/* We have excluded five loan ids (39,42,44,59,60) from portfolio report because these loan amount was theft by someone. Please do not change the code without permission */
+
+		$q="SELECT  ls.loanid, ls.borrowerid, l.AmountGot, b.FirstName, b.LastName, b.Country, b.Currency from loanstage ls join loanapplic l on ls.loanid = l.loanid join borrowers b on ls.borrowerid = b.userid where l.adminDelete =0 AND ls.status=".LOAN_ACTIVE." AND ls.startdate < ".$date4." AND (ls.enddate is NULL OR (ls.enddate is NOT NULL AND ls.enddate >=".$date4.")) AND l.loanid NOT IN (39,42,44,59,60) order by b.Country,ls.loanid";
+
+		$result=$db->getAll($q);
+		logger('result generated');
+		$pfReport=array();
+		/*
+			$pfReport[$country][1]=> Report for PAR 0-30 DAYS of a country
+			$pfReport[$country][2]=> Report for PAR 31-60 DAYS of a country
+			$pfReport[$country][3]=> Report for PAR 61-90 DAYS of a country
+			$pfReport[$country][4]=> Report for PAR 91-180 DAYS of a country
+			$pfReport[$country][5]=> Report for PAR OVER 180 DAYS of a country
+		*/
+		$threshold=$this->getAdminSetting('LATENESS_THRESHOLD');
+		logger('threshold amount got');
+		foreach($result as $row) {
+			$p="SELECT id,date from ! where loan_id = ? AND borrower_id=? AND date >= ? order by id asc";
+			$forgivenResult=$db->getRow($p,array('forgiven_loans',$row['loanid'],$row['borrowerid'], $date4));
+			logger('forgive result');
+			$p="SELECT id,date from ! where loan_id = ? AND borrower_id=? AND date >= ? order by id asc";
+			$rescheduleResult=$db->getRow($p,array('reschedule',$row['loanid'],$row['borrowerid'], $date4));
+			logger('reschdule result');
+			$p="SELECT SUM(amount) as totamt from ! where loanid = ? AND userid=? AND duedate < ?";
+			$totamt=$db->getOne($p,array('repaymentschedule',$row['loanid'],$row['borrowerid'],$date4));
+			logger('total amount got');
+			$repayTable = 'repaymentschedule';
+			$repayTableQuery1 = 'id <= ? ';
+			$repayTableQuery2 = '';
+			$repayTableQuery3 = 'id = ? ';
+			$reschedule_id=0;
+			$rid=0;
+			logger('repaytable variable');
+			if(!empty($forgivenResult) || !empty($rescheduleResult)) {
+				$flag1=0;/* if this flag goes 1 we will use repay history with forgiven_loans_id*/
+				$flag2=0;/* if this flag goes 1 we will use repay history with reschedule_id*/
+				if(!empty($forgivenResult) && !empty($rescheduleResult)) {
+					if($forgivenResult['date'] < $rescheduleResult['date']) {
+						$flag1=1;
+					} else {
+						$flag2=1;
+					}
+				} elseif(!empty($forgivenResult)) {
+					$flag1=1;
+				} else {
+					$flag2=1;
+				}
+				if($flag1==1) {
+					logger('flag 1 set');
+					$forgiven_loans_id=$forgivenResult['id'];
+					$p="SELECT SUM(amount) as totamount1 from ! where loanid = ? AND userid=? AND forgiven_loans_id = ? AND duedate < ?";
+					$totamt=$db->getOne($p,array('repaymentschedule_history',$row['loanid'],$row['borrowerid'],$forgiven_loans_id, $date4));
+					$repayTableQuery1='repaymentschedule_id <= ? AND forgiven_loans_id = '.$forgiven_loans_id;
+					$repayTableQuery2='AND forgiven_loans_id = '.$forgiven_loans_id;
+					$repayTableQuery3='repaymentschedule_id = ? AND forgiven_loans_id = '.$forgiven_loans_id;
+					$repayTable = 'repaymentschedule_history';
+					logger('flag1 complete');
+				} elseif($flag2==1) {
+					logger('flag2 set');
+					$reschedule_id=$rescheduleResult['id'];
+					$p="SELECT SUM(amount) as totamount1 from ! where loanid = ? AND userid=? AND reschedule_id = ? AND duedate < ?";
+					$totamt=$db->getOne($p,array('repaymentschedule_history',$row['loanid'],$row['borrowerid'],$reschedule_id, $date4));
+					$repayTableQuery1='repaymentschedule_id <= ? AND reschedule_id = '.$reschedule_id;
+					$repayTableQuery2='AND reschedule_id = '.$reschedule_id;
+					$repayTableQuery3='repaymentschedule_id = ? AND reschedule_id = '.$reschedule_id;
+					$repayTable = 'repaymentschedule_history';
+					logger('flag2 complete');
+				}
+			}
+			$q="SELECT SUM(paidamt) as totpaidamt from ! where loanid = ? AND userid=? AND paiddate < ?";
+			$totpaidamt=$db->getOne($q,array('repaymentschedule_actual',$row['loanid'],$row['borrowerid'],$date4));
+			logger('total paid amt');
+			if($reschedule_id) {
+				$r="SELECT rid from ! where loanid = ? AND userid=? AND paiddate < ? AND reschedule_id =? order by id desc";
+				$rid=$db->getOne($r,array('repaymentschedule_actual_history',$row['loanid'],$row['borrowerid'],$date4,$reschedule_id));
+			}
+			if(!$rid) {
+				$r="SELECT rid from ! where loanid = ? AND userid=? AND paiddate < ? order by id desc";
+				$rid=$db->getOne($r,array('repaymentschedule_actual',$row['loanid'],$row['borrowerid'],$date4));
+			}
+			if(!empty($rid)) {
+				$s="SELECT SUM(amount) from ! where loanid = ? AND userid=? AND ".$repayTableQuery1;
+				$totAmtToRid=$db->getOne($s,array($repayTable,$row['loanid'],$row['borrowerid'],$rid));
+			}
+			logger('reschedule id');
+			$t="SELECT sum(amount) from ! where loan_id = ? AND borrower_id=? AND date < ?";
+			$forgiveAmount=$db->getOne($t,array('forgiven_loans',$row['loanid'],$row['borrowerid'], $date4));
+			logger('forgive amount');
+			$ratio = $this->getPrincipalRatio($row['loanid'], $date4);
+			$rate=$this->getExRateByDate($date4,$row['Currency']);
+			$thresholdNative= round(($threshold * $rate),4);
+			if($forgiveAmount) {
+				$forgivePrinAmount=round(($forgiveAmount * $ratio),4);
+				$row['prinAmount']=round(($row['AmountGot']-$forgivePrinAmount),4);
+				logger('prinAmount in forgive');
+			} else {
+				$row['prinAmount']=$row['AmountGot'];
+				logger('prinAmount');
+			}
+			$row['principlePaid']= round(($totpaidamt * $ratio),4);
+			logger('row principlePaid');
+			$row['principleOutstanding']= round(($row['prinAmount']-$row['principlePaid']),4);
+			logger('row principleOutstanding');
+			$row['dueAmount']= round(($totamt-$totpaidamt),4);
+			logger('row dueAmount');
+			$row['dueAmountUSD']= round(($row['dueAmount'] / $rate),4);
+			$country = $row['Country'];
+			logger('row country');
+			if(!isset($pfReport[$country])) {
+				logger('pfreport country not set');
+				$pfReport[$country][1]['prinOut']=0;
+				$pfReport[$country][2]['prinOut']=0;
+				$pfReport[$country][3]['prinOut']=0;
+				$pfReport[$country][4]['prinOut']=0;
+				$pfReport[$country][5]['prinOut']=0;
+				$pfReport[$country]['currency']=$row['Currency'];
+				$pfReport[$country]['totPrinOut']=0;
+				$pfReport[$country]['allTotPrinOut']=0;
+				logger('pfreport country not set complete');
+			}
+			$pfReport[$country]['allTotPrinOut'] +=$row['principleOutstanding'];
+			if($row['dueAmountUSD'] <$threshold) {
+				logger('in continue condition');
+				// this amount will not considor in repayrepot using threshold functionality
+				continue;
+			}
+			$o="SELECT max(id) from ! where loanid = ? AND userid=? ".$repayTableQuery2;
+			$maxid=$db->getOne($o,array($repayTable,$row['loanid'],$row['borrowerid']));
+			logger('maxid');
+			$duedate='';
+			if($rid==$maxid) {
+				$r="SELECT max(duedate) as duedate from ! where loanid = ? AND userid=? ".$repayTableQuery2;
+				$duedate=$db->getOne($r,array($repayTable,$row['loanid'],$row['borrowerid']));
+				logger('duedate rid equal maxid');
+			} elseif(empty($rid)) {
+				$r="SELECT duedate from ! where loanid = ? AND userid=? AND amount > ? ".$repayTableQuery2." order by id";
+				$duedate=$db->getOne($r,array($repayTable,$row['loanid'],$row['borrowerid'],0));
+				logger('duedate rid not empty');
+			} else {
+				logger('in else with rid');
+				$flag=0;
+				if(($totpaidamt + $thresholdNative) < $totAmtToRid) {
+					$r="SELECT duedate from ! where loanid = ? AND userid=? AND ".$repayTableQuery3;
+					$duedate=$db->getOne($r,array($repayTable,$row['loanid'],$row['borrowerid'],$rid));
+					logger('duedate less totamtrid');
+				} else {
+					$r="SELECT * from ! where loanid = ? AND userid=? ".$repayTableQuery2;
+					$repayAll=$db->getAll($r,array($repayTable,$row['loanid'],$row['borrowerid']));
+					$reducedAmount=round(($totAmtToRid - $totpaidamt),4);
+					foreach($repayAll as $repay) {
+						logger('duedate in else foreach');
+						if($repay['id'] >$rid) {
+							if(($repay['amount']) >($thresholdNative -$reducedAmount)) {
+								$duedate=$repay['duedate'];
+								break;
+							} else {
+								$duedate=$repay['duedate'];
+								$reducedAmount += $repay['amount'];
+							}
+						}
+					}
+					logger('duedate in else out foreach');
+				}
+			}
+			$dateDiff = $date4 - $duedate;
+			$fullDays = floor($dateDiff/(60*60*24));
+			logger('full days');
+			$j=0;
+			if($fullDays <0 ) {
+				continue;
+			}
+			if($fullDays <31) {
+				$j=1;
+			} else if($fullDays <61) {
+				$j=2;
+			} else if($fullDays <91) {
+				$j=3;
+			} else if($fullDays <181) {
+				$j=4;
+			} else {
+				$j=5;
+			}
+			logger('j generated');
+			$aboutLoan=array();
+			$aboutLoan['bname']=$row['FirstName'].' '.$row['LastName'];
+			$aboutLoan['days']=$fullDays;
+			$aboutLoan['userid']=$row['borrowerid'];
+			$aboutLoan['prinOut']=$row['principleOutstanding'];
+			logger('aboutloans');
+			$pfReport[$country][$j]['prinOut'] +=$row['principleOutstanding'];
+			$pfReport[$country][$j]['loans'][] =$aboutLoan;
+			$pfReport[$country]['totPrinOut'] +=$row['principleOutstanding'];
+		}
+		logger('pfreportget');
+		return $pfReport;
+	}
+	function trhistory($date1, $date2,$ord,$opt)
+	{
+		global $db;
+		logger('cal in trfunction');
+		$dateArr1  = explode("/",$date1);
+		$dateArr2  = explode("/",$date2);
+		$date3=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
+		$date4=mktime(23,59,59,(int)$dateArr2[0],(int)$dateArr2[1],(int)$dateArr2[2]);
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT t.id, t.TrDate, t.userid, t.amount, t.txn_desc, t.txn_sub_type, t.loanid, t.conversionrate, t.txn_type, u.userlevel from ! t LEFT OUTER JOIN ! u on t.userid = u.userid where t.TrDate >=? AND t.TrDate <=? AND t.txn_type NOT IN (?,?,?,?) AND IF(t.txn_type = ? AND  t.userid = ?, false, true) AND IF(t.txn_type = ? AND  t.userid = ?, false, true) AND IF(t.txn_type = ? AND  t.userid = ?, false, true) AND IF(t.txn_type = ? AND  t.userid = ?, false, true)  order by t.$opt $ord";
+		$result=$db->getAll($q, array('transactions', 'users', $date3, $date4, LOAN_BACK_LENDER, LOAN_BID,LOAN_SENT_LENDER,LOAN_OUTBID, REGISTRATION_FEE, ADMIN_ID, DONATION, ADMIN_ID, PAYPAL_FEE, ADMIN_ID, GIFT_PURCHAGE, ADMIN_ID));
+		logger('result generated');
+		//Logger_Array('alltransaction', 'get all transaction', $result);
+		if(!empty($result)) {
+			$names=array();
+			$currencies=array();
+			$countries=array();
+			$bids=array();
+			$count_result = count($result);
+			for ($i = 0; $i < $count_result ; $i++) {
+				logger('in for loop');
+				if(array_key_exists($result[$i]['userid'], $names)) {
+					$name=$names[$result[$i]['userid']];
+					logger('name array exist');
+				} else {
+					$name=$this->getNameById($result[$i]['userid']);
+					$names[$result[$i]['userid']]=$name;
+					logger('name array not exist');
+				}
+				if(array_key_exists($result[$i]['userid'], $currencies)) {
+					$currency=$currencies[$result[$i]['userid']];
+					logger('currency array exist');
+				} else {
+					$currency=$this->getUserCurrency($result[$i]['userid']);
+					$currencies[$result[$i]['userid']]=$currency;
+					logger('currency array not exist');
+				}
+				//logger('username'.$name);
+				$result[$i]['username']=$name;
+				if($result[$i]['txn_type']==FEE || $result[$i]['txn_type']==REFERRAL_DEBIT) {
+					if(array_key_exists($result[$i]['loanid'], $bids)) {
+						$brid=$bids[$result[$i]['loanid']];
+						logger('brid array exist fee or referal debit');
+					} else {
+						$brid=$this->getBorrowerId($result[$i]['loanid']);
+						$bids[$result[$i]['loanid']]=$brid;
+						logger('brid array not exist fee or referal debit');
+					}
+					if(array_key_exists($brid, $currencies)) {
+						$currency=$currencies[$brid];
+					} else {
+						$currency=$this->getUserCurrency($brid);
+						$currencies[$brid]=$currency;
+					}
+					$result[$i]['userid'] = $brid;
+				}
+				$result[$i]['currency'] = $currency;
+				if(array_key_exists($result[$i]['userid'], $countries)) {
+					$country=$countries[$result[$i]['userid']];
+				} else {
+					$country='';
+					if($result[$i]['userlevel']==BORROWER_LEVEL || $result[$i]['txn_type'] == FEE || $result[$i]['txn_type'] == REFERRAL_DEBIT) {
+						$country=$this->getCountryCodeById($result[$i]['userid']);
+					}
+					$countries[$result[$i]['userid']]=$country;
+				}
+				logger('country get');
+				$result[$i]['country'] = $country;
+				if($result[$i]['txn_type']==FUND_UPLOAD) {
+					logger('txn fund upload');
+					$temp = 0;
+					$temp2 = 0; 
+					$temp1 = $i+1;
+					$temp2 = $i+2;
+					if($result[$temp1]['txn_type'] == PAYPAL_FEE && $result[$temp2]['txn_type']==DONATION) {
+							$j = count($result);
+							$result[$j]['id'] = $result[$i]['id'];
+							$result[$j]['amount'] = $result[$i]['amount']+$result[$temp1]['amount']+$result[$temp2]['amount']; 
+							$result[$j]['txn_type'] = 'AmountCredited';
+							$result[$j]['TrDate'] = $result[$i]['TrDate'];
+							$result[$j]['userid'] = $result[$i]['userid'];
+							$result[$j]['txn_desc'] = 'Lending credit to';
+							$result[$j]['userlevel'] = $result[$i]['userlevel'];
+							$result[$j]['username'] = $result[$i]['username'];
+							logger('temp1 & temp2');
+				}else if($result[$temp1]['txn_type'] == PAYPAL_FEE || $result[$temp1]['txn_type'] == DONATION) {
+						$j = count($result);
+							$result[$j]['id'] = $result[$i]['id'];
+							$result[$j]['amount'] = $result[$i]['amount']+$result[$temp1]['amount']; 
+							$result[$j]['txn_type'] = 'AmountCredited';
+							$result[$j]['TrDate'] = $result[$i]['TrDate'];
+							$result[$j]['userid'] = $result[$i]['userid'];
+							$result[$j]['txn_desc'] = 'Lending credit to';
+							$result[$j]['userlevel'] = $result[$i]['userlevel'];
+							$result[$j]['username'] = $result[$i]['username'];
+							logger('temp1 and temp2');
+					}else {
+							$j = count($result);
+							$result[$j]['id'] = $result[$i]['id'];
+							$result[$j]['amount'] = $result[$i]['amount']; 
+							$result[$j]['txn_type'] = 'AmountCredited';
+							$result[$j]['TrDate'] = $result[$i]['TrDate'];
+							$result[$j]['userid'] = $result[$i]['userid'];
+							$result[$j]['txn_desc'] = 'Lending credit to';
+							$result[$j]['userlevel'] = $result[$i]['userlevel'];
+							$result[$j]['username'] = $result[$i]['username'];
+							logger('no temp');
+					}
+				}
+				
+			}
+			logger('result get');
+			return $result;
+		}
+		else
+			return 0;
+	}
+	function trhistorytotal($date1, $date2)
+	{
+		global $db;
+		$dateArr1  = explode("/",$date1);
+		$dateArr2  = explode("/",$date2);
+		$date3=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
+		$date4=mktime(23,59,59,(int)$dateArr2[0],(int)$dateArr2[1],(int)$dateArr2[2]);
+		traceCalls(__METHOD__, __LINE__);
+
+		$q="SELECT t.id, t.TrDate, t.userid, b.Country, t.amount, t.txn_desc, t.txn_sub_type, t.loanid, t.conversionrate, t.txn_type, u.userlevel from ! t LEFT OUTER JOIN ! u on t.userid = u.userid LEFT OUTER JOIN ! b on t.userid = b.userid where t.TrDate >=? AND t.TrDate <=? order by t.TrDate";
+		$result=$db->getAll($q, array('transactions', 'users', 'borrowers', $date3, $date4));
+		return $result;
+	}
+	function getTranslate($id, $loanid, $cmntid, $lcid=0)
+	{
+		global $db;
+		if($id !=0)
+		{
+			$p="SELECT About, tr_About, BizDesc, tr_BizDesc from ! where userid = ?";
+			$result1=$db->getRow($p, array('borrowers',$id));
+
+			$q="SELECT loanuse, tr_loanuse from ! where borrowerid = ? AND loanid =  ?";
+			$result2=$db->getRow($q,  array('loanapplic', $id, $loanid));
+
+			$result1['loanuse'] = $result2['loanuse'];
+			$result1['tr_loanuse'] = $result2['tr_loanuse'];
+
+			return $result1;
+		}
+		else if($cmntid !=0)
+		{
+			$p="SELECT message, tr_message from ! where id = ?";
+			$result=$db->getRow($p,array('zi_comment', $cmntid));
+			return $result;
+		}
+		else
+		{
+			$p="SELECT comment, tr_comment from ! where id = ?";
+			$result=$db->getRow($p,array('b_comments', $lcid));
+			return $result;
+		}
+	}
+	function upadateTranslate($bizdesc, $about, $loanuse, $cmnt, $id, $up_id, $loanid, $lcid=0)
+	{
+		global $db, $session;
+		if($up_id==1)
+		{
+			$q="UPDATE ! set tr_BizDesc = ?, tr_About = ? where userid = ?";
+			$res=$db->query($q, array('borrowers',$bizdesc, $about , $id));
+			if($res===1)
+			{
+				$q="UPDATE  ! set tr_loanuse = ?, tr_user=? where borrowerid = ? AND loanid = ?";
+				$res=$db->query($q, array('loanapplic',$loanuse, $session->userid, $id, $loanid));
+				include_once("indexer.php");
+				updateIndex1($id);
+				updateIndex2($loanid);
+				return $res;
+			}
+			else
+				return 0;
+		}
+		if($up_id==2)
+		{
+			$q="UPDATE ! set tr_message = ?, tr_user=? where id = ?";
+			$res=$db->query($q, array('zi_comment',$cmnt, $session->userid, $id));
+			include_once("indexer.php");
+			updateIndex3($id);
+			return $res+2;
+		}
+		if($up_id==3)
+		{
+			$q="UPDATE ! set tr_comment = ? where id = ?";
+			$res=$db->query($q, array('b_comments',$cmnt, $lcid));
+			return $res+4;
+		}
+	}
+	function getAllLenderTrans($start=0, $limit='')
+	{
+		global $db;
+		$q="SELECT userid, FirstName, LastName, Email, isTranslator, trans_Lang from lenders limit ".$start.", ".$limit;
+		$result=$db->getAll($q);
+		return $result;
+	}
+	function changeTranslator($uid, $active)
+	{
+		global $db;
+		if($active==0)
+			$active = 1;
+		else
+			$active = 0;
+		$q="UPDATE lenders set isTranslator = '$active' where userid = '$uid'";
+		$res=$db->query($q);
+		return $res;
+	}
+	function changeTranslatorLang($uid, $translang)
+	{
+		global $db;
+		$q="UPDATE lenders set trans_Lang = '$translang' where userid = '$uid'";
+		$res=$db->query($q);
+		return $res;
+	}
+	function isTranslator($uid)
+	{
+		global $db;
+		$q="SELECT isTranslator from lenders where userid = '$uid'";
+		$result=$db->getOne($q);
+		return $result;
+	}
+	function isDeleteableBorrower($uid)
+	{
+		global $db;
+		$q="SELECT borrowerid from ! where  borrowerid = ? AND adminDelete=?";
+		$result=$db->getOne($q, array('loanapplic',$uid, 0));
+		if($uid !=$result)
+			return true;
+		else
+			return false;
+	}
+	function deleteBorrower($uid)
+	{
+		global $db;
+		$q="SELECT borrowerid from ! where  borrowerid = ? AND adminDelete=?";
+		$result=$db->getOne($q, array('loanapplic',$uid,0));
+		if($uid !=$result)
+		{
+			$p="DELETE from ! where userid =?";
+			$res1=$db->query($p, array('users',$uid));
+
+			$q="DELETE from ! where userid =?";
+			$res2=$db->query($q, array('borrowers',$uid));
+
+			if(!empty($res1) && !empty($res2))
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+	}
+	function isDeleteablePartner($uid)
+	{
+		global $db;
+		$q="SELECT Active from ! where  userid = ?";
+		$result=$db->getOne($q, array('partners',$uid));
+		if($result == 0)
+			return true;
+		else
+			return false;
+	}
+	function deletePartner($uid)
+	{
+		global $db;
+		$q="SELECT Active from ! where  userid = ?";
+		$result=$db->getOne($q, array('partners',$uid));
+		if($result == 0)
+		{
+			$p="DELETE from ! where userid =?";
+			$res1=$db->query($p, array('users',$uid));
+
+			$q="DELETE from ! where userid =?";
+			$res2=$db->query($q, array('partners',$uid));
+
+			if(!empty($res1) && !empty($res2))
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+	}
+	function isDeleteableLender($uid)
+	{
+		global $db;
+		$q="SELECT userid from ! where  userid = ?";
+		$result=$db->getOne($q, array('transactions',$uid));
+		if($uid !=$result)
+			return true;
+		else
+			return false;
+	}
+	function deleteLender($uid)
+	{
+		global $db;
+		$q="SELECT userid from ! where  userid = ?";
+		$result=$db->getOne($q, array('transactions',$uid));
+		if($uid !=$result)
+		{
+			$p="DELETE from ! where userid =?";
+			$res1=$db->query($p, array('users',$uid));
+
+			$q="DELETE from ! where userid =?";
+			$res2=$db->query($q, array('lenders',$uid));
+
+			if(!empty($res1) && !empty($res2))
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+	}
+	function repay_report($date, $country)
+	{
+		global $db, $session;
+		traceCalls(__METHOD__, __LINE__);
+		$dateArr1  = explode("/",$date);
+		$date1=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
+		$threshholdAmt= $this->getAdminSetting('RepaymentReportThrshld');
+		if($country=='AA')
+		{
+			$query="SELECT DISTINCT(b.Country) FROM ! as b, ! as l WHERE l.active=".LOAN_ACTIVE." AND  b.userid=l.borrowerid AND l.adminDelete = ?";
+			$countries=$db->getAll($query, array('borrowers','loanapplic',0));
+			$j=0;
+			foreach($countries as $row){
+				$country1[$j]=$row['Country'];
+				$j++;
+			}
+		}
+		else
+			$country1[0]=$country;
+		$is_mentor= $this->isBorrowerAlreadyAccess($session->userid);
+		$allReport=array();
+		for($j=0; $j<count($country1); $j++)
+		{
+			if($is_mentor){
+				$q="SELECT b.userid, b.FirstName, b.LastName, b.TelMobile, b.City, b.PAddress, l.loanid FROM ! as b, ! as l, ! as ls, ! as bext WHERE ls.loanid=l.loanid AND b.userid=ls.borrowerid AND b.userid=bext.userid AND l.adminDelete = ? AND b.Country = ? AND ls.status=".LOAN_ACTIVE." AND ls.startdate < ".$date1." AND (ls.enddate is NULL OR (ls.enddate is NOT NULL AND ls.enddate >=".$date1.")) AND bext.mentor_id=$session->userid";
+				$result=$db->getAll($q, array('borrowers','loanapplic','loanstage','borrowers_extn',0,$country1[$j]));  
+				
+			}else{
+				$q="SELECT b.userid, b.FirstName, b.LastName, b.TelMobile, b.City, b.PAddress, l.loanid FROM ! as b, ! as l, ! as ls WHERE ls.loanid=l.loanid AND b.userid=ls.borrowerid AND l.adminDelete = ? AND b.Country = ? AND ls.status=".LOAN_ACTIVE." AND ls.startdate < ".$date1." AND (ls.enddate is NULL OR (ls.enddate is NOT NULL AND ls.enddate >=".$date1."))";
+				$result=$db->getAll($q, array('borrowers','loanapplic','loanstage',0,$country1[$j]));
+			}
+			$report=array();
+			$duedateArr=array();
+			$i=0;
+			foreach($result as $row)
+			{
+				$CurrencyRate = $this->getCurrentRate($row['userid']);
+				$amtThreshhold = convertToNative($threshholdAmt, $CurrencyRate);
+				$p="SELECT id,date from ! where loan_id = ? AND borrower_id=? AND date >= ? order by id asc";
+				$forgivenResult=$db->getRow($p,array('forgiven_loans',$row['loanid'],$row['userid'], $date1));
+
+				$p="SELECT id,date from ! where loan_id = ? AND borrower_id=? AND date >= ? order by id asc";
+				$rescheduleResult=$db->getRow($p,array('reschedule',$row['loanid'],$row['userid'], $date1));
+
+				$p="SELECT SUM(amount) as totamt from ! where loanid = ? AND userid=? AND duedate < ?";
+				$totamt=$db->getOne($p,array('repaymentschedule',$row['loanid'],$row['userid'],$date1));
+				$dueDateFromHistory=0;
+				$forgiven_loans_id=0;
+				$reschedule_id=0;
+				if(!empty($forgivenResult) || !empty($rescheduleResult))
+				{
+					$flag1=0;/* if this flag goes 1 we will use repay history with forgiven_loans_id*/
+					$flag2=0;/* if this flag goes 1 we will use repay history with reschedule_id*/
+					if(!empty($forgivenResult) && !empty($rescheduleResult))
+					{
+						$forgiveDate=$forgivenResult['date'];
+						$rescheduleDate=$rescheduleResult['date'];
+						if($forgiveDate < $rescheduleDate)
+							$flag1=1;
+						else
+							$flag2=1;
+						$dueDateFromHistory=1;
+					}
+					elseif(!empty($forgivenResult))
+					{
+						$flag1=1;
+						$dueDateFromHistory=1;
+					}
+					else
+					{
+						$flag2=1;
+						$dueDateFromHistory=1;
+					}
+					if($flag1==1)
+					{
+						$forgiven_loans_id=$forgivenResult['id'];
+						$p="SELECT SUM(amount) as totamount1 from ! where loanid = ? AND userid=? AND forgiven_loans_id = ? AND duedate < ?";
+						$totamt=$db->getOne($p,array('repaymentschedule_history',$row['loanid'],$row['userid'],$forgiven_loans_id, $date1));
+					}
+					elseif($flag2==1)
+					{
+						$reschedule_id=$rescheduleResult['id'];
+						$p="SELECT SUM(amount) as totamount1 from ! where loanid = ? AND userid=? AND reschedule_id = ? AND duedate < ?";
+						$totamt=$db->getOne($p,array('repaymentschedule_history',$row['loanid'],$row['userid'],$reschedule_id, $date1));
+					}
+				}
+
+				$duedate='';
+
+				if($dueDateFromHistory==0)
+				{
+					$q="SELECT SUM(paidamt) as totpaidamt from ! where loanid = ? AND userid=? AND paiddate < ?";
+					$totpaidamt=$db->getOne($q,array('repaymentschedule_actual',$row['loanid'],$row['userid'],$date1));
+
+					$o="SELECT max(id) from ! where loanid = ? AND userid=?";
+					$maxid=$db->getOne($o,array('repaymentschedule',$row['loanid'],$row['userid']));
+
+					$r="SELECT rid from ! where loanid = ? AND userid=? AND paiddate < ? order by id desc";
+					$rid=$db->getOne($r,array('repaymentschedule_actual',$row['loanid'],$row['userid'],$date1));
+					if(!empty($rid))
+					{
+						$s="SELECT SUM(amount) from ! where loanid = ? AND userid=? AND id <= ?";
+						$totAmtToRid=$db->getOne($s,array('repaymentschedule',$row['loanid'],$row['userid'],$rid));
+					}
+
+					if($rid==$maxid)
+					{
+						$r="SELECT max(duedate) as duedate from ! where loanid = ? AND userid=?";
+						$duedate=$db->getOne($r,array('repaymentschedule',$row['loanid'],$row['userid']));
+					}
+					elseif(empty($rid))
+					{
+						$r="SELECT duedate from ! where loanid = ? AND userid=? AND amount > ? AND paidamt is NULL order by id";
+						$duedate=$db->getOne($r,array('repaymentschedule',$row['loanid'],$row['userid'],0));
+					}
+					else
+					{
+						$flag=0;
+						
+						if(($totpaidamt +$amtThreshhold )< $totAmtToRid)
+						{	
+							$r="SELECT duedate from ! where loanid = ? AND userid=? AND id=?";
+							$duedate=$db->getOne($r,array('repaymentschedule',$row['loanid'],$row['userid'],$rid));
+						}
+						else
+						{
+							$r="SELECT duedate from ! where loanid = ? AND userid=? AND id > ? AND amount > 0 order by id";
+							$duedate=$db->getOne($r,array('repaymentschedule',$row['loanid'],$row['userid'],$rid));
+						}
+					}
+				}
+				else
+				{
+					if($forgiven_loans_id!=0)
+					{
+						if(!empty($rescheduleResult))
+						{
+							$reschedule_id=$rescheduleResult['id'];
+							$q="SELECT SUM(paidamt) as totpaidamt from ! where loanid = ? AND userid=? AND paiddate < ? AND reschedule_id = ?";
+							$totpaidamt=$db->getOne($q,array('repaymentschedule_actual_history',$row['loanid'],$row['userid'],$date1, $reschedule_id));
+
+							$r="SELECT rid from ! where loanid = ? AND userid=? AND paiddate < ? AND reschedule_id = ? order by id desc";
+							$rid=$db->getOne($r,array('repaymentschedule_actual_history',$row['loanid'],$row['userid'], $date1, $reschedule_id));
+						}
+						else
+						{
+							$q="SELECT SUM(paidamt) as totpaidamt from ! where loanid = ? AND userid=? AND paiddate < ? ";
+							$totpaidamt=$db->getOne($q,array('repaymentschedule_actual',$row['loanid'],$row['userid'],$date1));
+
+							$r="SELECT rid from ! where loanid = ? AND userid=? AND paiddate < ?  order by id desc";
+							$rid=$db->getOne($r,array('repaymentschedule_actual',$row['loanid'],$row['userid'], $date1));
+						}
+
+						$o="SELECT max(repaymentschedule_id) from ! where loanid = ? AND userid=? AND forgiven_loans_id = ?";
+						$maxid=$db->getOne($o,array('repaymentschedule_history',$row['loanid'],$row['userid'], $forgiven_loans_id));
+
+						if(!empty($rid))
+						{
+							$s="SELECT SUM(amount) from ! where loanid = ? AND userid=? AND repaymentschedule_id <= ? AND forgiven_loans_id = ?";
+							$totAmtToRid=$db->getOne($s,array('repaymentschedule_history',$row['loanid'],$row['userid'],$rid, $forgiven_loans_id));
+						}
+
+						if($rid==$maxid)
+						{
+							$r="SELECT max(duedate) as duedate from ! where loanid = ? AND userid=? AND forgiven_loans_id = ?";
+							$duedate=$db->getOne($r,array('repaymentschedule_history',$row['loanid'],$row['userid'],$forgiven_loans_id));
+						}
+						elseif(empty($rid))
+						{
+							$r="SELECT duedate from ! where loanid = ? AND userid=? AND forgiven_loans_id = ? AND amount > ? AND paidamt is NULL order by id";
+							$duedate=$db->getOne($r,array('repaymentschedule_history',$row['loanid'],$row['userid'],$forgiven_loans_id,0));
+						}
+						else
+						{
+							$flag=0;
+							if(($totpaidamt +$amtThreshhold )< $totAmtToRid)
+							{
+								$r="SELECT duedate from ! where loanid = ? AND userid=? AND forgiven_loans_id = ? AND repaymentschedule_id=?";
+								$duedate=$db->getOne($r,array('repaymentschedule_history',$row['loanid'],$row['userid'],$forgiven_loans_id,$rid));
+							}
+							else
+							{
+							$r="SELECT duedate from ! where loanid = ? AND userid=? AND forgiven_loans_id = ? AND repaymentschedule_id > ? AND amount > 0 order by id";
+								$duedate=$db->getOne($r,array('repaymentschedule_history',$row['loanid'],$row['userid'],$forgiven_loans_id,$rid));
+							}
+						}
+					}
+					else if($reschedule_id!=0)
+					{
+						$q="SELECT SUM(paidamt) as totpaidamt from ! where loanid = ? AND userid=? AND paiddate < ? AND reschedule_id = ?";
+						$totpaidamt=$db->getOne($q,array('repaymentschedule_actual_history',$row['loanid'],$row['userid'],$date1, $reschedule_id));
+
+						$o="SELECT max(id) from ! where loanid = ? AND userid=? AND reschedule_id = ?";
+						$maxid=$db->getOne($o,array('repaymentschedule_history',$row['loanid'],$row['userid'], $reschedule_id));
+
+						$r="SELECT rid from ! where loanid = ? AND userid=? AND paiddate < ? AND reschedule_id = ? order by id desc";
+						$rid=$db->getOne($r,array('repaymentschedule_actual_history',$row['loanid'],$row['userid'], $date1, $reschedule_id));
+						if(!empty($rid))
+						{
+							$s="SELECT SUM(amount) from ! where loanid = ? AND userid=? AND id <= ? AND reschedule_id = ?";
+							$totAmtToRid=$db->getOne($s,array('repaymentschedule_history',$row['loanid'],$row['userid'],$rid, $reschedule_id));
+						}
+
+						if($rid==$maxid)
+						{
+							$r="SELECT max(duedate) as duedate from ! where loanid = ? AND userid=? AND reschedule_id = ?";
+							$duedate=$db->getOne($r,array('repaymentschedule_history',$row['loanid'],$row['userid'],$reschedule_id));
+						}
+						elseif(empty($rid))
+						{
+							$r="SELECT duedate from ! where loanid = ? AND userid=? AND reschedule_id = ? AND amount > ? AND paidamt is NULL order by id";
+							$duedate=$db->getOne($r,array('repaymentschedule_history',$row['loanid'],$row['userid'],$reschedule_id,0));
+						}
+						else
+						{
+							$flag=0;
+							if(($totpaidamt +$amtThreshhold )< $totAmtToRid)
+							{
+								$r="SELECT duedate from ! where loanid = ? AND userid=? AND reschedule_id = ? AND repaymentschedule_id=?";
+								$duedate=$db->getOne($r,array('repaymentschedule_history',$row['loanid'],$row['userid'],$reschedule_id,$rid));
+							}
+							else
+							{
+								$r="SELECT duedate from ! where loanid = ? AND userid=? AND reschedule_id = ? AND repaymentschedule_id > ? AND amount > 0 order by id";
+								$duedate=$db->getOne($r,array('repaymentschedule_history',$row['loanid'],$row['userid'],$reschedule_id,$rid));
+							}
+						}
+					}
+				}
+				
+				$res= array();
+				$res['bname']=$row['FirstName']." ".$row['LastName'];
+				$res['duedate']=$duedate;
+				$res['userid']=$row['userid'];
+				$res['loanid']=$row['loanid'];
+				$res['TelMobile'] = $row['TelMobile'];
+				$res['totamt']=$totamt;
+				$res['totpaidamt']=$totpaidamt;
+				$res['city']= $row['City'];
+				$res['Paddress']= $row['PAddress'];
+				$duedateArr[$i]=$duedate;
+				$report[$i]=$res;
+				$i++;
+			}
+			if(!empty($report)) {
+				array_multisort($duedateArr, SORT_ASC, $report);
+				$allReport[$j]=$report;
+				$allReport[$j][0]['country']=$country1[$j];
+			}
+		}
+		return $allReport;
+	}
+
+	function getRepayDynamicData($userid){
+		global $db;
+
+		$r="SELECT rec_form_offcr_name, rec_form_offcr_num, mentor_id from ! where userid = ?";
+		$refdetail = $db->getRow($r,array('borrowers_extn',$userid)); 
+		
+		$query="SELECT expected_repaydate, note FROM ! WHERE borrowerid = ?";
+		$repaydetails = $db->getRow($query, array('repay_report_detail',$userid));
+		$res= array();
+		$res['rec_form_offcr_num'] = $refdetail['rec_form_offcr_num'];
+		$res['rec_form_offcr_name'] = $refdetail['rec_form_offcr_name'];
+		$res['mentor_id'] = $refdetail['mentor_id'];
+		$res['expected_repaydate'] = $repaydetails['expected_repaydate'];
+		$res['note'] = $repaydetails['note'];
+		return $res;
+	}
+
+	function addpaymenttolender($userid,$amount,$donation)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$amount1=$amount + $donation;
+		$txn_sub_type = UPLOADED_BY_ADMIN;
+		$res1= $this->setTransaction($userid,$amount1,'Funds upload to lender account',0,0,FUND_UPLOAD,0,0, $txn_sub_type);
+		sleep(1);
+		if($res1===1)
+		{
+			if($donation >0)
+			{
+				$donationamt= $donation *-1;
+				$res2= $this->setTransaction($userid,$donationamt,'Donation to Zidisha',0,0,DONATION);
+				if($res2===1)
+				{
+					$res3= $this->setTransaction(ADMIN_ID,$donation,'Donation from lender',0,0,DONATION);
+					if($res3===1)
+						return 1;
+					else
+						return 0;
+				}
+				else
+					return 0;
+			}
+			else
+				return 1;
+		}
+		else
+			return 0;
+	}
+	function adddonationtolender($name, $email, $donationamt)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+
+		$transaction_id= $this->setTransaction(ADMIN_ID,$donationamt,'Donation from lender',0,0,DONATION,1);
+		$q="INSERT INTO ! (transaction_id, name, email, donation_amt, payment_type) VALUES "."(?, ?, ?, ?, ?)";
+		$res3= $db->query($q,array('donation',$transaction_id, $name, $email, $donationamt, PAYPAL));
+		if($res3===1)
+			return 1;
+		else
+			return 0;
+	}
+	function changePassword($userid,$password)
+	{
+		global $db;
+		$salt = $this->makeSalt();
+		$newpass= $this->makePassword($password, $salt);
+
+		$q="UPDATE ! SET password=?, salt=? WHERE userid=?";
+		$r3 = $db->query($q, array('users', $newpass, $salt, $userid));
+		if($r3===DB_OK)
+			return 1;
+		return 0;
+	}
+	function getAllActivePartners()
+	{
+		global $db;
+		$q="SELECT * FROM ! where Active=? order by userid desc";
+		$result=$db->getAll($q,array('partners', 1, ));
+		if(empty($result)){
+			return false;
+		}
+		return $result;
+	}
+	function assignedPartner($partnerid,$borrowerid)
+	{
+		global $db;
+		$time=time();
+		$q = "UPDATE ! set Assigned_to=?, Assigned_date=?, Assigned_status=? where userid=?";
+		$res1=$db->query($q, array('borrowers', $partnerid, $time, -2, $borrowerid));
+		if($res1===DB_OK)
+			return 1;
+		else
+			return 0;
+	}
+	function declinedBorrower($borrowerid,$dreason, $userid)
+	{
+		global $db;
+		$time=time();
+		$q = "UPDATE ! set Active = ?, declined_reason=?, Assigned_to=?, Assigned_date=?, Assigned_status=? where userid=?";
+		$res1=$db->query($q, array('borrowers', 0, $dreason, $userid, $time, 2, $borrowerid));
+		if($res1===DB_OK)
+			return 1;
+		else
+			return 0;
+	}
+	function isBorrowerAssignedToThisPartner($bid, $pid)
+	{
+		global $db,$session;
+		if($session->userlevel == ADMIN_LEVEL)
+			return true;
+		else
+		{
+			$q="SELECT count(userid) FROM ! WHERE userid=? and (Assigned_to =? OR PartnerId=?)";
+			$count = $db->getOne($q, array('borrowers', $bid,$pid,$pid));
+			if($count==0)
+				return false;
+			else
+				return true;
+		}
+	}
+	function referral($country,$refCommission, $refPercent)
+	{
+		global $db;
+		$time=time();
+		$q="SELECT max(id) FROM referrals WHERE country =? AND status = 1";
+
+		$last=0;
+		$q1="UPDATE referrals SET stop= ?, Status = ? WHERE id=?";
+
+		$q2="INSERT INTO referrals (start, country, ref_commission, percent_repay, status) VALUES (?, ?, ?, ?, ?)";
+
+		$id=$db->getOne($q,array($country));
+		$res=0;
+		if(empty($id))
+		{
+			$res= $db->query($q2, array($time , $country, $refCommission, $refPercent, 1));
+		}
+		else
+		{
+			$r2=$db->query($q2, array($time , $country, $refCommission, $refPercent, 1));
+			if($r2===DB_OK)
+			{
+				$res= $db->query($q1, array($time , 0, $id));
+			}
+		}
+		if($res===DB_OK)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	function getReferrals($country, $all=true)
+	{
+		global $db;
+		if($all){
+			$q="SELECT * FROM referrals WHERE country =? order by id desc";
+			$res=$db->getAll($q,array($country));
+		}
+		else {
+			$q="SELECT * FROM referrals WHERE country =? AND status = ? order by id desc";
+			$res=$db->getRow($q,array($country, 1));
+
+		}
+		return $res;
+	}
+	function checkReferrer($referrer)
+	{
+		global $db;
+		$q="SELECT count(u.userid) FROM ! as b join ! as u on b.userid= u.userid WHERE b.active=? and u.username=?";
+		$result = $db->getOne($q, array('borrowers', 'users',1, $referrer));
+		return $result;
+	}
+	function addCommission($applicant_id, $referrer_id, $referral_id)
+	{
+		global $db;
+		$time=time();
+		$q="INSERT INTO ! (applicant_id, referrer_id, referral_id, date) VALUES (?, ?, ?, ?)";
+		$res=$db->query($q, array('commissions', $applicant_id , $referrer_id, $referral_id, $time));
+		if($res===DB_OK)
+			return 1;
+		else
+			return 0;
+	}
+	function updateCommission($id, $amount, $time, $loanid)
+	{
+		global $db;
+		$time=time();
+		$q="UPDATE ! set paid_amt =?, paid_date=?, loan_id =? where id=?";
+		$res=$db->query($q, array('commissions', $amount , $time, $loanid, $id));
+		if($res===DB_OK)
+			return 1;
+		else
+			return 0;
+	}
+	function updateCommissionFailed($id, $reason)
+	{
+		global $db;
+		$time=time();
+		$q="UPDATE ! set failed_reason  =? where id=?";
+		$res=$db->query($q, array('commissions', $reason, $id));
+		if($res===DB_OK)
+			return 1;
+		else
+			return 0;
+	}
+	function getPendingCommissions($userid=0)
+	{
+		global $db;
+		if(empty($userid))
+		{
+			$q="SELECT c.*, r.ref_commission, r.percent_repay FROM commissions as c join referrals as r on c.referral_id = r.id WHERE c.paid_amt IS NULL order by c.id desc";
+		}
+		else
+		{
+			$q="SELECT c.*, r.ref_commission, r.percent_repay FROM commissions as c join referrals as r on c.referral_id = r.id WHERE c.referrer_id = $userid AND c.paid_amt IS NULL order by c.id desc";
+		}
+		$res=$db->getAll($q);
+		return $res;
+	}
+	function getPaidCommissions($userid=0)
+	{
+		global $db;
+		if(empty($userid))
+		{
+			$q="SELECT c.*, r.ref_commission, r.percent_repay FROM commissions as c join referrals as r on c.referral_id = r.id WHERE c.paid_amt IS NOT NULL order by c.id desc";
+		}
+		else
+		{
+			$q="SELECT c.*, r.ref_commission, r.percent_repay FROM commissions as c join referrals as r on c.referral_id = r.id WHERE c.referrer_id = $userid AND c.paid_amt IS NOT NULL order by c.id desc";
+		}
+
+		$res=$db->getAll($q,array());
+		return $res;
+	}
+	function getPendingCommissionByApplicantId($applicant_id)
+	{
+		global $db;
+		$q="SELECT c.*, r.ref_commission, r.percent_repay FROM commissions as c join referrals as r on c.referral_id = r.id WHERE c.applicant_id = $applicant_id AND c.paid_amt IS NULL";
+		$res=$db->getRow($q);
+		return $res;
+	}
+	function getAllRepayment_Instructions()
+	{
+		global $db;
+		$q="SELECT c.name, rpi.description, rpi.id FROM ! as c, ! as rpi WHERE c.code = rpi.country_code AND rpi.active=? order by rpi.id desc";
+		$result=$db->getAll($q, array('countries', 'repayment_instructions', 1));
+		$q1="SELECT description,id FROM ! WHERE country_code='ALL' AND active=?";
+		$defaultinstruction=$db->getALL($q1, array('repayment_instructions', 1));
+		
+		if(!empty($defaultinstruction)) {
+			$result = array_merge($result,$defaultinstruction);
+		}
+		return $result;
+	}
+	function getRepayment_InstructionsById($id)
+	{
+		global $db;
+		$q="SELECT c.name, rpi.description, rpi.id, rpi.country_code FROM ! as c, ! as rpi WHERE c.code = rpi.country_code AND rpi.active=? AND rpi.id=?";
+		$result=$db->getAll($q, array('countries', 'repayment_instructions', 1,$id));
+		return $result;
+	}
+	function addRePaymentInstruction($country_code, $description)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$date=date('Y-m-d h:i:s');
+		$q="INSERT INTO ! (country_code, description, created) VALUES (?, ?, ?)";
+		$res = $db->query($q, array('repayment_instructions', $country_code, $description, $date));
+		if($res === DB_OK)
+			return 1;//successful insert
+		else
+			return 0;//cannot insert
+	}
+	function updateRePaymentInstruction($country_code, $description, $id)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$date=date('Y-m-d h:i:s');
+		$q = "UPDATE ! SET country_code = ?, description= ? WHERE id = ?";
+		$res = $db->query($q, array('repayment_instructions', $country_code, $description, $id));
+		if($res === DB_OK)
+			return 1;//successful insert
+		else
+			return 0;//cannot insert
+	}
+	function deleteRePaymentInstruction($id)
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q = "delete from ! where id = ?";
+		$res = $db->query($q, array('repayment_instructions', $id));
+		if($res === DB_OK)
+			return 1;//successful insert
+		else
+			return 0;//cannot insert
+	}
+	function getRepayment_InstructionsByCountryCode($country_code)
+	{
+		global $db;
+		$q="SELECT c.name, rpi.description, rpi.id, rpi.country_code FROM ! as c, ! as rpi WHERE c.code = rpi.country_code AND rpi.active=? AND rpi.country_code=? limit 1";
+		$result=$db->getRow($q, array('countries', 'repayment_instructions', 1,$country_code));
+		return $result;
+	}
+	function IsActiveCampaign()
+	{
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q="SELECT id,max_use FROM ! WHERE active=?";
+		$campaigns= $db->getAll($q , array('campaign',1));
+		$isCampaign=false;
+		foreach($campaigns as $campaign)
+				{
+					$camp_id=$campaign['id'];
+					$isMax=$this->checkMaxUseCampaign($camp_id);
+					if($isMax<$campaign['max_use'])
+						$isCampaign=true;
+				}
+		return $isCampaign;
+	}
+
+	function checkMaxUseCampaign($camp_id)
+	{
+
+		global $db;
+		traceCalls(__METHOD__, __LINE__);
+		$q = "SELECT COUNT(*) FROM ! WHERE campaign_id = ?";
+		$Ismax=$db->getOne($q, array('referral_codes', $camp_id));
+		return $Ismax;
+	}
+	function addCampaign($code,$value, $max_use, $message,$active, $time)
+	{
+
+		g

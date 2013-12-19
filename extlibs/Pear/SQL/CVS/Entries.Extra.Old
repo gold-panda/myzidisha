@@ -1,0 +1,6 @@
+/Compiler.php////*///
+/Dialect_ANSI.php////*///
+/Dialect_MySQL.php////*///
+/Lexer.php////*///
+/Parser.php////*///
+/ctype.php////*///

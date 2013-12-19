@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link href="#SiteUrl#style/isp.css" rel="stylesheet" type="text/css" />
+<title>Zidisha Gift Certificate</title>
+<style type="text/css">
+body
+{
+font-family: "arial"; 
+}
+</style>
+</head>
+
+<body>
+	<p>%user_msg%</p><br><br>
+	<table cellspacing="0" width="600px" border=1>
+		<tbody>
+			<tr style="font-size:11px">
+				<td width="300px" valign="center" align="center">
+					<a href="%image_link%"><img style="border: 1px ridge rgb(204, 204, 204);" src="%image_src%"></a>
+				</td>
+				<td width="300px" valign="top">
+					<div style="margin-left: 5px;"><a href="%borrower_link%">%borrower_name%</a><br>%fbrating%% Positive (<a href="%fbrating_link%">%fbrating_count%</a>)<br>%location%<br><br>%loan_use%
+					</div><br>
+					<div style="margin-left: 50px; color: rgb(0, 0, 0); padding-left:15px; font-weight: normal;"><a href="%lend_link%"><img  style='border:none' src='%lend_image_src%' ></a></div><br>
+					<div style="margin-left: 5px;"><b>Amount Requested:</b> %amount_req% USD<br><b>Interest:</b> %interest%%<br><br>
+					<table width=80%><tr> <td>%statusbar%</td> </tr></table> 
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br><br>
+	%content_mail%
+</body>
+</html>

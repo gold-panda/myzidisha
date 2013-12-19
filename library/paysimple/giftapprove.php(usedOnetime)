@@ -1,0 +1,43 @@
+<html>
+<head>
+<script type="text/javascript" src="includes/scripts/giftajax.js"></script>
+</head>
+</html>
+<?php
+require_once('library/constant.php');
+require_once("library/session.php");
+global $db;
+
+if(1){
+	
+	
+	$invoice = 260;
+	require_once("library/session.php");
+
+    if($invoice == 0)
+    {
+        
+        echo "There was a problem processing your transaction. Please contact admin to complete the transaction.";
+    }
+    else{
+		$res4 = $database->updatePaySimpleTxnForGift($invoice,0);
+		Logger_Array("cvError_res4",$res4);
+		$order_id = $database->getOrderIdByInvoiceid($invoice);
+		Logger_Array("cvError_order_id",$order_id);
+		$_SESSION['orderid']=$order_id;
+		$res1 = $database->updateGiftTransaction($order_id);   /*   1 for paysimple transaction approve  */
+			Logger_Array("cvError_res1",$res1);
+		$res2 = $session->sendGiftCardMailsToSender($order_id);
+			Logger_Array("cvError_res2",$res2);
+		$res3 = $session->sendGiftCardMailsToReciever($order_id);
+			Logger_Array("cvError_res3",$res3);
+		echo "<SCRIPT type='text/javascript'>
+				hdrRedirect();     
+				</SCRIPT>";   /*encript id and invoiceid*/
+    }
+
+}else{
+	//Logger( 'invalid IPN from PaySimple', $level )	;
+
+}
+?>

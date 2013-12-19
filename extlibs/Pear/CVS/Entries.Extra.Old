@@ -1,0 +1,15 @@
+/Compat.php////*///
+/DB.php////*///
+/Date.php////*///
+/Mail.php////*///
+/PEAR.php////*///
+/cachedDB.php////*///
+D/Compat///////
+D/DB///////
+D/Date///////
+D/File///////
+D/MIME///////
+D/Mail///////
+D/Net///////
+D/OS///////
+D/SQL///////

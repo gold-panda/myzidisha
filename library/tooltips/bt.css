@@ -1,0 +1,44 @@
+.toolTip 
+{
+        padding-right: 20px;
+		padding-bottom: 1px;
+        background: url(help.png) no-repeat right;
+        color: #3366FF;
+        cursor: help;
+        position: relative;
+
+}
+
+.toolTipWrapper 
+{
+        width: 270px;
+		position: absolute;
+        top: 12px;
+        display: none;
+        color: #000000;
+        font-weight: normal;
+        font-size: 9pt;
+		z-index:100000;
+}
+
+.toolTipTop 
+{
+        width: 270px;
+        height: 30px;
+        background: url(bubbleTop.gif) no-repeat;
+		z-index:100000;
+}
+
+.toolTipMid 
+{
+        padding: 8px 15px;
+        background: #f9f57b url(bubbleMid.gif) repeat-x;
+		z-index:100000;
+}
+
+.toolTipBtm 
+{
+        height: 13px;
+        background: url(bubbleBtm.gif) no-repeat;
+		z-index:100000;
+}

@@ -1,0 +1,185 @@
+$(document).ready(function(){
+		var error=0;
+		
+		
+		//------------One for each set------------------//
+		//check for the Minimum Fund a lender can provide
+		$("#viewMinAmount").click(
+			function(event){
+				$(this).hide("fast");
+				$("#editMinAmount").show("fast");
+			}
+		);
+		$("#cEditMinAmount").click(
+			function(event){
+				$("#viewMinAmount").show("fast");
+				$("#editMinAmount").hide("fast");
+			}
+		);
+		
+		$("#sEditMinAmount").click(
+			function(event){
+
+				var un=$("#mamount").val();
+				$.get("includes/saveSettings.php",{mamount:un},
+					  function(data){
+						if(data == 0){
+							$("#mamountHide").html (un);
+							$("#viewMinAmount").show("fast");
+							$("#editMinAmount").hide("fast");
+							
+						}
+						else{
+						
+						}
+					  }
+					  );
+			}
+		);
+	
+//----------------------Till Here----------------------//
+		//------------One for each set------------------//
+		//check for the Dead line for escrowing funds (#days)
+		$("#viewDeadLine").click(
+			function(event){
+				$(this).hide("fast");
+				$("#editDeadLine").show("fast");
+			}
+		);
+		$("#cDeadLine").click(
+			function(event){
+				$("#viewDeadLine").show("fast");
+				$("#editDeadLine").hide("fast");
+			}
+		);
+		
+		$("#sDeadLine").click(
+			function(event){
+
+				var un=$("#deadline").val();
+				$.get("includes/saveSettings.php",{deadline:un},
+					  function(data){
+						if(data == 0){
+							$("#deadlineHide").html (un);
+							$("#viewDeadLine").show("fast");
+							$("#editDeadLine").hide("fast");
+							
+						}
+						else{
+						
+						}
+					  }
+					  );
+			}
+		);
+	
+//----------------------Till Here----------------------//
+		//------------One for each set------------------//
+		//check for the Minimum amount to be requested be borrower
+		$("#viewMinBAmount").click(
+			function(event){
+				$(this).hide("fast");
+				$("#editMinBAmount").show("fast");
+			}
+		);
+		$("#cEditMinBAmount").click(
+			function(event){
+				$("#viewMinBAmount").show("fast");
+				$("#editMinBAmount").hide("fast");
+			}
+		);
+		
+		$("#sEditMinBAmount").click(
+			function(event){
+
+				var un=$("#mbamount").val();
+				$.get("includes/saveSettings.php",{mbamount:un},
+					  function(data){
+						if(data == 0){
+							$("#mbamountHide").html (un);
+							$("#viewMinBAmount").show("fast");
+							$("#editMinBAmount").hide("fast");
+							
+						}
+						else{
+						
+						}
+					  }
+					  );
+			}
+		);
+	
+//----------------------Till Here----------------------//
+		//------------One for each set------------------//
+		//check for the Maximum amount to be requested be borrower
+		$("#viewMaxBAmount").click(
+			function(event){
+				$(this).hide("fast");
+				$("#editMaxBAmount").show("fast");
+			}
+		);
+		$("#cEditMaxBAmount").click(
+			function(event){
+				$("#viewMaxBAmount").show("fast");
+				$("#editMaxBAmount").hide("fast");
+			}
+		);
+		
+		$("#sEditMaxBAmount").click(
+			function(event){
+
+				var un=$("#maxbamount").val();
+				$.get("includes/saveSettings.php",{maxbamount:un},
+					  function(data){
+						if(data == 0){
+							$("#maxbamountHide").html (un);
+							$("#viewMaxBAmount").show("fast");
+							$("#editMaxBAmount").hide("fast");
+							
+						}
+						else{
+						
+						}
+					  }
+					  );
+			}
+		);
+	
+//----------------------Till Here----------------------//
+		//------------One for each set------------------//
+		//check for the Website Fee rate
+		$("#viewMinAmount").click(
+			function(event){
+				$(this).hide("fast");
+				$("#editMinAmount").show("fast");
+			}
+		);
+		$("#cEditMinAmount").click(
+			function(event){
+				$("#viewMinAmount").show("fast");
+				$("#editMinAmount").hide("fast");
+			}
+		);
+		
+		$("#sEditMinAmount").click(
+			function(event){
+
+				var un=$("#mamount").val();
+				$.get("includes/saveSettings.php",{mamount:un},
+					  function(data){
+						if(data == 0){
+							$("#mamountHide").html (un);
+							$("#viewMinAmount").show("fast");
+							$("#editMinAmount").hide("fast");
+							
+						}
+						else{
+						
+						}
+					  }
+					  );
+			}
+		);
+	
+//----------------------Till Here----------------------//
+	})

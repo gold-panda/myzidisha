@@ -1,0 +1,429 @@
+/*
+Design by Metamorphosis Design
+http://www.metamorphozis.com
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+
+*
+{
+margin: 0px;
+padding: 0px;
+}
+
+a:link {
+	color: #097E94;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #FF0000;
+}
+
+a:visited {
+	color: #097E94;
+}
+
+body {
+	
+	background: #037BB0 url(../../images/front_page/back_all.gif) repeat-x;
+	font: 13px Arial, Helvetica, sans-serif;
+	color: #383838;
+}
+
+#content
+{
+	width: 1001px;
+	margin: 0px auto;
+
+}
+
+#main
+{
+width: 1001px;
+background: url(../../images/front_page/table_back.gif) repeat-y;
+margin-bottom: 10px;
+}
+
+#top
+{
+background: url(../../images/front_page/top.gif) no-repeat;
+width: 1001px;
+}
+
+#bottom
+{
+background: url(../../images/front_page/bottom.gif) no-repeat;
+width: 1001px;
+height: 17px;
+}
+
+#back
+{
+width: 1001px;
+margin: 0px auto;
+}
+
+#header {
+	height: 415px;
+	text-align: left;
+	margin-bottom: 8px;
+	
+}
+
+#logo1 {
+
+width: 981px;
+height: 316px;
+text-align: right;
+padding-left: 0px;
+padding-top: 0px;
+}
+
+#logo {
+
+width: 981px;
+height: 316px;
+text-align: left;
+padding-left: 20px;
+padding-top: 30px;
+background: url(../../images/front_page/header.jpg) no-repeat;	
+}
+
+
+
+#logo a {
+	text-decoration: none;
+	text-transform: lowercase;
+	font-style: italic;
+	font-size: 18px;
+	color: #ffffff;
+}
+#logo H2 a
+{
+font-size: 12px;
+}
+
+
+#menu
+{
+width: 981px;
+height: 35px;
+padding-top: 12px;
+margin-top: 15px;
+padding-left: 20px;
+background: url(../../images/front_page/menu.gif) no-repeat;
+margin-bottom: 7px;
+}
+
+#menu ul {
+	list-style: none;	
+}
+
+#menu li {
+	
+	display: inline; 
+	
+}
+
+#menu a {
+	float: left;
+	width: 170px;
+	height: 42px;
+    display: block;
+	text-align: center;
+	text-decoration: none;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 14px;
+	padding-top: 5px;
+	text-transform: uppercase;
+	margin-left: 5px;
+}
+
+#menu a:hover {
+	width: 170px;
+    height: 42px;
+	padding-top: 5px;
+	color: #DEEBBC;
+	text-decoration: underline;
+}
+
+
+
+
+#right
+{
+	width: 244px;
+	float: right;
+	margin-right: 7px;
+	margin-top: 7px;
+}
+
+#right H3
+{
+width: 220px;
+height: 20px;
+font-size: 14px;
+font-weight: bold;
+padding-left: 24px;
+padding-top: 16px;
+text-transform: uppercase;
+color: #ffffff;
+background: url(../../images/front_page/title.gif) no-repeat;
+}
+
+#right ul {
+	list-style: none;
+	margin-bottom: 10px;
+	padding-top: 10px;
+}
+
+#right .right_back
+{
+background: #FFFFFF;
+}
+
+#right .right_bottom
+{
+padding-bottom: 15px;
+margin-bottom: 10px;
+background: url(../../images/front_page/title_bottom.gif) no-repeat bottom;
+}
+
+#right li  {
+	padding: 7px;
+	padding-left: 10px;
+
+}
+
+#right .sub
+{
+	padding-left: 30px;
+}
+
+#right a {
+	color: #097E94;
+}
+#right a:visited {
+	color: #097E94;
+}
+
+#right p
+{
+font-size: 10px;
+padding-left: 10px;
+}
+
+.bot
+{
+padding: 10px;
+}
+
+#calendar {
+	padding: 20px 10px 20px 10px;
+}
+
+#calendar table {
+	width: 100%;
+	text-align: center;
+}
+
+#calendar thead {
+
+}
+
+#calendar tbody td {
+	border: 1px solid #F1F1F1;
+}
+
+#calendar #prev {
+	text-align: left;
+}
+
+#calendar #next {
+	text-align: right;
+}
+
+#calendar tfoot a {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#calendar #now {
+	background: #696969;
+	border: 1px solid #ff0000;
+	font-weight: bold;
+	color: #ffffff
+}
+
+#left
+{
+width: 710px;
+padding-left: 20px;
+}
+
+
+#left H4
+{
+	margin: 0;
+	padding: 0px;
+	font-size: 14px;
+	color: #037BB0;
+	padding-top: 20px;
+	padding-bottom: 10px;
+	text-decoration: underline;
+}
+
+#left H4 a
+{
+	color: #037BB0;
+text-decoration: none;
+}
+
+#left a
+{
+	color: #037BB0;
+text-decoration: none;
+}
+
+#left p {
+	margin: 5px;
+	padding: 0;
+}
+
+#left h2 {
+	margin: 0;
+	padding: 0;
+	padding-top: 10px;
+	color: #037BB0;
+}
+
+#left ol, #left ul
+{
+margin-left: 30px;
+}
+
+.date {
+	text-align: right;
+	color: #037BB0;
+	font-size: 11px;
+
+}
+
+.date a {
+	color: #037BB0;
+
+}
+
+
+
+
+#footer {
+	height: 45px;
+	clear: both;
+	padding-top: 20px;
+}
+
+#footer p {
+	margin: 0;
+	font-size: 10px;
+	text-align: center;
+	color: #4A2011;
+}
+
+#footer a {
+	color: #4A2011;
+}
+
+#right1 H3
+{
+width: 690px;
+height: 20px;
+font-size: 14px;
+font-weight: bold;
+padding-left: 24px;
+padding-top: 10px;
+text-transform: uppercase;
+color: #ffffff;
+background: url(../../images/front_page/title1.gif) no-repeat;
+}
+
+#right2 H3
+{
+width: 600px;
+height: 20px;
+font-size: 14px;
+font-weight: bold;
+padding-left: 24px;
+padding-top: 10px;
+text-transform: uppercase;
+color: #ffffff;
+background: url(../../images/front_page/title2.gif) no-repeat;
+}
+
+#main_admin
+{
+width: 1001px;
+background: url(../../images/front_page/table_back1.gif) repeat-y;
+margin-bottom: 10px;
+}
+
+#top_admin
+{
+background: url(../../images/front_page/top_admin.gif) no-repeat;
+width: 1001px;
+}
+
+#bottom_admin
+{
+background: url(../../images/front_page/bottom_admin.gif) no-repeat;
+width: 1001px;
+height: 21px;
+}
+
+#left_admin
+{
+width: 1001px;
+padding-left: 20px;
+}
+
+#header_admin {
+	height: 40px;
+	text-align: left;
+	margin-bottom: 8px;
+	
+}
+
+#right_admin
+{
+	width: 244px;
+	float: right;
+	margin-right: 7px;
+	margin-top: 7px;
+}
+
+#right_admin H3
+{
+width: 220px;
+height: 20px;
+font-size: 14px;
+font-weight: bold;
+padding-left: 24px;
+padding-top: 16px;
+text-transform: uppercase;
+color: #ffffff;
+background: url(../../images/front_page/menutop.gif) no-repeat;
+}
+
+
+#right_admin .right_back
+{
+background: #FFFFFF;
+}
+
+#right_admin .right_bottom
+{
+padding-bottom: 15px;
+margin-bottom: 10px;
+background: url(../../images/front_page/title_bottom.gif) no-repeat bottom;
+}

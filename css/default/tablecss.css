@@ -1,0 +1,94 @@
+
+h3 {
+	margin-right: 10px;
+	background-color:#fff55c;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: bold;
+	font-size:14px;
+	color: #000;
+	padding: 4px;
+	
+}
+
+h1, h2{
+	margin-right: 10px;
+	
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: bold;
+	font-size:14px;
+	color: #000000;
+	padding: 2px;
+}
+
+.tablecss
+{
+font-size:12px;
+width:100%;
+font-weight:normal;
+color:#000000;
+font-family:Helvetica,Arial,sans-serif;
+}
+
+#status
+{
+height:200px;
+background: url(../../images/front_page/statusbox.gif) no-repeat;
+margin-left: 0px;
+}
+
+#current
+{
+height:200px;
+background: url(../../images/front_page/currentbox.gif) no-repeat;
+margin-left: 0px;
+}
+
+
+table.lendertable {
+	border:0;
+	width: 100%;
+}
+
+table.lendertable tr {
+background-color: rgb(235, 235, 235);	
+}
+
+table.lendertable td {
+margin-top:0px;
+border-color:#FFFFFF;
+
+}
+
+table.lendertable_o {
+	border:0;
+	width: 100%;
+}
+
+table.lendertable_o tr {
+background-color: rgb(255, 255, 255);	
+}
+
+table.lendertable_o td {
+margin-top:0px;
+border-color:#FFFFFF;
+
+}
+.arrow{
+	background: url(../../images/layout/icons/uparrow.gif) no-repeat ;
+	background-position: 100%;
+	background-color:#fff55c;
+	cursor: pointer;
+}
+.active {
+	background: url(../../images/layout/icons/downarrow.gif) no-repeat;
+	background-position: 100%;
+	background-color:#fff55c;
+}
+.smallarrow{
+	background: url(../../images/layout/table_show/left.gif) no-repeat ;
+	background-position: 0%;
+}
+.smallactive {
+	background: url(../../images/layout/table_show/asc.gif) no-repeat ;
+	background-position: 0%;
+}

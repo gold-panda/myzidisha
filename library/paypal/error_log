@@ -1,0 +1,53 @@
+[12-Jun-2009 06:05:22] PHP Warning:  unlink(/home4/semfundc/public_html/zidisha/cache/cache_fd69a07d63eedd0667082a6599555c64.dat) [<a href='function.unlink'>function.unlink</a>]: No such file or directory in /home4/semfundc/public_html/zidisha/extlibs/Pear/DB/mysqlc.php on line 1766
+[12-Jun-2009 22:48:42] PHP Warning:  unlink(/home4/semfundc/public_html/zidisha/cache/cache_fd69a07d63eedd0667082a6599555c64.dat) [<a href='function.unlink'>function.unlink</a>]: No such file or directory in /home4/semfundc/public_html/zidisha/extlibs/Pear/DB/mysqlc.php on line 1766
+[12-Jun-2009 22:48:42] PHP Warning:  unlink(/home4/semfundc/public_html/zidisha/cache/cache_2b117cf9569a8e164154e28134d95365.dat) [<a href='function.unlink'>function.unlink</a>]: No such file or directory in /home4/semfundc/public_html/zidisha/extlibs/Pear/DB/mysqlc.php on line 1766
+[12-Jun-2009 22:48:42] PHP Warning:  Invalid argument supplied for foreach() in /home4/semfundc/public_html/zidisha/extlibs/Pear/DB/mysqlc.php on line 1621
+[18-Jun-2009 01:21:45] PHP Warning:  unlink(/home4/semfundc/public_html/zidisha/cache/cache_fd69a07d63eedd0667082a6599555c64.dat) [<a href='function.unlink'>function.unlink</a>]: No such file or directory in /home4/semfundc/public_html/zidisha/extlibs/Pear/DB/mysqlc.php on line 1766
+[18-Jun-2009 01:40:23] PHP Warning:  unlink(/home4/semfundc/public_html/zidisha/cache/cache_fd69a07d63eedd0667082a6599555c64.dat) [<a href='function.unlink'>function.unlink</a>]: No such file or directory in /home4/semfundc/public_html/zidisha/extlibs/Pear/DB/mysqlc.php on line 1766
+[22-Jul-2009 12:56:57] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home4/semfundc/public_html/zidisha/library/paypal/confirmpay.php on line 5
+[08-Aug-2013 14:22:40 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[08-Aug-2013 14:22:41 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[09-Aug-2013 18:34:37 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[09-Aug-2013 18:34:37 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[19-Aug-2013 12:39:47 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[19-Aug-2013 12:39:47 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[19-Aug-2013 12:39:58 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[19-Aug-2013 12:39:58 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[19-Aug-2013 13:54:42 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[19-Aug-2013 13:54:42 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[20-Aug-2013 12:24:28 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[20-Aug-2013 12:24:28 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[20-Aug-2013 12:24:38 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[20-Aug-2013 12:24:38 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[20-Aug-2013 12:24:46 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[20-Aug-2013 12:24:46 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[20-Aug-2013 12:24:52 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[20-Aug-2013 12:24:52 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[20-Aug-2013 12:25:04 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[20-Aug-2013 12:25:04 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[20-Aug-2013 12:25:11 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[20-Aug-2013 12:25:11 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[21-Aug-2013 05:05:58 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[21-Aug-2013 05:05:58 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[21-Aug-2013 05:09:17 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[21-Aug-2013 05:09:17 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[22-Aug-2013 03:53:14 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[22-Aug-2013 03:53:14 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[22-Aug-2013 23:49:11 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[22-Aug-2013 23:49:11 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[25-Aug-2013 16:43:26 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[25-Aug-2013 16:43:26 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[25-Aug-2013 16:44:41 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[25-Aug-2013 16:44:41 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[25-Aug-2013 16:44:41 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[25-Aug-2013 16:44:41 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[26-Aug-2013 13:37:58 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[26-Aug-2013 13:37:58 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[26-Aug-2013 13:38:02 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[26-Aug-2013 13:38:02 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[27-Aug-2013 02:22:15 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[27-Aug-2013 02:22:15 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[28-Aug-2013 07:48:52 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[28-Aug-2013 07:48:52 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
+[28-Aug-2013 07:48:57 EST] PHP Notice:  Undefined index: paypal_amount in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 47
+[28-Aug-2013 07:48:57 EST] PHP Notice:  Undefined index: paypal_donation in /home4/semfundc/public_html/zidisha/library/paypal/getMoney.php on line 48
