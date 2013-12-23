@@ -7767,7 +7767,7 @@ function forgiveReminder(){
 		$params['bname']=$database->getNamebyId($borrowerid);
 		$params['duedays']=$duedays;
 		$content= $this->formMessage($lang['mailtext']['loanarrear_mediation_sms'], $params);
-		if(!empty($result)){
+		if(!empty($to_number)){
 			$this->SendSMS($content, $to_number);
 		}
 
@@ -7867,7 +7867,7 @@ function forgiveReminder(){
 		$params['bnumber']=$brwrnumber;
 		$params['bname']=$database->getNamebyId($borrowerid);
 		$content= $this->formMessage($lang['mailtext']['contact_confirmation_sms'], $params);
-		if(!empty($result)){
+		if(!empty($to_number)){
 			$this->SendSMS($content, $to_number);
 		}
 
