@@ -1110,6 +1110,85 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		$webrate=$lonedata['WebFee'];
 		$period=$lonedata['period'];
 		$grace=$lonedata['grace'];
+		$weekly_inst=$lonedata['weekly_inst'];
+
+//case of loans with weekly repayment schedules, added by Julia 21-12-2013
+	if ($weekly_inst==1){
+			
+		$inst_day = $database->getinstallmentweekday($uid, $loanid);
+		if(empty($inst_day)) {
+			$inst_day = date('w',time());
+		}
+
+		if(empty($date_disbursed)) {
+			$date_disbursed = time();
+		}
+		$loneAcceptDate = $date_disbursed;
+		$currday = date('d',$date_disbursed);
+		//specifies day of the week loan was disbursed
+		$currweekday = date('w',$date_disbursed);
+		$currmonth = date('m',$date_disbursed);
+		$curryear = date('Y',$date_disbursed);
+		//sets the number of days we need to add to the disbursement date to make repayments fall on the borrower's desired weekday
+		
+		if($currweekday <= $inst_day) {
+			$extradays = $inst_day - $currweekday;
+		}else {
+			$extradays = 7 - ($currweekday - $inst_day);
+		}
+		$extraseconds = $extradays * 86400;
+		
+		//for the purposes of generating the repayment schedule, defines the base date to which we will add the recurring periods such that repayments fall on the borrower's desired weekday
+		$loneAcceptDate	 = $date_disbursed+$extraseconds;
+		$period_org=$period;
+		//calculates total time loan is held in weeks
+		$period=$period+($extradays/7);
+		$interest=(($period)/52)*(($amount*($rate/100))+($amount*($webrate/100)));
+		$totalamt=$amount+$interest;
+		$pinterest=$interest/($period);
+		$pamount=$amount/($period-$grace);
+		$pamount=round($pamount, 4);
+
+		//correct decimal places
+		$pamount1=floor($pamount);
+		$dfamt=round($pamount-$pamount1, 2)*($period-$grace);
+
+
+		$pinterest1=floor($pinterest);
+		$dfint=round($pinterest-$pinterest1, 2)*($period);
+
+		$count=0;
+		$tint=0;
+		$tprin=0;
+		$ttotl=0;
+		$schedule = array();
+		$period_org += 1;
+	
+		for($i=0; $i<$period_org; $i++)
+		{
+			if($count < $grace)
+			{
+				$pint1=number_format($pinterest1, 2, ".", ",");
+				$schedule[] = array('date'=>strtotime('+ '.$count.' week ' , $loneAcceptDate), 'total' => 0);
+				$tint=$tint+$pinterest1;
+			}
+			else if($count >= $grace)
+			{
+				if($count==$period_org){
+					$pamount1=$pamount1+$dfamt;
+					$pinterest1=$pinterest1+$dfint;
+				}
+				$schedule[] = array('date'=> strtotime('+ '.$count.' week ' , $loneAcceptDate), 'total' => $totalamt/($period_org - $grace));
+				$tint=$tint+$pinterest1;
+				$tprin=$tprin+$pamount1;
+				$ttotl=$ttotl+$pamount1+$pinterest1;
+			}
+			$count++;
+		}
+
+
+	}else{
+	
 		$inst_day = $database->getinstallmentday($uid, $loanid);
 		if(empty($inst_day)) {
 			$inst_day = date('d',time());
@@ -1227,6 +1306,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 
 				}
 			$count++;
+			}
 		}
 	}
 	if(!empty($schedule))
@@ -1234,6 +1314,9 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		else
 			return 0;
 	}
+
+
+
 	function pfreport($date3, $date4)
 	{
 		global $database, $form;
@@ -2295,7 +2378,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		
 		if($submit_type != $lang['register']['Registerlater']) {
 //			Logger_Array("FB LOG - on session 3",'fb_data', serialize($fb_data).$uname);
-			$validation->validateBorrowerEdit($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $country, $email, $mobile,$reffered_by, $income, $about, $bizdesc, $photo, $bnationid, $community_name_no, $documents, $repaidPast, $debtFree, $share_update,$onbehalf, $behalf_name, $behalf_number, $behalf_email, $behalf_town, $submit_type, $uploadedDocs, $bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1, $bneighcont2, $bneighcont3,$home_no, $rec_form_offcr_name, $rec_form_offcr_num, $cntct_type, $fb_data, $endorser_name, $endorser_email);
+			$validation->validateBorrowerEdit($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $country, $email, $mobile,$reffered_by, $income, $about, $bizdesc, $photo, $bnationid, $community_name_no, $documents, $repaidPast, $debtFree, $share_update,$onbehalf, $behalf_name, $behalf_number, $behalf_email, $behalf_town, $submit_type, $uploadedDocs, $bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1, $bneighcont2, $bneighcont3,$home_no, $rec_form_offcr_name, $rec_form_offcr_num, $cntct_type, $fb_data, $endorser_name, $endorser_email,$id);
 		} else {
 			$completeLater = 1;
 			if(!empty($pass1))
@@ -3325,7 +3408,14 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$amountAfterForgive= $amount - ($forgiveAmount * $ratio);
 		else
 			$amountAfterForgive= $amount;
-		$interestNew=(($new_period - $period)/12)*(($amountAfterForgive*($rate/100))+($amountAfterForgive*($webrate/100))); 
+
+		$weekly_inst=$lonedata['weekly_inst'];
+
+		if ($weekly_inst==1){
+			$interestNew=(($new_period - $period)/52)*(($amountAfterForgive*($rate/100))+($amountAfterForgive*($webrate/100))); 
+		}else{
+			$interestNew=(($new_period - $period)/12)*(($amountAfterForgive*($rate/100))+($amountAfterForgive*($webrate/100))); 
+		}
 		$totalAmountNew=$instAmt + $interestNew; 
 		$fullTotal +=$totalAmountNew;
 		$totalRemainingPeriod= $k +  $new_period - $period +0;
@@ -3360,7 +3450,15 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			}
 			else if($flag==0 && strtotime('+ '.$count.' month ' , $duedate) < $installment_date_margin)
 			{
-				$schedule[$index] = array('duedate'=> strtotime('+ '.$count.' month ' , $duedate), 'amount' => 0,'paiddate' => NULL,'paidamt' => NULL);
+				if($weekly_inst==1){
+
+					$schedule[$index] = array('duedate'=> strtotime('+ '.$count.' week ' , $duedate), 'amount' => 0,'paiddate' => NULL,'paidamt' => NULL);
+		
+				}else{
+
+					$schedule[$index] = array('duedate'=> strtotime('+ '.$count.' month ' , $duedate), 'amount' => 0,'paiddate' => NULL,'paidamt' => NULL);
+				
+				}
 				$count++;
 				$index++;
 				$totalRemainingPeriod--;
@@ -3379,7 +3477,13 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				}
 				$newPaidAmount=NULL;
 				$newPaidDate=NULL;
-				$schedule[$index] = array('duedate'=> strtotime('+ '.$count.' month ' , $duedate), 'amount' => $newAmount,'paiddate' => $newPaidDate,'paidamt' => $newPaidAmount);
+				if($weekly_inst==1){
+
+					$schedule[$index] = array('duedate'=> strtotime('+ '.$count.' week ' , $duedate), 'amount' => $newAmount,'paiddate' => $newPaidDate,'paidamt' => $newPaidAmount);
+	
+				}else{
+					$schedule[$index] = array('duedate'=> strtotime('+ '.$count.' month ' , $duedate), 'amount' => $newAmount,'paiddate' => $newPaidDate,'paidamt' => $newPaidAmount);
+				}
 				$count++;
 				$index++;
 			}
@@ -7878,9 +7982,16 @@ function forgiveReminder(){
 
 		
 		if($firstloan==0){
-//case where borrower has not yet received first loan disbursement - credit limit should equal admin 1st loan size
+//case where borrower has not yet received first loan disbursement - credit limit should equal admin 1st loan size plus invited borrower credit if applicable
 			$val=$database->getAdminSetting('firstLoanValue');
-			$currentlimit=ceil(convertToNative($val, $rate));	
+			$invitedstatus=$database->getInvitee($userid);
+			if (!empty($invitedstatus)){
+				$invitedcredit=200;
+			}else{
+				$invitedcredit=0;
+			}
+			$totalval=$val+$invitedcredit;
+			$currentlimit=ceil(convertToNative($totalval, $rate));	
 			return $currentlimit;
 
 		} elseif($ontime != 1){
@@ -7888,7 +7999,7 @@ function forgiveReminder(){
 //case where last loan was repaid late - credit limit should equal last loan repaid on time or admin first loan setting, if no loan was ever repaid on time						
 			$loanCountArray=$database->getLoanCount($userid,true); 
 			$prevamount=$database->getPreviousLoanAmount($userid, $loanCountArray, $loanid);
-			if(empty($prevamount)){
+			if(empty($prevamount) || $prevamount==0){
 				$currentlimit=$database->getAdminSetting('firstLoanValue');
 			} else {
 				$currentlimit=$prevamount;

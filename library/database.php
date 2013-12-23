@@ -4728,6 +4728,9 @@ class genericClass
         $time=time();
         $res = DB_OK;
         $old_status = $this->getBorrowerActive($id);
+		// beacause country name disable on edit profile page by mohit 19-12-13
+		$qry="SELECT Country FROM ! WHERE userid=?";
+        $country=$db->getOne($qry,array('borrowers',$id));
         $currency=$this->getCurrencyIdByCountryCode($country);
         if(!empty($fb_data['user_profile'])){
             $facebook_id= $fb_data['user_profile']['id'];
@@ -5693,7 +5696,7 @@ class genericClass
     function getLastRepaidloanId($borrowerid)
     {
         global $db;
-        $sql = "SELECT loanid FROM ! WHERE borrowerid  = ? AND adminDelete = ? AND (active=? OR active=?) AND expires is NULL ORDER BY loanid DESC ";
+        $sql = "SELECT loanid FROM ! WHERE borrowerid  = ? AND adminDelete = ? AND (active=? OR active=?) AND expires is NULL AND RepaidDate IS NOT NULL ORDER BY loanid DESC ";
         $r3 = $db->getOne($sql, array('loanapplic', $borrowerid, 0, LOAN_REPAID, LOAN_DEFAULTED));
         return $r3;
     }
@@ -6736,6 +6739,9 @@ class genericClass
         }
         return $creditearned;
     }
+
+
+
     function getCurrentCreditEarned($borrowerid, $loanid, $type) {
         global $db,$database;
         if($type == 'Total') {	/* update on 12-12-13 by Mohit As per julia email: we are no longer offering any bonuses for 100% on-time repayment */
@@ -6850,10 +6856,20 @@ class genericClass
     function getinstallmentday($uid, $loanid) {
         global $db;
 
-        $q = "SELECT  installment_day FROM ! WHERE loanid =? AND borrowerid = ? ";
+        $q = "SELECT  installment_day, installment_weekday FROM ! WHERE loanid =? AND borrowerid = ? ";
         $result1 = $db->getOne($q , array('loanapplic', $loanid, $uid));
         return $result1;
     }
+
+//in cases where weekly repayment schedule is specified, looks up the day of week the borrower had selected to have repayments fall due
+    function getinstallmentweekday($uid, $loanid) {
+        global $db;
+
+        $q = "SELECT  installment_weekday FROM ! WHERE loanid =? AND borrowerid = ? ";
+        $result1 = $db->getOne($q , array('loanapplic', $loanid, $uid));
+        return $result1;
+    }
+
     function getborrowerbehalfid($brwrid) {
         global $db;
 
@@ -7118,6 +7134,33 @@ class genericClass
         $res= $db->getAll($q, array('invites', $userid));
         return $res;
     }
+
+//determines whether any of a borrower's invited members have repayment scores below standard, if so borrower is ineligible to invite further members
+    function getInviteeRepaymentRate($userid){
+
+       global $session;
+        $invitees= $this->getInvitedMember($userid);
+        $ineligible=0;
+        foreach($invitees as $invite){
+            $inviterepayrate= $session->RepaymentRate($invite['invitee_id']);
+            $invite_lastloan= $this->getLastloan($invite['invitee_id']);
+            if(empty($invite_lastloan)){
+                $inviterepayrate=100;
+            }
+            $minrepayrate=$this->getAdminSetting('MinRepayRate');
+            if($inviterepayrate>=$minrepayrate){
+                $ineligible=0;
+            }else{
+                $ineligible=1;
+            }
+            $total_ineligible+=$ineligible;
+
+        }
+        return $total_ineligible;
+    }
+
+    
+
     function getInviteCredit($userid){
         global $session;
         $invitees= $this->getInvitedMember($userid);
@@ -7137,6 +7180,8 @@ class genericClass
         }
         return $creditearned;
     }
+
+
     function getInvitee($id){
         global $db;
         $q="select userid from ! where invitee_id=?";
@@ -10950,6 +10995,14 @@ class genericClass
         $fee=$db->getRow($q, array('transactions',FEE, $txnid));
         return $fee;
     }
+	
+	// beacause country name disable on edit profile page by mohit 19-12-13
+	public function getCountryByBorrowerId($id){
+		global $db;     
+		$q="SELECT Country FROM ! WHERE userid=?";     
+		$Country=$db->getOne($q,array('borrowers',$id));
+		return $Country;
+	}
 
 };
 $database= new genericClass;

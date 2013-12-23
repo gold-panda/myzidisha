@@ -911,25 +911,23 @@ if($borrowerActive==1) {
 					<?php	} ?>
 						</select><br/><div id="volunteer_mentorerror"><?php echo $form->error("volunteer_mentor"); ?></div></td>
 				</tr>
-				 <tr><td>&nbsp;</td></tr>
-			<?php 
-				if(!empty($facebook_id)){?>
-				<tr style="<?php if($country!='BF') echo 'display:none'; else echo 'display:block';?>" id="contact_type">
-					<td colspan='2'><?php echo $lang['register']['contact_type']?><a id="cntct_type"></a><br/><?php echo $form->error("contact_type"); ?></td>
-					<td></td>
-				</tr>
-				<tr><td>&nbsp;</td></tr> 
+				<tr><td>&nbsp;</td></tr>
+	<!------ Modify by Mohit on date 20-12-13 ------->			
+	<?php 
+	if($cntct_type=='1') {?>			
+				<tr><td>&nbsp;</td></tr>			
 				<tr style="<?php if($country!='BF') echo 'display:none'; else echo "display:''";?>" id="facebook_optional" >
 					<td>
 					<input type="radio" name="cntct_type" id="FB_cntct" value="1" onclick="needToConfirm = false;open_contact(this.value);submitform1();" <?php if($cntct_type=='1' || isset($_SESSION['FB_Detail'])) echo"checked";?> <?php echo $disabled; ?>>
-					
-					
-					<?php echo $lang['register']['FB_contact']." (This must be an actively used account in your own name.)";?><br/><br/></div>
+							
+					<?php echo $lang['register']['FB_contact']." (This must be an actively used account in your own name.)";?><br/><br/>
+				</div>
 					<div id="fb_instruction" style="<?php if($cntct_type=='1')echo "display:block;"; else echo "display:none;"; ?>"><?php echo $lang['register']['fb_instruction']; ?></div>
 					<?php echo $form->error("cntct_type"); ?>
-					</td>
+					</td>		
 					<td>
-				
+						<?php 
+						if(!empty($facebook_id)){?>
 							<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" style="<?php if($cntct_type=='1' || isset($_SESSION['FB_Detail']))echo "display:block"; else echo "display:none"; ?>"><img src="images/facebook-connect.png"/></a>
 						<?}elseif($fbData['loginUrl']==''){ ?>
 							<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="javascript:login_popup('<?php echo $fbData['logoutUrl']?>');return false;" style="<?php if($cntct_type=='1' || isset($_SESSION['FB_Detail']))echo "display:block"; else echo "display:none"; ?>"><img src="images/f_disconnect.jpg"/></a>
@@ -946,13 +944,11 @@ if($borrowerActive==1) {
 					if(isset($_SESSION['FB_Error'])){
 						echo $_SESSION['FB_Error'];
 					}?></td>
-				</tr>
-				<tr><td>&nbsp;</td></tr> 
+				</tr>	  
 			</table>
 
-	<?php
-	/*** Added if condition by mohit on date 5-12-13 ***/
-	if(empty($facebook_id)){?>	
+	<?php /*** Added if condition by mohit on date 5-12-13 ***/
+	}elseif($cntct_type=='0'){?>	
 			<table class="detail">
 				<tr>
 					<td id="telephone_contact" style="<?php if($country!='BF') echo 'display:none'; else echo 'display:block';?>"><input type="radio" name="cntct_type" id="tel_cntct" onclick="open_contact(this.value);" value="0" <?php if($cntct_type=='0') echo"checked";?> <?php echo $disabled; ?>><?php echo $lang['register']['tel_contact']?></td>
@@ -960,7 +956,58 @@ if($borrowerActive==1) {
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 			</table>
-	<?php }?>		
+	<!--------------- Modify by Mohit on date 20-12-13 ------------->		
+	<?php } else {?>
+	
+	<tr style="<?php if($country!='BF') echo 'display:none'; else echo 'display:block';?>" id="contact_type">
+					<td colspan='2'><?php echo $lang['register']['contact_type']?><a id="cntct_type"></a><br/><?php echo $form->error("contact_type"); ?></td>
+					<td></td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>			
+				<tr style="<?php if($country!='BF') echo 'display:none'; else echo "display:''";?>" id="facebook_optional" >
+					<td>
+					<input type="radio" name="cntct_type" id="FB_cntct" value="1" onclick="needToConfirm = false;open_contact(this.value);submitform1();" <?php if($cntct_type=='1' || isset($_SESSION['FB_Detail'])) echo"checked";?> <?php echo $disabled; ?>>
+							
+					<?php echo $lang['register']['FB_contact']." (This must be an actively used account in your own name.)";?><br/><br/>
+				</div>
+					<div id="fb_instruction" style="<?php if($cntct_type=='1')echo "display:block;"; else echo "display:none;"; ?>"><?php echo $lang['register']['fb_instruction']; ?></div>
+					<?php echo $form->error("cntct_type"); ?>
+					</td>		
+					<td>
+						<?php 
+						if(!empty($facebook_id)){?>
+							<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" style="<?php if($cntct_type=='1' || isset($_SESSION['FB_Detail']))echo "display:block"; else echo "display:none"; ?>"><img src="images/facebook-connect.png"/></a>
+						<?}elseif($fbData['loginUrl']==''){ ?>
+							<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="javascript:login_popup('<?php echo $fbData['logoutUrl']?>');return false;" style="<?php if($cntct_type=='1' || isset($_SESSION['FB_Detail']))echo "display:block"; else echo "display:none"; ?>"><img src="images/f_disconnect.jpg"/></a>
+						<?php }else{?>
+							<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="login_popup('<?php echo $fbData['loginUrl']?>');" style="<?php if($cntct_type=='1' || isset($_SESSION['FB_Detail']))echo "display:block"; else echo "display:none"; ?>"><img src="images/facebook-connect.png"/></a>
+					<?php }?>
+					</td>
+				</tr>
+				<tr style="<?php if($country!='BF' || $fbmsg_hide==1) echo 'display:none'; else echo 'display:block';?>" id="facebook_result" >
+				<td><?php 
+					if(isset($_SESSION['FB_Detail'])){
+						echo "<div align='center'><font color=green><strong>Your Facebook account is now linked to Zidisha.</strong></font></div><br/>";
+					}
+					if(isset($_SESSION['FB_Error'])){
+						echo $_SESSION['FB_Error'];
+					}?></td>
+				</tr>	  
+			</table>
+
+	<table class="detail">
+				<tr>
+					<td id="telephone_contact" style="<?php if($country!='BF') echo 'display:none'; else echo 'display:block';?>"><input type="radio" name="cntct_type" id="tel_cntct" onclick="open_contact(this.value);" value="0" <?php if($cntct_type=='0') echo"checked";?> <?php echo $disabled; ?>><?php echo $lang['register']['tel_contact']?></td>
+					<td></td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+			</table>
+	
+	<?php }?>
+<!--------------- end here ------------->
+
+
+	
 			<table class="detail" style="<?php if($cntct_type=='0' || $country!='BF')echo "display:block"; else echo "display:none"; ?>" id="tele_contacts">
 				<tr>
 					<td colspan='2'><?php echo $lang['register']['family_contact']?><a id="bfamilycontact"></a></td>
@@ -1110,7 +1157,7 @@ if($borrowerActive==1) {
 					</td>
 				</tr>
 				 <tr><td>&nbsp;</td></tr>
-				 <tr style="<?php if($form->value("bcountry")=='ID')echo "display:none"; ?>" >
+				 <tr style="<?php if($country=='ID')echo "display:none"; ?>" >
 
 					<td>
 						<?php echo $lang['register']['address_proof'];?>
@@ -1173,13 +1220,12 @@ if($borrowerActive==1) {
 					</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
-				<tr style="<?php if($form->value("bcountry")=='ID')echo "display:none"; ?>" >
-
+				<tr style="<?php if($country=='ID')echo "display:none"; ?>" >
 					<td><?php echo $lang['register']['sign_recomform_name'];?>:<a id="sign_recomform_nameerr"></a></td>
 					<td><input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $rec_form_offcr_name?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div></td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
-				<tr style="<?php if($form->value("bcountry")=='ID')echo "display:none"; ?>" >
+				<tr style="<?php if($country=='ID')echo "display:none"; ?>" >
 
 					<td><?php echo $lang['register']['sign_recomform_num'];?>:<a id="sign_recomform_numerr"></a></td>
 					<td><input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $rec_form_offcr_num ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div></td>

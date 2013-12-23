@@ -207,7 +207,7 @@ if(isset($_SESSION['forgive']))
 	}
 	else if($forgive==2)
 	{
-		echo "<div align='center'><font color=red><b>Sorry you cannot forgive this loan, please try again or contact to zidisha.</b></font></div>";
+		echo "<div align='center'><font color=red><b></b></font></div>";
 	}
 	else if($forgive==3)
 	{
@@ -215,7 +215,7 @@ if(isset($_SESSION['forgive']))
 	}
 	else if($forgive==8)
 	{
-		echo "<div align='center'><font color=red><b>Please login to continue</b></font></div>";
+		echo "<div align='center'><font color=red><b>Please log in to continue.</b></font></div>";
 	}
 	else if($forgive==9)
 	{ 	
@@ -223,7 +223,7 @@ if(isset($_SESSION['forgive']))
 	}
 	else
 	{
-		echo "<div align='center'><font color=red><b>Sorry there was some problem in forgiving this loan, please try again or contact to zidisha.</b></font></div>";
+		echo "<div align='center'><font color=red><b></b></font></div>";
 	}
 
 	echo "<br/>";
@@ -372,6 +372,7 @@ else
 	$damountX= number_format($damount, 2, ".", ",");
 	//$lamountX=number_format($lamount, 0, ".", ",");
 	if($weekly_inst == 1) {
+		$conversion=5200;
 		if($gperiod <2)
 			$gperiodText=$lang['loanstatn']['week'];
 		else
@@ -381,6 +382,7 @@ else
 		else
 			$periodText=$lang['loanstatn']['weeks'];
 	} else {
+		$conversion=1200;
 		if($gperiod <2)
 			$gperiodText=$lang['loanstatn']['month'];
 		else
@@ -397,20 +399,20 @@ else
 	$totToPayBack = 0;
 	$totFee = 0;
 	if($brw2['active']==LOAN_OPEN || $brw2['active']==LOAN_FUNDED || $brw2['active']==LOAN_EXPIRED || $brw2['active']==LOAN_CANCELED)
-	{	$totToPayBack = $lamount +($lamount * ($newperiod)* ($interest + $webfee))/1200;
+	{	$totToPayBack = $lamount +($lamount * ($newperiod)* ($interest + $webfee))/$conversion;
 		$totFee = $interest + $webfee ;
 		$maxInterestRate=$interest1;
 		if($totBid >= $brw2['reqdamt'])
 		{
 			$maxInterestRate=$interestrate;
 			$totFee = $interestrate + $webfee ;
-			$totToPayBack = $lamount +($lamount * ($newperiod)* ($interestrate + $webfee))/1200;
+			$totToPayBack = $lamount +($lamount * ($newperiod)* ($interestrate + $webfee))/$conversion;
 		}
 		
 	}
 	else
 	{
-		$totToPayBack = $brw2['AmountGot'] +($brw2['AmountGot'] * $newperiod * ($interestrate + $webfee))/1200;
+		$totToPayBack = $brw2['AmountGot'] +($brw2['AmountGot'] * $newperiod * ($interestrate + $webfee))/$conversion;
 		$totFee = $interestrate + $webfee ;
 
 	}
@@ -441,8 +443,8 @@ else
 	{
 		$showLoanDetail=1;
 	}
-	$feeamount=((($newperiod)*$brw2['AmountGot']*($webfee))/1200);
-	$feelender=((($newperiod)*$brw2['AmountGot']*($brw2['finalrate']))/1200);
+	$feeamount=((($newperiod)*$brw2['AmountGot']*($webfee))/$conversion);
+	$feelender=((($newperiod)*$brw2['AmountGot']*($brw2['finalrate']))/$conversion);
 	$tamount=$brw2['AmountGot']+((($newperiod)/12)*(($brw2['AmountGot']*$brw2['finalrate'])+($brw2['AmountGot']*$webfee))/100);
 
 	$pamount1=$form->value('pamount1');
@@ -570,7 +572,24 @@ else
 			<?php } ?>
 
 					</td>
-		</tr> <tr>
+		</tr> 
+
+		<tr>
+		
+		<?php $invitor= $database->getInvitee($ud);
+		$invcurrentloanid= $database->getCurrentLoanid($invitor);
+			if(!empty($invcurrentloanid)){
+				$invitorname= $database->getNameById($invitor);
+				$invitorurl= getLoanprofileUrl($invitor);
+				$invitedby= "<a href='$invitorurl'>".$invitorname."</a>";
+			?>
+			<td><strong><?php echo $lang['loanstatn']['invited_by'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_invited'] ?></span><span class='bottom'></span></span></a></strong></td>
+ </strong></td>
+			<td><?php echo $invitedby; ?></td>
+			<?php } ?>
+		</tr>
+
+		<tr>
 				<td> <strong> <?php
 
 					
@@ -588,7 +607,7 @@ else
 						if($vm_level==BORROWER_LEVEL && !empty($vmcurrentloanid)){
 							$vm_url= getLoanprofileUrl($brw['mentor_id'],$vmcurrentloanid);
 						}else{
-							$vm_url = getUserProfileUrl($brw['mentor_id']);
+							$vm_url = "";
 						}
 						$vm_name= $database->getNameById($brw['mentor_id']);
 					?>

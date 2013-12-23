@@ -40,7 +40,6 @@ if($session->userlevel  == BORROWER_LEVEL || $session->userlevel  == ADMIN_LEVEL
 	$bfrstloan=$database->getBorrowerFirstLoan($ud);
 
 	$lonedata=$database->getLoanfund($ud, $ld);
-
 	$rate=$lonedata['finalrate'];
 	$period=$lonedata['period'];
 	$gperiod=$lonedata['grace'];
@@ -48,29 +47,43 @@ if($session->userlevel  == BORROWER_LEVEL || $session->userlevel  == ADMIN_LEVEL
 	$webfee=$brw2['WebFee'];
 	$extraPeriod=$database->getLoanExtraPeriod($ud, $ld);
 	$newperiod=$extraPeriod+$period;
-	$feeamount=((($newperiod)*$amount*($fee))/1200);
-	$feelender=((($newperiod)*$amount*($rate))/1200);
-	$interestrate = $database->getAvgBidInterest($ud, $ld);
-	if($gperiod <2)
-		$gperiodText=$lang['loanstatn']['month'];
-	else
-		$gperiodText=$lang['loanstatn']['months'];
-	if($period <2)
-		$periodText=$lang['loanstatn']['month'];
-	else
-		$periodText=$lang['loanstatn']['months'];
+	$weekly_inst=$lonedata['weekly_inst'];
+	if($weekly_inst == 1) {
+		$conversion=5200;
+		if($gperiod <2)
+			$gperiodText=$lang['loanstatn']['week'];
+		else
+			$gperiodText=$lang['loanstatn']['weeks'];
+		if($period <2)
+			$periodText=$lang['loanstatn']['week'];
+		else
+			$periodText=$lang['loanstatn']['weeks'];
+	} else {
+		$conversion=1200;
+		if($gperiod <2)
+			$gperiodText=$lang['loanstatn']['month'];
+		else
+			$gperiodText=$lang['loanstatn']['months'];
+		if($period <2)
+			$periodText=$lang['loanstatn']['month'];
+		else
+			$periodText=$lang['loanstatn']['months'];
+	}
 
+	$feeamount=((($newperiod)*$amount*($fee))/$conversion);
+	$feelender=((($newperiod)*$amount*($rate))/$conversion);
+	$interestrate = $database->getAvgBidInterest($ud, $ld);
 	$lamount=convertToNative($brw2['reqdamt'], $CurrencyRate);
 	$interest=$brw2['interest'] - $webfee;
 	$totToPayBack = 0;
 	$totFee = 0;
 	if($brw2['active']==LOAN_OPEN || $brw2['active']==LOAN_FUNDED){
-		$totToPayBack = $lamount +($lamount * ($newperiod)* ($interest + $webfee))/1200;
+		$totToPayBack = $lamount +($lamount * ($newperiod)* ($interest + $webfee))/$conversion;
 		$totFee = $interest + $webfee ;
 
 	}
 	else{
-		$totToPayBack = $brw2['AmountGot'] +($brw2['AmountGot'] * $newperiod * ($interestrate + $webfee))/1200;
+		$totToPayBack = $brw2['AmountGot'] +($brw2['AmountGot'] * $newperiod * ($interestrate + $webfee))/$conversion;
 
 		$totFee = $interestrate + $webfee ;
 

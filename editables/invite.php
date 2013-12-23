@@ -13,9 +13,9 @@ $lang['invite']['subject'] = 'Subject';
 $lang['invite']['enter_subject'] = 'Zidisha invitation from';
 $lang['invite']['invite_message'] = 'Invite Message';
 $lang['invite']['binvite_frnds']='Invite New Members';
-$lang['invite']['binvite_inst']="This page allows you to invite new members to Zidisha. You may send as many
-individual invites as you like.<br/><br/>
-For a limited time, current Zidisha members may earn bonus credit limit increases by inviting new members who participate responsibly in our lending community. Under this program, your maximum credit limit will increase by a
+$lang['invite']['binvite_inst']="This page allows members who have earned invite privileges to send high-value invite credits to new members.  
+<br/><br/>The new members who receive the high-value invite credits join with a larger starting loan size than ordinary members, commensurate with the trust we place in the Zidisha members who have invite privileges.<br/><br/>
+For a limited time, current Zidisha members with invite privileges may also earn bonus credit limit increases by inviting new members who participate responsibly in our lending community. Under this program, your maximum credit limit will increase by a
 bonus amount of %currency% %binvite_credit% for each of your invited members who maintains a %minreapayrate%% or higher on-time monthly installment repayment rate.<br/><br/>
 You may track the status of your invited members and invite bonus credits at the page <a href='%invited_link%'>My Invited Members</a>.";
 $lang['invite']['binvite_email']="Enter your friend's email address";
@@ -41,4 +41,6 @@ $lang['invite']['no_loan']='Activated, No Loan Yet';
 $lang['invite']['fundraising_loan']='Fundraising Loan';
 $lang['invite']['ontime_loan']='Repaying On Time';
 $lang['invite']['due_loan']='Past Due';
+$lang['invite']['not_eligible']="You are not yet eligible to send invite credits to new members. In order to become eligible for invite priveleges, you must repay at least one loan and maintain an on-time repayment rate of %minreapayrate%% or higher, and all of your invited members must remain current with their scheduled repayments.";
+$lang['invite']['eligible']="Congratulations! You are now eligible to send invite credits to new members. In order to remain eligible for invite priveleges, you must continue to maintain an on-time repayment rate of %minreapayrate%% or higher, and all of your invited members must remain current with their scheduled repayments.";
 ?>

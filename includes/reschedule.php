@@ -34,21 +34,39 @@ if($session->userlevel  == BORROWER_LEVEL)
 		$original_period=$brw2['original_period'];
 		$gperiod=$brw2['grace'];
 		$fee=$brw2['WebFee'];
-		$feeamount=((($newperiod)*$amount*($fee))/1200);
-		$feelender=((($newperiod)*$amount*($rate))/1200);
+		$weekly_inst=$brw2['weekly_inst'];
+		if($weekly_inst == 1) {
+			$conversion=5200;
+			if($gperiod <2)
+				$gperiodText=$lang['loanstatn']['week'];
+			else
+				$gperiodText=$lang['loanstatn']['weeks'];
+			if($period <2)
+				$periodText=$lang['loanstatn']['week'];
+			else
+				$periodText=$lang['loanstatn']['weeks'];
+		} else {
+			$conversion=1200;
+			if($gperiod <2)
+				$gperiodText=$lang['loanstatn']['month'];
+			else
+				$gperiodText=$lang['loanstatn']['months'];
+			if($period <2)
+				$periodText=$lang['loanstatn']['month'];
+			else
+				$periodText=$lang['loanstatn']['months'];
+		}
+		$feeamount=((($newperiod)*$amount*($fee))/$conversion);
+		$feelender=((($newperiod)*$amount*($rate))/$conversion);
 		$totFee=$feeamount + $feelender;
 		$interestrate = $database->getAvgBidInterest($ud, $ld);
 		$totIntr=$interestrate + $fee;
-		if($gperiod <2)
-			$gperiodText=$lang['loanstatn']['month'];
-		else
-			$gperiodText=$lang['loanstatn']['months'];
-		if($period <2)
-			$periodText=$lang['loanstatn']['month'];
-		else
-			$periodText=$lang['loanstatn']['months'];
-
-		$maxperiodValue = $database->getAdminSetting('maxRepayPeriod');
+		$maxperiodValue_months = $database->getAdminSetting('maxRepayPeriod');
+		if ($weekly_inst == 1) {
+			$maxperiodValue = $maxperiodValue_months * (52/12);
+		} else {
+			$maxperiodValue = $maxperiodValue_months;
+		}
 		$totalrate = $rate + $fee;
 		$possibleIns = $session->getMinInstallmentForReschedule($ud, $ld, $amount, $totalrate);
 		if($brw2['active'] == LOAN_ACTIVE)
@@ -180,7 +198,18 @@ echo "selected='selected'"?>>
 */
 						?>
 								<tr id='reduce_amount' style="<?php echo $display?>">
-									<td><strong><?php echo $lang['loanstatn']['installment_amount']." ".$maxperiodValue." ".$lang['loanstatn']['installment_amount2']." ".$possibleIns ?>:</strong></td>
+									<td><strong>
+										<?php 
+										if ($weekly_inst==1){
+											
+											echo $lang['loanstatn']['installment_amount_wks']." ".$maxperiodValue." ".$lang['loanstatn']['installment_amount2_wks']." ".$possibleIns.".";
+										
+										}else{
+											
+											echo $lang['loanstatn']['installment_amount']." ".$maxperiodValue." ".$lang['loanstatn']['installment_amount2']." ".$possibleIns.".";
+										
+										} ?>
+									</strong></td>
 									<td>
 										<input type='text' id='installment_amount' name='installment_amount' maxlength='10' style='width:106px' class='inputcmmn-1' value='<?php echo $form->value("installment_amount"); ?>' />
 								</td>

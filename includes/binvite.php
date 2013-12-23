@@ -7,6 +7,11 @@ require ("editables/".$path);
 require("editables/invite.php");
 $path=	getEditablePath('invite.php', $language);
 require("editables/".$path);
+
+$userid = $session->userid;
+$islastrepaid = $database->getLastRepaidloanId($userid);
+$brwr_repayrate= $session->RepaymentRate($userid);
+$minrepayrate= $database->getAdminSetting('MinRepayRate');
 $binvitecredit=$database->getcreditsettingbyCountry($session->userinfo['country'],3);
 if(empty($binvitecredit)){
 	$params['binvite_credit']=0;
@@ -14,10 +19,15 @@ if(empty($binvitecredit)){
 	$params['binvite_credit']= $binvitecredit['loanamt_limit'];
 }
 $params['minreapayrate']= $database->getAdminSetting('MinRepayRate');
+
+//determines whether previous invitees meet on-time repayment rate standard, if so borrower is eligible to invite more
+$invitee_criteria = $database->getInviteeRepaymentRate($userid);
 $currency  = $database->getUserCurrency($session->userid); 
 $params['invited_link']= 'index.php?p=97';
 $params['currency']= $currency;
 $binvite_inst= $session->formMessage($lang['invite']['binvite_inst'], $params);
+$binvite_eligible= $session->formMessage($lang['invite']['eligible'], $params);
+$binvite_noteligible= $session->formMessage($lang['invite']['not_eligible'], $params);
 $params['binvite_link']= SITE_URL.'microfinance/borrow.html';
 $binvite_link= $session->formMessage($lang['invite']['binvite_link'], $params);
 $borrower = $database->getEmailB($session->userid);
@@ -47,6 +57,14 @@ if(!empty($loginErr))
 <div class='span12'>
 <div align='left' class='static'><h1><?php echo $lang['invite']['binvite_frnds'] ?></h1></div>
 <?php echo $binvite_inst; ?><br/><br/>
+<?php 
+
+if(!empty($islastrepaid) && $brwr_repayrate>=$minrepayrate && $invitee_criteria==0){
+	
+echo $binvite_eligible; ?>
+
+<br/><br/><br/>
+
 <form  action='updateprocess.php' method="POST">
 	<table class='detail'>
 		<tbody>
@@ -104,4 +122,8 @@ if(!empty($loginErr))
 		</tbody>
 	</table>
 </form>
+<?php
+}else{
+	echo $binvite_noteligible;
+} ?>
 </div>

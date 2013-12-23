@@ -45,11 +45,33 @@ if($session->userlevel  == BORROWER_LEVEL && isset($_SESSION['rescheduleDetail']
 		$newPeriod=$period+$extraPeriod;
 		$gperiod=$brw2['grace'];
 		$fee=$brw2['WebFee'];
-		$feeamount=((($new_repay_period)*$amount*($fee))/1200);
-		$feelender=((($new_repay_period)*$amount*($rate))/1200);
+		$weekly_inst=$brw2['weekly_inst'];
+		if($weekly_inst == 1) {
+			$conversion=5200;
+			if($gperiod <2)
+				$gperiodText=$lang['loanstatn']['week'];
+			else
+				$gperiodText=$lang['loanstatn']['weeks'];
+			if($period <2)
+				$periodText=$lang['loanstatn']['week'];
+			else
+				$periodText=$lang['loanstatn']['weeks'];
+		} else {
+			$conversion=1200;
+			if($gperiod <2)
+				$gperiodText=$lang['loanstatn']['month'];
+			else
+				$gperiodText=$lang['loanstatn']['months'];
+			if($period <2)
+				$periodText=$lang['loanstatn']['month'];
+			else
+				$periodText=$lang['loanstatn']['months'];
+		}
+		$feeamount=((($new_repay_period)*$amount*($fee))/$conversion);
+		$feelender=((($new_repay_period)*$amount*($rate))/$conversion);
 		$totFee=$feeamount + $feelender;
-		$feeamountOrg=((($newPeriod)*$amount*($fee))/1200);
-		$feelenderOrg=((($newPeriod)*$amount*($rate))/1200);
+		$feeamountOrg=((($newPeriod)*$amount*($fee))/$conversion);
+		$feelenderOrg=((($newPeriod)*$amount*($rate))/$conversion);
 		$totFeeOrg=$feeamountOrg + $feelenderOrg;
 		$totalamt=$database->getTotalPayment($ud, $ld);
 		$schedule = $session->generateReSchedule($ud, $ld,$new_repay_period, $installment_amount, $installment_date);
@@ -57,18 +79,6 @@ if($session->userlevel  == BORROWER_LEVEL && isset($_SESSION['rescheduleDetail']
 		$interestrate = $database->getAvgBidInterest($ud, $ld);
 		$totIntr=$interestrate + $fee;
 
-		if($gperiod <2)
-			$gperiodText=$lang['loanstatn']['month'];
-		else
-			$gperiodText=$lang['loanstatn']['months'];
-		if($period <2)
-			$periodText=$lang['loanstatn']['month'];
-		else
-			$periodText=$lang['loanstatn']['months'];
-		if($new_repay_period<2)
-			$NewperiodText=$lang['loanstatn']['month'];
-		else
-			$NewperiodText=$lang['loanstatn']['months'];
 
 		if(empty($schedule))
 		{
@@ -100,13 +110,13 @@ if($session->userlevel  == BORROWER_LEVEL && isset($_SESSION['rescheduleDetail']
 							</tr>
 							<tr>
 								<td><strong><?php echo $lang['loanstatn']['new_pd'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_pd'] ?></span><span class='bottom'></span></span></a></strong></td>
-								<td><?php echo $new_repay_period ?> <?php echo $NewperiodText ?></td>
+								<td><?php echo $new_repay_period ?> <?php echo $periodText ?></td>
 							</tr>
 							<tr><td colspan=2><br/></td></tr>
 							<tr>
 								<td><strong><?php echo $lang['loanstatn']['tot_int_and_fee_new'] ?>:</strong></td>
 								<td><?php echo number_format(round_local($totFee),0, '.', ',')." ".$tmpcurr." (".number_format($totIntr, 0,'.',',')."%
-								".$lang['loanstatn']['intrst_rate_text']. ' '.$new_repay_period .' '.$NewperiodText.")"; ?></td>
+								".$lang['loanstatn']['intrst_rate_text']. ' '.$new_repay_period .' '.$periodText.")"; ?></td>
 							</tr>
 							<tr>
 									<td><strong><?php echo $lang['loanstatn']['tot_repay_due_new'] ?>:</strong></td>
