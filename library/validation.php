@@ -298,7 +298,7 @@ class Validation
 		$this->checkCapcha($user_guess, "user_guess");
 		$this->checkDocuments($documents);
 	}
-	function validateBorrowerEdit($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $country, $email, $mobile,$reffered_by, $income, $about, $bizdesc, $photo,$bnationid, $community_name_no,$File, $repaidPast, $debtFree, $share_update, $onbehalf, $behalf_name, $behalf_number, $behalf_email, $behalf_town, $submit_type, $uploadedDocs, $bfamilycont1, $bfamilycont2, $bfamilycont3, $bneighcont1, $bneighcont2, $bneighcont3,$home_no, $rec_form_offcr_name, $rec_form_offcr_num, $cntct_type, $fb_data, $endorser_name, $endorser_email) 
+	function validateBorrowerEdit($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $country, $email, $mobile,$reffered_by, $income, $about, $bizdesc, $photo,$bnationid, $community_name_no,$File, $repaidPast, $debtFree, $share_update, $onbehalf, $behalf_name, $behalf_number, $behalf_email, $behalf_town, $submit_type, $uploadedDocs, $bfamilycont1, $bfamilycont2, $bfamilycont3, $bneighcont1, $bneighcont2, $bneighcont3,$home_no, $rec_form_offcr_name, $rec_form_offcr_num, $cntct_type, $fb_data, $endorser_name, $endorser_email,$id) 
 	{
 		global $form, $database, $session;
 		//Logger_Array("FB LOG - on validation - edit",'fb_data', serialize($fb_data).$uname);
@@ -327,6 +327,9 @@ class Validation
 				$form->setError('reffered_by', $lang['error']['reffered_by']);
 			}
 		*/	
+		// beacause country name disable on edit profile page by mohit 19-12-13 
+		$country=$database->getCountryByBorrowerId($id);
+		
 		if($country=='BF'){
 			if($onbehalf) {
 				
@@ -572,7 +575,7 @@ class Validation
 			$this->checkLendingInstPhone($lending_inst_phone, "lending_institution_phone");
 			if(empty($lending_inst_officer)) {
 				$form->setError('lending_institution_officer', $this->error['lending_institution_officer']);
-			} */
+			} */		
 		if ($country!='ID'){
 			if(empty($rec_form_offcr_num)) {
 				$form->setError('rec_form_offcr_num', $lang['error']['empty_rec_form_offcr_num']);
@@ -582,8 +585,10 @@ class Validation
 			if(empty($rec_form_offcr_name)) {
 				$form->setError('rec_form_offcr_name', $lang['error']['empty_rec_form_offcr_name']);
 			}
+			
+			$this->checkDocuments($File,$uploadedDocs);
 		}
-				$this->checkDocuments($File,$uploadedDocs);
+				
 		}
 		$userid = $database->getUserId($uname);
 		$iscompleteLater = $database->getiscompleteLater($userid);
