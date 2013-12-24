@@ -112,7 +112,7 @@ class Session
 			$this->userid    = $this->userinfo['userid'];
 			$this->fullname  = $this->userinfo['name'];
 			$this->userlevel = $this->userinfo['userlevel'];
-			$this->usersublevel = $_SESSION['sublevel'] = $this->userinfo['sublevel'];
+			$this->usersublevel = $_SESSION['sublevel'] = $this->userinfo['sublevel'];	
 			return true;
 		}
 		/* User not logged in */
@@ -205,6 +205,10 @@ class Session
 			setcookie("cookid",   $this->userid, time()+COOKIE_EXPIRE, COOKIE_PATH, '', COOKIE_SECURE, true);
 			setcookie("cookcsrf",   $userinfo['salt'], time()+COOKIE_EXPIRE, COOKIE_PATH, '', COOKIE_SECURE, true);
 		}
+			
+		/**** Integration with shift science on date 24-12-2013******/		
+		$this->invoiceShiftScience('login_event',$this->userid);
+		
 		return 1;
 
 	}
@@ -238,6 +242,10 @@ class Session
 			setcookie("cookcsrf",   "", time()-COOKIE_EXPIRE, COOKIE_PATH, '', COOKIE_SECURE, true);
 		}
 		/* Unset PHP session variables */
+		
+		/**** Integration with shift science on date 24-12-2013******/		
+		$this->invoiceShiftScience('logout_event',$_SESSION['userid']);
+		
 		unset($_SESSION['username']);
 		unset($_SESSION['userid']);
 		unset($_SESSION['language']);
@@ -1024,7 +1032,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 			$loanamount = -1 *$a_amount;
 			$res3= $database->setTransactionAmount($pid,$loanamount,'Got amount from loan',$loanid, $CurrencyRate, DISBURSEMENT, $date_disbursed);
 			if($res3==0)
-				return 0;
+				return 0;			
 			if(!empty($reg_fee))
 			{
 				$res7=$database->setTransaction(ADMIN_ID,$reg_fee,'Registration Fee',$loanid, $CurrencyRate, REGISTRATION_FEE);
@@ -1089,6 +1097,8 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				$params['zidisha_link'] = SITE_URL;
 				$message = $this->formMessage($lang['mailtext']['loan_disburse_body'], $params);
 				$this->mailSending($From, $To, $r['email'], $Subject, $message,$templet);
+				/**** Integration with shift science on date 24-12-2013 by Mohit ******/		
+				$this->invoiceShiftScience('disbursement',$pid,'','','','',$a_amount);
 				return 1;//success
 			}
 		}
@@ -2222,7 +2232,12 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$retVal = $database->addBorrower($uname,$namea,$nameb, $pass1, $post, $city,$country,$email, $mobile,$reffered_by, $income, $about, $bizdesc,$bnationid, $language, $community_name_no, $documents,  $repaidPast, $debtFree,$share_update, $completeLater, $onbehalf, $behalf_name, $behalf_number, $behalf_email, $behalf_town, $bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1,$bneighcont2,$bneighcont3,$home_no, $rec_form_offcr_name, $rec_form_offcr_num, $refer_member, $volunteer_mentor, $fb_data, $endorser_name, $endorser_email, $tnc);
 			
 			$id = $database->getUserId($uname);
-					
+			
+			/**** Integration with shift science on date 24-12-2013******/
+			if(!empty($id)){				  
+				$this->invoiceShiftScience('create_new_account',$id,$about,$bizdesc,$reffered_by);
+			}
+			
 			if(!empty($id) && $submit_type == $lang['register']['RegisterComplete'])
 			{
 				if($cntct_type!='1'){
@@ -2397,6 +2412,12 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		else
 		{	
 			$rtn=$database->updateBorrower($uname,$namea,$nameb, $pass1, $post, $city,$country,$email, $mobile,$reffered_by, $income, $about, $bizdesc,$id,$bnationid, $language, $community_name_no, $repaidPast, $debtFree,$share_update,$onbehalf, $behalf_name, $behalf_number, $behalf_email, $behalf_town, $borrower_behalf_id, $completeLater, $bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1, $bneighcont2, $bneighcont3, $home_no, $rec_form_offcr_name, $rec_form_offcr_num, $refer_member, $volunteer_mentor, $fb_data, $endorser_name, $endorser_email, $endorser_id);
+			
+			/**** Integration with shift science on date 24-12-2013******/
+			if($rtn == 0){				  
+				$this->invoiceShiftScience('edit_account',$id,$about,$bizdesc,$reffered_by);
+			}
+			
 			if($rtn == 0 && $submit_type == $lang['register']['RegisterComplete']) {
 				if($cntct_type!='1'){
 					$From=EMAIL_FROM_ADDR;
@@ -3204,7 +3225,6 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				}
 			}
 		}
-
 		$rescheduleDetail=array();
 		if($confirmReScheduleLoan==0)
 		{
@@ -5510,11 +5530,12 @@ function forgiveReminder(){
 	}
 	function ProcessAutoBidding()
 	{	
-		global $database;
+	global $database;
 		$GLOBALS['loanArray']=array();
 		$fullyFundedAll = array();
 		$lenders=$database->getAllLenderForAutoLend();
 		$GLOBALS['loanArray']=$database->getAllLoansForAutoLend();
+		
 		foreach($GLOBALS['loanArray'] as $key => $row) {
 			$status = $this->getStatusBar($row['borrowerid'],$row['loanid'],5);
 			if($status >=100) {
@@ -5531,6 +5552,7 @@ function forgiveReminder(){
 				$possibleLoans=0;
 				$loansToAutolend=array();
 				$availAmount=$this->amountToUseForBid($lender['lender_id']);
+				
 				if ($availAmount >= AUTO_LEND_AMT) {
 					if($lender['current_allocated']==0) {
 						$amounToAutoLend=bcsub($availAmount, $lender['lender_credit'],2);
@@ -5542,6 +5564,7 @@ function forgiveReminder(){
 					}
 					if($possibleLoans) {
 						$loansToAutolend = $database->getSortedLoanForAutoBid($lender['preference'] ,$GLOBALS['loanArray'], $lender['desired_interest'], $lender['max_desired_interest'], $fullyFundedAll);
+					
 						if($possibleLoans < count($loansToAutolend)) {
 						$loansToAutolend=array_slice($loansToAutolend, 0, $possibleLoans);
 						}
@@ -8080,6 +8103,85 @@ function forgiveReminder(){
 		return $currentlimit;
 	}
 }
+
+/**** added by mohit 24-12-2013 ***/
+function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=null,$hearaAoutZidisha=null,$facebook_id=null,$loan_amnt){
+	
+	$time=time();
+	if($event_type=='create_new_account' || $event_type=='edit_account'){
+			
+			$data = array(
+			  '$type' => $event_type,
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$session_id' => session_id(),
+			  '$time'	=> $time,
+			  'aboutme' => $aboutMe,
+			  'aboutbusiness' => $aboutBusiness,
+			  'hearaboutzidisha' => $hearaAoutZidisha
+			);
+		}
+		
+		if($event_type=='facebook_connect'){			
+			$data = array(
+			  '$type' => $event_type,
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$session_id' => session_id(),
+			  '$time'	=> $time,
+			  'facebookid' => $facebook_id
+			);
+		}
+		
+		if($event_type=='login_event'){			
+			$data = array(
+			  '$type' => '$login',
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$session_id' => session_id(),
+			  '$time'	=> $time,
+			  '$login_status' => '$success'
+			);
+		}
+		
+		if($event_type=='logout_event'){			
+			$data = array(
+			  '$type' => '$logout',
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$time'	=> $time
+			);
+		}
+		
+		if($event_type=='disbursement'){			
+			$data = array(
+			  '$type' => $event_type,
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$time'	=> $time,
+			  'loan_amount' => $loan_amnt
+			);
+		}
+
+		$url_send ="https://api.siftscience.com/v203/events"; 
+		$str_data = json_encode($data);	
+		$this->sendPostData($url_send, $str_data);
+		
+}
+
+function sendPostData($url, $post){
+	  $ch = curl_init($url);
+	  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");  
+	  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	  curl_setopt($ch, CURLOPT_POSTFIELDS,$post);
+	  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); 
+	  $result = curl_exec($ch);
+	  curl_close($ch);
+	  return $result;
+	}
+	
+/***** end here ******/
+
 }
 $session=new Session;
 $form = new Form;

@@ -841,6 +841,8 @@ class genericClass
             $cumStat['hist_loss']= ($defaultAmountUsd/$disb_amount)*100;
             $cumStat['repay_late_rate']=($due_amtUsd/$disb_amount)*100;
             $cumStat['end_forgive_rate']=($forgiveAmountUsd/$disb_amount)*100;
+            $cumStat['hist_loss_amt']= $defaultAmountUsd;
+            $cumStat['disb_amt']= $disb_amount;
         }
         else
         {
@@ -946,6 +948,8 @@ class genericClass
             $cumStat['hist_loss']= ($defaultAmountUsd/$disb_amount)*100;
             $cumStat['repay_late_rate']=($due_amtUsd/$disb_amount)*100;
             $cumStat['end_forgive_rate']=($forgiveAmountUsd/$disb_amount)*100;
+            $cumStat['hist_loss_amt']= $defaultAmountUsd;
+            $cumStat['disb_amt']= $disb_amount;
         }
         return $cumStat;
     }
@@ -4104,7 +4108,7 @@ class genericClass
         global $db;
         $review_exist= $this->getBorrowerReviewDetail($userid);
         if(!empty($review_exist)){
-            $q1="select * from ! where borrower_id=? AND (is_photo_clear=? || is_desc_clear = ? || is_addr_locatable = ? || is_pending_mediation = ? || is_nat_id_uploaded = ? || is_rec_form_uploaded = ? || is_rec_form_offcr_name = ?)";
+            $q1="select * from ! where borrower_id=? AND (is_photo_clear=? || is_desc_clear = ? || is_addr_locatable = ? || is_pending_mediation = ? || is_nat_id_uploaded = ? || is_rec_form_uploaded = ? || is_number_provided = ?)";
             $res= $db->getRow($q1, array('borrower_review',$userid, '0','0','0','0','0','0','0'));
             if(empty($res))
                 return True;
@@ -7190,18 +7194,20 @@ class genericClass
     }
 
     function saveFacebookInfo($facebook_id, $fbData, $web_acc, $userid=0, $email='', $fail_reason='') {
-        global $db;
+        global $db,$session;
         $date= time();
         $ip=(isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : "";
         $q="select id from ! where facebook_id=? AND (userid=? OR userid=?)";
         $existid= $db->getOne($q, array('facebook_info', $facebook_id, 0, $userid));
         if(!empty($existid)){
             $q1="update ! set facebook_id=?, userid=?, facebook_data=?, accept=?, date=?, zidisha_email=?, ip_address=?, fail_reason=? where id=?";
-            $res=  $db->query($q1, array('facebook_info', $facebook_id, $userid, $fbData, $web_acc, $date, $email, $ip, $fail_reason, $existid));
+            $res=  $db->query($q1, array('facebook_info', $facebook_id, $userid, $fbData, $web_acc, $date, $email, $ip, $fail_reason, $existid));			
         }else{
             $q1="insert into ! (facebook_id, userid, facebook_data, accept, date, zidisha_email, ip_address, fail_reason) values(?,?,?,?,?,?,?,?)";
             $res=$db->query($q1, array('facebook_info', $facebook_id, $userid, $fbData, $web_acc, $date, $email, $ip, $fail_reason));
         }
+		/**** Integration with shift science on date 24-12-2013******/
+		$session->invoiceShiftScience('facebook_connect',$userid,'','','',$facebook_id);
         return $res;
     }
 

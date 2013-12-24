@@ -1065,7 +1065,7 @@ end loan contract check commenting out -->
 						<?php } ?>
 						<?php	
 							
-						if(($breviewcomplt) && ($session->userlevel==LENDER_LEVEL || $session->userlevel==ADMIN_LEVEL)) {
+						if($breviewcomplt) {
 							$partners=$database->getAllActivePartners();
 							?>
 						<table> 

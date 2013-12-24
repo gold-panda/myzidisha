@@ -13,7 +13,8 @@ $(function() {
 	});	
 </script>
 <div class='span12'>
-<div align='left' class='static'><h1>New Member Activation Rate test</h1></div><br/>
+<div align='left' class='static'><h1>New Member Activation Rate</h1></div><br/>
+
 <?php 
 if($session->userlevel==ADMIN_LEVEL ) {
 	$v=0;
