@@ -238,4 +238,5 @@ define("MONTHLY_LOANARREAR_REMINDER", "30");
 define("TELEREVERT_API_KEY","DA7Z7NAFTAED7TQH3G3PRZGK7NMR2WAE");
 define("PROJECTID","PJ3e913d700ca3a696ac6b1a324c0943b3");
 define("PHONE_ID","PN6a83fb89665d4447");	// update the phone id as per julia mail on 27-11-13
+define("SHIFT_SCIENCE_KEY","e33ffd8ca8b19175"); // Shift Science API KEY
  
