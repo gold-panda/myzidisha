@@ -145,17 +145,18 @@ if($session->userlevel  == BORROWER_LEVEL && isset($_SESSION['rescheduleDetail']
 							for($i = 0; $i < count($schedule) ; $i++  )
 							{
 								$tempama=$schedule[$i]['amount'] ;
-								$tempama1=$schedule[$i]['paidamt'];
-								$dp='';
-								if(isset($schedule[$i]['paiddate']))
-									$dp = date('M d, Y',$schedule[$i]['paiddate']);
-								$amtpd='';
-								if(isset($schedule[$i]['paidamt']))
-								{
-									$amtpd =number_format(round_local($tempama1), 0, '.', ',');
-									$amtPaid += $tempama1;
-								}
-								$amtDue += $tempama;
+								if($tempama!=0){			// hide unncessary reypay schedule with due amount 0 by mohit 26-12-13
+									$tempama1=$schedule[$i]['paidamt'];
+									$dp='';
+									if(isset($schedule[$i]['paiddate']))
+										$dp = date('M d, Y',$schedule[$i]['paiddate']);
+									$amtpd='';
+									if(isset($schedule[$i]['paidamt']))
+									{
+										$amtpd =number_format(round_local($tempama1), 0, '.', ',');
+										$amtPaid += $tempama1;
+									}
+									$amtDue += $tempama;
 							?>
 								<tr>
 									<td><?php echo date('M d, Y',$schedule[$i]['duedate']);?></td>
@@ -163,7 +164,7 @@ if($session->userlevel  == BORROWER_LEVEL && isset($_SESSION['rescheduleDetail']
 									<td><?php echo $dp;?></td>
 									<td><?php echo $amtpd;?></td>
 								</tr>
-					<?php	}	?>
+					<?php	} }	?>
 						</tbody>
 						<tfoot>
 							<tr>

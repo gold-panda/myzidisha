@@ -715,6 +715,10 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		$loandetail=$database->getLoanDetailsNew($borrowerid, $loanid);
 		$totalAmt = $loandetail['totalAmt'];
 		$totalPaidAmt = $loandetail['totalPaidAmt'];
+		
+		/**** Integration with shift science on date 26-12-2013******/
+		$this->invoiceShiftScience('loan_repayments',$borrowerid,'','','','',$amount,$date);
+		
 		if($rtn==0)
 		{
 			if ( (abs($totalAmt) - abs($totalPaidAmt) <= 1))
@@ -5261,11 +5265,14 @@ function forgiveReminder(){
 			$totalDueAmtUsd += convertToDollar($totalDueAmt ,($CurrencyRate));
 			$amtDueTillUsd += convertToDollar($amtDueTill ,($CurrencyRate));
 			for($i = 0; $i < count($printSchedule); $i++)
-			{
+			{	
+								
 				if($i < $gracePeriod)
 				{
 					continue;
 				}
+				
+			if($printSchedule[$i]['dueAmt']!=0){
 				$text= $text. "<tr> ";
 				$text=$text."<td style='text-align:left; width:20%'>".date('M d, Y',$printSchedule[$i]['dueDate'])."</td>";
 				if($displyall)
@@ -5330,6 +5337,9 @@ function forgiveReminder(){
 					$text=$text."<td style='text-align:left; width:20%'>&nbsp;</td>";
 					 $text=$text." </tr>";
 				}
+			
+              } //end if			
+				
 			}
 			$totalPaidAmtUsd=convertToDollar($totalPaidAmt ,($CurrencyRate));
 			$amtPaidTillUsd=convertToDollar($amtPaidTill ,($CurrencyRate));
@@ -8105,7 +8115,7 @@ function forgiveReminder(){
 }
 
 /**** added by mohit 24-12-2013 ***/
-function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=null,$hearaAoutZidisha=null,$facebook_id=null,$loan_amnt){
+function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=null,$hearaAoutZidisha=null,$facebook_id=null,$loan_amnt,$repay_date,$comment=null,$subject=null,$senderid){
 	
 	$time=time();
 	if($event_type=='create_new_account' || $event_type=='edit_account'){
@@ -8149,6 +8159,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$type' => '$logout',
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
+			  '$session_id' => session_id(),
 			  '$time'	=> $time
 			);
 		}
@@ -8160,6 +8171,40 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$user_id' => $userid,
 			  '$time'	=> $time,
 			  'loan_amount' => $loan_amnt
+			);
+		}
+		
+		if($event_type=='loan_repayments'){			
+			$data = array(
+			  '$type' => $event_type,
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$time'	=> $time,
+			  'loan_amount' => $loan_amnt,
+			  'repayment_date' => $repay_date
+			);
+		}
+		
+		if($event_type=='borrower_comments'){			
+			$data = array(
+			  '$type' => $event_type,
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$time'	=> $time,
+			  'comment' => $comment,
+			  'sender' => $senderid
+			);
+		}
+		
+		if($event_type=='comments_reply'){			
+			$data = array(
+			  '$type' => $event_type,
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$time'	=> $time,
+			  'subject' => $subject,
+			  'comment' => $comment,
+			  'sender' => $senderid
 			);
 		}
 
