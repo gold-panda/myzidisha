@@ -284,7 +284,7 @@ class Validation
 			$form->setError('share_update', $lang['error']['share_update']);
 		}
 */
-	if($country!='ID'){
+	
 		if(empty($rec_form_offcr_num)) {
 			$form->setError('rec_form_offcr_num', $lang['error']['empty_rec_form_offcr_num']);
 		}else {
@@ -293,8 +293,9 @@ class Validation
 		if(empty($rec_form_offcr_name)) {
 			$form->setError('rec_form_offcr_name', $lang['error']['empty_rec_form_offcr_name']);
 		}
-		$this->checkDocuments($documents);
-	}
+		
+		//$this->checkDocuments($documents);
+		
 		//$this->checkCommunityNameAndNo($community_name_no, "community_name_no");
 		$this->checkCapcha($user_guess, "user_guess");
 	}
@@ -576,8 +577,7 @@ class Validation
 			if(empty($lending_inst_officer)) {
 				$form->setError('lending_institution_officer', $this->error['lending_institution_officer']);
 			} */		
-		if ($country!='ID'){
-			if(empty($rec_form_offcr_num)) {
+		if(empty($rec_form_offcr_num)) {
 				$form->setError('rec_form_offcr_num', $lang['error']['empty_rec_form_offcr_num']);
 			}else {
 				$this->checkMobile($rec_form_offcr_num, 'rec_form_offcr_num');
@@ -586,10 +586,10 @@ class Validation
 				$form->setError('rec_form_offcr_name', $lang['error']['empty_rec_form_offcr_name']);
 			}
 			
-			$this->checkDocuments($File,$uploadedDocs);
+			//$this->checkDocuments($File,$uploadedDocs);
 		}
 				
-		}
+		
 		$userid = $database->getUserId($uname);
 		$iscompleteLater = $database->getiscompleteLater($userid);
 		if($iscompleteLater) {

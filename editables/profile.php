@@ -102,6 +102,7 @@ $lang['profile']['home_location']='Home Location';
 $lang['profile']['posted_by']='Loan Profile Posted By';
 $lang['profile']['endorsed']='Endorsers';
 $lang['profile']['online_identity']='Online identity';
+$lang['profile']['invited_text']="If you would like help in communicating with %brwr_name%, you may post a message in the profile page of the member who invited %brwr_name% to join Zidisha, %invitedby%. <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'>%invited_tooltip%</span><span class='bottom'></span></span></a></strong>";
 $lang['profile']['vm_comment_text']="If you would like help in communicating with %brwr_name%, you may post a message in the profile page of %brwr_name%'s Volunteer Mentor, <a href='%vm_url%#comment-section' target='_blank'>%vm_name%</a>. <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'>%vm_tooltip%</span><span class='bottom'></span></span></a></strong>";
 $lang['profile']['volunteer_mentor']='Volunteer Mentor';
 $lang['profile']['tooltip_mentor']='Volunteer Mentors are Zidisha borrowers or residents of borrowers\' communities, who volunteer their time to assist new members to interact with our website.';

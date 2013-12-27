@@ -42,7 +42,17 @@ $(document).ready(function() {
 	<div style="float:right">
 		<h3 class="subhead" style="border-bottom:none;margin-bottom:0px"><?php echo"<a style='padding-right:20px' id='slick-toggle' href='$RequestUrl#'>".$lang['profile']['wcomments']."</a>";?><p id="user_comment" class="view-more-less">View Less</p></h3>
 	</div><br/>
-	<?php if(!empty($mentor_id)){?>
+	<?php 
+			
+	if(!empty($invcurrentloanid)){?>
+		<div style="float:left;padding-bottom: 15px;">
+		<?php 
+			$params['brwr_name']= $name;
+			$params['invitedby']= $invitedby;
+			$params['invited_tooltip']=$lang['profile']['tooltip_invited'];
+			$vm_comments= $session->formMessage($lang['profile']['invited_text'], $params);
+
+	} elseif(!empty($mentor_id)){?>
 	<div style="float:left;padding-bottom: 15px;">
 		<?php 
 			$params['brwr_name']= $name;
@@ -62,10 +72,9 @@ $(document).ready(function() {
 				$vm_comments= "";
 
 			}
-		?>
-		<?php echo $vm_comments; ?>
+		}
+		echo $vm_comments; ?>
 	</div>
-	<?php } ?>
 	<div style="clear:both;border-top:1px solid #DFDCDC">&nbsp;</div>
 	<div>
 		<div id="slickbox" style="border-bottom:1px solid #DFDCDC;display:none">

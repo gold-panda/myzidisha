@@ -912,7 +912,21 @@ if($borrowerActive==1) {
 						</select><br/><div id="volunteer_mentorerror"><?php echo $form->error("volunteer_mentor"); ?></div></td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
-	<!------ Modify by Mohit on date 20-12-13 ------->			
+
+								<tr>
+					<td><?php echo $lang['register']['sign_recomform_name'];?>:<a id="sign_recomform_nameerr"></a></td>
+					<td><input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $rec_form_offcr_name?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div></td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+
+					<td><?php echo $lang['register']['sign_recomform_num'];?>:<a id="sign_recomform_numerr"></a></td>
+					<td><input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $rec_form_offcr_num ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div></td>
+				</tr>
+				 <tr><td>&nbsp;</td></tr>
+
+
+	<!------ Modify by Mohit on date 20-12-13 --->			
 	<?php 
 	if($cntct_type=='1') {?>			
 				<tr><td>&nbsp;</td></tr>			
@@ -1090,6 +1104,8 @@ if($borrowerActive==1) {
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 
+				<!-- moved ID & recommendation form to optional verification page 27-12-13 
+							
 				 <tr>
 					<td>
 						<?php echo $lang['register']['front_national_id'];?>
@@ -1133,20 +1149,20 @@ if($borrowerActive==1) {
 							</strong>
 							<?php } ?>
 							</div>
+
 							<?php if($borrowerActive!=1) {?>
-							<!--[if lt IE 9]>
+							
 							<div>
 								<input type="file" name="front_national_id" id="front_national_id" value="C:\fakepath\ok" onchange="uploadfile(this)"/>
 							</div>
-							<![endif]-->
-							<!--[if !IE]> -->
+							
 								<div class="fileType_hide">
 									<input type="file" name="front_national_id" id="front_national_id" value="C:\fakepath\ok" onchange="uploadfile(this)"/>
 								</div>
 							<?php } ?>
 								<div class="customfiletype" onclick="getfrontNationalId()"><?php echo $FrntNatidlabel?></div>
 								<div style="clear:both"></div>
-							<!-- <![endif]-->
+							
 							<div  id="front_national_id_file"></div>
 							<br/>
 						</div>
@@ -1157,7 +1173,7 @@ if($borrowerActive==1) {
 					</td>
 				</tr>
 				 <tr><td>&nbsp;</td></tr>
-				 <tr style="<?php if($country=='ID')echo "display:none"; ?>" >
+				 <tr>
 
 					<td>
 						<?php echo $lang['register']['address_proof'];?>
@@ -1197,12 +1213,11 @@ if($borrowerActive==1) {
 						<?php } ?>
 						</div>
 							<?php if($borrowerActive!=1) {?>
-							<!--[if lt IE 9]>
+							
 								<div>
 									<input type="file" name="address_proof" id="address_proof" value="" onchange="uploadfile(this)"/>
 								</div>
-								<![endif]-->
-							<!--[if !IE]> -->
+								
 								<div class="fileType_hide">
 									<input type="file" name="address_proof" id="address_proof" value="" onchange="uploadfile(this)"/>
 								</div>
@@ -1210,7 +1225,7 @@ if($borrowerActive==1) {
 								<div class="customfiletype" onclick="getAddressProof()"><?php echo $addrprflabel?></div>
 								<div  id="address_proof_file"></div>
 								<div style="clear:both"></div>
-							<!-- <![endif]-->
+							
 							<br/><span><?php echo $lang['register']['allowed']; ?></span>
 							
 					</div>
@@ -1220,17 +1235,8 @@ if($borrowerActive==1) {
 					</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
-				<tr style="<?php if($country=='ID')echo "display:none"; ?>" >
-					<td><?php echo $lang['register']['sign_recomform_name'];?>:<a id="sign_recomform_nameerr"></a></td>
-					<td><input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $rec_form_offcr_name?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div></td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
-				<tr style="<?php if($country=='ID')echo "display:none"; ?>" >
 
-					<td><?php echo $lang['register']['sign_recomform_num'];?>:<a id="sign_recomform_numerr"></a></td>
-					<td><input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $rec_form_offcr_num ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div></td>
-				</tr>
-				 <tr><td>&nbsp;</td></tr>
+				end moved ID & recommendation form to optional verification page 27-12-13 -->
 
 
 			<?php $params['minendorser']= $database->getAdminSetting('MinEndorser');

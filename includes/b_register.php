@@ -421,6 +421,19 @@ end commenting out language section & eligibility questions -->
 						</select><br/><div id="volunteer_mentorerror"><?php echo $form->error("volunteer_mentor"); ?></div></td>
 					</tr>
 
+					<tr><td>&nbsp;</td></tr>
+					
+					 <tr>
+						<td><?php echo $lang['register']['sign_recomform_name'];?>:<a id="sign_recomform_nameerr"></a></td>
+						<td><input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_name"); ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div></td>
+					</tr>
+					<tr><td>&nbsp;</td></tr>
+					<tr style="<?php if($form->value("bcountry")=='ID')echo "display:none"; ?>" >
+
+						<td><?php echo $lang['register']['sign_recomform_num'];?>:<a id="sign_recomform_numerr"></a></td>
+						<td><input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_num"); ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div></td>
+					</tr>
+					<tr><td>&nbsp;</td></tr>
 
 					 <tr style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" id="contact_type" >
 						<td colspan='2'><?php echo $lang['register']['contact_type']?><a id="cntct_type"></a><br/><?php echo $form->error("contact_type"); ?></td>
@@ -520,7 +533,7 @@ end commenting out language section & eligibility questions -->
 				<tr>
 					<td><?php echo $lang['register']['reffered_by'];?><a id="breffered_by"></a></td>
 					<td>
-					<textarea name="reffered_by" id='reffered_by' class="textareacmmn" style="height:130px;"><?php echo $reffer_by?></textarea><br/>
+					<textarea name="reffered_by" id='reffered_by' class="textareacmmn" style="height:130px;"><?php echo $form->value("reffered_by"); ?></textarea><br/>
 					<div id="reffered_by_err"><?php echo $form->error("reffered_by"); ?></div>
 					</td>
 				</tr>
@@ -538,6 +551,8 @@ end commenting out language section & eligibility questions -->
 						<td><input type="text" id="referrer" name="referrer" class="inputcmmn-1" value="<?php echo $form->value("referrer"); ?>" /><br/><div id="error"><?php echo $form->error("referrer"); ?></div></td>
 					</tr>
 					 <tr><td>&nbsp;</td></tr>
+
+					<!-- moved ID and recommendation form to optional verification page 27-12-13 
 					 <tr>
 						<td>
 							<?php echo $lang['register']['front_national_id'];?>
@@ -559,18 +574,13 @@ end commenting out language section & eligibility questions -->
 									<img style="float:none" class="user-account-img" src="<?php echo SITE_URL.'images/tmp/'.end(explode('/',$isFrntNatid)) ?>" height="50" width="50" alt=""/>
 							<?php } ?>
 							</div>
-							<!--[if lt IE 9]>
-								<div>
-									<input type="file" name="front_national_id" id="front_national_id" onchange="uploadfile(this)"/>
-								</div>
-								<![endif]-->
-							<!--[if !IE]> -->
+							
 								<div class="fileType_hide">
 									<input type="file" name="front_national_id" id="front_national_id" onchange="uploadfile(this)"/>
 								</div>
 								<div class="customfiletype" onclick="getfrontNationalId()"><?php echo $FrntNatidlabel?></div>
 								<div style="clear:both"></div>
-							<!-- <![endif]-->
+							
 							<div  id="front_national_id_file"></div>
 							<br/><span><?php echo $lang['register']['allowed'];?></span><br/><div id="front_national_id_err"><?php echo $form->error("front_national_id"); ?></div>
 						
@@ -581,7 +591,7 @@ end commenting out language section & eligibility questions -->
 
 					 <tr><td>&nbsp;</td></tr>
 
-					 <tr style="<?php if($form->value("bcountry")=='ID')echo "display:none"; ?>" >
+					 <tr>
 						<td>
 							<?php echo $lang['register']['address_proof'];?>
 							<a id="address_prooferr"></a>
@@ -604,12 +614,11 @@ end commenting out language section & eligibility questions -->
 										<img style="float:none" class="user-account-img" src="<?php echo SITE_URL.'images/tmp/'.end(explode('/',$isaddrprf)) ?>" height="50" width="50" alt=""/>
 								<?php	}	?>
 								</div>
-								<!--[if lt IE 9]>
+								
 									<div>
 										<input type="file" name="address_proof" id="address_proof" value="" onchange="uploadfile(this)"/>
 									</div>
-								<![endif]-->
-								<!--[if !IE]> -->
+								
 									<div class="fileType_hide">
 										<input type="file" name="address_proof" id="address_proof" value="" onchange="uploadfile(this)"/>
 									</div>
@@ -617,17 +626,19 @@ end commenting out language section & eligibility questions -->
 										<?php echo $addrprflabel?>
 									</div>
 									<div style="clear:both"></div>
-								<!-- <![endif]-->
+								
 									<div  id="address_proof_file"></div>			
 									<br/><span><?php echo $lang['register']['allowed'];?></span><br/><div id="address_proof_err"><?php echo $form->error("address_proof"); ?></div>
 									<input type="hidden" name="isaddrprf" value="<?php echo $form->value("isaddrprf"); ?>" />
 								</div>
 						</td>
 					</tr>
-					 <tr><td>&nbsp;</td></tr>
-					 <tr style="<?php if($form->value("bcountry")=='ID')echo "display:none"; ?>" >
 
+					<tr><td>&nbsp;</td></tr>
 
+					end moved ID and recommendation form to optional verification page 27-12-13 -->
+
+					 <tr>
 						<td><?php echo $lang['register']['sign_recomform_name'];?>:<a id="sign_recomform_nameerr"></a></td>
 						<td><input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_name"); ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div></td>
 					</tr>

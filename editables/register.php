@@ -157,8 +157,8 @@ $lang['register']['lending_institution_officer']='Please enter the name of the l
 $lang['register']['reffered_by']='How did you hear about Zidisha?';
 $lang['register']['reffered_member']='Please select the name of the member who referred you to Zidisha:';
 $lang['register']['volunteer_mentor']='Please choose one person from this list to serve as your Volunteer Mentor:';
-$lang['register']['sign_recomform_name']='Please enter the name of the official who signed the Recommendation Form';
-$lang['register']['sign_recomform_num']='Please enter the telephone number of the official who signed the Recommendation Form';
+$lang['register']['sign_recomform_name']='Please enter the name of a community leader, such as the leader of a local school, religious institution or other community organization, who knows you well and can recommend you for a Zidisha loan';
+$lang['register']['sign_recomform_num']='Please enter the mobile telephone number of the community leader here';
 $lang['register']['contact_type']='Please choose an account authentication method:';
 $lang['register']['FB_contact']='Link my Facebook profile';
 $lang['register']['tel_contact']='Request telephone contacts to vouch for me';
@@ -205,4 +205,6 @@ $lang['register']['endorser_fb']='In order to verify your identity, please click
 $lang['register']['tooltip_mentor']='Volunteer Mentors are Zidisha borrowers or residents of borrowers\' communities, who volunteer their time to assist new members to interact with our website.';
 $lang['register']['edited']='Your changes have been saved.';
 $lang['register']['partner_commentpost']='Would you like to be notified by email when a comment is posted on the profile of one of the members you activated?';
+$lang['register']['additional_verification'] ='Additional Verification'; 
+$lang['register']['av_instructions'] ='This page allows you to provide additional verification credentials.<br/><br/>The credentials will be displayed in your profile page, so that lenders will have more confidence in funding your loan applications.  Displaying additional credentials will help your loan applications to be funded more quickly and at lower interest rates.'; 
 ?>

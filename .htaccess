@@ -17,6 +17,7 @@ AuthUserFile "/home4/semfundc/.htpasswds/public_html/zidisha/passwd"
 RewriteEngine On
 ErrorDocument 404 https://www.zidisha.org
 RewriteCond %{SERVER_PORT} !^443$
+
 RewriteRule ^(.*)$ https://www.zidisha.org/$1 [L,R] 
 RewriteCond %{HTTP_HOST}%{REQUEST_URI} ^https://www.zidisha.org(\/?)$
 RewriteRule (.*) https://www.zidisha.org/en/$1 [R=302,L]

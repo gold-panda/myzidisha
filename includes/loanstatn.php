@@ -597,7 +597,7 @@ else
 
 						echo "";
 
-					} elseif (!empty($mentor_id)) {
+					} elseif (empty($invcurrentloanid) && !empty($mentor_id)) {
 
 						echo $lang['loanstatn']['volunteer_mentor'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_mentor'] ?></span><span class='bottom'></span></span></a></strong></td>
 
@@ -611,7 +611,7 @@ else
 						}
 						$vm_name= $database->getNameById($brw['mentor_id']);
 					?>
-					<td><?php if(!empty($brw['mentor_id'])){?><a href="<?php echo $vm_url?>"><?php echo $vm_name; ?></a><?php }else	echo ' ';
+					<td><?php if(empty($invcurrentloanid) && !empty($brw['mentor_id'])){?><a href="<?php echo $vm_url?>"><?php echo $vm_name; ?></a><?php }else	echo ' ';
 					 ?></td>
 				</tr>
 
@@ -724,10 +724,7 @@ else
 					
 				</tr>
 				<?php if($brw2['active']==LOAN_OPEN) {?>
-					<tr>
-						<td><strong><?php echo $lang['loanstatn']['currency_risk'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_crncy_risk'] ?></span><span class='bottom'></span></span></a></strong></td>
-						<td>Yes</td>
-					</tr>
+					
 					<tr>
 						<td><strong><?php echo $lang['loanstatn']['total_bids'] ?>:</strong></td>
 						<td>USD <?php echo number_format($totBid, 2, '.', ',') ?></td>
