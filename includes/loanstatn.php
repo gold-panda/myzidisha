@@ -339,7 +339,11 @@ else
 	$partwebsite=$partner['website'];
 	$report=$database->loanReport($ud);
 	$ldate=$report['sincedate'];
+	$feedback=$database->getPartnerComment($ud);
 	$f=$report['feedback'];
+	if ($f==''){
+		$f=0;
+	}
 	$cf=$report['Totalfeedback'];
 	$bfrstloan=$database->getBorrowerFirstLoan($ud);
 	$bot = '';
@@ -546,7 +550,7 @@ else
 					<?php $prurl = getUserProfileUrl($ud);?>
 					<td><?php 
 
-	if(!empty($f) && $f!='' && $cf-1>0){
+	if(!empty($feedback)){
 
 		echo number_format($f); ?>% Positive&nbsp;(<?php echo $cf-1; ?>)<br/><br/><a href="<?php echo $prurl?>?fdb=2">View Lender Feedback</a><?php 
 	
@@ -572,6 +576,47 @@ else
 			<?php } ?>
 
 					</td>
+		</tr> 
+
+<!-- displays whether or not borrower has provided copy of national ID -->
+
+		<tr>
+			<td> <strong> <?php echo $lang['loanstatn']['nationalid'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_nationalid'] ?></span><span class='bottom'></span></span></a></strong></td>
+
+			<td>
+
+			<?php if(empty($brw['frontNationalId'])){
+
+				echo $lang['loanstatn']['not_provided'];
+
+			} else {
+
+				echo $lang['loanstatn']['provided'];
+
+			} ?>
+
+			</td>
+		</tr> 
+		<tr><td></td></tr>
+
+<!-- displays whether or not borrower has provided Recommendation Form -->
+
+		<tr>
+			<td> <strong> <?php echo $lang['loanstatn']['recommendation'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_recommendation'] ?></span><span class='bottom'></span></span></a></strong></td>
+
+			<td>
+
+			<?php if(empty($brw['addressProof'])){
+
+				echo $lang['loanstatn']['not_provided'];
+
+			} else {
+
+				echo $lang['loanstatn']['provided'];
+
+			} ?>
+
+			</td>
 		</tr> 
 
 		<tr>

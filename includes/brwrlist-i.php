@@ -666,57 +666,97 @@ echo "<p><i>How did you hear about Zidisha?  </i>".$reffered_by;
 											</table>
 										</td>
 									</tr>
-									<tr height='15px'></tr>
-
-
 									<tr>
 										<td width="30px" style="text-align:right; vertical-align: top;<?php echo $padding_top?>">4.</td>
-										<td>Please download the national identity card copy below, and ensure that it is legible and matches the applicant's name.<br/>
-Has the applicant uploaded a legible copy of a government-issued identity card that matches his or her name?</td>
+
+										<td><?php  echo $lang['brwrlist-i']['is_number_provided']; ?></td>
 									</tr>
-									<tr><td></td></tr>
-									<?php if(!empty($details['frontNationalId'])) { ?>
+									<tr height='15px'></tr>
 									<tr>
 										<td></td>
-										<td colspan=2><strong><a href="<?php echo SITE_URL.'download.php?u='.$userid.'&doc=frontNationalId'; ?>" onclick="needToConfirm = false;">
-											<?php echo $lang['brwrlist-i']['dwn_front_nation_id'];?></a></strong>
-										</td>
-									</tr>
-									<?php }if(!empty($details['backNationalId'])) {?>
-									<tr>
-										<td></td>
-										<td colspan=2><strong><a href="<?php echo SITE_URL.'download.php?u='.$userid.'&doc=backNationalId'; ?>" onclick="needToConfirm = false;">
-											<?php echo $lang['brwrlist-i']['dwn_back_nation_id'];?></a></strong>
-<?php } ?>
+																							<td>
+														<strong>
+															<?php echo $lang['brwrlist-i']['familycont1'];?>:  
+														</strong>
+				<?php echo $familycont1;?>
+													</td>
+												</tr>
+												<tr>	
+													<td></td>
+		<td>
+														<strong>
+															<?php echo $lang['brwrlist-i']['familycont2'];?>:  
+														</strong>
+				<?php echo $familycont2;?>
+													</td>
+												</tr>
+												<tr>	
+													<td></td>
+		<td>
+														<strong>
+															<?php echo $lang['brwrlist-i']['familycont3'];?>:  
+														</strong>
+				<?php echo $familycont3;?>
+													</td>
+												</tr>
+												<tr>	
+													<td></td>
+		<td>
+														<strong>
+															<?php echo $lang['brwrlist-i']['neighcont1'];?>:  
+														</strong>
+				<?php echo $neighcont1;?>
+													</td>
+												</tr>
+												<tr>	
+													<td></td>
+		<td>
+														<strong>
+															<?php echo $lang['brwrlist-i']['neighcont2'];?>:  
+														</strong>
+				<?php echo $neighcont2;?>
+													</td>
+												</tr>
+												<tr>	
+													<td></td>
+		<td>
+														<strong>
+															<?php echo $lang['brwrlist-i']['neighcont3'];?>:  
+														</strong>
+				<?php echo $neighcont3;?>
+													</td>
 
-<br/><br/>
 
-</td>
+			</td>
+		</tr>
+
 										
-									</tr> 
-									<tr height='10px'></tr>
-									<tr>
-										<td></td>
-										<td>
-											<input type='radio' name='is_nat_id_uploaded' value='1' <?php 	if($is_nat_id_uploaded== '1') echo "checked";?> onclick="showtext(this.value, 'is_nat_id_uploaded_other_text')">Yes&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-											<input type='radio' name='is_nat_id_uploaded' id='is_photo_clear_no' value='0' <?php 	if($is_nat_id_uploaded== '0') echo "checked";?> onclick="showtext(this.value, 'is_nat_id_uploaded_other_text')">No
-										</td>
 									</tr>
-									<tr>
+								<tr>
+									<td></td>
+									<td colspan=2> <br/><br/>
+
+														<input type='radio' name='is_number_provided' id='is_number_provided_yes' value='1' <?php 	if($is_number_provided== '1') echo "checked";?> onclick="showtext(this.value, 'is_number_provided_other_text')">Yes&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+														<input type='radio' name='is_number_provided' id='is_number_provided_no' value='0' <?php 	if($is_number_provided== '0') echo "checked";?> onclick="showtext(this.value, 'is_number_provided_other_text')">No
+													</td>
+													<td>
+													</td>
+												</tr>
+
+										<tr>
 										<td></td>
+									
 										<td>
 											<table class='detail'>
 												<tr>
-													<td ><input type='radio' name='is_nat_id_uploaded' id='is_nat_id_uploaded_other' value='-1' <?php 	if($is_nat_id_uploaded== '-1') echo "checked";?> onclick="showtext(this.value, 'is_nat_id_uploaded_other_text')"><span >Other (Please explain):</span></td>
+													<td ><input type='radio' name='is_number_provided' id='is_number_provided_other' value='-1' <?php 	if($is_number_provided== '-1') echo "checked";?> onclick="showtext(this.value, 'is_number_provided_other_text')"><span >Other (Please explain):</span></td>
 													<td>
-														<textarea name="is_nat_id_uploaded_other" id="is_nat_id_uploaded_other_text" rows='10' cols='40' class="textareacmmn" style="<?php if($is_nat_id_uploaded== '-1') echo 'display'; else echo 'display:none'; ?>"><?php echo $is_nat_id_uploaded_other; ?></textarea>
+														<textarea name="is_number_provided_other" id="is_number_provided_other_text" rows='10' cols='40' class="textareacmmn" style="<?php if($is_number_provided== '-1') echo 'display'; else echo 'display:none'; ?>"><?php echo $is_number_provided_other; ?></textarea>
 													</td>
 												</tr>
 											</table>
-										</td>
-									</tr>
-									
 									<tr height='15px'></tr>
+
 									<tr>
 										<td width="30px" style="text-align:right; vertical-align: top;<?php echo $padding_top?>">5.</td>
 
@@ -906,97 +946,59 @@ if (!empty($rec_form_ofcr_no)) {
 										</td>
 									</tr>
 									<tr height='15px'></tr>
+
+									<?php if(!empty($details['frontNationalId'])) { ?>
 									<tr>
 										<td width="30px" style="text-align:right; vertical-align: top;<?php echo $padding_top?>">7.</td>
-
-										<td><?php  echo $lang['brwrlist-i']['is_number_provided']; ?></td>
+										<td>Please download the national identity card copy below, and ensure that it is legible and matches the applicant's name.<br/>
+Has the applicant uploaded a legible copy of a government-issued identity card that matches his or her name?</td>
 									</tr>
-									<tr height='15px'></tr>
+									<tr><td></td></tr>
+									<?php }
+									if(!empty($details['frontNationalId'])) { ?>
 									<tr>
 										<td></td>
-																							<td>
-														<strong>
-															<?php echo $lang['brwrlist-i']['familycont1'];?>:  
-														</strong>
-				<?php echo $familycont1;?>
-													</td>
-												</tr>
-												<tr>	
-													<td></td>
-		<td>
-														<strong>
-															<?php echo $lang['brwrlist-i']['familycont2'];?>:  
-														</strong>
-				<?php echo $familycont2;?>
-													</td>
-												</tr>
-												<tr>	
-													<td></td>
-		<td>
-														<strong>
-															<?php echo $lang['brwrlist-i']['familycont3'];?>:  
-														</strong>
-				<?php echo $familycont3;?>
-													</td>
-												</tr>
-												<tr>	
-													<td></td>
-		<td>
-														<strong>
-															<?php echo $lang['brwrlist-i']['neighcont1'];?>:  
-														</strong>
-				<?php echo $neighcont1;?>
-													</td>
-												</tr>
-												<tr>	
-													<td></td>
-		<td>
-														<strong>
-															<?php echo $lang['brwrlist-i']['neighcont2'];?>:  
-														</strong>
-				<?php echo $neighcont2;?>
-													</td>
-												</tr>
-												<tr>	
-													<td></td>
-		<td>
-														<strong>
-															<?php echo $lang['brwrlist-i']['neighcont3'];?>:  
-														</strong>
-				<?php echo $neighcont3;?>
-													</td>
-
-
-			</td>
-		</tr>
-
-										
+										<td colspan=2><strong><a href="<?php echo SITE_URL.'download.php?u='.$userid.'&doc=frontNationalId'; ?>" onclick="needToConfirm = false;">
+											<?php echo $lang['brwrlist-i']['dwn_front_nation_id'];?></a></strong>
+										</td>
 									</tr>
-								<tr>
-									<td></td>
-									<td colspan=2> <br/><br/>
-
-														<input type='radio' name='is_number_provided' id='is_number_provided_yes' value='1' <?php 	if($is_number_provided== '1') echo "checked";?> onclick="showtext(this.value, 'is_number_provided_other_text')">Yes&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-														<input type='radio' name='is_number_provided' id='is_number_provided_no' value='0' <?php 	if($is_number_provided== '0') echo "checked";?> onclick="showtext(this.value, 'is_number_provided_other_text')">No
-													</td>
-													<td>
-													</td>
-												</tr>
-
-																			<tr>
+									<?php }if(!empty($details['backNationalId'])) {?>
+									<tr>
 										<td></td>
-									
+										<td colspan=2><strong><a href="<?php echo SITE_URL.'download.php?u='.$userid.'&doc=backNationalId'; ?>" onclick="needToConfirm = false;">
+											<?php echo $lang['brwrlist-i']['dwn_back_nation_id'];?></a></strong>
+<?php } ?>
+
+<br/><br/>
+
+</td>
+										
+									</tr> 
+									<tr height='10px'></tr>
+
+									<tr style="<?php if (!empty($details['frontNationalId']))echo "display:''"; else echo "display:none"; ?>" >
+										<td></td>
+										<td>
+											<input type='radio' name='is_nat_id_uploaded' value='1' <?php 	if($is_nat_id_uploaded== '1' || empty($details['frontNationalId'])) echo "checked";?> onclick="showtext(this.value, 'is_nat_id_uploaded_other_text')">Yes&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+											<input type='radio' name='is_nat_id_uploaded' id='is_photo_clear_no' value='0' <?php 	if($is_nat_id_uploaded== '0' && !empty($details['frontNationalId'])) echo "checked";?> onclick="showtext(this.value, 'is_nat_id_uploaded_other_text')">No
+										</td>
+									</tr>
+									<tr>
+										<td></td>
 										<td>
 											<table class='detail'>
 												<tr>
-													<td ><input type='radio' name='is_number_provided' id='is_number_provided_other' value='-1' <?php 	if($is_number_provided== '-1') echo "checked";?> onclick="showtext(this.value, 'is_number_provided_other_text')"><span >Other (Please explain):</span></td>
+													<td ><input type='radio' name='is_nat_id_uploaded' id='is_nat_id_uploaded_other' value='-1' <?php 	if($is_nat_id_uploaded== '-1' && !empty($details['frontNationalId'])) echo "checked";?> onclick="showtext(this.value, 'is_nat_id_uploaded_other_text')"><span >Other (Please explain):</span></td>
 													<td>
-														<textarea name="is_number_provided_other" id="is_number_provided_other_text" rows='10' cols='40' class="textareacmmn" style="<?php if($is_number_provided== '-1') echo 'display'; else echo 'display:none'; ?>"><?php echo $is_number_provided_other; ?></textarea>
+														<textarea name="is_nat_id_uploaded_other" id="is_nat_id_uploaded_other_text" rows='10' cols='40' class="textareacmmn" style="<?php if($is_nat_id_uploaded== '-1') echo 'display'; else echo 'display:none'; ?>"><?php echo $is_nat_id_uploaded_other; ?></textarea>
 													</td>
 												</tr>
 											</table>
-										
-
+										</td>
+									</tr>
+									
+									<tr height='15px'></tr>
+									</table>
 <!-- commented out loan contract check 5 Dec 2013
 
 										<td><?php echo $lang['brwrlist-i']['is_rec_form_offcr_name']; ?></td>

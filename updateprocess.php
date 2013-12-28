@@ -185,7 +185,9 @@ class updateProcess
 		else if(isset($_POST['tmp_transactionhistorySummary'])){
 			$this->tmp_trhistorySummary();
 		}
-		
+		if(isset($_POST["additional_verification"])){
+			$this->additional_verification();
+		}
 		
 		
 
@@ -565,6 +567,135 @@ class updateProcess
 			}
 		}
 	}
+
+	function additional_verification()
+	{	
+		global $session, $form;
+		$id=$session->userid;
+		$_POST_ORG=$_POST;
+		//Logger_Array("FB LOG - updateprocess start",'fb_data', serialize($_POST['fb_data']).$_POST["busername"]);
+		$_POST = sanitize_custom($_POST);
+		for($i=1; $i<=10; $i++){
+			$endorser_name[]= $_POST['endorser_name'.$i];
+			$endorser_email[]= $_POST['endorser_email'.$i];
+			$endorser_id[]= $_POST['endorser_id'.$i];
+		}
+		if($_POST['before_fb_data']=='1'){
+			$_SESSION['fb_data']= $_POST;
+			header('Location: index.php?p=111&fb_data=1#FB_cntct');
+		}else{
+		
+			if(isset($_FILES['front_national_id']['tmp_name']) && !is_uploaded_file($_FILES['front_national_id']['tmp_name']) && !empty($_POST['isFrntNatid'])) {
+				$_FILES['front_national_id']['tmp_name'] = $_POST['isFrntNatid'];
+				$_FILES['front_national_id']['name'] = end(explode("/",$_POST['isFrntNatid']));
+			}
+			
+			if(isset($_FILES['address_proof']['tmp_name']) && !is_uploaded_file($_FILES['address_proof']['tmp_name']) && !empty($_POST['isaddrprf'])) {
+				$_FILES['address_proof']['tmp_name'] = $_POST['isaddrprf'];
+				$_FILES['address_proof']['name'] = end(explode("/",$_POST['isaddrprf']));
+			}
+			
+			if (!empty($_POST["uploadfileanchor"])) {
+				$result = 2;
+			}else{ 
+				Logger_Array("FB LOG - updateprocess",'fb_data', serialize($_POST['fb_data']).$_POST["busername"]);
+				$result = $session->editprofile_b($_POST["busername"], $_POST["bfname"], $_POST["blname"], $_POST["bpass1"], $_POST["bpass2"], $_POST["bpostadd"], $_POST["bcity"], $_POST["bcountry"], $_POST["bemail"], $_POST["bmobile"], $_POST["reffered_by"],$_POST["bincome"], $_POST["babout"], $_POST["bbizdesc"], $photo, $id, $_POST["bnationid"], $_POST["labellang"], $_POST["community_name_no"], $_FILES, $_POST["abletocomplete"], $_POST["repaidpast"], $_POST["debtfree"], $_POST["share_update"], $_POST["borrower_behalf"], $_POST["behalf_name"], $_POST["behalf_number"], $_POST["behalf_email"],$_POST["behalf_town"],$_POST["borrower_behalf_id"],$_POST['submitform'], $_POST['uploadedDocs'], $_POST['bfamilycont1'],$_POST['bfamilycont2'],$_POST['bfamilycont3'], $_POST['bneighcont1'],$_POST['bneighcont2'],$_POST['bneighcont3'], $_POST['home_no'], $_POST['rec_form_offcr_name'], $_POST['rec_form_offcr_num'],$_POST['refer_member'], $_POST['volunteer_mentor'], $_POST['cntct_type'], $_POST['fb_data'], $endorser_name, $endorser_email, $endorser_id); 
+			}
+			if($result==0)
+			{
+				require("editables/register.php");
+				$path=  getEditablePath('register.php');
+				require ("editables/".$path);
+				if($_POST['submitform'] != trim($lang['register']['RegisterComplete'])){
+					$_SESSION['bedited'] = true;
+				}
+				if(isset($_POST["labellang"]) && $_POST["labellang"] !="en")
+					$url= SITE_URL.$_POST["labellang"]."/index.php?p=111";
+				else if(isset($_GET["language"])) {
+					$language = $_GET["language"];
+					$url= SITE_URL.$language."/index.php?p=111";
+				}else 
+					$url= SITE_URL."index.php?p=111";
+
+				if($_POST['submitform'] == trim($lang['register']['RegisterComplete'])) {
+					$url= SITE_URL."index.php?p=50";
+				}
+				header("Location: $url");
+			}
+			else 
+			{
+				$_SESSION['value_array'] = $_POST_ORG;
+				$_SESSION['error_array'] = $form->getErrorArray();
+				$errurl1 = $_SERVER['HTTP_REFERER'];
+				if(strstr($errurl1, "fb_join")){
+					$errurl= $errurl1;
+				}else{
+					$errurl= $errurl1."&fb_join=1";
+				}
+				$supported=array("image/gif", "image/jpeg", "image/pjpeg", "image/png", "image/x-png", "application/pdf");
+				
+				if(isset($_FILES['front_national_id']['type'])){
+					$frntidtype = $_FILES['front_national_id']['type'];
+				}
+				
+				if(isset($_FILES['address_proof']['type'])){
+					$addrsype = $_FILES['address_proof']['type'];
+				}
+				
+				if(isset($_FILES['front_national_id']['tmp_name']) && !empty($_FILES['front_national_id']['tmp_name']) && in_array($frntidtype, $supported))
+				{
+					chmod($_FILES['front_national_id']['tmp_name'], 0644);
+					$time=time();
+					if($_FILES['front_national_id']['tmp_name']=="image/gif")
+						$frntnatid=$time.".gif";
+					else if($_FILES['front_national_id']['tmp_name']=="image/jpeg" || $_FILES['front_national_id']['tmp_name']=="image/pjpeg")
+						$frntnatid=$time.".jpeg";
+					else if($_FILES['front_national_id']['tmp_name']=="image/png" || $_FILES['front_national_id']['tmp_name']=="image/x-png")
+						$frntnatid=$time.".png";
+					else
+						$frntnatid=$_FILES['front_national_id']['name'];
+					move_uploaded_file($_FILES['front_national_id']['tmp_name'],TMP_IMAGE_DIR.$frntnatid);
+					$_SESSION['value_array']['isFrntNatid']=TMP_IMAGE_DIR.$frntnatid;
+									
+				}			
+
+				if(isset($_FILES['address_proof']['tmp_name']) && !empty($_FILES['address_proof']['tmp_name']) && in_array($addrsype, $supported))
+				{
+					chmod($_FILES['address_proof']['tmp_name'], 0644);
+					$time=time();
+					if($_FILES['address_proof']['tmp_name']=="image/gif")
+						$addrprf=$time.".gif";
+					else if($_FILES['address_proof']['tmp_name']=="image/jpeg" || $_FILES['address_proof']['tmp_name']=="image/pjpeg")
+						$addrprf=$time.".jpeg";
+					else if($_FILES['address_proof']['tmp_name']=="image/png" || $_FILES['address_proof']['tmp_name']=="image/x-png")
+						$addrprf=$time.".png";
+					else
+						$addrprf=$_FILES['address_proof']['name'];
+					move_uploaded_file($_FILES['address_proof']['tmp_name'],TMP_IMAGE_DIR.$addrprf);
+					$_SESSION['value_array']['isaddrprf']=TMP_IMAGE_DIR.$addrprf;
+				}
+				
+				if($result==1) {
+						if (!empty($_SESSION['error_array']['front_national_id'])) {
+							$errurl = 'index.php?p=111'."#front_national_iderr";
+						}else if(!empty($_SESSION['error_array']['address_proof'])) {
+							$errurl = 'index.php?p=111'."#address_prooferr";
+			
+						header("Location: $errurl");
+					}else{
+						$url = $_SERVER['HTTP_REFERER'];
+						if(strstr($url, "fb_join")){
+							header("Location: $url".$_POST["uploadfileanchor"]);
+						}else{
+					// redirect to borrower form after file upload. $_POST["uploadfileanchor"] contains an anchor
+						header("Location: $url&fb_join=1".$_POST["uploadfileanchor"]);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	function repaymentfeedback()
 	{
 		global $session, $form;

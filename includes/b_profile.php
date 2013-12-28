@@ -100,7 +100,7 @@
 } 
 
 
-if($isvolunteer==1 || $session->userlevel==ADMIN_LEVEL){ ?>
+if($isvolunteer==1 || $is_mentor==1|| $session->userlevel==ADMIN_LEVEL){ ?>
 
 
 		<h3 class="subhead top"><?php echo $lang['profile']['b_detail'] ?></h3>

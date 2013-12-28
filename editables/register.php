@@ -95,9 +95,9 @@ $lang['register']['l_optional']='<br/><i>Optional: if completed this will be dis
 $lang['register']['mailinglist_preferences_subscribe_newsletter']='Would you like to subscribe to our monthly newsletter?';
 $lang['register']['p_emails_notify']="Enter your email addresses here,<br>separated by commas. When a new loan application is sent to you for review, an email notification will go to each of these addresses.";
 $lang['register']['community_name_no']="Please enter the name, name of institution, official title and telephone number of a community official (such as a religious or school official) who can provide a personal reference and confirm your residential address.";
-$lang['register']['front_national_id']="Please upload a copy of the front of your national identification card.";
+$lang['register']['front_national_id']="Please upload a copy of your national identification card.";
 $lang['register']['back_national_id']="Please upload a copy of the back of your national identification card.";
-$lang['register']['address_proof']="Please download the Recommendation Form below, and upload a completed copy of it here. <br/><br/>
+$lang['register']['address_proof']="Please download the Recommendation Form below, and upload a completed copy of it here. <br/><br/><i>The Recommendation Form may be completed by either your current Community Leader, or by a different leader of a school, religious institution or other recognized organization in your community.</i><br/><br/>
 <strong><a href='images/Recommendation Form.pdf' target='_blank'>Download Recommendation Form</strong></a>";
 
 $lang['register']['legal_declaration']="Please upload a copy of the Legal Contract, which has been completed and signed by you and by a witness.<br/><br/> <a href='images/Legal Contract_EN.pdf' target='_blank'><strong>Download Legal Contract in English</strong></a><br/><br/> <a href='images/Legal Contract.pdf' target='_blank'><strong>Download Legal Contract in Kiswahili</strong></a>";
@@ -165,7 +165,7 @@ $lang['register']['tel_contact']='Request telephone contacts to vouch for me';
 $lang['register']['fb_instruction']='Please click on the Facebook Connect button to
 connect your Facebook account. A link to your public Facebook page will be displayed to lenders in your Zidisha loan profile page.';
 $lang['register']['behalf_guideline']='View guidelines for helping others apply';
-$lang['register']['endorser']='<strong>Optional:</strong>  Please enter the names and email addresses of up to 10 people who know you well and can endorse you for a loan.  <br/><br/><i>In order to be eligible, the endorsers must hold Facebook accounts with extensive social connections, and must not be an existing Zidisha member or endorsing any other Zidisha member.  <br/><br/>When you submit this registration form, an email invite to complete an endorsement form will be sent to each endorser you list here.  Each endorsement received will be published on your Zidisha profile page, and help to attract funding for your loan applications.</i>';
+$lang['register']['endorser']='Please enter the names and email addresses of up to 10 people who know you well and can endorse you for a loan.  <br/><br/><i>In order to be eligible, the endorsers must hold Facebook accounts with extensive social connections, and must not be an existing Zidisha member or endorsing any other Zidisha member.  <br/><br/>When you submit this registration form, an email invite to complete an endorsement form will be sent to each endorser you list here.  Each endorsement received will be published on your Zidisha profile page, and help to attract funding for your loan applications.</i>';
 $lang['register']['endorser1_name']='Endorser 1 Name:';
 $lang['register']['endorser1_email']='Endorser 1 Email:';
 $lang['register']['endorser2_name']='Endorser 2 Name:';
@@ -205,6 +205,15 @@ $lang['register']['endorser_fb']='In order to verify your identity, please click
 $lang['register']['tooltip_mentor']='Volunteer Mentors are Zidisha borrowers or residents of borrowers\' communities, who volunteer their time to assist new members to interact with our website.';
 $lang['register']['edited']='Your changes have been saved.';
 $lang['register']['partner_commentpost']='Would you like to be notified by email when a comment is posted on the profile of one of the members you activated?';
-$lang['register']['additional_verification'] ='Additional Verification'; 
-$lang['register']['av_instructions'] ='This page allows you to provide additional verification credentials.<br/><br/>The credentials will be displayed in your profile page, so that lenders will have more confidence in funding your loan applications.  Displaying additional credentials will help your loan applications to be funded more quickly and at lower interest rates.'; 
+$lang['register']['additional_verification'] ='Add Verification Credentials'; 
+$lang['register']['av_instructions'] ='This page allows you to add verification credentials to your Zidisha profile.<br/><br/>The credentials will be displayed in your profile page, so that lenders will have more confidence in funding your loan applications.  Displaying additional credentials will help your loan applications to be funded more quickly and at lower interest rates.'; 
+$lang['register']['step_one'] ='Step One: Link Your Facebook Account'; 
+$lang['register']['step_two'] ='Step Two: Upload Your National ID Card'; 
+$lang['register']['step_three'] ='Step Three: Add A Community Leader Recommendation'; 
+$lang['register']['step_four'] ='Step Four: Invite Your Online Contacts to Endorse You'; 
+$lang['register']['step_one_complete'] ='Congratulations! You have completed Step One.'; 
+$lang['register']['step_two_complete'] ='Congratulations! You have completed Step Two.'; 
+$lang['register']['step_three_complete'] ='Congratulations! You have completed Step Three.'; 
+$lang['register']['cl_name'] ='Your Community Leader Name';
+$lang['register']['cl_tel'] ='Your Community Leader Telephone Number';
 ?>
