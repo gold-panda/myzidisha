@@ -448,7 +448,7 @@ $lang['mailtext']['if_addrs_missing-msg'] = 'A precise residential address, incl
 ';
 $lang['mailtext']['if_tel_num_missing-msg'] = '';
 
-$lang['mailtext']['if_nat_id_missing-msg'] = 'A legible copy of the front and back of your national identity card.
+$lang['mailtext']['if_nat_id_missing-msg'] = 'A legible copy of your national identity card.
 
 ';
 $lang['mailtext']['if_rec_form_missing-msg'] = 'Recommendation Form downloaded from our website that has been signed by the leader of a religious institution, a school or a social organization in your community.

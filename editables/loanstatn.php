@@ -204,4 +204,10 @@ $lang['loanstatn']['public_endorse']='Public Endorsement';
 $lang['loanstatn']['tooltip_endorse']='One or more of this applicant\'s online endorsers has consented to make their endorsement visible to the public.';
 $lang['loanstatn']['view_endorse']='View Endorsements';
 $lang['loanstatn']['weeks_after_disb_date']='Weeks after disbursement date';
+$lang['loanstatn']['nationalid']='National ID Card';
+$lang['loanstatn']['tooltip_nationalid']='Indicates whether this member has provided Zidisha with a copy of a government-issued identity card.';
+$lang['loanstatn']['recommendation']='Community Leader Recommendation';
+$lang['loanstatn']['tooltip_recommendation']='Indicates whether this member has provided Zidisha with a Recommendation Form signed by the leader of a recognized organization, such as a school or religious institution, in the member\'s community.';
+$lang['loanstatn']['provided']='Provided';
+$lang['loanstatn']['not_provided']='Not Provided';
 ?>
