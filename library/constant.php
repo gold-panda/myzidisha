@@ -131,11 +131,15 @@ Define ('WATERMARK_ALIGN_V', 'bottom'); //water mark vertical alignment  top / b
 Define ('WATERMARK_MARGIN',		10);// water mark margin
 Define ('WATERMARK_TEXT',		'');// text displayed on uploaded pics
 Define ('DEFAULT_IMAGE', 'file:dimg.jpg');
-Define ('SITE_URL', 'https://www.zidisha.org/');
+Define ('SITE_URL', 'http://localhost:8888');
 
 // paths
-define("FULL_PATH", '/home4/semfundc/public_html/zidisha/');//  physical full path for site
-define("ROOT_PATH", '/home4/semfundc/');//  physical root path for site
+// define("FULL_PATH", '/home4/semfundc/public_html/zidisha/');//  physical full path for site
+// define("ROOT_PATH", '/home4/semfundc/');//  physical root path for site
+
+define("FULL_PATH", '');//  physical full path for site
+define("ROOT_PATH", '../');//  physical root path for site
+
 define("PEAR_DIR" , FULL_PATH.'extlibs/Pear/');// path of pear directory
 define("CACHE_DIR" , FULL_PATH.'cache/');//path of cache directory
 define("LOG_PATH", ROOT_PATH.'zidisha_contents/logs/');//  physical root path for site

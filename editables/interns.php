@@ -12,7 +12,7 @@ $lang['interns']['desc']='<h1>Volunteer or Intern With Zidisha Microfinance</h1>
 
 <p>Do you have a passion for advancing opportunities for highly motivated people in the world\'s poorest communities? Do you enjoy volunteering on a flexible schedule from the comfort of your own home?</p>
 
-<p>We have openings for English- and French-speaking volunteers who would like to contribute two or more hours per week to join our Virtual Volunteer team. Virtual Volunteers review applications for completeness, and assist borrowers who request help to interact with our website via email and SMS, and assist in translation of borrower content. This is a position that may be undertaken on a flexible schedule, from any location in the world with an internet connection.</p>
+<p>We have openings for volunteers who would like to contribute two or more hours per week to join our Virtual Volunteer team. Virtual Volunteers review applications for completeness, and assist borrowers who request help to interact with our website via email and SMS, and assist in translation of borrower content. This is a position that may be undertaken on a flexible schedule, from any location in the world with an internet connection.</p>
 
 <p>If you would like to learn more about joining our Virtual Volunteer Team, please send an email to <a href="mailto:service@zidisha.org">service@zidisha.org</a>.</p>
 
@@ -31,28 +31,32 @@ $lang['interns']['desc']='<h1>Volunteer or Intern With Zidisha Microfinance</h1>
 
 <p><b>Full-Time, International</b></p>
 
-<p><a href="http://www.idealist.org/view/internship/8g49dkKZF5Cp/" target="_blank">Burkina Faso Client Relationship Intern</a></p>
+<p><a href="http://www.idealist.org/view/volop/Hh2k8JTcgpw4/" target="_blank">Burkina Faso Client Relationship Manager</a></p>
 
-<p><a href="http://www.idealist.org/view/internship/33Gj5ZzHXzmfP/" target="_blank">Indonesia Client Relationship Intern</a></p>
+<p><a href="http://www.idealist.org/view/volop/Dz4hFwmBdsXd/" target="_blank">Indonesia Client Relationship Manager</a></p>
 
-<p><a href="http://www.idealist.org/view/internship/Z9jPnFd7XzMD/" target="_blank">Kenya Client Relationship Intern</a></p>
+<p><a href="http://www.idealist.org/view/volop/35xSFbxHHDfsP/" target="_blank">Kenya Client Relationship Manager</a></p>
 
-<p><a href="http://www.idealist.org/view/internship/G9xFKbmNK3xd/" target="_blank">Senegal Client Relationship Intern</a></p>
+<p><a href="http://www.idealist.org/view/volop/fPk2PP4jxkh4/" target="_blank">Senegal Client Relationship Manager</a></p>
 
 
 <br/>
 
 <p><b>Flexible Schedule, From Any Location</b></p>
 
-<p><a href="http://www.idealist.org/view/internship/PKHsZ4MKhTW4/" target="_blank">Indonesia Country Liaison Intern</a></p>
+<p><a href="http://www.idealist.org/view/volop/TZssmMFgHnH4/" target="_blank">Indonesia Country Liaison</a></p>
 
-<p><a href="http://www.idealist.org/view/internship/CP2CWB62H4bD/" target="_blank">Kenya Country Liaison Intern</a></p>
+<p><a href="http://www.idealist.org/view/volop/gnj3KdMzSkMD/" target="_blank">Kenya Country Liaison</a></p>
 
-<p><a href="http://www.idealist.org/view/internship/5x67mJf8C5sP/" target="_blank">Francophone Country Liaison Intern</a></p>
+<p><a href="http://www.idealist.org/view/volop/GJ3jC88N9sCp/" target="_blank">Francophone Country Liaison</a></p>
 
-<p><a href="http://www.idealist.org/view/internship/JwtHD3TpN3H4/" target="_blank">New Country Expansion Coordinator</a></p>
+<p><a href="http://www.idealist.org/view/volop/Cb5gJhP27ssP/" target="_blank">New Country Expansion Coordinator</a></p>
 
-<p><a href="http://www.idealist.org/view/volop/89d7th4mG3cp/" target="_blank">Volunteer Translator: French</a></p>
+<p><a href="http://www.idealist.org/view/volop/33BWCjWbtBgW4/" target="_blank">Social Media Manager</a></p>
+
+<p><a href="http://www.idealist.org/view/volop/BC6fNW5kbtBD/" target="_blank">Volunteer Translator: French</a></p>
+
+<p><a href="http://www.idealist.org/view/volop/HjGGhhKz3pbD/" target="_blank">Volunteer Translator: Indonesian</a></p>
 
 
 <br/><br/>
