@@ -4847,6 +4847,62 @@ class genericClass
         }
     }
 
+       function additionalVerification($id, $fb_data, $endorser_name, $endorser_email, $endorser_id)
+    {
+        global $db, $session;
+        traceCalls(__METHOD__, __LINE__);
+        $time=time();
+        $res = DB_OK;
+        $old_status = $this->getBorrowerActive($id);
+        if(!empty($fb_data['user_profile'])){
+            $facebook_id= $fb_data['user_profile']['id'];
+            $fb_data= base64_encode(serialize($fb_data));
+        }else{
+            $facebook_id= '';
+            $fb_data='';
+        }
+        
+        $q = "UPDATE ! SET facebook_id=? WHERE userid = ?";
+        $r=$db->query($q, array('users', $facebook_id, $id));
+                
+        if($res == DB_OK)
+        {
+
+            $q = "UPDATE ! SET fb_data=? WHERE userid = ?";
+            $r=$db->query($q, array('borrowers_extn', $fb_data, $id));
+
+            if(!empty($endorser_name) && !empty($endorser_email)){
+                for($i=0; $i<10; $i++){
+                    if(!empty($endorser_id[$i])){
+                        $q3="update ! set e_email=?, ename=? where id=?";                               
+                        $r=$db->query($q3, array('endorser', $endorser_email[$i], $endorser_name[$i], $endorser_id[$i]));
+                    }elseif(!empty($endorser_name[$i]) && !empty($endorser_email[$i])){
+                        $v_code=mt_rand(0, 32).time();
+                        $q2="insert into ! (borrowerid, ename, e_email, validation_code) values(?, ?, ?, ?)";
+                        $res3=$db->query($q2, array('endorser', $id, $endorser_name[$i], $endorser_email[$i], $v_code));
+                        $q4= "SELECT id FROM ! where borrowerid=? and e_email=? and validation_code=?";
+                        $row_id= $db->getOne($q4, array('endorser', $id, $endorser_email[$i], $v_code));
+                        $q5="select validation_code from ! where id=?";
+                        $res4= $db->getOne($q5, array('endorser', $row_id));
+                        $uniq_code= md5($res4).$row_id;
+                        $q6="update ! set validation_code=? where id=?";
+                        $res5=$db->query($q6, array('endorser', $uniq_code, $row_id));
+                    }
+                }
+            }
+                
+            include_once("indexer.php");
+            updateIndex1($id);
+
+            return 0;//successful insert
+        }
+        else{
+            return 1;//unsuccessful insert
+        }
+        
+    }
+
+
     function updateBorrowerDocument($id, $field, $name)
     {
         global $db, $session;

@@ -599,7 +599,7 @@ class updateProcess
 				$result = 2;
 			}else{ 
 				Logger_Array("FB LOG - updateprocess",'fb_data', serialize($_POST['fb_data']).$_POST["busername"]);
-				$result = $session->editprofile_b($_POST["busername"], $_POST["bfname"], $_POST["blname"], $_POST["bpass1"], $_POST["bpass2"], $_POST["bpostadd"], $_POST["bcity"], $_POST["bcountry"], $_POST["bemail"], $_POST["bmobile"], $_POST["reffered_by"],$_POST["bincome"], $_POST["babout"], $_POST["bbizdesc"], $photo, $id, $_POST["bnationid"], $_POST["labellang"], $_POST["community_name_no"], $_FILES, $_POST["abletocomplete"], $_POST["repaidpast"], $_POST["debtfree"], $_POST["share_update"], $_POST["borrower_behalf"], $_POST["behalf_name"], $_POST["behalf_number"], $_POST["behalf_email"],$_POST["behalf_town"],$_POST["borrower_behalf_id"],$_POST['submitform'], $_POST['uploadedDocs'], $_POST['bfamilycont1'],$_POST['bfamilycont2'],$_POST['bfamilycont3'], $_POST['bneighcont1'],$_POST['bneighcont2'],$_POST['bneighcont3'], $_POST['home_no'], $_POST['rec_form_offcr_name'], $_POST['rec_form_offcr_num'],$_POST['refer_member'], $_POST['volunteer_mentor'], $_POST['cntct_type'], $_POST['fb_data'], $endorser_name, $endorser_email, $endorser_id); 
+				$result = $session->additional_verification($id, $_POST["labellang"], $_FILES, $_POST['submitform'], $_POST['uploadedDocs'], $_POST['fb_data'], $endorser_name, $endorser_email, $endorser_id); 
 			}
 			if($result==0)
 			{

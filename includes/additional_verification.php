@@ -151,13 +151,15 @@ if($borrowerActive==1) {
 <div class="row">
 <div align='left' class='static'><h1><?php echo $lang['register']['additional_verification'] ?></h1></div>
 <tr><td>&nbsp;</td></tr>
-<tr><td>&nbsp;</td></tr>
-<div align='left' class='static'><p><?php echo $lang['register']['av_instructions'] ?></p></div>
 
 <?php if(isset($_SESSION['bedited'])) {?>
 	<div id='error' align='center'><font color='green'><?php echo $lang['register']['edited'];?></font></div><br/>
 <?php unset($_SESSION['bedited']);
 	} ?>
+	
+<tr><td>&nbsp;</td></tr>
+<div align='left' class='static'><p><?php echo $lang['register']['av_instructions'] ?></p></div>
+
 	<table class='detail' style="width:auto">
 	<form enctype="multipart/form-data" id="additional_verification" name="additional_verification" method="post" action="updateprocess.php">
 

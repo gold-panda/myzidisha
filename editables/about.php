@@ -101,8 +101,25 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 
 <h4 style="display:inline">LINET OGOTI, Kenya Country Liaison Intern</h4>
 							
-							<p style="margin-top:10px;">Linet was born in Kenya and spent most of her life in Nairobi. She now lives in the United States. She is a recent graduate of Smith College with a bachelor\'s degree in economics. Her recent exposure to the abundant resources and opportunities available to all segments of society in the US has sparked her interest in the potential of finance as a tool of development in Africa. In her words: "I am captivated by Zidisha\'s work and its commitment to alleviating poverty in the developing world. The opportunities Zidisha provides offer hope to economically marginalized small business owners in countries like Kenya and throughout the world. I am enjoying my current work with Zidisha." In her free time Linet enjoys reading, listening to music, and learning about different cultures.</p>
+							<p style="margin-top:10px;">Linet was born in Kenya and spent most of her life in Nairobi. She now lives in the United States. She is a recent graduate of Smith College with a bachelor\'s degree in economics. Her recent exposure to the abundant resources and opportunities available to all segments of society in the US has sparked her interest in the potential of finance as a tool of development in Africa. In her words: "I am captivated by Zidisha\'s work and its commitment to alleviating poverty in the developing world. The opportunities Zidisha provides offer hope to economically marginalized small business owners in countries like Kenya and throughout the world. I am enjoying my current work with Zidisha." In her free time Linet enjoys reading, listening to music, and learning about different cultures.
+</p>
 							
+							<br />
+
+
+
+<h4 style="display:inline">CHRISTIAN OLEG ZEBALLOS, Kenya Country Liaison Intern</h4>
+							
+							
+							<p style="margin-top:10px;">Christian is a graduate from the University of Edinburgh, where he earned
+his bachelor\'s degree in International Business and Russian Language. As a
+student, Christian developed a strong interest in the role of the private
+sector in development and wrote a dissertation that focused on
+facilitating the implementation of business practices that create value
+for businesses and the communities in which they operate. He was drawn to
+Zidisha due to the organization\'s ability to alleviate poverty through
+business mechanisms and entrepreneurship. Christian grew up in Bolivia and
+currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 							<br />
 
 <h4 style="display:inline">MEAGHAN PATRICK, Kenya Country Liaison Intern</h4>
@@ -179,7 +196,6 @@ Bruce Donellan<br />
 <a href="https://www.zidisha.org/microfinance/profile/Ethan.html" target="_blank">Ethan Loufield</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/Kilmeny.html" target="_blank">Kilmeny M.</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/Maartje.html" target="_blank">Maartje Niekel</a><br />
-Christian Oleg Zeballos<br />
 Amanda Ortega<br />
 <a href="https://www.zidisha.org/microfinance/profile/pentatonicscale.html" target="_blank">Denise Owen</a><br />
 Jyoti Pai<br />

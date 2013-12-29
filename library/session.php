@@ -2475,6 +2475,63 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				return $rtn;
 		}
 	}
+
+		function additional_verification($id, $language, $documents, $uploadedDocs, $fb_data, $endorser_name, $endorser_email, $endorser_id)
+	{
+		global $database, $form, $mailer,$validation ;
+		traceCalls(__METHOD__, __LINE__);
+		require("editables/register.php");
+		$path=  getEditablePath('register.php');
+		require ("editables/".$path);
+		$fb_data= unserialize(stripslashes(urldecode($fb_data)));
+		Logger_Array("FB LOG - on session 1",'fb_data', serialize($fb_data).$uname);
+		if($_SESSION['FB_Error']!=false){
+//			Logger_Array("FB LOG - on session 2",'fb_data', serialize($fb_data).$uname);
+			Logger_Array("cnt",serialize($_SESSION['FB_Error']));
+			$fb_data= '';
+			unset($_SESSION['FB_Error']);
+		}
+		
+		if($form->num_errors>0){ 
+			return 1;
+		}
+		else
+		{	
+			$rtn=$database->additionalVerification($id, $fb_data, $endorser_name, $endorser_email, $endorser_id);
+			
+			
+			if($rtn == 0) {
+				
+					for($i=0; $i<10; $i++){ 
+						if(!empty($endorser_name[$i]) && !empty($endorser_email[$i])){ 
+							$e_details= $database->getEndorserForEmail($id, $endorser_name[$i], $endorser_email[$i]);
+							if(empty($e_details['message'])){
+								$validation_code= $e_details['validation_code'];
+								$From=$email;
+								$reg_link = SITE_URL."index.php?p=93&vd=$validation_code";
+								$params['reg_link']= $reg_link;
+								require("editables/mailtext.php");
+								$templet="editables/email/simplemail.html";
+								$path=  getEditablePath('mailtext.php',$language);
+								require ("editables/".$path);
+								$e_email= $endorser_email[$i];
+								$Subject=$namea." ".$nameb." ".$lang['mailtext']['borrowerEndorser-subject'];
+								$To=$params['name'] = $endorser_name[$i] ;
+								$params['bname']= $namea." ".$nameb;
+								$replyTo = SERVICE_EMAIL_ADDR;
+								$message = $this->formMessage($lang['mailtext']['BorrowerEndorser-msg'], $params);
+								$reply= $this->mailSending($From, $To, $e_email, $Subject, $message,$templet, $replyTo); 
+								$database->updateEndorserAfterEmail($id, $To, $e_email, $message);
+							}
+						}
+					}
+				
+			}
+				$this->updateBorrowerDocument($id, $documents);
+				return $rtn;
+		}
+	}
+
 	function updateBorrowerDocument($id, $documents)
 	{
 		global $database;
