@@ -7250,18 +7250,18 @@ class genericClass
             }else{
                 $failedinvite=1;
             }
+        }
 
-            $total_failed+=$failedinvite;
-            $total_invitedloans+=$invite_lastloan;
+        $total_failed+=$failedinvite;
+        $total_invitedloans+=$invite_lastloan;
 
 //if failure rate is over 10% then member is ineligible to issue any more invites
-            if (($total_failed/$total_invitedloans) > 0.1){
-                  $ineligible=1; //ineligible to invite more members
-            }else{
-                $ineligible=0; //eligible to invite
-            }
-
+        if (($total_failed/$total_invitedloans) > 0.1){
+            $ineligible=1; //ineligible to invite more members
+        }else{
+            $ineligible=0; //eligible to invite
         }
+
         return $ineligible;
     }
 
