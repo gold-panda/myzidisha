@@ -41,6 +41,6 @@ $lang['invite']['no_loan']='Activated, No Loan Yet';
 $lang['invite']['fundraising_loan']='Fundraising Loan';
 $lang['invite']['ontime_loan']='Repaying On Time';
 $lang['invite']['due_loan']='Past Due';
-$lang['invite']['not_eligible']="You are not yet eligible to send invite credits to new members. In order to become eligible for invite priveleges, you must repay at least one loan and maintain an on-time repayment rate of %minreapayrate%% or higher, and all of your invited members must remain current with their scheduled repayments.";
-$lang['invite']['eligible']="Congratulations! You are now eligible to send invite credits to new members. In order to remain eligible for invite priveleges, you must continue to maintain an on-time repayment rate of %minreapayrate%% or higher, and all of your invited members must remain current with their scheduled repayments.";
+$lang['invite']['not_eligible']="You are not yet eligible to send invite credits to new members. In order to become eligible for invite priveleges, you must repay at least one loan and maintain an on-time repayment rate of %minreapayrate%% or higher, and at least 90% of your invited members must remain current with their scheduled repayments.";
+$lang['invite']['eligible']="Congratulations! You are now eligible to send invite credits to new members. In order to remain eligible for invite priveleges, you must continue to maintain an on-time repayment rate of %minreapayrate%% or higher, and at least 90% of your invited members must remain current with their scheduled repayments.";
 ?>

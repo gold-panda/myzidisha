@@ -7229,24 +7229,40 @@ class genericClass
     function getInviteeRepaymentRate($userid){
 
        global $session;
+
+//set of all members invited by this member
         $invitees= $this->getInvitedMember($userid);
         $ineligible=0;
         foreach($invitees as $invite){
+//checks repayment rate of invited member
             $inviterepayrate= $session->RepaymentRate($invite['invitee_id']);
+//checks whether invited member has ever had a loan, if not consider repayment 100%
             $invite_lastloan= $this->getLastloan($invite['invitee_id']);
             if(empty($invite_lastloan)){
                 $inviterepayrate=100;
             }
+//gets minimum on-time repayment rate needed to progress to larger loans as set by admin
             $minrepayrate=$this->getAdminSetting('MinRepayRate');
+
+//assignes a "failed invite" point for each invited member who did not meet repayment rate standard
             if($inviterepayrate>=$minrepayrate){
-                $ineligible=0;
+                $failedinvite=0;
             }else{
-                $ineligible=1;
+                $failedinvite=1;
             }
-            $total_ineligible+=$ineligible;
+
+            $total_failed+=$failedinvite;
+            $total_invitedloans+=$invite_lastloan;
+
+//if failure rate is over 10% then member is ineligible to issue any more invites
+            if (($total_failed/$total_invitedloans) > 0.1){
+                  $ineligible=1; //ineligible to invite more members
+            }else{
+                $ineligible=0; //eligible to invite
+            }
 
         }
-        return $total_ineligible;
+        return $ineligible;
     }
 
     
