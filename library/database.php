@@ -4278,9 +4278,9 @@ class genericClass
 
         if($firstpmt==1){
 
-            $q1="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
+            $q1="SELECT * FROM borrowers JOIN repaymentschedule on borrowers.userid=repaymentschedule.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
             
-            $res1= $db->getAll($q1, array('borrowers', $date3, $date4));
+            $res1= $db->getAll($q1, array('borrowers', 'repaymentschedule', $date3, $date4));
 
             foreach ($res1 as $row){
 
@@ -4288,7 +4288,7 @@ class genericClass
 
                 $first_duedate="SELECT min(duedate) FROM repaymentschedule WHERE userid = $userid";
                 
-                $q2="SELECT * FROM ! WHERE userid = $userid AND duedate = $first_duedate AND amount > 0 AND paiddate <= duedate";
+                $q2="SELECT * FROM borrowers JOIN repaymentschedule on borrowers.userid=repaymentschedule.userid WHERE repaymentschedule.userid = $userid AND duedate = $first_duedate AND amount > 0 AND paiddate <= duedate";
             }
 
             $res= $db->getAll($q2, array('borrowers', 'repaymentschedule'));
