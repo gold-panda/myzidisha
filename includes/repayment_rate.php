@@ -28,6 +28,10 @@ if($session->userlevel==ADMIN_LEVEL ) {
 		$date1=$form->value("date1");
 		$date2=$form->value("date2");
 	}
+	$firstpmt='';
+	if(isset($_GET['firstpmt'])){
+		$firstpmt= $_GET['firstpmt'];
+	}
 	$fb='';
 	if(isset($_GET['fb'])){
 		$fb= $_GET['fb'];
@@ -52,14 +56,26 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					<td><input style="width:auto"  name="date2" id="date2"type="text" value='<?php echo $date2 ;?>' /><br/><?php echo $form->error("todate"); ?></td>
 
 				<tr><td></td><td><br/><br/></td></tr>
+
+				<tr>
+
+					<td><strong>Select first installment status:</strong></td>
+					<td><select id="firstpmt" name="firstpmt" >
+						<option value='0'>All</option>
+						<option value='1' <?php if($firstpmt==1) echo "Selected='true'";?>>On Time</option>
+						<option value='2' <?php if($firstpmt==2) echo "Selected='true'";?>>Not On Time</option>
+					</select></td>
+
+				</tr>
+				<tr><td></td><td><br/><br/></td></tr>
+
 				<tr>
 
 					<td><strong>Select Facebook status:</strong></td>
 					<td><select id="fb" name="fb" >
 						<option value='0'>All</option>
-						<option value='1' <?php if($fb==1) echo "Selected='true'";?>>FB Not Linked</option>
 						<option value='2' <?php if($fb==2) echo "Selected='true'";?>>FB Linked</option>
-
+						<option value='1' <?php if($fb==1) echo "Selected='true'";?>>FB Not Linked</option>
 					</select></td>
 
 				</tr>
@@ -105,7 +121,8 @@ if($session->userlevel==ADMIN_LEVEL ) {
 	</form><br/>
 	<?php 
 	if($v==1){
-		$profile = $database->getActivatedBorrowers($date1, $date2, $fb, $invite, $text);
+
+		$profile = $database->getActivatedBorrowers($date1, $date2, $firstpmt, $fb, $invite, $text);
 		$showingRes =count($profile);
 		$completed_on = date('M d, Y', $rows['completed_on']);
 
@@ -147,9 +164,7 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					$totalTodayinstallment_sum += $totalTodayinstallment;
 					$OnTimeinstallment_sum += $OnTimeinstallment;
 					$RepayRate_sum = ($OnTimeinstallment_sum / $totalTodayinstallment_sum) * 100;
-
-
-				
+					
 
 ?>
 						<tr>

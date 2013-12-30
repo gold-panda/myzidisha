@@ -4266,69 +4266,83 @@ class genericClass
         return $fbusers;
     }
 
-    function getActivatedBorrowers($date1, $date2, $fb, $invite, $text){
+
+    function getActivatedBorrowers($date1, $date2, $fb, $invite, $text, $firstpmt){
         global $db;
+
+//date selection
         $dateArr1  = explode("/",$date1);
         $dateArr2  = explode("/",$date2);
         $date3=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
         $date4=mktime(23,59,59,(int)$dateArr2[0],(int)$dateArr2[1],(int)$dateArr2[2]);
 
-        if ($fb==1){
+        if($firstpmt==1){
+
+            $q="SELECT * from ! WHERE duedate IS IN (SELECT min(duedate) from repaymentschedule WHERE userid IS IN (SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=?)) AND paiddate > 0 AND paiddate <= duedate";
+    
+        }
+
+
+//Facebook link status
+        elseif ($fb==1){
 
             $q="SELECT * FROM ! LEFT JOIN borrowers_extn as bext on bext.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND bext.fb_data IS NULL order by completed_on";
 
         }elseif ($fb==2){
 
-
             $q="SELECT * FROM ! LEFT JOIN borrowers_extn as bext on bext.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND bext.fb_data IS NOT NULL order by completed_on";
 
-        }else{
-            if ($invite==1){
-
-                $q="SELECT * FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NOT NULL order by completed_on";
-
-            }elseif ($invite==2){
-
-                $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NULL order by completed_on";
-
-            }elseif ($invite==3){
-
-                $q="SELECT DISTINCT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NOT NULL order by completed_on";
-
-            }elseif ($invite==4){
-
-                $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NULL order by completed_on";
-
-            }else{
-
-                if ($text==1){
-
-                    $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) > 0 AND length(reffered_by) < 10 order by completed_on";
-
-                }elseif ($text==2){
-
-                    $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 10 AND length(reffered_by) < 50 order by completed_on";
-
-                }elseif ($text==3){
-
-                    $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 50 AND length(reffered_by) < 100 order by completed_on";
-
-                }elseif ($text==4){
-
-                    $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 100 order by completed_on";
-
-                }else{
-
-                    $q="select * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
-
-                }
-            }
         }
 
-        $fbusers= $db->getAll($q, array('borrowers', $date3, $date4));
-        return $fbusers;
-    }
+//invite status
+        elseif ($invite==1){
 
+            $q="SELECT * FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NOT NULL order by completed_on";
+
+        }elseif ($invite==2){
+
+            $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NULL order by completed_on";
+
+        }elseif ($invite==3){
+
+            $q="SELECT DISTINCT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NOT NULL order by completed_on";
+
+        }elseif ($invite==4){
+
+            $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NULL order by completed_on";
+
+        }
+
+//"how did you hear about zidisha" text field length
+        elseif ($text==1){
+
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) > 0 AND length(reffered_by) < 10 order by completed_on";
+
+        }elseif ($text==2){
+
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 10 AND length(reffered_by) < 50 order by completed_on";
+
+        }elseif ($text==3){
+
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 50 AND length(reffered_by) < 100 order by completed_on";
+
+        }elseif ($text==4){
+
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 100 order by completed_on";
+
+        }
+
+
+//if no other filter selected, show all results within date range
+        else {
+
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
+
+        }
+
+        $res= $db->getAll($q, array('borrowers', $date3, $date4));
+        return $res;
+    }
 
 
     function getAcceptBidNote($loanid){
@@ -6660,6 +6674,9 @@ class genericClass
         $retarr['missedInst'] = $missedInst;
         return $retarr;
     }
+
+
+
     function RepaymentOverduedetail($userid, $loanid) {
         global $db,$database;
         $ret = array();
@@ -11065,6 +11082,7 @@ class genericClass
 		$Country=$db->getOne($q,array('borrowers',$id));
 		return $Country;
 	}
+
 
 };
 $database= new genericClass;
