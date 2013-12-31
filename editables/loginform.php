@@ -163,7 +163,7 @@ $lang['loginform']['name']='Name:';
 $lang['loginform']['Telephone']='Telephone:';
 $lang['loginform']['do_more']='<strong>DO MORE</strong><br/><br/>
 Join us in overcoming barriers of location and circumstance.  Help us build the world\'s first online microlending community that connects people directly across previously impregnable barriers of country, language and culture. <br/><br/>Here is how you can help:<br/><br/>
-1. Do you know other trustworthy internet users who could benefit from a Zidisha loan? <a href="https://www.zidisha.org/index.php?p=96">Invite them to join.</a><br/><br/>
+1. Do you know other trustworthy internet users who could benefit from a Zidisha loan? Invite them to join.<br/><br/>
 2. Post comments in your loan profile page to let lenders know in what ways the loan has made a difference.<br/><br/>
 3. Share a link to our website in Facebook.<br/><br/>
 4. If you are willing to volunteer your time to help other Zidisha members in your country interact with our website, email us at service@zidisha.org and ask about becoming a Volunteer Mentor.<br/><br/>
@@ -174,8 +174,8 @@ $lang['loginform']['brwr_emails']='Generate Borrower Emails';
 $lang['loginform']['lender_emails']='Generate Lender Emails';
 $lang['loginform']['FB_links']='Facebook Links';
 $lang['loginform']['find_brwr']='Find Borrower';
-$lang['loginform']['invite_frnd_msg1']='Invite your friends, earn';
-$lang['loginform']['invite_frnd_msg2']='bonus credit!';
+$lang['loginform']['invite_frnd_msg1']='Congratulations!  Your on-time repayment rate is';
+$lang['loginform']['invite_frnd_msg2']='You are now eligible to award credit limit increases to the new members you invite.';
 $lang['loginform']['invite_now']='INVITE NOW';
 $lang['loginform']['donatebirthday']='Donate Your Birthday';
 ?>

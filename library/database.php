@@ -4278,70 +4278,68 @@ class genericClass
 
         if($firstpmt==1){
 
-            $q1="SELECT * FROM borrowers JOIN repaymentschedule on borrowers.userid=repaymentschedule.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
-            
-            $res1= $db->getAll($q1, array('borrowers', 'repaymentschedule', $date3, $date4));
 
-            foreach ($res1 as $row){
-
-                $userid=$row['userid'];
-
-                $first_duedate="SELECT min(duedate) FROM repaymentschedule WHERE userid = $userid";
-                
-                $q2="SELECT * FROM borrowers JOIN repaymentschedule on borrowers.userid=repaymentschedule.userid WHERE repaymentschedule.userid = $userid AND duedate = $first_duedate AND amount > 0 AND paiddate <= duedate";
-            }
-
-            $res= $db->getAll($q2, array('borrowers', 'repaymentschedule'));
-            return $res;
+            $q="SELECT repaymentschedule.userid FROM repaymentschedule INNER JOIN (SELECT userid, min(duedate) as min_duedate FROM repaymentschedule GROUP BY userid) AS table_mindue ON repaymentschedule.userid = table_mindue.userid JOIN borrowers ON borrowers.userid=repaymentschedule.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND paiddate < duedate";
+          
+   
         }
-
 
 //Facebook link status
         elseif ($fb==1){
 
             $q="SELECT * FROM ! LEFT JOIN borrowers_extn as bext on bext.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND bext.fb_data IS NULL order by completed_on";
-
+         
+   
         }elseif ($fb==2){
 
             $q="SELECT * FROM ! LEFT JOIN borrowers_extn as bext on bext.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND bext.fb_data IS NOT NULL order by completed_on";
-
+            
+   
         }
 
 //invite status
         elseif ($invite==1){
 
             $q="SELECT * FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NOT NULL order by completed_on";
-
+            
+   
         }elseif ($invite==2){
 
             $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NULL order by completed_on";
-
+           
+   
         }elseif ($invite==3){
 
             $q="SELECT DISTINCT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NOT NULL order by completed_on";
-
+            
+   
         }elseif ($invite==4){
 
             $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NULL order by completed_on";
-
+            
+   
         }
 
 //"how did you hear about zidisha" text field length
         elseif ($text==1){
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) > 0 AND length(reffered_by) < 10 order by completed_on";
-
+            
+   
         }elseif ($text==2){
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 10 AND length(reffered_by) < 50 order by completed_on";
-
+            
+   
         }elseif ($text==3){
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 50 AND length(reffered_by) < 100 order by completed_on";
-
+            
+   
         }elseif ($text==4){
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 100 order by completed_on";
+            
 
         }
 
@@ -4350,9 +4348,9 @@ class genericClass
         else {
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
-
+            
         }
-
+        
         $res= $db->getAll($q, array('borrowers', $date3, $date4));
         return $res;
     }
@@ -7225,7 +7223,6 @@ class genericClass
         return $res;
     }
 
-//determines whether any of a borrower's invited members have repayment scores below standard, if so borrower is ineligible to invite further members
     function getInviteeRepaymentRate($userid){
 
        global $session;
@@ -7234,12 +7231,14 @@ class genericClass
         $invitees= $this->getInvitedMember($userid);
         $ineligible=0;
         foreach($invitees as $invite){
-//checks repayment rate of invited member
-            $inviterepayrate= $session->RepaymentRate($invite['invitee_id']);
-//checks whether invited member has ever had a loan, if not consider repayment 100%
+
+//checks whether invited member has ever had a loan
             $invite_lastloan= $this->getLastloan($invite['invitee_id']);
-            if(empty($invite_lastloan)){
-                $inviterepayrate=100;
+
+            if(!empty($invite_lastloan)){
+//checks repayment rate of invited members who have had loans
+                $inviterepayrate= $session->RepaymentRate($invite['invitee_id']);
+
             }
 //gets minimum on-time repayment rate needed to progress to larger loans as set by admin
             $minrepayrate=$this->getAdminSetting('MinRepayRate');
@@ -7264,8 +7263,6 @@ class genericClass
 
         return $ineligible;
     }
-
-    
 
     function getInviteCredit($userid){
         global $session;
@@ -11170,6 +11167,74 @@ class genericClass
         $res = $db->getAll($q, array('transactions',DISBURSEMENT));
 	   return $res;
 	}	
+
+
+    function inviteReport(){
+        
+        global $db;
+
+        $q="SELECT DISTINCT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND inv.userid IS NOT NULL order by completed_on";
+ 
+        $res= $db->getAll($q, array('borrowers'));
+        
+        return $res;
+    }
+
+
+    function getInviteesWithLoans($userid){
+
+       global $session;
+
+//set of all members invited by this member
+        $invitees= $this->getInvitedMember($userid);
+        $loan=0;
+        foreach($invitees as $invite){
+
+            $invite_lastloan= $this->getLastloan($invite['invitee_id']);
+            
+            if(!empty($invite_lastloan)){
+
+                $loan=1;
+            }
+
+            $total_loans+=$loan;
+        }
+
+        return $total_loans;
+    }
+
+
+    function getSuccessfulInvitees($userid){
+
+       global $session;
+
+//set of all members invited by this member
+        $invitees= $this->getInvitedMember($userid);
+        $success=0;
+        foreach($invitees as $invite){
+//checks repayment rate of invited members
+            $invite_lastloan= $this->getLastloan($invite['invitee_id']);
+            
+            if(!empty($invite_lastloan)){
+
+                $inviterepayrate= $session->RepaymentRate($invite['invitee_id']);  
+            }
+//gets minimum on-time repayment rate needed to progress to larger loans as set by admin
+            $minrepayrate=$this->getAdminSetting('MinRepayRate');
+
+            if($inviterepayrate>=$minrepayrate){
+                $success=1;
+            }else{
+                $success=0;
+            }
+
+            $total_success+=$success;
+        }
+
+        return $total_success;
+    }
+
+
 
 };
 $database= new genericClass;

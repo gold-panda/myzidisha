@@ -367,6 +367,8 @@ if($session->userlevel==LENDER_LEVEL)
 					<!--		<li><a href="index.php?p=72"><?php echo 'Balance Outstanding';?></a></li>-->
 							<li><a href="index.php?p=109">New Member Activation Rate</a></li>
 							<li><a href="index.php?p=110">New Member Repayment Rate</a></li>
+							<li><a href="index.php?p=112">Invite Report</a></li>
+						
 						</ul>
 				  </div>
 			 </div>

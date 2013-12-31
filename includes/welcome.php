@@ -18,6 +18,12 @@ $binvitecredit=$database->getcreditsettingbyCountry($session->userinfo['country'
 $binvitecredit = $binvitecredit['loanamt_limit'];
 $currency  = $database->getUserCurrency($session->userid); 
 
+$islastrepaid = $database->getLastRepaidloanId($session->userid);
+$brwr_repayrate= $session->RepaymentRate($session->userid);
+$minrepayrate= $database->getAdminSetting('MinRepayRate'); 
+$invitee_criteria = $database->getInviteeRepaymentRate($session->userid);
+
+
 ?>
 <div class="span12">
 	<div class="row">
@@ -217,7 +223,12 @@ $currency  = $database->getUserCurrency($session->userid);
 					$link=getUserProfileUrl($mentor_id);
 				}
 
-				echo '<br/><br/><br/>'.$lang['loginform']['invite_frnd_msg1'].' '.$currency.' '.number_format($binvitecredit).' '.$lang['loginform']['invite_frnd_msg2'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.php?p=96"><input type="button" value="'.$lang['loginform']['invite_now'].'" class="btn"></a>';
+				if(!empty($islastrepaid) && $brwr_repayrate>=$minrepayrate && $invitee_criteria==0){
+	
+					echo '<br/><br/><br/>'.$lang['loginform']['invite_frnd_msg1'].' '.number_format($brwr_repayrate).'%.  '.$lang['loginform']['invite_frnd_msg2'].'<br/><br/><div align="center"><a href="index.php?p=96"><input type="button" value="'.$lang['loginform']['invite_now'].'" class="btn"></a></div>';
+
+				}
+
 
 				if (!empty ($volunteer_mentor['TelMobile'])){
 					echo "<br/><br/><br/>".$lang['loginform']['volunteer_text']."<a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'>".$lang['loginform']['tooltip_volunteer']."</span><span class='bottom'></span></span></a>";
