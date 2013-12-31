@@ -11095,7 +11095,65 @@ class genericClass
 		$Country=$db->getOne($q,array('borrowers',$id));
 		return $Country;
 	}
+	
+	// functions used to integrate historical data with shift science
+	public function getloginHistOfAllBorrower($lastProcessId=null){
+        global $db;     
+		if($lastProcessId!=0){
+			$qry="userid>'".$lastProcessId."' AND";
+		}	
+		$q="SELECT username, userid, last_login FROM ! WHERE $qry userlevel=? order by userid asc";			
+        $res = $db->getAll($q, array('users',1));
+		return $res;
+    }
+	
+	public function getLastProcessId($event_type){
+		global $db; 
+		$q= "SELECT processed_userid from ! where shift_event_type=?";		
+		$processed_id=$db->getOne($q,array('temp_shiftevent',$event_type));
+		return $processed_id;
+	}
 
+	public function getBorrowerAccountHist($lastProcessId=null){
+		
+		global $db;
+		if($lastProcessId!=0){
+			$qry="WHERE userid>'".$lastProcessId."'";
+		}	
+        $q = "select userid, FirstName, LastName, About, BizDesc, reffered_by, Created, completed_on, LastModified from ! $qry order by userid asc limit 0,500";
+        $res = $db->getAll($q, array('borrowers'));
+	   return $res;
+	}
+	
+    public function getFacebookConnectHist($lastProcessId=null){
+		global $db;
+		if($lastProcessId!=0){
+			$qry="WHERE id>'".$lastProcessId."'";
+		}	
+        $q = "select * from ! $qry order by id asc limit 0,500";
+        $res = $db->getAll($q, array('facebook_info'));
+	   return $res;
+	}
+	
+	public function getloanReypayHist($lastProcessId=null){
+		global $db;
+		if($lastProcessId!=0){
+			$qry="WHERE id>'".$lastProcessId."'";
+		}	
+        $q = "select * from ! $qry order by id asc limit 0,500";
+        $res = $db->getAll($q, array('repaymentschedule_actual'));
+	   return $res;
+	}
+
+	public function getloanDisbursHist($lastProcessId=null){
+		global $db;
+		if($lastProcessId!=0){
+			$qry="AND id>'".$lastProcessId."'";
+		}	
+        $q = "select * from ! WHERE txn_type=? $qry order by id asc limit 0,500";
+        $res = $db->getAll($q, array('transactions',DISBURSEMENT));
+	   return $res;
+	}	
 
 };
 $database= new genericClass;

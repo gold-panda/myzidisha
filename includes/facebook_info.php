@@ -59,6 +59,7 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					<th>Zidisha Name</th>
 					<th>Zidisha Email</th>
 					<th>Date Linked</th>
+					<th>FB Reject Reason</th>
 					<th>Account Accepted</th>
 					<th>IP Address</th>
 					<th>Exist User</th>
@@ -92,7 +93,9 @@ if($session->userlevel==ADMIN_LEVEL ) {
 						$web_acc= 'Yes';
 					}else{
 						$web_acc= 'No';
-					}?>
+					}
+					$fb_rej_reason=$rows['fail_reason'];
+					?>
 						<tr>
 							<td><a href="<?php echo 'http://www.facebook.com/'.$fbdata['user_profile']['id']; ?>"><?php echo $fbdata['user_profile']['name']; ?></a></td>
 							<td><?php echo $email; ?></td>
@@ -101,6 +104,7 @@ if($session->userlevel==ADMIN_LEVEL ) {
 							<td><a href="index.php?p=7&id=<?php echo $borrowerid;?>"><?php echo $zidisha_name; ?></a></td>
 							<td><?php echo $rows['zidisha_email']; ?></td>
 							<td><?php echo $link_date; ?></td>
+							<td><?php echo $fb_rej_reason; ?></td>
 							<td><?php echo $web_acc; ?></td>
 							<td><?php echo $rows['ip_address']; ?></td>
 							<td><?php echo $exist_user; ?></td>

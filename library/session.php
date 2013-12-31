@@ -166,9 +166,11 @@ class Session
 			}
 		}
 
-		if($form->num_errors > 0)
+		if($form->num_errors > 0){
+			/**** Integration with shift science on date 27-12-2013******/		
+			$this->invoiceShiftScience('invalid_login_event');	
 			return 0;
-
+		}
 		$userinfo = $database->getUserInfo($subuser);
 		$active = $database->confirmLenderActive($userinfo['userid']);
 		if($userinfo['userlevel'] != BORROWER_LEVEL) {
@@ -8182,7 +8184,6 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
-			  '$time'	=> $time,
 			  'aboutme' => $aboutMe,
 			  'aboutbusiness' => $aboutBusiness,
 			  'hearaboutzidisha' => $hearaAoutZidisha
@@ -8195,7 +8196,6 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
-			  '$time'	=> $time,
 			  'facebookid' => $facebook_id
 			);
 		}
@@ -8206,18 +8206,25 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
-			  '$time'	=> $time,
 			  '$login_status' => '$success'
 			);
 		}
 		
+		if($event_type=='invalid_login_event'){			
+			$data = array(
+			  '$type' => '$login',
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$session_id' => session_id(),
+			  '$login_status' => 'failure'
+			);
+		}
+
 		if($event_type=='logout_event'){			
 			$data = array(
 			  '$type' => '$logout',
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  '$session_id' => session_id(),
-			  '$time'	=> $time
+			  '$session_id' => session_id()
 			);
 		}
 		
@@ -8226,7 +8233,6 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$type' => $event_type,
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  '$time'	=> $time,
 			  'loan_amount' => $loan_amnt
 			);
 		}
@@ -8236,7 +8242,6 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$type' => $event_type,
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  '$time'	=> $time,
 			  'loan_amount' => $loan_amnt,
 			  'repayment_date' => $repay_date
 			);
@@ -8247,7 +8252,6 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$type' => $event_type,
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  '$time'	=> $time,
 			  'comment' => $comment,
 			  'sender' => $senderid
 			);
@@ -8258,7 +8262,6 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$type' => $event_type,
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  '$time'	=> $time,
 			  'subject' => $subject,
 			  'comment' => $comment,
 			  'sender' => $senderid
