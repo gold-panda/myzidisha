@@ -134,11 +134,8 @@ Define ('DEFAULT_IMAGE', 'file:dimg.jpg');
 Define ('SITE_URL', 'http://localhost:8888');
 
 // paths
-// define("FULL_PATH", '/home4/semfundc/public_html/zidisha/');//  physical full path for site
-// define("ROOT_PATH", '/home4/semfundc/');//  physical root path for site
-
-define("FULL_PATH", '');//  physical full path for site
-define("ROOT_PATH", '../');//  physical root path for site
+define("FULL_PATH", '/home4/semfundc/public_html/zidisha/');//  physical full path for site
+define("ROOT_PATH", '/home4/semfundc/');//  physical root path for site
 
 define("PEAR_DIR" , FULL_PATH.'extlibs/Pear/');// path of pear directory
 define("CACHE_DIR" , FULL_PATH.'cache/');//path of cache directory
