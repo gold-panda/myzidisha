@@ -4279,7 +4279,7 @@ class genericClass
         if($firstpmt==1){
 
 
-            $q="SELECT repaymentschedule.userid FROM repaymentschedule INNER JOIN (SELECT userid, min(duedate) as min_duedate FROM repaymentschedule GROUP BY userid) AS table_mindue ON repaymentschedule.userid = table_mindue.userid JOIN borrowers ON borrowers.userid=repaymentschedule.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND paiddate < duedate";
+            $q="SELECT repaymentschedule.userid FROM repaymentschedule INNER JOIN (SELECT userid, min(duedate) as min_duedate FROM repaymentschedule GROUP BY userid) AS table_mindue ON repaymentschedule.userid = table_mindue.userid JOIN ! ON borrowers.userid=repaymentschedule.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND paiddate <= (duedate + 864000)";
           
    
         }
