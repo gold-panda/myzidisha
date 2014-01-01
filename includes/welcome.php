@@ -17,7 +17,6 @@ global $database;
 $binvitecredit=$database->getcreditsettingbyCountry($session->userinfo['country'],3);
 $binvitecredit = $binvitecredit['loanamt_limit'];
 $currency  = $database->getUserCurrency($session->userid); 
-
 $islastrepaid = $database->getLastRepaidloanId($session->userid);
 $brwr_repayrate= $session->RepaymentRate($session->userid);
 $minrepayrate= $database->getAdminSetting('MinRepayRate'); 

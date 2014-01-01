@@ -1,26 +1,59 @@
+<script type="text/javascript" src="includes/scripts/eepztooltip.js?q=<?php echo RANDOM_NUMBER ?>"></script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+		$("#stay-target-1").ezpz_tooltip({
+			stayOnContent: true,
+			offset: 0
+		});
+	$("#stay-target-2").ezpz_tooltip({
+			stayOnContent: true,
+			offset: 0
+		});
+});
+</script>
+<script type="text/javascript" src="includes/scripts/generic.js?q=<?php echo RANDOM_NUMBER ?>"></script>
+<style type="text/css">
+	@import url(library/tooltips/btnew.css);
+</style>
+
 <?php
 include_once("./editables/invite.php");
 $path=	getEditablePath('invite.php');
 include_once("editables/".$path);
+
+$userid=$session->userid;
 $binvitecredit=$database->getcreditsettingbyCountry($session->userinfo['country'],3);
-$currency= $database->getUserCurrency($session->userid);
+$currency= $database->getUserCurrency($userid);
 $params['currency']= $currency;
-$params['binvite_credit']= $binvitecredit['loanamt_limit'];
+$params['binvite_credit']= number_format($binvitecredit['loanamt_limit']);
 $minrepayrate=$database->getAdminSetting('MinRepayRate');
 $params['minreapayrate']= $minrepayrate;
 $binvited_msg= $session->formMessage($lang['invite']['binvited_msg'], $params);
-$invitedmember= $database->getInvitedMember($session->userid);
-$TotBonus=0;
+$invitedmember= $database->getInvitedMember($userid);
+$total_success = $database->getSuccessfulInvitees($userid);
+$total_with_loans = $database->getInviteesWithLoans($userid);
+$success_rate = number_format(($total_success / $total_with_loans)*100);
+$TotBonus=$database->getInviteCredit($userid);
+
 ?>
 <div class='span12'>
 <div align='left' class='static'><h1><?php echo $lang['invite']['binvited'] ?></h1></div><br/>
 <?php echo $binvited_msg; ?><br/><br/><br/>
+
+<strong><?php echo $lang['invite']['success_rate'];?>: <a  style='margin-left:0px;cursor:pointer;' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['invite']['success_rate_tooltip'];?></span><span class='bottom'></span></span></a>&nbsp&nbsp&nbsp&nbsp<?php echo $success_rate; ?>%</strong>
+
+<br/><br/>
+
+<strong><?php echo $lang['invite']['bonus_earned'];?>: <a  style='margin-left:0px;cursor:pointer;' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['invite']['bonus_earned_tooltip'];?></span><span class='bottom'></span></span></a>&nbsp&nbsp&nbsp&nbsp<?php echo $currency.' '.number_format($TotBonus); ?></strong>
+
+<br/><br/><br/>
+
+
 <table class="zebra-striped tablesorter_pending_endorser">
 		<thead>
 			<tr>
 				<th><?php echo $lang['invite']['name'] ?></th>
 				<th><?php echo $lang['invite']['email'] ?></th>
-			<!--	<th><?php echo $lang['invite']['invite_accept'] ?></th>-->
 				<th><?php echo $lang['invite']['status'] ?></th>
 				<th><?php echo $lang['invite']['repay_rate'] ?></th>
 				<th><?php echo $lang['invite']['bonus_credit'] ?></th>
@@ -92,26 +125,24 @@ $TotBonus=0;
 							$status=$lang['invite']['due_loan'];
 						}
 						$brwrrepayrate= $session->RepaymentRate($borrowerid);
-						$brwrrepayratep=$brwrrepayrate."%";
+						$brwrrepayratep=number_format($brwrrepayrate)."%";
 						if($brwrrepayrate>=$minrepayrate)
 							$bonus=$binvitecredit['loanamt_limit'];
 						else
 							$bonus=0;
 
-						$TotBonus+=$bonus;
 					}
 				}?>
 				<tr>
 					<td><?php echo $name?></td>
 					<td><?php echo $rows['email']?></td>
-			<!--		<td><?php echo $invite_acc?></td>-->
 					<td><?php echo $status; ?></td>
 					<td><?php echo $brwrrepayratep; ?></td>
-					<td><?php echo $currency.' '.$bonus; ?></td>
+					<td><?php echo $currency.' '.number_format($bonus); ?></td>
 				</tr>
 	<?php	}
 		?>
 		</tbody>
-	</table><br/><br/>
-	<strong>Total New Member Bonus Credit Earned:</strong>&nbsp;&nbsp;<?php echo $currency.' '.$TotBonus; ?>
+	</table>
+
 </div>

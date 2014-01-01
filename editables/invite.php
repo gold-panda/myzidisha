@@ -43,4 +43,8 @@ $lang['invite']['ontime_loan']='Repaying On Time';
 $lang['invite']['due_loan']='Past Due';
 $lang['invite']['not_eligible']="You are not yet eligible to send invite credits to new members. In order to become eligible for invite priveleges, you must repay at least one loan and maintain an on-time repayment rate of %minreapayrate%% or higher, and at least 90% of your invited members must remain current with their scheduled repayments.";
 $lang['invite']['eligible']="Congratulations! You are now eligible to send invite credits to new members. In order to remain eligible for invite priveleges, you must continue to maintain an on-time repayment rate of %minreapayrate%% or higher, and at least 90% of your invited members must remain current with their scheduled repayments.";
+$lang['invite']['success_rate']='Invited Member Success Rate';
+$lang['invite']['bonus_earned']='Total Bonus Earned';
+$lang['invite']['success_rate_tooltip']='This is the percentage of members you have invited who are meeting the on-time repayment rate standard.';
+$lang['invite']['bonus_earned_tooltip']='This is the total bonus for inviting new members that will be added to the maximum credit limit when you post your next loan application.  It is the number of your invited members who meet the on-time repayment rate standard, times the current invite bonus amount for your country.';
 ?>
