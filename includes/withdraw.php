@@ -256,6 +256,11 @@ if($session->userlevel == LENDER_LEVEL)
 
 
 	<p>&nbsp;</p>
+
+<!-- withdrawal disabled for userid 14830 per email instructions Dec 28, 2013 -->
+	<div style="<?php if($session->userid != 14830)echo "display:''"; else echo "display:none"; ?>" >
+					
+
 	<h3 class="subhead"><?php echo $lang['withdraw']['withdraw_fund'] ?></h3>
 <br />
 	<p><?php echo $lang['withdraw']['total_avl_amt'].": USD ".number_format($availAmt, 2, ".", ","); ?></p><br />
@@ -373,6 +378,7 @@ if($session->userlevel == LENDER_LEVEL)
 				</tbody>
 			</table>
 		</form>
+
 <?php	
 	}
 }
@@ -519,6 +525,7 @@ else if($session->userlevel  == ADMIN_LEVEL )
 				}	?>
 			</tbody>
 		</table>
+	</div>
 <?php	
 	}
 }

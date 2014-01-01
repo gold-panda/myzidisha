@@ -4279,7 +4279,7 @@ class genericClass
         if($firstpmt==1){
 
 
-            $q="SELECT repaymentschedule.userid FROM repaymentschedule INNER JOIN (SELECT userid, min(duedate) as min_duedate FROM repaymentschedule GROUP BY userid) AS table_mindue ON repaymentschedule.userid = table_mindue.userid JOIN ! ON borrowers.userid=repaymentschedule.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND paiddate <= (duedate + 864000)";
+            $q="SELECT repaymentschedule.userid FROM repaymentschedule INNER JOIN (SELECT userid, min(duedate) as min_duedate FROM repaymentschedule GROUP BY userid) AS table_mindue ON repaymentschedule.userid = table_mindue.userid JOIN ! ON borrowers.userid=repaymentschedule.userid WHERE active = 1 AND completed_on >=? AND completed_on <=?";
           
    
         }
@@ -5834,11 +5834,14 @@ class genericClass
         $date= $db->getOne($p , array('repaymentschedule_actual',$borrowerid,$loanid));
         return $date;
     }
-    function getPreviousLoanAmount($borrowerid,$loanCount, $excludeLoanIds)
+
+
+    function getPreviousLoanAmount($borrowerid, $excludeLoanIds)
     {
         global $db;
         $rate=$this->getCurrentRate($borrowerid);
-        if($loanCount==0)
+        $firstloan=$this->getBorrowerFirstLoan($borrowerid);
+        if($firstloan==0)
         {
             /* it means it is first loan */
             $val=$this->getAdminSetting('firstLoanValue');
@@ -5849,23 +5852,32 @@ class genericClass
         {
             /* it means it is next loan */
 
-            /*$p="SELECT max(amount) from ! where userid = ?";
-			
-			$amount1=$db->getOne($p,array('comments',$borrowerid));*/
-
             // update by mohit on date 3-11-13 to fix get max loan amount credit from last loan  set expires=NULL 
 
-            $q="SELECT max(AmountGot) from ! where borrowerid = ? AND active > ? AND adminDelete =? AND expires is NULL";
             if(!empty($excludeLoanIds)) {
+
                 $excludeLoanIds = implode(',', $excludeLoanIds);
-                $q="SELECT max(AmountGot) from ! where borrowerid = ? AND active > ? AND adminDelete =? AND loanid NOT IN(".$excludeLoanIds.")";
+                $q="SELECT max(AmountGot) from ! where borrowerid = ? AND active = ? AND adminDelete =? AND expires is NULL AND loanid NOT IN(".$excludeLoanIds.")";
+                $amount=$db->getOne($q,array('loanapplic',$borrowerid, LOAN_REPAID, 0));
+            
+                if(!empty($amount) && $amount > 1){
+
+                    $resultNative=$amount;
+
+                }else{
+                    $val=$this->getAdminSetting('firstLoanValue');
+                    $resultNative=convertToNative($val, $rate);
+                    
+                }
+
+            } else {
+
+                $q="SELECT max(AmountGot) from ! where borrowerid = ? AND active = ? AND adminDelete =? AND expires is NULL";
+                $resultNative=$db->getOne($q,array('loanapplic',$borrowerid, LOAN_REPAID, 0));
+  
             }
-            $amount=$db->getOne($q,array('loanapplic',$borrowerid, LOAN_OPEN, 0));
-            if(empty($amount)){
-                $val=$this->getAdminSetting('firstLoanValue');
-                $amount=convertToNative($val, $rate);
-            }
-            return $amount;
+            
+            return $resultNative;
 
         }
     }

@@ -8051,8 +8051,7 @@ function forgiveReminder(){
 	}
 	
 	
-/* Updated by mohit 0n date 12-12-2013 */
-
+//determines a borrower's current credit limit
 	function getCurrentCreditLimit($userid,$addCreditearned){
 		global $database;
 		$firstloan=$database->getBorrowerFirstLoan($userid);
@@ -8095,13 +8094,38 @@ function forgiveReminder(){
 		} elseif($ontime != 1){
 
 //case where last loan was repaid late - credit limit should equal last loan repaid on time or admin first loan setting, if no loan was ever repaid on time						
-			$loanCountArray=$database->getLoanCount($userid,true); 
-			$prevamount=$database->getPreviousLoanAmount($userid, $loanCountArray, $loanid);
-			if(empty($prevamount) || $prevamount==0){
-				$currentlimit=$database->getAdminSetting('firstLoanValue');
-			} else {
-				$currentlimit=$prevamount;
+			
+			$prevamount=$database->getPreviousLoanAmount($userid, $loanid);
+			
+
+			if(!empty($prevamount) && $prevamount > 0){
+
+				$currentlimit = $prevamount;
+
 			}
+
+			else{
+
+				$val=$database->getAdminSetting('firstLoanValue');
+				$val_local = convertToNative($val, $rate);
+
+				if($addCreditearned == false){
+
+					$currentlimit=$val_local;
+
+				} else {
+
+					$currentlimit=ceil($val_local + $invitecredit);	
+
+				}
+
+			}
+			
+
+
+			return $currentlimit;
+
+
 		} else {
 //case where last loan was repaid on time, we next check whether monthly installment repayment rate meets threshold
 

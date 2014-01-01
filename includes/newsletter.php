@@ -160,6 +160,7 @@ include_once("./editables/".$path);
 <!--- Please do not touch above script untill you really need to change -->
 		
 		<label class="custom_label"><?php echo $lang['newsletter']['newsletter_archive'] ?>:</label><br/><br/>
+<p><a href="http://us1.campaign-archive1.com/?u=c8b5366ff36890ecbc3bf00cc&id=82dd5c8bcd" target="_blank">December 2013</a></p>
 
 <p><a href="http://us1.campaign-archive1.com/?u=c8b5366ff36890ecbc3bf00cc&id=7617980ed9&e=[UNIQID]" target="_blank">November 2013</a></p>
 
