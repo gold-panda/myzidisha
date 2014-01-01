@@ -75,7 +75,8 @@ if($isvolunteer==1 || $session->userlevel==ADMIN_LEVEL){
 			$email=$rows['Email'];
 //added by Julia 22-10-2013
 			$is_endorser=$database->IsEndorser($userid);
-			$details=$database->getBorrowerById($userid); 						$assignedStatus=$details['Assigned_status'];
+			$details=$database->getBorrowerById($userid); 						
+			$assignedStatus=$details['Assigned_status'];
 			$last_modified=$details['LastModified'];
 			$last_mod_date=date('M d, Y', $last_modified);
 				if($assignedStatus==1) {

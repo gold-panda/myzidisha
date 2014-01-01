@@ -2375,7 +2375,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				*/
 			      $database->saveFacebookInfo($fb_data['user_profile']['id'], serialize($fb_data), $web_acc, $id, $email, $fb_fail_reason);
 			}
-			$database->IsUserinvited($id); 
+			$database->IsUserinvited($id, $email); 
 			$this->updateBorrowerDocument($id, $documents);// check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 			return $retVal ;
 		}
@@ -4082,7 +4082,7 @@ function totalTodayinstallment($userid){
 					$this->subscribeLender($email, $fname, $lname);
 				}
 			logger('lender registerd id '.$id);
-			$database->IsUserinvited($id); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
+			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 		}
 			return $retVal;
 		}
@@ -6264,7 +6264,7 @@ function forgiveReminder(){
 		$result=$database->addPartner($username, $pass1, $pname, $address, $city, $country, $email, $emails_notify, $website, $desc, $language);
 		$id = $database->getUserId($username);
 		if(!empty($id)) {
-			$database->IsUserinvited($id); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
+			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 		}
 		if($result==0)
 		{

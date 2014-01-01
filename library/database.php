@@ -1180,7 +1180,7 @@ class genericClass
         $result=$db->getOne($q, array('borrowers',0, $countrycode));
         return $result;
     }
-    function IsUserinvited($userid) {
+    function IsUserinvited($userid, $email) {
 
         global $db;
         if(isset($_COOKIE["invtduserjoins"])) {
@@ -1190,6 +1190,13 @@ class genericClass
             $q1="UPDATE invites SET invitee_id = ? Where cookie_value = ? LIMIT 1";
             $res=$db->query($q1, array($userid, $cookie_val));
             setcookie ("invtduserjoins", "", time() - 3600);
+        
+//uses email to record invite, for case where invited user joins without cookie set
+        }else{
+            $q="select id,userid from ! where email = ?";
+            $result=$db->getRow($q, array('invites',$email));
+            $q1="UPDATE invites SET invitee_id = ? Where email = ? LIMIT 1";
+            return $db->query($q1, array($userid, $email));
         }
     }
     function getco_Organizers_Country() {
