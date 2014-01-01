@@ -170,9 +170,20 @@ $invitee_criteria = $database->getInviteeRepaymentRate($session->userid);
 								</tbody>
 							</table>
 				<?php		}else{
-								$params['emailaddrs'] = $session->userinfo['email'];
-								$profile_noaccepted = $session->formMessage($lang['loginform']['profile_noaccepted'], $params);
-								echo $profile_noaccepted;
+
+								$details=$database->getBorrowerById($session->userid); 	
+								$assignedStatus=$details['Assigned_status'];
+
+								if($assignedStatus!=2) { //if not declined
+						
+									$params['emailaddrs'] = $session->userinfo['email'];
+									$profile_noaccepted = $session->formMessage($lang['loginform']['profile_noaccepted'], $params);
+									echo $profile_noaccepted;
+
+								}else{ //case of declined account
+
+									echo $lang['loginform']['profile_declined'];
+								}
 							}
 						}  
 						else if($brwrandLoandetail['brwrActive']==1 ) {

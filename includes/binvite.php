@@ -59,7 +59,9 @@ if(!empty($loginErr))
 <?php echo $binvite_inst; ?><br/><br/>
 <?php 
 
-if(!empty($islastrepaid) && $brwr_repayrate>=$minrepayrate && $invitee_criteria==0){
+//exception so that Cornelius Nartey of userid 14623 can invite new members in Ghana although he has not yet repaid a loan; we can remove this exception from the code once he has repaid his first loan
+
+if((!empty($islastrepaid) || $userid==14623) && $brwr_repayrate>=$minrepayrate && $invitee_criteria==0){
 	
 echo $binvite_eligible; ?>
 
