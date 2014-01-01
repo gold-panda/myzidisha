@@ -428,11 +428,9 @@ end commenting out language section & eligibility questions -->
 						<td><input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_name"); ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div></td>
 					</tr>
 					<tr><td>&nbsp;</td></tr>
-					<tr style="<?php if($form->value("bcountry")=='ID')echo "display:none"; ?>" >
-
 						<td><?php echo $lang['register']['sign_recomform_num'];?>:<a id="sign_recomform_numerr"></a></td>
 						<td><input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_num"); ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div></td>
-					</tr>
+					
 					<tr><td>&nbsp;</td></tr>
 
 					 <tr style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" id="contact_type" >
@@ -637,18 +635,6 @@ end commenting out language section & eligibility questions -->
 					<tr><td>&nbsp;</td></tr>
 
 					end moved ID and recommendation form to optional verification page 27-12-13 -->
-
-					 <tr>
-						<td><?php echo $lang['register']['sign_recomform_name'];?>:<a id="sign_recomform_nameerr"></a></td>
-						<td><input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_name"); ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div></td>
-					</tr>
-					<tr><td>&nbsp;</td></tr>
-					<tr style="<?php if($form->value("bcountry")=='ID')echo "display:none"; ?>" >
-
-						<td><?php echo $lang['register']['sign_recomform_num'];?>:<a id="sign_recomform_numerr"></a></td>
-						<td><input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_num"); ?>" /><br/><div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div></td>
-					</tr>
-					<tr><td>&nbsp;</td></tr>
 
 </div>
 				<?php $params['minendorser']= $database->getAdminSetting('MinEndorser');

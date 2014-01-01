@@ -2260,7 +2260,6 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 					$params['password'] = $pass1;
 					$message = $this->formMessage($lang['mailtext']['BorrowerReg-msg'], $params);
 					$this->mailSending($From, $To, $email, $Subject, $message,$templet, $replyTo);
-					$this->sendContactConfirmation($this->userid);
 				}
 
 				$From=EMAIL_FROM_ADDR;
@@ -2275,6 +2274,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				$params['verify_link'] = $link;
 				$message = $this->formMessage($lang['mailtext']['email_verification_body'], $params);
 				$reply = $this->mailSending($From, $To, $email, $Subject, $message,$templet);
+				$this->sendContactConfirmation($id);	// send SMS ommunity leader, family and neighborcontacts
 				if($reply)
 					Logger_Array("Email Verification mail sent to borrower ",'email, To', $email, $To);
 				$_SESSION['bEmailVerifiedPending']=true;
@@ -2436,8 +2436,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 					$To=$params['name'] = $namea." ".$nameb ;
 					$message = $this->formMessage($lang['mailtext']['BorrowerReg-msg'], $params);
 					$this->mailSending($From, $To, $email, $Subject, $message,$templet, $replyTo);
-					$this->sendContactConfirmation($this->userid);
 				}
+				$this->sendContactConfirmation($id);	// send SMS ommunity leader, family and neighborcontacts
 				$Subject=$lang['mailtext']['email_verification_sub'];
 				$activate_key = $database->getActivationKey($id);
 				$link = SITE_URL."index.php?p=51&ident=$id&activate=$activate_key";
@@ -7922,7 +7922,13 @@ function forgiveReminder(){
 		require ("editables/".$path);
 		$telnumber= $bdetail['TelMobile'];
 		$country=$bdetail['Country'];
-			
+		/* set lang as per julia email 30/12/13 **/
+		if($country=='BJ' || $country=='BF' || $country=='GN' || $country=='SN' || $country=='NE'){
+			$language='fr';
+		}elseif($country=='ID'){
+			$language='in';
+		}
+		
 		if(!empty($bdetail['family_member1']))
 			$this->ContactConfirmation($bdetail['family_member1'], $country, $telnumber, $language, $userid);
 
