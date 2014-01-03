@@ -5,7 +5,7 @@ if(empty($session->userid)){
 	$showShareBox=0;
 	$fbmsg_hide=0;
 	$web_acc=0;
-	$fb_fail_reason=isset($_SESSION['FB_Fail_Reason']) ? $_SESSION['FB_Fail_Reason'] : ''.' : Borrower Registration';
+	$fb_fail_reason=isset($_SESSION['FB_Fail_Reason']) ? $_SESSION['FB_Fail_Reason'] : ''.'During Facebook Account linked to Zidisha,Borrower close the Registration page';
 	if(!empty($form->values)){
 		$_SESSION['fb_data']=$form->values;
 	}
