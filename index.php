@@ -1,5 +1,17 @@
 <?php
+
+	error_log("enviro name:" . $_SERVER['env_name']);
+
+/*	if (isset($_GET["p"])) {
+		error_log("value of GET['p']: " . $_GET["p"]);
+	} else {
+		error_log("value of GET['p'] not set");
+	}
+*/
+
 	include("library/session.php");
+
+	// error_log("FOOO");
 	
 	//Anupam 22-11-201 redirect https://www.zidisha.org/index.php to https://www.zidisha.org/
 	if ($_SERVER['REQUEST_URI']=='/index.php')
@@ -27,6 +39,9 @@
 	if(isset($_GET["p"])){
 		$page=$_GET["p"];
 	}
+
+	// error_log("value of $page: " . $page);
+
 	if($page==1001)
 	{
 		header("location:landing_page/fullyfunded.html");

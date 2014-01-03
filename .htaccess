@@ -16,13 +16,6 @@ AuthName "Zidisha Site"
 AuthUserFile "/home4/semfundc/.htpasswds/public_html/zidisha/passwd"
 RewriteEngine On
 ErrorDocument 404 https://www.zidisha.org
-RewriteCond %{SERVER_PORT} !^443$
-
-RewriteRule ^(.*)$ https://www.zidisha.org/$1 [L,R] 
-RewriteCond %{HTTP_HOST}%{REQUEST_URI} ^https://www.zidisha.org(\/?)$
-RewriteRule (.*) https://www.zidisha.org/en/$1 [R=302,L]
-RewriteRule ^(sq|ar|am|az|bn|bu|zh|dz|fr|de|el|hi|in|it|ja|kh|ko|la|ms|mn|np|ps|pr|pt|ru|es|tl|ta|th|tr|ur|vi)/(.*)$ $2?language=$1&%{QUERY_STRING} [L] 
-
 
 RewriteCond %{QUERY_STRING} (^|&)p=2(&|$)
 RewriteCond %{QUERY_STRING} !(^|&)nr=1($|&)
