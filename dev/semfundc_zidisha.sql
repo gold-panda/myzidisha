@@ -15,6 +15,11 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+-- Create and use database
+
+CREATE DATABASE `semfundc_zidisha`;
+USE `semfundc_zidisha`;
+
 --
 -- Table structure for table `active_guests`
 --

@@ -22,6 +22,7 @@ if (!isset($db))
 			$dsn = 'mysql' . '://' . USER . ':' . PASS . '@' . PATH . '/' . NAME;
 			$db = @DB::connect( $dsn, $db_options );
 			if (PEAR::isError($db)){
+				error_log("Error connecting to DB: " . $db->getMessage());
 				header("location: landing_page/fullyfunded.html");
 				exit;
 			}

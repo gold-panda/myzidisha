@@ -4,11 +4,13 @@ define("RANDOM_NUMBER", "1287942845");
 date_default_timezone_set ('EST');
 ini_set('include_path', '/home4/semfundc/public_html/zidisha/extlibs/Pear/:.:/usr/local/lib/php/');
 //database constants for connection settings
-define("USER", "semfundc_network");// user name for database
 define("COUNTRY", "US");
-define("PASS", "wY62Nt5Rz7l6");// user password for database
 define("PATH", "localhost");// host name
 define("NAME", "semfundc_zidisha");// database name
+
+define("USER", $_SERVER["ENV_DB_USER"]);// user name for database
+define("PASS", $_SERVER["ENV_DB_PASS"]);// user password for database
+
 //database table name constants
 define("TBL_USERS", "users");
 define("TBL_PARTNER", "partners");
@@ -134,11 +136,9 @@ Define ('DEFAULT_IMAGE', 'file:dimg.jpg');
 Define ('SITE_URL', 'http://localhost:8888');
 
 // paths
-//define("FULL_PATH", '/home4/semfundc/public_html/zidisha/');//  physical full path for site
-//define("ROOT_PATH", '/home4/semfundc/');//  physical root path for site
 
-define("FULL_PATH", '');//  physical full path for site
-define("ROOT_PATH", '../');//  physical root path for site
+define("FULL_PATH", $_SERVER["ENV_FULL_PATH"]);//  physical full path for site
+define("ROOT_PATH", $_SERVER["ENV_ROOT_PATH"]);//  physical root path for site
 
 define("PEAR_DIR" , FULL_PATH.'extlibs/Pear/');// path of pear directory
 define("CACHE_DIR" , FULL_PATH.'cache/');//path of cache directory
