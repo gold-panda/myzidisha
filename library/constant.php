@@ -133,7 +133,7 @@ Define ('WATERMARK_ALIGN_V', 'bottom'); //water mark vertical alignment  top / b
 Define ('WATERMARK_MARGIN',		10);// water mark margin
 Define ('WATERMARK_TEXT',		'');// text displayed on uploaded pics
 Define ('DEFAULT_IMAGE', 'file:dimg.jpg');
-Define ('SITE_URL', 'https://www.zidisha.org/');
+Define ('SITE_URL', $_SERVER["ENV_SITE_URL"]);
 
 // paths
 
