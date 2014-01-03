@@ -1781,29 +1781,10 @@ if($brw2['active'] == LOAN_REPAID)
 											<a href="javascript:void(0)" onclick="$.facebox.close();" class=''>
 											No Thanks</a>
 
-<!-- added by Julia 26-11-2013
+<!-- update by Mohit on date 3-1-14 (Julia 26-11-2013) ---->
 
 <br/><br/>
-
-
-<form method='post' action='updateprocess.php'>
-
-<input type='hidden' name='lenderid' value="<?php echo $userid ?>"/>
-				
-<input type='hidden' name='borrowerid' value="<?php echo $ud ?>"/>
-
-<input type='hidden' name='loanid' value="<?php echo $ld ?>" />
-
-<input type='hidden' name='sharebox_off' id='sharebox_off' />
-
-<input type="hidden" name="user_guess" value="<?php echo generateToken('sharebox_off'); ?>"/>
-
-
-<a href='javascript:void(0)' onclick='document.forms.sharebox_off".submit()'>Do Not Display Share Invite Again</a>
-
-</form>
-
--->
+<a href='javascript:void(0)' onclick='sharebox_off_submit(<?php echo $userid;?>,<?php echo $ud;?>,<?php echo $ld;?>,1)'>Do Not Display Share Invite Again</a>
 
 										</div>
 									</div>

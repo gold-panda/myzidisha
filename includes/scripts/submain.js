@@ -434,3 +434,15 @@ function getlegalDeclaration2(){
 	}
 	document.getElementById("borrowersubmitform").click();
 }
+// Added by Mohit on date 03-01-14
+function sharebox_off_submit(lenderid,borrowerid,loanid,sharebox_status)
+{   
+    jQuery.ajax({
+                url: 'updateprocess.php',
+                type: 'POST',
+                data: 'sharebox_off='+sharebox_status+'&lenderid='+lenderid+'&borrowerid='+borrowerid+'&loanid='+loanid, 
+                success: function(data){
+                    window.location.href=data;
+                }
+            });
+    }

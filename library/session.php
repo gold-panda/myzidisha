@@ -2208,11 +2208,12 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		$path=  getEditablePath('register.php');
 		require ("editables/".$path);
 		$fb_data= unserialize(stripslashes(urldecode($fb_data)));
-		$web_acc=0;
+		
+		/* Comment by mohit on date 02-01-14
+ 		$web_acc=0;
 		$fb_fail_reason=isset($_SESSION['FB_Fail_Reason']) ? $_SESSION['FB_Fail_Reason'] : ''.' : Borrower Registration Session';
-		Logger_Array("FB LOG - on session 1",'fb_data', serialize($fb_data).$uname);
+		Logger_Array("FB LOG - on session 1",'fb_data', serialize($fb_data).$uname); */
 		if($cntct_type!='1' || (isset($_SESSION['FB_Error']) && $_SESSION['FB_Error']!=false)){
-//			Logger_Array("FB LOG - on session 2",'fb_data', serialize($fb_data).$uname);
 			Logger_Array("cnt",$cntct_type, serialize($_SESSION['FB_Error']));
 			$fb_data= '';
 			unset($_SESSION['FB_Error']);
@@ -5333,9 +5334,7 @@ function forgiveReminder(){
 				if($i < $gracePeriod)
 				{
 					continue;
-				}
-				
-			if($printSchedule[$i]['dueAmt']!=0){
+				}					
 				$text= $text. "<tr> ";
 				$text=$text."<td style='text-align:left; width:20%'>".date('M d, Y',$printSchedule[$i]['dueDate'])."</td>";
 				if($displyall)
@@ -5399,9 +5398,7 @@ function forgiveReminder(){
 					$text=$text."<td style='text-align:left; width:20%'>&nbsp;</td>";
 					$text=$text."<td style='text-align:left; width:20%'>&nbsp;</td>";
 					 $text=$text." </tr>";
-				}
-			
-              } //end if			
+				}		
 				
 			}
 			$totalPaidAmtUsd=convertToDollar($totalPaidAmt ,($CurrencyRate));
@@ -7934,25 +7931,25 @@ function forgiveReminder(){
 			$language='in';
 		}
 		
-		if(!empty($bdetail['family_member1']))
+		if(!empty($bdetail['family_member1']) && !empty($telnumber))
 			$this->ContactConfirmation($bdetail['family_member1'], $country, $telnumber, $language, $userid);
 
-		if(!empty($bdetail['family_member2']))
+		if(!empty($bdetail['family_member2']) && !empty($telnumber))
 			$this->ContactConfirmation($bdetail['family_member2'], $country, $telnumber, $language, $userid);
 
-		if(!empty($bdetail['family_member3']))
+		if(!empty($bdetail['family_member3']) && !empty($telnumber))
 			$this->ContactConfirmation($bdetail['family_member3'], $country, $telnumber, $language, $userid);
 
-		if(!empty($bdetail['neighbor1']))
+		if(!empty($bdetail['neighbor1']) && !empty($telnumber))
 			$this->ContactConfirmation($bdetail['neighbor1'], $country, $telnumber, $language, $userid);
 
-		if(!empty($bdetail['neighbor2']))
+		if(!empty($bdetail['neighbor2']) && !empty($telnumber))
 			$this->ContactConfirmation($bdetail['neighbor2'], $country, $telnumber, $language, $userid);
 
-		if(!empty($bdetail['neighbor3']))
+		if(!empty($bdetail['neighbor3']) && !empty($telnumber))
 			$this->ContactConfirmation($bdetail['neighbor3'], $country, $telnumber, $language, $userid);		
 		
-		if(!empty($bdetail['rec_form_offcr_name']))
+		if(!empty($bdetail['rec_form_offcr_name']) && !empty($telnumber))
 
 			$this->ContactConfirmation($bdetail['rec_form_offcr_name']." ".$bdetail['rec_form_offcr_num'], $country, $telnumber, $language, $userid);
 
@@ -8320,6 +8317,65 @@ function sendPostData($url, $post){
 	  return $result;
 	}
 	
+
+//checks whether a borrower is eligible to send invites to new borrowers
+function isEligibleToInvite($userid){
+	
+	global $database;
+
+	//borrower must have repaid some amount to Zidisha
+	$previous_loan = $database->getLastRepaidloanId($userid);
+
+	//in case where there is no previous loan, checks whether borrower has yet made any payments on current loan
+	if(!empty($previous_loan)){
+
+		$paid = $previous_loan;
+
+	} else {
+
+		$loanid = $database->getCurrentLoanid($userid);
+		$paid = $database->getTotalPaid($loanid,$userid);
+
+	}
+
+	if (empty($paid) || $paid==0){
+
+		$eligible=0; //not eligible
+
+	} else {
+
+		$brwr_repayrate= $this->RepaymentRate($userid);
+		$minrepayrate= $database->getAdminSetting('MinRepayRate');
+
+
+//determines if member on-time repayment rate meets standard
+		if($brwr_repayrate<$minrepayrate){
+		
+			$eligible=0; //not eligible
+
+		} else {
+
+			//if more than 10% of invited members do not meet repayment standard then this user is ineligible to invite more
+ 			$success_rate = $database->getInviteeRepaymentRate($userid);
+		
+			
+			if ($success_rate < 0.9) {
+
+            	$eligible = 0; //not eligible
+
+        	}else{ 
+
+            	$eligible = 1; //eligible
+        	}
+        	
+        } 
+	} 
+	
+	return $eligible;
+}
+
+
+
 /***** end here ******/
 
 }

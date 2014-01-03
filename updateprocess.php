@@ -188,6 +188,9 @@ class updateProcess
 		if(isset($_POST["additional_verification"])){
 			$this->additional_verification();
 		}
+		if(isset($_POST["sharebox_off"])){
+			$this->sharebox_off();
+		}
 		
 		
 
@@ -1611,12 +1614,12 @@ class updateProcess
 		global $session;
 		$_POST = sanitize_custom($_POST);
 		$loanprurl = getLoanprofileUrl($_POST['borrowerid'],$_POST['loanid']);
-		$result=$session->sharebox_off($_POST['lenderid'],$_POST['set']);
+		$result=$session->sharebox_off($_POST['lenderid'],$_POST['sharebox_off']);
 		if($result){
-			header("Location: $loanprurl");
+			echo $loanprurl;
 		}
 		else{
-			header("Location: $loanprurl");
+			echo $loanprurl;
 		}
 	}
 

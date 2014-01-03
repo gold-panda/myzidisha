@@ -11024,12 +11024,12 @@ class genericClass
         global $db;
         traceCalls(__METHOD__, __LINE__);
         $q = "UPDATE ! SET sharebox_off=? WHERE userid = ?";
-        $r=$db->query($q, array('lenders', $sharebox_off, $id));
+        $r=$db->query($q, array('lenders', $set, $id));
         if($r===DB_OK){
-            return 0;//successful insert
+            return 1;//successful insert
         }
         else{
-            return 1;//unsuccessful insert
+            return 0;//unsuccessful insert
         }
     }
 
@@ -11226,21 +11226,15 @@ class genericClass
 //calculates percentage of members invited by this user who meet repayment rate standard
         $success_rate=$total_success / $total_invitedloans;
 
-//if more than 10% of invited members do not meet repayment standard then this user is ineligible to invite more
-        if ($success_rate < 0.9) {
-
-            $ineligible = 1;
-
-        }else{
-
-            $ineligible = 0;
-        }
-
-        return $ineligible;
-        
+        return $success_rate;      
     }
-
-
+	
+	public function loanIsAlreadyOpen($borrowerid){
+		global $db;
+		$q="SELECT * from ! where borrowerid = ? AND (active=? OR active=? OR active=?) AND expires is NULL AND adminDelete =?";
+		$result=$db->query($q,array('loanapplic',$borrowerid, LOAN_OPEN,LOAN_FUNDED,LOAN_ACTIVE,0));
+		return $result->numRows();
+	} 
 
 };
 $database= new genericClass;
