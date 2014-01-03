@@ -156,6 +156,14 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 
 
 
+<h4 style="display:inline">DENISE OWEN, Translation Team Coordinator</h4>
+							
+							
+							<p style="margin-top:10px;">Denise Owen teaches elementary and middle school music at an international Christian school in Tokyo, Japan. She is a graduate of Oberlin College, where she lived in French House and German House, and Regent College, where she majored in Old Testament and Hebrew. Now she uses Japanese and English on a daily basis, but linguistics and translation continue to be her hobby. She is happy to be able to put her French to use to help alleviate poverty through Zidisha.</p>
+							
+							<br />
+
+
 
 
 							
@@ -208,13 +216,6 @@ Cornellia Widiastuti<br />
 							
 							<br />	
 
-	
-							
-							<h4 style="display:inline">PRANJAL SRIVASTAVA, Web Developer</h4>
-							
-							<p style="margin-top:10px;">Pranjal is the Chief Executive Officer of <a href="http://www.CodeFire.in" target="_blank">CodeFire Technologies Pvt. Ltd.</a>, a software company based out of India. The team at CodeFire Technologies love developing challenging web-based applications and this is how they got associated with Zidisha. They appreciate the kind platform that Zidisha is building and nurturing, and understand that this is a great medium to encourage new entrepreneurs and provide them with much-needed money to take their businesses to the next level. CodeFire Technologies, with its technical capabilities in different verticals, has leveraged technology to provide a robust platform to Zidisha.org. As per Pranjal Srivastava, "We are committed to deploy the best of technology in Zidisha.org to provide highest-level service and satisfaction in the peer-to-peer microfinancing space. We are glad to partner with Zidisha.org on the technology end and support the initiative."</p>
-							
-							<br />
 							
 <h4 style="display:inline">RONALD CHENG, Trustee</h4>
 							

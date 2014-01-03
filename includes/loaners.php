@@ -165,9 +165,12 @@ $setcolor=0;
 <?php if($t==2){ ?>
 			<select class="medium" id="fundSort" name="activeSort" style="width:auto;">
 				<option value='1'>Random Sorting</option>
+				
+				<!-- these options no longer work because number of loans to sort is too many, removed pending introduction of replacement filtering feature 
 				<option value='2' <?php if($sort==2)echo "Selected"; ?>>Percent Repaid</option>
 				<option value='3' <?php if($sort==3)echo "Selected"; ?>>Number of Comments</option>
 				<option value='4' <?php if($sort==4)echo "Selected"; ?>>Borrower Feedback Rating</option>
+			-->
 				<option value='5' <?php if($sort==5)echo "Selected"; ?>>Date Disbursed (Earliest First)</option>
 				<option value='6' <?php if($sort==6)echo "Selected"; ?>>Date Disbursed (Most Recent First)</option>
 			</select>

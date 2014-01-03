@@ -3248,7 +3248,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$allDates['remainPeriod']=$remainPeriod;
 		return $allDates;
 	}
-	function reScheduleLoan($period,$installment_amount, $installment_date,$original_period,$reschedule_reason,$confirmReScheduleLoan,$loanid,$propose_type)
+	function reScheduleLoan($period,$installment_amount, $installment_date,$original_period,$reschedule_reason,$confirmReScheduleLoan,$loanid,$propose_type, $weekly_inst)
 	{	
 		global $database,$form;
 		$path=  getEditablePath('error.php');
@@ -3397,9 +3397,13 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 								$lendersArray = $database->getLendersAndAmount($loanid, true);
 								for($i =0; $i < count($lendersArray); $i++)
 								{
-									$this->sendRescheduleMailToLender($lendersArray[$i]['lenderid'],$borrower_id,$new_period,$reschedule_reason, false, $propose_type, $period_increased, $NewinstallmentAmt, $isamountIncreased, $loanid);
+									
+									//$this->sendRescheduleMailToLender($lendersArray[$i]['lenderid'],$borrower_id,$new_period,$reschedule_reason, false, $propose_type, $period_increased, $NewinstallmentAmt, $isamountIncreased, $loanid);
+									
 								}
-								$this->sendRescheduleMailToLender(ADMIN_ID,$borrower_id,$new_period,$reschedule_reason, true, $propose_type, $period_increased, $NewinstallmentAmt, $isamountIncreased, $loanid);
+								
+								//$this->sendRescheduleMailToLender(ADMIN_ID,$borrower_id,$new_period,$reschedule_reason, true, $propose_type, $period_increased, $NewinstallmentAmt, $isamountIncreased, $loanid);
+								
 								$res3=$database->subFeedback1($borrower_id,$borrower_id,$reschedule_reason,0,0,$reschedule_id);
 								return true;
 						}
@@ -6012,6 +6016,7 @@ function forgiveReminder(){
 	function facebook_connect($borrowerid=null) {
 		include('facebook/facebook.php');
 		global $database, $form;
+		include_once("editables/error.php");
 		$path=  getEditablePath('error.php');
 		include_once("editables/".$path);
 		$fb_array=array();
@@ -6043,19 +6048,19 @@ function forgiveReminder(){
                                 if(empty($fb_array['permissions']['data'][0]['publish_stream']) || empty($fb_array['permissions']['data'][0]['read_stream'])){
 					$fb_array['loginUrl'] = $facebook->getLoginUrl(array('canvas' => 1, 'fbconnect' => 0, 'display' => 'popup', 'scope'=> 'email,user_location,publish_stream,read_stream'));
 					$fb_array['user_profile']='';
-					$_SESSION['FB_Error']= "<div align='center'><font color=green><strong>You must grant the requested permissions in order to link your Facebook account.</strong></font></div><br/>";
+					$_SESSION['FB_Error']= $lang['error']['fb_permissions'];
 				}else{  								
 					$FB_ID_exist= $database->IsFacebookIdExist($fb_array['user_profile']['id'], $userid); 
 					/* Added by Mohit 28-10-13 */			
 					$ip=(isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : "";
 					$IpExist=$database->IsIpExist($ip,$borrowerid);	
 					if($IpExist > 0){
-						$_SESSION['FB_Error']= "<div align='center'><font color=green><strong>This Facebook account is not eligible i.e you have already endorse for this borrower with same ip address.</strong></font></div><br/>";
+						$_SESSION['FB_Error']= $lang['error']['fb_ineligible'];
 						$_SESSION['FB_Fail_Reason']= "This Facebook user is already endorse to the same borrrower with same IP address.";				
 					}else if($FB_ID_exist>0){ 
 						$existuser= $database->getExistFbUser($fb_array['user_profile']['id'], $userid);
 						$fb_array['exist_user']= $existuser;
-						$_SESSION['FB_Error']="<div align='center'><font color=green><strong>Another Zidisha account is already linked to this Facebook account.  If you have linked your Facebook account to another Zidisha account in the past, please log in to that account in order to complete your application.</strong></font></div><br/>";
+						$_SESSION['FB_Error']=$lang['error']['fb_already_connected'];
 						$_SESSION['FB_Fail_Reason']= "This Facebook account is already connect with another Zidisha account.";
 					}else{
 						$minFbFrnds= $database->getAdminSetting('MIN_FB_FRNDS');
@@ -6065,11 +6070,11 @@ function forgiveReminder(){
 							$_SESSION['FB_Fail_Reason']='All looks okay.';
 						} elseif(count($fb_array['user_friends']) < $minFbFrnds) {
 							Logger_Array("FB LOG - on session friend less",'fb_connect', $fb_array['user_profile']['id']);
-							$_SESSION['FB_Error']= "<div align='center'><font color=green><strong>This Facebook account is not eligible.</strong></font></div><br/>";
+							$_SESSION['FB_Error']= $lang['error']['fb_ineligible'];
 							$_SESSION['FB_Fail_Reason']= "This Facebook account have less friends as required.";
 						}else{
 							Logger_Array("FB LOG - on session post less",'fb_connect', $fb_array['user_profile']['id']);
-							$_SESSION['FB_Error']= "<div align='center'><font color=green><strong>This Facebook account is not eligible.</strong></font></div><br/>";
+							$_SESSION['FB_Error']= $lang['error']['fb_ineligible'];
 							$_SESSION['FB_Fail_Reason']= "This Facebook account does not have old post as required.";
 						}
 					}
