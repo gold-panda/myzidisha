@@ -875,7 +875,7 @@ class Process
 	}
 	function loanApplication()
 	{
-		global $session, $form;
+		global $database,$session, $form;
 		$_POST_ORG=$_POST;
 		$_POST = sanitize_custom($_POST);
 		$_POST['amount'] = str_replace(",","",$_POST['amount']);
@@ -887,6 +887,12 @@ class Process
 		$_SESSION['la']['lu'] = $_POST['loanuse'];
 		$_SESSION['la']['iday'] = $_POST['installment_day'];
 		$_SESSION['la']['iwkday'] = $_POST['installment_weekday'];
+
+		$isLoanOpen=$database->loanIsAlreadyOpen($_SESSION['userid']);	// To check loan is already LOAN_OPEN,LOAN_FUNDED,LOAN_ACTIVE
+		if($isLoanOpen>0){
+			unset($_SESSION['loanapp']);
+			header("Location: index.php?p=50");
+		}else{
 		$result=$session->loanApplication($_POST['amount'], $interest, $_POST['installment_amt'], $_POST['gperiod'], $_POST['loanuse'],$_POST['agree'],$_POST['installment_day'],$_POST['installment_weekday']);
 		if($result==0)
 		{
@@ -918,6 +924,7 @@ class Process
 			$_SESSION['loanapp']=$loan;
 				header("Location: index.php?p=9&s=1");
 		}
+	  } // end here	
 	}
 	function editloanApplication()
 	{
