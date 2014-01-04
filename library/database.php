@@ -4285,10 +4285,23 @@ class genericClass
 
         if($firstpmt==1){
 
-
-            $q="SELECT repaymentschedule.userid FROM repaymentschedule INNER JOIN (SELECT userid, min(duedate) as min_duedate FROM repaymentschedule GROUP BY userid) AS table_mindue ON repaymentschedule.userid = table_mindue.userid JOIN ! ON borrowers.userid=repaymentschedule.userid WHERE active = 1 AND completed_on >=? AND completed_on <=?";
-          
+            $q="SELECT repaymentschedule.userid, amount, 
+FROM_UNIXTIME(borrowers.completed_on),
+FROM_UNIXTIME(duedate), FROM_UNIXTIME(paiddate)
+FROM
+   repaymentschedule 
+INNER JOIN
+    (SELECT userid, min(duedate) as min_duedate
+    FROM repaymentschedule
+     WHERE amount > 0
+    GROUP BY userid) AS table_mindue      
+  ON repaymentschedule.userid = table_mindue.userid AND table_mindue.min_duedate = repaymentschedule.duedate
+JOIN borrowers
+  ON borrowers.userid=repaymentschedule.userid
+WHERE paiddate <= duedate+864000 and active = 1 AND completed_on >=? AND completed_on <=? ";
    
+            $res= $db->getAll($q, array($date3, $date4));
+
         }
 
 //Facebook link status
@@ -4296,11 +4309,13 @@ class genericClass
 
             $q="SELECT * FROM ! LEFT JOIN borrowers_extn as bext on bext.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND bext.fb_data IS NULL order by completed_on";
          
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
    
         }elseif ($fb==2){
 
             $q="SELECT * FROM ! LEFT JOIN borrowers_extn as bext on bext.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND bext.fb_data IS NOT NULL order by completed_on";
             
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
    
         }
 
@@ -4309,21 +4324,25 @@ class genericClass
 
             $q="SELECT * FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NOT NULL order by completed_on";
             
+             $res= $db->getAll($q, array('borrowers', $date3, $date4));
    
         }elseif ($invite==2){
 
             $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NULL order by completed_on";
            
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
    
         }elseif ($invite==3){
 
             $q="SELECT DISTINCT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NOT NULL order by completed_on";
             
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
    
         }elseif ($invite==4){
 
             $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NULL order by completed_on";
             
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
    
         }
 
@@ -4332,22 +4351,25 @@ class genericClass
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) > 0 AND length(reffered_by) < 10 order by completed_on";
             
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
    
         }elseif ($text==2){
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 10 AND length(reffered_by) < 50 order by completed_on";
             
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
    
         }elseif ($text==3){
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 50 AND length(reffered_by) < 100 order by completed_on";
             
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
    
         }elseif ($text==4){
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 100 order by completed_on";
             
-
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
         }
 
 
@@ -4356,9 +4378,10 @@ class genericClass
 
             $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
             
+            $res= $db->getAll($q, array('borrowers', $date3, $date4));
         }
         
-        $res= $db->getAll($q, array('borrowers', $date3, $date4));
+       
         return $res;
     }
 

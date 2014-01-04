@@ -8355,17 +8355,26 @@ function isEligibleToInvite($userid){
 
 		} else {
 
-			//if more than 10% of invited members do not meet repayment standard then this user is ineligible to invite more
- 			$success_rate = $database->getInviteeRepaymentRate($userid);
+			$invitedmember= $database->getInvitedMember($userid);
+
+			if (empty($invitedmember)){
+
+				$eligible = 1;
+
+			} else {
+
+				//if more than 10% of invited members do not meet repayment standard then this user is ineligible to invite more
+ 				$success_rate = $database->getInviteeRepaymentRate($userid);
 		
 			
-			if ($success_rate < 0.9) {
+				if ($success_rate < 0.9) {
 
-            	$eligible = 0; //not eligible
+            		$eligible = 0; //not eligible
 
-        	}else{ 
+        		}else{ 
 
-            	$eligible = 1; //eligible
+            		$eligible = 1; //eligible
+        		}
         	}
         	
         } 

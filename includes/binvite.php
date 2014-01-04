@@ -9,8 +9,6 @@ $path=	getEditablePath('invite.php', $language);
 require("editables/".$path);
 
 $userid = $session->userid;
-$islastrepaid = $database->getLastRepaidloanId($userid);
-$brwr_repayrate= $session->RepaymentRate($userid);
 $minrepayrate= $database->getAdminSetting('MinRepayRate');
 $binvitecredit=$database->getcreditsettingbyCountry($session->userinfo['country'],3);
 if(empty($binvitecredit)){
@@ -19,10 +17,8 @@ if(empty($binvitecredit)){
 	$params['binvite_credit']= $binvitecredit['loanamt_limit'];
 }
 $params['minreapayrate']= $database->getAdminSetting('MinRepayRate');
-
-//determines whether previous invitees meet on-time repayment rate standard, if so borrower is eligible to invite more
-$invitee_criteria = $database->getInviteeRepaymentRate($userid);
-$currency  = $database->getUserCurrency($session->userid); 
+$eligible = $session->isEligibleToInvite($userid);
+$currency  = $database->getUserCurrency($userid); 
 $params['invited_link']= 'index.php?p=97';
 $params['currency']= $currency;
 $binvite_inst= $session->formMessage($lang['invite']['binvite_inst'], $params);
@@ -59,15 +55,13 @@ if(!empty($loginErr))
 <?php echo $binvite_inst; ?><br/><br/>
 <?php 
 
-//exception so that Cornelius Nartey of userid 14623 can invite new members in Ghana although he has not yet repaid a loan; we can remove this exception from the code once he has repaid his first loan
+if($eligible==1){
 
-if((!empty($islastrepaid) || $userid==14623) && $brwr_repayrate>=$minrepayrate && $invitee_criteria==0){
-	
-echo $binvite_eligible; ?>
+	echo $binvite_eligible; ?>
 
-<br/><br/><br/>
+	<br/><br/><br/>
 
-<form  action='updateprocess.php' method="POST">
+	<form  action='updateprocess.php' method="POST">
 	<table class='detail'>
 		<tbody>
 			<tr>
@@ -123,7 +117,7 @@ echo $binvite_eligible; ?>
 			</tr>
 		</tbody>
 	</table>
-</form>
+	</form>
 <?php
 }else{
 	echo $binvite_noteligible;

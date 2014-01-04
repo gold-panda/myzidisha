@@ -17,10 +17,8 @@ global $database;
 $binvitecredit=$database->getcreditsettingbyCountry($session->userinfo['country'],3);
 $binvitecredit = $binvitecredit['loanamt_limit'];
 $currency  = $database->getUserCurrency($session->userid); 
-$islastrepaid = $database->getLastRepaidloanId($session->userid);
 $brwr_repayrate= $session->RepaymentRate($session->userid);
-$minrepayrate= $database->getAdminSetting('MinRepayRate'); 
-$invitee_criteria = $database->getInviteeRepaymentRate($session->userid);
+$eligible = $session->isEligibleToInvite($session->userid);
 
 
 ?>
@@ -233,7 +231,7 @@ $invitee_criteria = $database->getInviteeRepaymentRate($session->userid);
 					$link=getUserProfileUrl($mentor_id);
 				}
 
-				if(!empty($islastrepaid) && $brwr_repayrate>=$minrepayrate && $invitee_criteria==0){
+				if($eligible==1){
 	
 					echo '<br/><br/><br/>'.$lang['loginform']['invite_frnd_msg1'].' '.number_format($brwr_repayrate).'%.  '.$lang['loginform']['invite_frnd_msg2'].'<br/><br/><div align="center"><a href="index.php?p=96"><input type="button" value="'.$lang['loginform']['invite_now'].'" class="btn"></a></div>';
 

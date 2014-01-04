@@ -30,9 +30,8 @@ $minrepayrate=$database->getAdminSetting('MinRepayRate');
 $params['minreapayrate']= $minrepayrate;
 $binvited_msg= $session->formMessage($lang['invite']['binvited_msg'], $params);
 $invitedmember= $database->getInvitedMember($userid);
-$total_success = $database->getSuccessfulInvitees($userid);
-$total_with_loans = $database->getInviteesWithLoans($userid);
-$success_rate = number_format(($total_success / $total_with_loans)*100);
+$success_percentage = $database->getInviteeRepaymentRate($userid);
+$success_rate = number_format(($success_percentage)*100);
 $TotBonus=$database->getInviteCredit($userid);
 
 ?>

@@ -948,7 +948,7 @@ if($language==''){
 				<em>
 					Zidisha Microfinance is the first peer-to-peer microlending service to offer direct interaction between lenders and borrowers across international borders. We are a United States 501(c)(3) nonprofit organization.
 				</em><br/><br/>
-				<em>&copy; 2009 - 2013 Zidisha Inc.</em>
+				<em>&copy; 2009 - 2014 Zidisha Inc.</em>
 			</p>
 		</footer>
 
