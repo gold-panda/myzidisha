@@ -11246,9 +11246,16 @@ WHERE paiddate <= duedate+864000 and active = 1 AND completed_on >=? AND complet
 //counts total members invited by this user who have taken out loans
         $total_invitedloans=$this->getInviteesWithLoans($userid);
 
-//calculates percentage of members invited by this user who meet repayment rate standard
-        $success_rate=$total_success / $total_invitedloans;
+        if (empty($total_invitedloans) || $total_invitedloans==0){
 
+            $success_rate=1;
+
+        } else {
+
+//calculates percentage of members invited by this user who meet repayment rate standard
+            $success_rate=$total_success / $total_invitedloans;
+        }
+        
         return $success_rate;      
     }
 	
