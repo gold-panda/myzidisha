@@ -97,7 +97,7 @@ $lang['loginform']['emailconf_sent']='<font color=green><b>Thank you. We have se
 $lang['loginform']['endorse_sent']='<font color=green><b>The endorsement request email has been resent.</b></font>';
 $lang['loginform']['profile_uncomplete']='Your profile is not yet submitted to Zidisha. <strong><a href="index.php?p=13">Click here to complete and submit your profile.</a></strong>';
 
-$lang['loginform']['profile_noaccepted']='Your profile has been submitted, and will now be reviewed by Zidisha staff.<br /><br />If any further information is needed, a notification will be sent to your email address, <a href=\'mailto:%emailaddrs%\'>%emailaddrs%</a>.<br /><br />Once your profile is complete, a Zidisha staff member will contact you by telephone.  Before your application can be approved, you must demonstrate that you have a good understanding of how our lending program works by correctly answering the questions about Zidisha that the staff member will ask.  To prepare for this telephone interview, we recommend that you review carefully the information about Zidisha in the Loan Contract that you submitted with your application.<br/><br/>Thank you,<br/><br/>Zidisha Team';
+$lang['loginform']['profile_noaccepted']='Your profile has been submitted, and will now be reviewed by Zidisha staff.<br /><br />If any further information is needed, a notification will be sent to your email address, %emailaddrs%.<br/><br/>If you do not hear from us within one week, please send an email to <a href=\'mailto:service@zidisha.org\'>service@zidisha.org</a> to ensure we have received your application.';
 
 $lang['loginform']['fisrtLoanNotPosted']='Congratulations!  Your profile is now activated. <strong><a href="index.php?p=9&inst=1">Click here to create a loan application</a>.</strong>';
 
@@ -122,7 +122,7 @@ $lang['loginform']['Loanoverdue'] = 'Your loan currently has a past due balance 
 
 <strong><a href="%repaymentschedule%">Click here</a></strong> to view your repayment schedule.
 ';
-$lang['loginform']['regcompleted'] = 'Congratulations! Your details has been saved';
+$lang['loginform']['regcompleted'] = 'Your changes have been saved.';
 $lang['loginform']['AmtLentByInvitee'] = 'Lent By My Invitees';
 $lang['loginform']['AmtLentByGiftrecp'] = 'Lent By My Gift Card Recipients';
 $lang['loginform']['LenderTotalImpact'] = 'Lender Impact Totals';
@@ -177,5 +177,5 @@ $lang['loginform']['find_brwr']='Find Borrower';
 $lang['loginform']['invite_frnd_msg1']='Congratulations!  Your on-time repayment rate is';
 $lang['loginform']['invite_frnd_msg2']='You are now eligible to award credit limit increases to the new members you invite.';
 $lang['loginform']['invite_now']='INVITE NOW';
-$lang['loginform']['donatebirthday']='Donate Your Birthday';
+$lang['loginform']['incomplete_message']='%message%<br /><br /><strong><a href="index.php?p=13">Please click here to add the requested information and submit your profile.</a></strong>';
 ?>

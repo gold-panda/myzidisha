@@ -38,7 +38,6 @@ $eligible = $session->isEligibleToInvite($session->userid);
 		<?php if($session->userlevel==BORROWER_LEVEL)
 			{	
 				$endorser= $database->IsEndorser($session->userid); 
-//added by Julia 31-10-2013 - do not display loan application if defaulted
 				$defaultLoanid=$database->getDefaultedLoanid($userid);
 
 				if($endorser==1){ 
@@ -48,19 +47,6 @@ $eligible = $session->isEligibleToInvite($session->userid);
 					$text = $session->formMessage($lang['loginform']['endorser_msg'], $params);
 					echo $text;
 				}else{
-				
-					$download_link="";
-					if(isset($_GET['language'])){
-						$language=$_GET['language'];
-						
-						if($language=='fr'){
-							$download_link="<a href='https://zidisha.org/editables/Zidisha_Guide_for_Borrowers-FR.pdf'>".$lang['loginform']['b_guide']."</a>";
-						}else if($language=='in'){ 
-							$download_link="<a href='https://zidisha.org/editables/Zidisha%20Guide%20for%20Borrowers-IN.pdf'>".$lang['loginform']['b_guide']."</a>";
-						}else{
-							$download_link="<a href='https://zidisha.org/editables/Zidisha%20Guide%20for%20Borrowers.pdf'>".$lang['loginform']['b_guide']."</a>";
-						}		
-					}
 				
 					$brwrandLoandetail = $database->getBrwrAndLoanStatus($session->userid);
 					$tmpcurr = $database->getUserCurrency($userid);
@@ -78,7 +64,7 @@ $eligible = $session->isEligibleToInvite($session->userid);
 							</form>
 							<?php 	
 							echo $lang['loginform']['emailntVerified1'];
-//modified by Julia 31-10-2013 to include written off loans
+
 						}else if($brwrandLoandetail['loanActive'] == LOAN_ACTIVE || $defaultLoanid) {
 						$loanprurl = getLoanprofileUrl($userid, $brwrandLoandetail['loanid']);
 						
@@ -125,7 +111,7 @@ $eligible = $session->isEligibleToInvite($session->userid);
 						}
 
 					} else {
-						if(isset($brwrandLoandetail['iscomplete_later']) && $brwrandLoandetail['iscomplete_later']==1) {
+						if(isset($brwrandLoandetail['iscomplete_later']) && $brwrandLoandetail['iscomplete_later']==1 && $brwrandLoandetail['brwrActive']==0) {
 							echo $lang['loginform']['profile_uncomplete'];
 						}else if(isset($brwrandLoandetail['iscomplete_later']) && $brwrandLoandetail['iscomplete_later']==0 && $brwrandLoandetail['brwrActive']==0) { 
 							$country= $session->userinfo['country'];
@@ -172,11 +158,28 @@ $eligible = $session->isEligibleToInvite($session->userid);
 								$details=$database->getBorrowerById($session->userid); 	
 								$assignedStatus=$details['Assigned_status'];
 
-								if($assignedStatus!=2) { //if not declined
+								if($assignedStatus!=2) { //if submitted but not yet activated, and not yet declined
+
+									$last_modified=$details['LastModified'];
+									$BorrowerReports=$database->getBorrowerReports($session->userid);
+									$emailed_on=$BorrowerReports['sent_on'];
+
+									//if the application is pending review by us 
+									if(empty($emailed_on) || $last_modified > $emailed_on){ 
 						
-									$params['emailaddrs'] = $session->userinfo['email'];
-									$profile_noaccepted = $session->formMessage($lang['loginform']['profile_noaccepted'], $params);
-									echo $profile_noaccepted;
+										$params['emailaddrs'] = $session->userinfo['email'];
+										$profile_noaccepted = $session->formMessage($lang['loginform']['profile_noaccepted'], $params);
+										echo $profile_noaccepted;
+
+									//if the application is pending additional information requested by us
+									} else {
+
+										$params['message'] = $BorrowerReports['message'];
+										$incomplete_message = $session->formMessage($lang['loginform']['incomplete_message'], $params);
+										echo $incomplete_message;
+
+									}
+									
 
 								}else{ //case of declined account
 
@@ -190,34 +193,6 @@ $eligible = $session->isEligibleToInvite($session->userid);
 
 					}
 
-	/*				$row = $database->getBorrowerDetails($userid);
-					if($row['activeLoanID'] != 0)
-					{	
-						$active=$database->getLoanStatus($userid);
-						$defaulted=false;
-						if($active==NO_LOAN) {
-							if($database->getDefaultedLoanid($userid)) {
-								$defaulted=true;
-							}
-						}
-					?>
-						<p><strong><a href="index.php?p=14&u=<?php echo $row ['userid'] ?>&l=<?php echo$row ['activeLoanID'] ?>#e4"><?php echo $lang['loginform']['post_comment'] ?></a></strong></p>
-						<p><strong><a href="index.php?p=37&l=<?php echo $row ['activeLoanID'] ?>"><?php echo $lang['loginform']['ac_detail'] ?></a></strong></p>
-						<p><strong><a href="index.php?p=71&u=<?php echo $row ['userid'] ?>"><?php echo $lang['loginform']['view_repay_ins'] ?></a></strong></p>
-						<?php 
-						if($active != LOAN_FUNDED && $active != LOAN_ACTIVE && !$defaulted) {?>
-						<p> 
-						<strong><a href="index.php?p=44"><?php echo $lang['loginform']['loanapp'] ?></a></strong></p>
-						<? } ?>
-
-						<p><strong><?php echo $download_link ?></strong></p>
-		<?php		}
-					else
-					{	?>
-						<p><strong><a href="index.php?p=71&u=<?php echo $row ['userid'] ?>"><?php echo $lang['loginform']['view_repay_ins'] ?></a></strong></p>
-						<p><strong><a href="index.php?p=9&inst=1"><?php echo $lang['loginform']['loanapp'] ?></a></strong></p>
-						<p><strong><?php echo $download_link ?></strong></p>
-		<?php		}*/
 				}
 				$mentor_id= $database->getBorrowerVolnteerMentor($session->userid);
 				$volunteer_mentor=$database->getUserById($mentor_id);
@@ -237,6 +212,7 @@ $eligible = $session->isEligibleToInvite($session->userid);
 
 				}
 
+				echo '<br/><br/><br/>';
 
 				if (!empty ($volunteer_mentor['TelMobile'])){
 					echo "<br/><br/><br/>".$lang['loginform']['volunteer_text']."<a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'>".$lang['loginform']['tooltip_volunteer']."</span><span class='bottom'></span></span></a>";
@@ -244,13 +220,15 @@ $eligible = $session->isEligibleToInvite($session->userid);
 					echo"<br/><strong>".$lang['loginform']['Telephone']."</strong>&nbsp;&nbsp;&nbsp;<a href='$link'>".$volunteer_mentor['TelMobile']."</a>";
 				}
 
+				echo '<br/><br/><br/>';
+
 				echo"<br/><br/><br/><br/>".$lang['loginform']['do_more']."<br/><br/><br/>";
 							
 		}
 		
 		?>
 		</div>
-	</div><!-- /row -->
+	</div>
 </div>
 <script>
 function resendEndorsermail(id){
