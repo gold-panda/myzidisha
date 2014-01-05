@@ -4273,33 +4273,6 @@ class genericClass
         return $fbusers;
     }
 
-    function getActivatedBorrowers($date1, $date2, $fb, $invite, $text){
-
-        global $db;
-        $dateArr1  = explode("/",$date1);
-        $dateArr2  = explode("/",$date2);
-        $date3=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
-        $date4=mktime(23,59,59,(int)$dateArr2[0],(int)$dateArr2[1],(int)$dateArr2[2]);
-
-        if ($fb==1){
-
-            $q="SELECT bext.userid, b.completed_on, b.userid, b.Country from ! as bext join ! as b on bext.userid=b.userid WHERE b.completed_on >=? AND b.completed_on <=?  AND bext.fb_data IS NULL order by b.completed_on";
-            
-            $result= $db->getAll($q, array('borrowers_extn', 'borrowers', $date3, $date4));
-
-        }else{
-
-            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
-
-            $result= $db->getAll($q, array('borrowers', $date3, $date4));
-
-        }
-
-        return $result;
-    }
-
-
-/*
 
     function getActivatedBorrowers($date1, $date2, $fb, $invite, $text){
 
@@ -4313,61 +4286,80 @@ class genericClass
 
             $q="SELECT b.userid, b.Country, b.completed_on FROM ! as b JOIN ! as bext on b.userid=bext.userid WHERE b.active = 1 AND b.completed_on >=? AND b.completed_on <=? AND bext.fb_data IS NULL order by b.completed_on";
 
-            $result= $db->getAll($q, array('borrowers', 'borrowers.extn', $date3, $date4));
+            $result= $db->getAll($q, array('borrowers', 'borrowers.extn', $date3, $date4));                  
 
-        }elseif ($fb==2){
+        }
 
+        elseif ($fb==2){
 
-            $q="SELECT * FROM ! LEFT JOIN borrowers_extn as bext on bext.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND bext.fb_data IS NOT NULL order by completed_on";
+            $q="SELECT DISTINCT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN ! as fb on fb.userid=borrowers.userid WHERE borrowers.active = 1 AND borrowers.completed_on >=? AND borrowers.completed_on <=? AND fb.facebook_id > ? order by borrowers.completed_on";
 
-        }else{
+            $result= $db->getAll($q, array('borrowers', 'facebook_info', $date3, $date4, 0));
+                     
 
-            if ($invite==1){
+        }          
 
-                $q="SELECT * FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NOT NULL order by completed_on";
+        else if ($invite==1){
 
-            }elseif ($invite==2){
+            $q="SELECT * FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NOT NULL order by completed_on";
 
-                $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NULL order by completed_on";
+            $result= $db->getAll($q, array('borrowers', $date3, $date4));
 
-            }elseif ($invite==3){
+        }elseif ($invite==2){
 
-                $q="SELECT DISTINCT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NOT NULL order by completed_on";
+            $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.invitee_id=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.invitee_id IS NULL order by completed_on";
 
-            }elseif ($invite==4){
+            $result= $db->getAll($q, array('borrowers', $date3, $date4));
 
-                $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NULL order by completed_on";
+        }elseif ($invite==3){
 
-            }else{
+            $q="SELECT DISTINCT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NOT NULL order by completed_on";
 
-                if ($text==1){
+            $result= $db->getAll($q, array('borrowers', $date3, $date4));
 
-                    $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) > 0 AND length(reffered_by) < 10 order by completed_on";
+        }elseif ($invite==4){
 
-                }elseif ($text==2){
+            $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NULL order by completed_on";
+            
+            $result= $db->getAll($q, array('borrowers', $date3, $date4));
 
-                    $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 10 AND length(reffered_by) < 50 order by completed_on";
+        }elseif ($text==1){
 
-                }elseif ($text==3){
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) > 0 AND length(reffered_by) < 10 order by completed_on";
+            
+            $result= $db->getAll($q, array('borrowers', $date3, $date4));
 
-                    $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 50 AND length(reffered_by) < 100 order by completed_on";
+        }elseif ($text==2){
 
-                }elseif ($text==4){
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 10 AND length(reffered_by) < 50 order by completed_on";
+            
+            $result= $db->getAll($q, array('borrowers', $date3, $date4));
 
-                    $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 100 order by completed_on";
+        }elseif ($text==3){
 
-                }else{
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 50 AND length(reffered_by) < 100 order by completed_on";
 
-                    $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
+            $result= $db->getAll($q, array('borrowers', $date3, $date4));
 
-                }
-            }
+        }elseif ($text==4){
+
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 100 order by completed_on";
+                
+            $result= $db->getAll($q, array('borrowers', $date3, $date4));
+        
+        }
+
+        else{ //no other filter selected
+
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? order by completed_on";
+
+            $result= $db->getAll($q, array('borrowers', $date3, $date4));
         }
 
 
         return $result;
     }
-*/
+
 
 
     function getAcceptBidNote($loanid){
@@ -6377,8 +6369,7 @@ class genericClass
         $date = $db->getOne($q, array('transactions', $loanid, DISBURSEMENT));
         return $date;
     }
-    function setLoanStage($loanid, $borrowerid, $status, $startdate, $oldstatus=null, $enddate=null, $createddate=null)
-    {
+    function setLoanStage($loanid, $borrowerid, $status, $startdate, $oldstatus=null, $enddate=null, $createddate=null){
 
         global $db;
         $created = date('Y-m-d G:i:s', time());

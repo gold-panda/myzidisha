@@ -1582,12 +1582,6 @@ class updateProcess
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->getErrorArray();
 
-			if(!empty($_POST['firstpmt'])){
-				$firstpmt=$_POST['firstpmt'];
-			}else{
-				$firstpmt='';
-			}
-
 			if(!empty($_POST['fb'])){
 				$fb=$_POST['fb'];
 			}else{
@@ -1605,7 +1599,7 @@ class updateProcess
 			}else{
 				$text='';
 			}
-			header("Location: index.php?p=110&v=1&firstpmt=".$firstpmt."&fb=".$fb."&invite=".$invite."&text=".$text);
+			header("Location: index.php?p=110&v=1&fb=".$fb."&invite=".$invite."&text=".$text);
 
 
 		}

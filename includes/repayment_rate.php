@@ -13,7 +13,7 @@ $(function() {
 	});	
 </script>
 <div class='span12'>
-<div align='left' class='static'><h1>Member Repayment Rates</h1></div><br/>
+<div align='left' class='static'><h1>Member Repayment Rate</h1></div><br/>
 <?php 
 if($session->userlevel==ADMIN_LEVEL ) {
 	$v=0;
@@ -27,10 +27,6 @@ if($session->userlevel==ADMIN_LEVEL ) {
 	else {
 		$date1=$form->value("date1");
 		$date2=$form->value("date2");
-	}
-	$firstpmt='';
-	if(isset($_GET['firstpmt'])){
-		$firstpmt= $_GET['firstpmt'];
 	}
 	$fb='';
 	if(isset($_GET['fb'])){
@@ -50,32 +46,20 @@ if($session->userlevel==ADMIN_LEVEL ) {
 		<table class="detail">
 			<tbody>
 				<tr>
-					<td><strong>Show members who submitted applications from date:</strong></td>
+					<td><strong>Show members who joined from date:</strong></td>
 					<td><input style="width:auto" name="date1" id="date1" type="text" value='<?php echo $date1 ;?>'/><br/><?php echo $form->error("fromdate"); ?></td>
 					<td><strong>To date:</strong></td>
 					<td><input style="width:auto"  name="date2" id="date2"type="text" value='<?php echo $date2 ;?>' /><br/><?php echo $form->error("todate"); ?></td>
 
 				<tr><td></td><td><br/><br/></td></tr>
-
-				<tr>
-
-					<td><strong>Select first installment status:</strong></td>
-					<td><select id="firstpmt" name="firstpmt" >
-						<option value='0'>All</option>
-						<option value='1' <?php if($firstpmt==1) echo "Selected='true'";?>>On Time</option>
-						<option value='2' <?php if($firstpmt==2) echo "Selected='true'";?>>Not On Time</option>
-					</select></td>
-
-				</tr>
-				<tr><td></td><td><br/><br/></td></tr>
-
 				<tr>
 
 					<td><strong>Select Facebook status:</strong></td>
 					<td><select id="fb" name="fb" >
 						<option value='0'>All</option>
-						<option value='2' <?php if($fb==2) echo "Selected='true'";?>>FB Linked</option>
 						<option value='1' <?php if($fb==1) echo "Selected='true'";?>>FB Not Linked</option>
+						<option value='2' <?php if($fb==2) echo "Selected='true'";?>>FB Linked</option>
+
 					</select></td>
 
 				</tr>
@@ -121,9 +105,9 @@ if($session->userlevel==ADMIN_LEVEL ) {
 	</form><br/>
 	<?php 
 	if($v==1){
-
-		$profile = $database->getActivatedBorrowers($date1, $date2, $firstpmt, $fb, $invite, $text);
+		$profile = $database->getActivatedBorrowers($date1, $date2, $fb, $invite, $text);
 		$showingRes =count($profile);
+		$completed_on = date('M d, Y', $rows['completed_on']);
 
 		?>
 		<p>Viewing <?php echo $showingRes?> Results.</p>
@@ -134,7 +118,7 @@ if($session->userlevel==ADMIN_LEVEL ) {
 				<tr>
 					<th>Name</th>
 					<th>Country</th>
-					<th>Date Activated</th>
+					<th>Date Submitted</th>
 					<th>Payments Made On Time</th>
 					<th>Payments Due</th>
 					<th>On-Time Repayment Rate</th>
@@ -155,7 +139,7 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					$prurl= getUserProfileUrl($borrowerid);
 					$link='index.php?p=7&id='.$borrowerid;
 					$completed_on_sort = $rows['completed_on'];
-					$completed_on = date('M d, Y', $completed_on_sort);
+					$completed_on = date('M d, Y', $rows['completed_on']);
 					$country=$database->mysetCountry($rows['Country']);
 					$RepayRate=$session->RepaymentRate($borrowerid);
 					$totalTodayinstallment=$session->totalTodayinstallment($borrowerid);
@@ -163,7 +147,9 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					$totalTodayinstallment_sum += $totalTodayinstallment;
 					$OnTimeinstallment_sum += $OnTimeinstallment;
 					$RepayRate_sum = ($OnTimeinstallment_sum / $totalTodayinstallment_sum) * 100;
-					
+
+
+				
 
 ?>
 						<tr>
@@ -173,6 +159,7 @@ if($session->userlevel==ADMIN_LEVEL ) {
 							<td><?php echo $country; ?></td>
 
 							<td><span style='display:none'>$completed_on_sort</span><a href="<?php echo $link;?>"><?php echo $completed_on; ?></a></td>
+
 
 							<td><?php echo number_format($OnTimeinstallment); ?></td>
 
