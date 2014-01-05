@@ -179,7 +179,7 @@ class updateProcess
 		else if(isset($_POST['repayment_rate'])){
 			$this->repayment_rate();
 		}
-                else if(isset($_POST['tmp_transactionhistory'])){
+        else if(isset($_POST['tmp_transactionhistory'])){
 			$this->tmp_trhistory();
 		}
 		else if(isset($_POST['tmp_transactionhistorySummary'])){
@@ -191,7 +191,9 @@ class updateProcess
 		if(isset($_POST["sharebox_off"])){
 			$this->sharebox_off();
 		}
-		
+		else if(isset($_POST['loans_funded'])){
+			$this->loans_funded();
+		}
 		
 
 	}
@@ -1659,6 +1661,25 @@ class updateProcess
 	}
 
 
+	function loans_funded(){
+		global $session, $form;
+		$result=$session->loans_funded($_POST["date1"], $_POST["date2"]);
+		if($result==0)
+		{
+			$_SESSION['value_array'] = $_POST;
+			$_SESSION['error_array'] = $form->getErrorArray();
+			header("Location: index.php?p=114");
+		}
+		else if($result==1)
+		{
+			$_SESSION['value_array'] = $_POST;
+			$_SESSION['error_array'] = $form->getErrorArray();
+
+			header("Location: index.php?p=114&v=1");
+
+
+		}
+	}
 
 
 

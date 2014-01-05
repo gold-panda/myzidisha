@@ -4340,6 +4340,8 @@ WHERE paiddate <= duedate+864000 and active = 1 AND completed_on >=? AND complet
    
         }elseif ($invite==4){
 
+
+
             $q="SELECT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN invites as inv on inv.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND inv.userid IS NULL order by completed_on";
             
             $res= $db->getAll($q, array('borrowers', $date3, $date4));
@@ -11265,6 +11267,33 @@ WHERE paiddate <= duedate+864000 and active = 1 AND completed_on >=? AND complet
 		$result=$db->query($q,array('loanapplic',$borrowerid, LOAN_OPEN,LOAN_FUNDED,LOAN_ACTIVE,0));
 		return $result->numRows();
 	} 
+
+
+//gets all loans whose bids were accepted by the borrower between the selected dates
+    function getLoansFunded($date1, $date2){
+        global $db;
+
+//date selection
+        $dateArr1  = explode("/",$date1);
+        $dateArr2  = explode("/",$date2);
+        $date3=mktime(0,0,0,(int)$dateArr1[0],(int)$dateArr1[1],(int)$dateArr1[2]);
+        $date4=mktime(23,59,59,(int)$dateArr2[0],(int)$dateArr2[1],(int)$dateArr2[2]);
+
+        $q="SELECT l.borrowerid, l.AcceptDate, l.loanid, b.userid, b.Country from ! as l join ! as b on l.borrowerid=b.userid WHERE l.AcceptDate >=? AND l.AcceptDate <=? order by l.AcceptDate";
+            
+        $res= $db->getAll($q, array('loanapplic', 'borrowers', $date3, $date4));
+   
+        return $res;
+    }
+
+
+
+
+
+
+
+
+
 
 };
 $database= new genericClass;

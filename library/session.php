@@ -2192,6 +2192,34 @@ function verify_borrower($identity_verify, $identity_verify_other, $participate_
 		}
 	}
 
+	function loans_funded($date3, $date4){		
+		global $database, $form;
+		traceCalls(__METHOD__, __LINE__);
+		$path=  getEditablePath('error.php');
+		include_once("editables/".$path);
+		if(empty($date3)){
+			$form->setError("fromdate", $lang['error']['empty_fromdate']);
+		}
+		if(empty($date4)){
+			$form->setError("todate", $lang['error']['empty_todate']);
+		}
+		if($form->num_errors > 0)
+			return 0;
+		$result2=datecompare($date3,$date4);
+		if(!$result2){
+			$form->setError("todate", $lang['error']['lower_fromdate']);
+		}
+		if($form->num_errors > 0)
+			return 0;
+		else
+		{
+			$_SESSION['date1']=$date3;
+			$_SESSION['date2']=$date4;
+			return 1;
+		}
+	}
+
+
 
 /* -------------------Admin Section End----------------------- */
 
