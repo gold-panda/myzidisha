@@ -4284,18 +4284,18 @@ class genericClass
 
         if ($fb==1){
 
-            $q="SELECT b.userid, b.Country, b.completed_on FROM ! as b JOIN ! as bext on b.userid=bext.userid WHERE b.active = 1 AND b.completed_on >=? AND b.completed_on <=? AND bext.fb_data IS NULL order by b.completed_on";
 
-            $result= $db->getAll($q, array('borrowers', 'borrowers.extn', $date3, $date4));                  
+            $q="SELECT * FROM ! as brw LEFT JOIN ! as bext on brw.userid=bext.userid WHERE brw.active = 1 AND brw.completed_on >=? AND brw.completed_on <=? AND (bext.fb_data IS NULL || length(bext.fb_data) = 0) order by brw.completed_on";
+        
+            $result=$db->getAll($q, array('borrowers','borrowers_extn', $date3, $date4));
 
         }
 
         elseif ($fb==2){
 
-            $q="SELECT DISTINCT borrowers.userid, borrowers.Country, borrowers.completed_on FROM ! LEFT JOIN ! as fb on fb.userid=borrowers.userid WHERE borrowers.active = 1 AND borrowers.completed_on >=? AND borrowers.completed_on <=? AND fb.facebook_id > ? order by borrowers.completed_on";
-
-            $result= $db->getAll($q, array('borrowers', 'facebook_info', $date3, $date4, 0));
-                     
+            $q="SELECT * FROM ! as brw LEFT JOIN ! as bext on brw.userid=bext.userid WHERE brw.active = 1 AND brw.completed_on >=? AND brw.completed_on <=? AND length(bext.fb_data) > 0 order by brw.completed_on";
+        
+            $result=$db->getAll($q, array('borrowers','borrowers_extn', $date3, $date4));      
 
         }          
 
