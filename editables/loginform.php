@@ -98,8 +98,9 @@ $lang['loginform']['endorse_sent']='<font color=green><b>The endorsement request
 $lang['loginform']['profile_uncomplete']='Your profile is not yet submitted to Zidisha. <strong><a href="index.php?p=13">Click here to complete and submit your profile.</a></strong>';
 
 $lang['loginform']['profile_noaccepted']='Your profile has been submitted, and will now be reviewed by Zidisha staff.<br /><br />If any further information is needed, a notification will be sent to your email address, %emailaddrs%.<br/><br/>If you do not hear from us within one week, please send an email to <a href=\'mailto:service@zidisha.org\'>service@zidisha.org</a> to ensure we have received your application.';
-
-$lang['loginform']['fisrtLoanNotPosted']='Congratulations!  Your profile is now activated. <strong><a href="index.php?p=9&inst=1">Click here to create a loan application</a>.</strong>';
+$lang['loginform']['invite_alert']='Congratulations!  Your member account is now activated.<br/><br/>IMPORTANT NOTE: You are not yet eligible for the loan size bonus we offer to invited members.<br/><br/>If you were invited to join by another Zidisha member, you may be eligible for a larger loan amount.  To receive the bonus, ask the member who invited you to send you an invitation email from the "Invite New Members" page of his or her account before posting your loan application.<br/><br/>
+<strong><a href="index.php?p=9&inst=1">Click here to create a loan application.</a></strong>';
+$lang['loginform']['firstLoanNotPosted']='Congratulations!  Your member account is now activated. <strong><a href="index.php?p=9&inst=1">Click here to create a loan application.</a></strong>';
 
 $lang['loginform']['LoanPosted']='Your loan application is %percentFunded%% funded.
 <br/><br/>
@@ -175,7 +176,7 @@ $lang['loginform']['lender_emails']='Generate Lender Emails';
 $lang['loginform']['FB_links']='Facebook Links';
 $lang['loginform']['find_brwr']='Find Borrower';
 $lang['loginform']['invite_frnd_msg1']='Congratulations!  Your on-time repayment rate is';
-$lang['loginform']['invite_frnd_msg2']='You are now eligible to award credit limit increases to the new members you invite.';
+$lang['loginform']['invite_frnd_msg2']='You are now eligible to award credit limit bonuses to the new members you invite.';
 $lang['loginform']['invite_now']='INVITE NOW';
 $lang['loginform']['incomplete_message']='%message%<br /><br /><strong><a href="index.php?p=13">Please click here to add the requested information and submit your profile.</a></strong>';
 ?>

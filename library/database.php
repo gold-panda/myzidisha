@@ -4286,11 +4286,6 @@ class genericClass
             $q="SELECT bext.userid, b.completed_on, b.userid, b.Country from ! as bext join ! as b on bext.userid=b.userid WHERE b.completed_on >=? AND b.completed_on <=?  AND bext.fb_data IS NULL order by b.completed_on";
             
             $result= $db->getAll($q, array('borrowers_extn', 'borrowers', $date3, $date4));
- 
-        }elseif ($fb==2){
-
-            $q="SELECT * FROM ! LEFT JOIN borrowers_extn as bext on bext.userid=borrowers.userid WHERE active = 1 AND completed_on >=? AND completed_on <=? AND bext.fb_data IS NOT NULL order by completed_on";
-
 
         }else{
 

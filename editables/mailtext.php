@@ -67,7 +67,8 @@ $lang['mailtext']['ActiveBid-subject'] = 'Zidisha Loan Disbursed';
 $lang['mailtext']['ActivateBorrower-msg'] = 'Dear %name%, <br/><br/>
 Congratulations! Your application to join Zidisha has been approved.<br/><br/>
 Zidisha is an internet-based community based on earned trust.  Membership is highly selective, and being accepted into Zidisha is something to take pride in.<br/><br/>
-You are now eligible to offer a loan agreement to Zidisha lenders.  To post a loan application on Zidisha, please log in to your member account and click on "Loan Application" at the left of the screen.<br/><br/>
+You are now eligible to offer a loan agreement to Zidisha lenders.  To post a loan application on Zidisha, please log in to your member account and follow the instructions.<br/><br/>
+IMPORTANT NOTE: If you were invited by another Zidisha member, you may be eligible for a loan size increase bonus.  To receive the bonus, ask the member who invited you to send you an invitation email from the "Invite New Members" page of his or her account before posting your loan application.<br/><br/>
 Best wishes,<br/><br/>
 Zidisha Team';
 

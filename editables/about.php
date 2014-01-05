@@ -196,21 +196,26 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 							
 							<p style="margin-top:10px;">Zidisha\'s Virtual Volunteers work with our staff to review borrower applications, translate loan profiles and comments, and answer member questions.  Check out our <a href="https://www.zidisha.org/microfinance/intern.html" target="_blank">Intern / Volunteer page</a> to learn more about our Virtual Volunteering program.<br /><br />
 
-Metin Balci<br />
-<a href="https://www.zidisha.org/microfinance/profile/Susansfund.html" target="_blank">Becky Comeau</a><br />
-<a href="https://www.zidisha.org/microfinance/profile/ideerge.html" target="_blank">Ignatius Darren Gozali</a><br />
-Bruce Donellan<br />
-<a href="https://www.zidisha.org/microfinance/profile/maxep06.html" target="_blank">Max Epstein</a><br />
-<a href="https://www.zidisha.org/microfinance/profile/Ethan.html" target="_blank">Ethan Loufield</a><br />
-<a href="https://www.zidisha.org/microfinance/profile/Kilmeny.html" target="_blank">Kilmeny M.</a><br />
-<a href="https://www.zidisha.org/microfinance/profile/Maartje.html" target="_blank">Maartje Niekel</a><br />
-Amanda Ortega<br />
-<a href="https://www.zidisha.org/microfinance/profile/pentatonicscale.html" target="_blank">Denise Owen</a><br />
-Jyoti Pai<br />
-Andrew Rhoads<br />
-Hussein Sefian<br />
-<a href="https://www.zidisha.org/microfinance/profile/isabelv.html" target="_blank">Isabel Valencia</a><br />
-Cornellia Widiastuti<br />
+<a href="https://www.zidisha.org/microfinance/profile/Labuouf.html" target="_blank">Lauren Abuouf</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/vickylizette.html" target="_blank">Victoria Aldana</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/Ralmeida.html" target="_blank">Rachel Almeida</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/ejc211.html" target="_blank">Edward Carson</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/alainpc.html" target="_blank">Alain Chaponnierre</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/LeahD.html" target="_blank">Leah Dembitzer</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/AniDeshmukh.html" target="_blank">Ani Desmukh</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/heathernengel.html" target="_blank">Heather Engel</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/sidjain8.html" target="_blank">Sidarth Jain</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/Kilmeny.html" target="_blank">Kilmeny</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/tmasango.html" target="_blank">Tendai Masangomai</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/margalit.html" target="_blank">Beatrice Nguthu</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/Jyoti.html" target="_blank">Jyoti Pay</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/mariegsr.html" target="_blank">Marie Reiter</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/AngieSantoto.html" target="_blank">Angelica Santodomingo</a><br />
+<a href=https://www.zidisha.org/microfinance/profile/MichelleS.html"" target="_blank">Michelle Sarver</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/gidsoy.html" target="_blank">Gideon Soy</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/TWAGGA.html" target="_blank">Tricia Wagga</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/cornellia.html" target="_blank">Cornellia Widiastuti</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/Sidney.html" target="_blank">Sidney Gig-Jan Wong</a><br />
 
 </p>
 							

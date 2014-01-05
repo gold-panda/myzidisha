@@ -14,6 +14,7 @@ if(isset($_GET['t']) && $_GET['t']='1'){
 
 global $database;
 
+$invitedstatus=$database->getInvitee($session->userid);
 $binvitecredit=$database->getcreditsettingbyCountry($session->userinfo['country'],3);
 $binvitecredit = $binvitecredit['loanamt_limit'];
 $currency  = $database->getUserCurrency($session->userid); 
@@ -188,7 +189,16 @@ $eligible = $session->isEligibleToInvite($session->userid);
 							}
 						}  
 						else if($brwrandLoandetail['brwrActive']==1 ) {
-							echo $lang['loginform']['fisrtLoanNotPosted'];
+
+							if(empty($invitedstatus)){ //if our site does not recognize this member as having been invited
+
+								echo $lang['loginform']['invite_alert']; //display alert that they must have formal invite sent in order to qualify for bonus
+
+							} else {
+							
+								echo $lang['loginform']['firstLoanNotPosted']; //display simple invite to post a loan application
+
+							}
 						}
 
 					}
