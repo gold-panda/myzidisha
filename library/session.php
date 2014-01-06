@@ -8111,21 +8111,31 @@ function forgiveReminder(){
 		if($firstloan==0){
 //case where borrower has not yet received first loan disbursement - credit limit should equal admin 1st loan size plus invited borrower credit if applicable
 			$val=$database->getAdminSetting('firstLoanValue');
+
 			$invitedstatus=$database->getInvitee($userid);
-			if (!empty($invitedstatus)){
-				$invitedcredit=200; //adds bonus of USD 200 for new members who were invited by eligible existing members
-			}else{
-				$invitedcredit=0;
-			}
-/*
 
 			if (!empty($invitedstatus)){
 				$invitedcredit=200; //adds bonus of USD 200 for new members who were invited by eligible existing members
 			}else{
 				$invitedcredit=0;
 			}
-*/
-			$totalval=$val+$invitedcredit;
+
+			$text_length = $database->getTextResponseLength($userid);
+
+			if (!empty($text_length)){
+
+				if ($text_length >= 40 && $text_length <= 60){
+
+					$textcredit=200; //adds bonus of USD 200 for new members who entered optimal length of text response to 'How did you hear about Zidisha' optional question in application
+				
+				}else{
+
+					$textcredit=0;
+
+				}
+			}
+
+			$totalval=$val+$invitedcredit+$textcredit;
 			$currentlimit=ceil(convertToNative($totalval, $rate));	
 			return $currentlimit;
 
