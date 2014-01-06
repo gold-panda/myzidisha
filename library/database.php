@@ -5027,6 +5027,7 @@ class genericClass
         $result = $db->getOne($q, array('borrowers', $uid));
         return $result;
     }
+
     function loanApplication($borrowerid, $amount, $interest, $period, $gperiod, $loanuse, $tnc, $weekly_inst, $loan_installmentDate, $loan_installmentDay)
     {
         global $db;
@@ -11260,7 +11261,19 @@ class genericClass
     }
 
 
+//gets number of characters the member had entered in text response to "How did you hear about Zidisha?" question in registration form
+    function getTextResponseLength($userid){
 
+        global $db;
+        traceCalls(__METHOD__, __LINE__);
+
+        $q="SELECT length(reffered_by) FROM ! WHERE userid = ? AND reffered_by IS NOT NULL";
+
+        $result= $db->getOne($q, array('borrowers', $userid));
+
+        return $result;
+
+    }
 
 
 

@@ -8113,10 +8113,18 @@ function forgiveReminder(){
 			$val=$database->getAdminSetting('firstLoanValue');
 			$invitedstatus=$database->getInvitee($userid);
 			if (!empty($invitedstatus)){
-				$invitedcredit=200;
+				$invitedcredit=200; //adds bonus of USD 200 for new members who were invited by eligible existing members
 			}else{
 				$invitedcredit=0;
 			}
+/*
+
+			if (!empty($invitedstatus)){
+				$invitedcredit=200; //adds bonus of USD 200 for new members who were invited by eligible existing members
+			}else{
+				$invitedcredit=0;
+			}
+*/
 			$totalval=$val+$invitedcredit;
 			$currentlimit=ceil(convertToNative($totalval, $rate));	
 			return $currentlimit;
@@ -8410,6 +8418,10 @@ function isEligibleToInvite($userid){
 	
 	return $eligible;
 }
+
+
+
+
 
 
 
