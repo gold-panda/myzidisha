@@ -8146,7 +8146,7 @@ function forgiveReminder(){
 			$prevamount=$database->getPreviousLoanAmount($userid, $loanid);
 			
 
-			if(!empty($prevamount) && $prevamount > 0){
+			if(!empty($prevamount) && $prevamount > 10){
 
 				$currentlimit = $prevamount;
 
