@@ -2083,6 +2083,7 @@ function verify_borrower($identity_verify, $identity_verify_other, $participate_
 		}
 		if($is_eligible_ByAdmin=='0'){
 			$this->declinedBorrower($borrowerid,$eligible_no_reason);
+			$this->invoiceShiftScience('decline_borrower',$borrowerid);
 			$_SESSION['Declined']=true;
 			return 0;
 		}else if($is_eligible_ByAdmin = '1'){
@@ -8264,7 +8265,9 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$session_id' => session_id(),
 			  'aboutme' => $aboutMe,
 			  'aboutbusiness' => $aboutBusiness,
-			  'hearaboutzidisha' => $hearaAoutZidisha
+			  'hearaboutzidisha' => $hearaAoutZidisha,
+			  '$time=' => $time
+			  
 			);
 		}
 		
@@ -8274,7 +8277,8 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
-			  'facebookid' => $facebook_id
+			  'facebookid' => $facebook_id,
+			   '$time=' => $time
 			);
 		}
 		
@@ -8284,7 +8288,8 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
-			  '$login_status' => '$success'
+			  '$login_status' => '$success',
+			  '$time=' => $time
 			);
 		}
 		
@@ -8311,7 +8316,8 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$type' => $event_type,
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  'loan_amount' => $loan_amnt
+			  'loan_amount' => $loan_amnt,
+			  '$time=' => $time
 			);
 		}
 		
@@ -8321,7 +8327,8 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  'loan_amount' => $loan_amnt,
-			  'repayment_date' => $repay_date
+			  'repayment_date' => $repay_date,
+			  '$time=' => $time
 			);
 		}
 		
@@ -8345,8 +8352,25 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  'sender' => $senderid
 			);
 		}
-
-		$url_send ="https://api.siftscience.com/v203/events"; 
+		
+		if($event_type=='decline_borrower'){			
+			$data = array(
+			  '$type' => $event_type,
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$is_bad' => true,
+			  '$reasons' => ['$fake'],
+			  '$description' => 'Borrower decline by Admin',
+			  '$time=' => $time
+			);
+		}
+		
+		if($event_type=='decline_borrower') {
+			$url_send ="https://api.siftscience.com/v203/users/".$userid."/labels"; 
+		}else{
+			$url_send ="https://api.siftscience.com/v203/events"; 
+		}
+		
 		$str_data = json_encode($data);	
 		$this->sendPostData($url_send, $str_data);
 		
