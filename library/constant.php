@@ -133,7 +133,8 @@ Define ('WATERMARK_ALIGN_V', 'bottom'); //water mark vertical alignment  top / b
 Define ('WATERMARK_MARGIN',		10);// water mark margin
 Define ('WATERMARK_TEXT',		'');// text displayed on uploaded pics
 Define ('DEFAULT_IMAGE', 'file:dimg.jpg');
-Define ('SITE_URL', $_SERVER["ENV_SITE_URL"]);
+// TODO: Require environment site URL to end in a slash
+Define ('SITE_URL', (substr($_SERVER["ENV_SITE_URL"], -1) === '/') ? $_SERVER["ENV_SITE_URL"] : $_SERVER["ENV_SITE_URL"].'/');
 
 // paths
 
@@ -210,7 +211,10 @@ define("RESENDINGDAYS", 30); // send reminder for invites after these many days
 define("EXTEND_PERIOD_MULTIPLY",6);
 define("RECAPCHA_PUBLIC_KEY","6Lej9M0SAAAAAJ6LQfRiraYHaa_t_QFpLDrOOv5j");
 define("RECAPCHA_PRIVATE_KEY","6Lej9M0SAAAAAEgOXV_21hTUzoYRlckoeANlMHhc");
-define("COOKIE_SECURE",true);
+// THIS NEEDS TO BE FALSE FOR LOGINS TO WORK LOCALLY.
+// In theory, it is set as false in constant_local.php, but you cannot define something twice.
+// So the true value remains, and thus there is the bug on the local environment.
+define("COOKIE_SECURE", true);
 define("MAIL_CHIMP_API_KEY","78d5f8a7b16869bcdedad6eb696435e6-us1");
 define("MAIL_CHIMP_LIST_ID","d2aeae704b");
 define("MAIL_CHIMP_EMAIL","julia@zidisha.org");

@@ -1,6 +1,7 @@
 <?php
 
-	error_log("enviro name:" . $_SERVER['env_name']);
+  error_log('cookie: '.json_encode($_COOKIE));
+  error_log('session: '.json_encode($_SESSION));
 
 /*	if (isset($_GET["p"])) {
 		error_log("value of GET['p']: " . $_GET["p"]);

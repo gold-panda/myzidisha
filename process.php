@@ -230,9 +230,11 @@ class Process
 			$_SESSION['value_array'] = $_POST_ORG;
 			$_SESSION['error_array'] = $form->getErrorArray();
 			header("Location:./index.php?p=20");
+            exit;
 		}
 		if($reply){
 			header('Location:./index.php?p=20');
+            exit;
 		}
 	}
 	function subLogout()
@@ -241,6 +243,7 @@ class Process
 		$session->logout();
 		$ref = "index.php";
 		header("Location: $ref");
+		exit;
 	}
 	function subLogin()
 	{	
@@ -261,6 +264,7 @@ class Process
 			$_SESSION['value_array'] = $_POST_ORG;
 			$_SESSION['error_array'] = $form->getErrorArray();
 			header("Location: $ref");
+            exit;
 		}
 		else if($result==1)
 		{	
@@ -362,6 +366,7 @@ class Process
 				}
 			}
 			header("Location: $ref");
+            exit;
 		} 
 	}
 	function subRegLender()
@@ -405,6 +410,7 @@ class Process
 			$_POST["password"]=$_POST["lpass1"];
 			$this->subLogin();
 			header("Location: index.php?p=1&sel=4&t=2");
+            exit;
 		}
 		else
 		{
@@ -430,6 +436,7 @@ class Process
 				header("Location: index.php?p=1&sel=5");
 			else
 				header("Location: index.php?p=1&sel=2");
+            exit;
 		}
 	}
 	function subRegPartner()
@@ -458,6 +465,7 @@ class Process
 				imageUpload($img_file, $ext, $id);	
 			}
 			header("Location: index.php?p=1&sel=4&t=3");
+            exit;
 		}
 		else
 		{
@@ -479,6 +487,7 @@ class Process
 			}
 			$_SESSION['error_array'] = $form->getErrorArray();
 			header("Location: index.php?p=1&sel=3&lang=".$_POST["labellang"]);
+            exit;
 		}
 	}
 	function subRegBorrower()
@@ -495,6 +504,7 @@ class Process
 		if($_POST['before_fb_data']=='1'){
 			$_SESSION['fb_data']= $_POST;
 			header('Location: index.php?p=1&sel=1&fb_data=1#FB_cntct');
+            exit;
 		}else{
 			if (isset($_POST['recaptcha_response_field'])) {
 				$user_guess = $_POST['recaptcha_response_field'];
@@ -571,6 +581,7 @@ class Process
 				$_POST["password"]=$_POST["bpass1"];
 				$this->subLogin();
 				header('Location: index.php?p=50');
+                exit;
 			}
 			else
 			{	
@@ -761,6 +772,7 @@ class Process
 						$errurl = $errurl."#volunteer_mentorerr";
 					}
 					header("Location: $errurl");
+                    exit;
 				}
 				else {
 						$url = $_SERVER['HTTP_REFERER'];
@@ -768,8 +780,9 @@ class Process
 							header("Location: $url".$_POST["uploadfileanchor"]);
 						}else{
 					// redirect to borrower form after file upload. $_POST["uploadfileanchor"] contains an anchor
-						header("Location: $url&fb_join=1".$_POST["uploadfileanchor"]);
+     						header("Location: $url&fb_join=1".$_POST["uploadfileanchor"]);
 						}
+						exit;
 				}
 			}
 		}
@@ -788,6 +801,7 @@ class Process
 				$url= $url1."&fb_data=1";
 			}
 			header("Location: $url");
+			exit;
 		}else{
 			$result= $session->register_e($_POST["busername"], $_POST["bfname"], $_POST["blname"], $_POST["bpass1"], $_POST["bpass2"], $_POST["bpostadd"], $_POST["bcity"], $_POST["bcountry"], $_POST["bemail"], $_POST["bmobile"], $user_guess, $id, $_POST["bnationid"], $_POST['home_no'], $_POST['fb_data'], $_POST['validation_code'], $_POST['babout'], $_POST['bconfdnt'],$_POST['e_candisplay']);
 			if($result==0)
@@ -796,6 +810,7 @@ class Process
 				$_POST["password"]=$_POST["bpass1"];
 				$this->subLogin();
 				header('Location: index.php?p=50');
+				exit;
 			}else{
 				$_SESSION['value_array'] = $_POST;
 				$_SESSION['error_array'] = $form->getErrorArray();
@@ -806,6 +821,7 @@ class Process
 					$errurl= $errurl1."&fb_join=1";
 				}
 				header("Location: $errurl");
+                exit;
 			}
 		}
 	}
@@ -823,6 +839,7 @@ class Process
 		else{
 			header("Location: index.php?p=102&c=$c&brwr=$b_type&search=$s");
 		}
+        exit;
 	}
 
 	function activateLender()
@@ -836,6 +853,7 @@ class Process
 		else{
 			header("Location: index.php?p=11&a=3&v=0");
 		}
+        exit;
 	}
 	function deactivateLender()
 	{
@@ -848,6 +866,7 @@ class Process
 		else{
 			header("Location: index.php?p=11&a=3&v=0");
 		}
+        exit;
 	}
 	function activatePartner()
 	{
@@ -860,6 +879,7 @@ class Process
 		else{
 			header("Location: index.php?p=11&a=2&v=0");
 		}
+        exit;
 	}
 	function deactivatePartner()
 	{
@@ -872,6 +892,7 @@ class Process
 		else{
 			header("Location: index.php?p=11&a=2&v=0");
 		}
+        exit;
 	}
 	function loanApplication()
 	{
@@ -892,13 +913,15 @@ class Process
 		if($isLoanOpen>0){
 			unset($_SESSION['loanapp']);
 			header("Location: index.php?p=50");
+			exit;
 		}else{
 		$result=$session->loanApplication($_POST['amount'], $interest, $_POST['installment_amt'], $_POST['gperiod'], $_POST['loanuse'],$_POST['agree'],$_POST['installment_day'],$_POST['installment_weekday']);
 		if($result==0)
 		{
 			$_SESSION['value_array']=$_POST_ORG;
 			$_SESSION['error_array']=$form->getErrorArray();
-				header("Location: index.php?p=9");
+		    header("Location: index.php?p=9");
+			exit;
 		}
 		else if($result==1)
 		{
@@ -922,7 +945,8 @@ class Process
 			$loan['iday']=$_POST['installment_day'];
 			$loan['iwkday']=$_POST['installment_weekday'];
 			$_SESSION['loanapp']=$loan;
-				header("Location: index.php?p=9&s=1");
+			header("Location: index.php?p=9&s=1");
+			exit;
 		}
 	  } // end here	
 	}
@@ -944,10 +968,12 @@ class Process
 				$_SESSION['value_array']=$_POST_ORG;
 				$_SESSION['error_array']=$form->getErrorArray();
 				header("Location: index.php?p=44");
+				exit;
 			}
 			else if($result==1)
 			{
 				header("Location: index.php?p=44&s=1");
+                exit;
 			}
 		} else {
 			$result=$session->editLoanApplication($_POST['loanid'], $_POST['amount'], $_POST['interest'], $_POST['loanuse'], $_POST['installment_amt'], $_POST['installment_day'], $_POST['installment_weekday'], $_POST['gperiod'],1);
@@ -967,7 +993,7 @@ class Process
 				$_SESSION['error_array']=$form->getErrorArray();
 				header("Location: index.php?p=44");
 			}
-
+			exit;
 		}
 	}
 	function confirmLoan()
@@ -992,11 +1018,14 @@ class Process
 			else{
 				header("Location: index.php?p=9&s=1");
 			}
+			exit;
+			# NOTE: YOU NEED TO EXIT AFTER REDIRECT, WHERE IS THERE A RETURN STATEMENT?
 			return $result;
 		}
 		else
 		{	$prurl = getUserProfileUrl($session->userid);
 			header("Location: $prurl");
+			exit;
 		}		
 	}
 	function exchangeRate()
@@ -1009,9 +1038,11 @@ class Process
 			$_SESSION['value_array']=$_POST_ORG;
 			$_SESSION['error_array']=$form->getErrorArray();
 			header("Location: index.php?p=11&a=4&c=".$_POST['currency']);
+			exit;
 		}
 		if($result==1){
 			header("Location: index.php?p=11&a=4&c=".$_POST['currency']);
+			exit;
 		}
 	}
 	function saveRegistrationFee()
@@ -1026,9 +1057,11 @@ class Process
 			$_SESSION['value_array']=$_POST_ORG;
 			$_SESSION['error_array']=$form->getErrorArray();
 			header("Location: index.php?p=21");
+			exit;
 		}
 		if($result){
 			header("Location:index.php?p=21");
+			exit;
 		}
 	}
 	function setMinFund()
@@ -1043,10 +1076,12 @@ class Process
 			$_SESSION['value_array']=$_POST_ORG;
 			$_SESSION['error_array']=$form->getErrorArray();
 			header("Location: index.php?p=11&a=6");
+			exit;
 		}
 		else
 		{
 			header("Location: index.php?p=11");
+			exit;
 		}
 	}	
 	function deleteBorrower()
@@ -1060,6 +1095,7 @@ class Process
 		else{
 			header("Location: index.php?p=11&a=1");
 		}
+        exit;
 	}
 	function deletePartner()
 	{
@@ -1072,6 +1108,7 @@ class Process
 		else{
 			header("Location: index.php?p=11&a=2");
 		}
+		exit;
 	}
 	function deleteLender()
 	{
@@ -1084,6 +1121,7 @@ class Process
 		else{
 			header("Location: index.php?p=11&a=3");
 		}
+		exit;
 	}
 	function makeLoanActive()
 	{	
@@ -1114,6 +1152,8 @@ class Process
 			$database->rollbackTxn();
 			header("Location: $url&err=1001");
 		}
+		exit;
+		# WHY IS THERE A RETURN STATEMENT AFTER THE HEADER (REDIRECT)?
 		return $result;
 	}
 	function makeLoanExpire()
@@ -1125,9 +1165,11 @@ class Process
 		if($result==0){
 			$database->rollbackTxn();
 			header("Location: index.php?p=11&a=1&err=1001");
+			exit;
 		} else {
 			$database->commitTxn();
 			header("Location: index.php?p=11&a=1");
+			exit;
 		}
 	}
 	function placeBid()
@@ -1154,15 +1196,19 @@ class Process
 			$_SESSION['value_array']=$_POST_ORG;
 			$_SESSION['error_array']=$form->getErrorArray();
 			header("Location: $loanprurl#e3");
+			exit;
 		}
 		else if($result==0){
 			header("Location: $loanprurl#e3");
+			exit;
 		}
 		else if($result==1){
 			header("Location: $loanprurl#e3");
+			exit;
 		}
 		else if($result==2){
 			header("Location: index.php?p=75");
+			exit;
 		}
 	}
 	function placeBidUp()
@@ -1181,15 +1227,19 @@ class Process
 			$_SESSION['value_array']=$_POST;
 			$_SESSION['error_array']=$form->getErrorArray();
 			header("Location: $loanprurl#e5");
+			exit;
 		}
 		else if($result==0){
 			header("Location: $loanprurl#e5");
+			exit;
 		}
 		else if($result==1){
 			header("Location: $loanprurl#e5");
+			exit;
 		}
 		else if($result==2){
 			header("Location: index.php?p=75");
+			exit;
 		}
 	}	
 	function addpaymenttolender()
@@ -1205,10 +1255,12 @@ class Process
 			$_SESSION['value_array']=$_POST_ORG;
 			$_SESSION['error_array']=$form->getErrorArray();
 			header("Location: index.php?p=60");
+			exit;
 		}
 		else
 		{
 			header("Location: index.php?p=60&t=1");
+			exit;
 		}
 	}
 	function adddonationtolender()
@@ -1223,10 +1275,12 @@ class Process
 			$_SESSION['value_array']=$_POST_ORG;
 			$_SESSION['error_array']=$form->getErrorArray();
 			header("Location: index.php?p=60");
+			exit;
 		}
 		else
 		{
 			header("Location: index.php?p=60&t=2");
+			exit;
 		}
 	}
 	function changePassword()
@@ -1241,6 +1295,7 @@ class Process
 			$_SESSION['error_array']=$form->getErrorArray();
 		}
 		header("Location: index.php?p=39");
+        exit;
 	}
 	function forgiveShare()
 	{
@@ -1265,6 +1320,7 @@ class Process
 		}
 
 		header("Location:$url");
+        exit;
 	}
 	function assignedPartner()
 	{
@@ -1278,6 +1334,7 @@ class Process
 			$_SESSION['error_array']=$form->getErrorArray();
 		}
 		header("Location: index.php?p=7&id=".$_POST['borrowerid']);
+		exit;
 	}
 	function referral()
 	{
@@ -1292,6 +1349,7 @@ class Process
 			$_SESSION['error_array']=$form->getErrorArray();
 		}
 		header("Location: index.php?p=49&c=".$_POST['country']);
+		exit;
 	}
 	function addRePaymentInstruction()
 	{
@@ -1304,12 +1362,14 @@ class Process
 		if($result)
 		{
 			header("Location: index.php?p=11&a=13");
+			exit;
 		}
 		else
 		{
 			$_SESSION['value_array'] = $_POST_ORG;
 			$_SESSION['error_array'] = $form->getErrorArray();
 			header("Location: index.php?p=11&a=13&ac=add");
+			exit;
 		}
 	}
 	function sendShareEmail()
@@ -1332,6 +1392,7 @@ class Process
 			header("Location: $loanprurl#e5");
 		else
 			header("Location: $loanprurl#e3");
+		exit;
 	}
 		function addcampaign()
 	{
@@ -1344,10 +1405,12 @@ class Process
 			$_SESSION['value_array']=$_POST_ORG;
 			$_SESSION['error_array']=$form->getErrorArray();
 			header("Location: index.php?p=54");
+			exit;
 		}
 		if($result==1){
 			$_SESSION['campaign_succs']='Campaign added succesfully !';
 			header("Location: index.php?p=54");
+			exit;
 		}
 	}
 	function deactivateAndDonate()
@@ -1356,6 +1419,7 @@ class Process
 			$_POST = sanitize_custom($_POST);
 			$donate=$session->ConverToDonation($_POST['lenderid'],$_POST['availAmt']);
 			header("Location: index.php?p=53");
+			exit;
 		}
 	function emailedTo()
 		{
@@ -1371,6 +1435,7 @@ class Process
 				}
 			}
 			header("Location: $errurl");
+			exit;
 		}
 		function AllowForgive()
 		{
@@ -1383,6 +1448,7 @@ class Process
 				$_SESSION['error_array']=$form->getErrorArray();
 			}
 			header("Location: index.php?p=73");
+			exit;
 		}
 		function automaticLending() {	
 			global $session, $form;
@@ -1396,6 +1462,7 @@ class Process
 				$_SESSION['error_array']=$form->getErrorArray();
 			}
 			header("Location: index.php?p=74");
+			exit;
 		}
 		function StopRefferalCommision()
 		{
@@ -1410,6 +1477,7 @@ class Process
 			}
 			$c=$_GET['c'];
 			header("Location: index.php?p=49&c=$c");
+			exit;
 		}
 		function RemoveFromCart()
 		{
@@ -1422,6 +1490,7 @@ class Process
 			else{
 				header("Location: index.php?p=75&s=0");
 			}
+			exit;
 		}
 		function ProcessCart()
 		{
@@ -1437,6 +1506,7 @@ class Process
 			}else {
 				header("Location: index.php?p=75");
 			}
+			exit;
 		}
 		function commentcredit()
 		{	
@@ -1476,6 +1546,7 @@ class Process
 			$_SESSION['usernotloggedin']=true;
 		}
 		header("Location: index.php?p=82&gid=$gid");
+		exit;
 	}
 
 //added by Julia 6-11-2013
@@ -1519,6 +1590,7 @@ class Process
 			$_SESSION['usernotloggedin']=true;
 		}
 		header("Location: index.php?p=107&gid=$gid");
+		exit;
 	}
 
 
@@ -1537,6 +1609,7 @@ class Process
 			$_SESSION['usernotloggedin']=true;
 		}
 		header("Location: index.php?p=82&gid=$grpid");
+		exit;
 	}
 	function leavegroup() {
 		global $session, $form;
@@ -1553,6 +1626,7 @@ class Process
 		}
 		$url=$_SERVER['HTTP_REFERER'];
 		header("Location: $url");
+        exit;
 	}
 	function transffer_leadership() {
 		global $session, $form;
@@ -1562,6 +1636,7 @@ class Process
 		} 
 		$url=$_SERVER['HTTP_REFERER'];
 		header("Location: $url");
+		exit;
 	}
 	function updateGrpmsgNotify() {
 		global $session, $form;
@@ -1581,13 +1656,15 @@ class Process
 		$result= $session->isBorrowerAlreadyAccess($brwrid);
 		if($result){
 			$url=$_SERVER['HTTP_REFERER'];
-			header("Location: $url" );	
+			header("Location: $url" );
+			exit;	
 		}
 		else{
 		$res= $session->grantAccessCo($brwrid);
 			if($res){
 				$url=$_SERVER['HTTP_REFERER'];
 				header("Location: $url" );
+				exit;
 			}
 		}
 	}
@@ -1598,7 +1675,8 @@ class Process
 		$res= $session->grantRemoveCo($borrowerid);
 		if($res){
 			$url=$_SERVER['HTTP_REFERER'];
-			header("Location: $url" );	
+			header("Location: $url" );
+			exit;
 		}
 	}
 	function getloansbycountry() {
@@ -1718,11 +1796,14 @@ class Process
 				$errurl = 'index.php?p=7&id='.$_POST["borrowerid"]."#is_eligible_err";
 			}
 			header("Location: $errurl");
+			exit;
 		}elseif($res==2){
 			$_SESSION['bverification_comlater']= true;
 			header("Location:./index.php?p=7&id=".$_POST['borrowerid']."#changeSaved");
+			exit;
 		}else{
 			header("Location:./index.php?p=7&s=1");
+			exit;
 		}
 		
 	}
@@ -1831,8 +1912,10 @@ class Process
 				$errurl = 'index.php?p=7&id='.$_POST["borrowerid"].'#is_eligible_ByAdminerr';
 			}
 			header("Location: $errurl");
+			exit;
 		}else{
 			header("Location:./index.php?p=7&s=1");
+			exit;
 		}
 	
 	}
@@ -1852,6 +1935,7 @@ class Process
 		}
 		$_SESSION['shareEmailValidate']=($_POST["formbidpos"]==1) ? 1:2;
 		header("Location: $url");
+		exit;
 	}
 	function donate(){
 		global $session, $form;
@@ -1861,8 +1945,10 @@ class Process
 			$_SESSION['value_array']=$_POST;
 			$_SESSION['error_array']=$form->getErrorArray();
 			header("Location: $url");
+			exit;
 		}else{
 			header("Location: index.php?p=75");
+			exit;
 		}
 	}
 	function getVolunteersByCity(){
@@ -1903,10 +1989,12 @@ class Process
 		if($result==1){
 			$database->commitTxn();
 			header("Location: $url");
+			exit;
 		}
 		else{
 			$database->rollbackTxn();
 			header("Location: $url&err=1001");
+			exit;
 		}
 
 	}
