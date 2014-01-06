@@ -45,7 +45,10 @@ if($session->userlevel==BORROWER_LEVEL) {
 		$commentcreditdetail = 0;
 	} 
 	$brwr_repayrate= $session->RepaymentRate($userid);
-	if($loanstatus == LOAN_ACTIVE || $loanstatus == LOAN_OPEN || $islastrepaid) {
+	$borwrAmtExceptCredit = $session->getCurrentCreditLimit($userid,false);   // function created by julia 08-12-13 used by Mohit
+	$maxborwAmtNextLoan =$session->getCurrentCreditLimit($userid,true);
+
+	if($loanstatus == LOAN_ACTIVE || $loanstatus == LOAN_OPEN || $islastrepaid || empty($currentloan)) { 
 		$allloans= $database->getBorrowerRepaidLoans($userid); 
 		$k=2;
 		$params['nxtLoanvalue']='';
@@ -53,30 +56,30 @@ if($session->userlevel==BORROWER_LEVEL) {
 			$params['nxtLoanvalue']='';
 			$params['firstLoanVal']='';
 		}else{
-			if(!empty($allloans))
-			if($allloans[0]['loancount']>0){
-				$k=1;
-				foreach($allloans as $allloan){ 
-					if($k==1){
-						$loanRepaidDate= date('M d, Y',$database->getLoanRepaidDate($allloan['loanid'], $userid));
-						$loanprofileurl = getLoanprofileUrl($userid,$allloan['loanid']);
-						$params['firstLoanVal']='1.'." ".$tmpcurr." ".number_format($allloan['AmountGot'], 0, ".", ",")." (<a href='$loanprofileurl' >Repaid ".$loanRepaidDate."</a>)";
-					}else{ 
-						$loanRepaidDate= date('M d, Y',$database->getLoanRepaidDate($allloan['loanid'], $userid));
-						$loanprofileurl = getLoanprofileUrl($userid,$allloan['loanid']);
-						$params['nxtLoanvalue'].="<br/>".$k.". ".$tmpcurr." ".number_format($allloan['AmountGot'], 0, ".", ",")." (<a href='$loanprofileurl' >Repaid ".$loanRepaidDate."</a>)";
+			
+				if(!empty($allloans) && $allloans[0]['loancount']>0){
+					$k=1;
+					foreach($allloans as $allloan){ 
+						if($k==1){
+							$loanRepaidDate= date('M d, Y',$database->getLoanRepaidDate($allloan['loanid'], $userid));
+							$loanprofileurl = getLoanprofileUrl($userid,$allloan['loanid']);
+							$params['firstLoanVal']='1.'." ".$tmpcurr." ".number_format($allloan['AmountGot'], 0, ".", ",")." (<a href='$loanprofileurl' >Repaid ".$loanRepaidDate."</a>)";
+						}else{ 
+							$loanRepaidDate= date('M d, Y',$database->getLoanRepaidDate($allloan['loanid'], $userid));
+							$loanprofileurl = getLoanprofileUrl($userid,$allloan['loanid']);
+							$params['nxtLoanvalue'].="<br/>".$k.". ".$tmpcurr." ".number_format($allloan['AmountGot'], 0, ".", ",")." (<a href='$loanprofileurl' >Repaid ".$loanRepaidDate."</a>)";
+						}
+						$k++;
 					}
-					$k++;
+				}elseif(empty($currentloan)){ 
+					$firstLoanValue=$database->getAdminSetting('firstLoanValue');
+					$value=$firstLoanValue;
+					$params['firstLoanVal']='1.'." ".$tmpcurr.' '.number_format(convertToNative($firstLoanValue, $rate), 0, ".", ",");
 				}
-			}elseif(empty($currentloan)){ 
-				$firstLoanValue=$database->getAdminSetting('firstLoanValue');
-				$value=$firstLoanValue;
-				$params['firstLoanVal']='1.'." ".$tmpcurr.' '.number_format(convertToNative($firstLoanValue, $rate), 0, ".", ",");
-			}
-			$flag=0;
-			if(!empty($currentloan) && $currentloan!=$islastrepaid){
+				$flag=0;
+				if(!empty($currentloan) && $currentloan!=$islastrepaid){
 					$res= $database->getTotalPayment($userid, $currentloan);
-					if($res['amttotal']==0) /*  this case is when loan is funded and schedule is not yet generatetd */
+					if($res['amttotal']==0) //  this case is when loan is funded and schedule is not yet generatetd 
 						$repaidPercent= 0;
 					else
 						$repaidPercent = $res['paidtotal']/$res['amttotal']*100;
@@ -110,8 +113,7 @@ if($session->userlevel==BORROWER_LEVEL) {
 					$k++;
 			}
 			if(!empty($currentloan)){ 
-				$borwrAmtExceptCredit = $session->getCurrentCreditLimit($userid,false);   // function created by julia 08-12-13 used by Mohit
-				$maxborwAmtNextLoan =$session->getCurrentCreditLimit($userid,true);
+
 				$value_local= $borwrAmtExceptCredit;
 				$params['nxtLoanvalue'].="<br/>".$k.". ".$tmpcurr.' '.number_format($maxborwAmtNextLoan, 0, ".", ",");
 				$k++;
@@ -213,7 +215,6 @@ if($session->userlevel==BORROWER_LEVEL) {
 		}
 
 
-/* ----------------- notes definition section added by Julia 13-12-2013 ---------------- */
 
 
 		$firstloan=$database->getBorrowerFirstLoan($userid);
@@ -242,7 +243,7 @@ if($session->userlevel==BORROWER_LEVEL) {
 
 		$params['TimeThrshld']=$timethrshld;
 
-		if($firstloan==0){
+		if(empty($firstloan) || $firstloan==0){
 			$note = $session->formMessage($lang['current_credit']['first_loan'], $params);
 
 		} elseif(empty($currentloan) && $islastrepaid) {
@@ -265,8 +266,6 @@ if($session->userlevel==BORROWER_LEVEL) {
 
 
 
-/* ------------- end notes definition section ------------------ */
-
 
 		$beginning = $session->formMessage($lang['current_credit']['beginning'], $params);
 		$invite_credit = $session->formMessage($lang['current_credit']['invite_credit'], $params);
@@ -286,9 +285,13 @@ if($session->userlevel==BORROWER_LEVEL) {
 
 		}
 
-		echo $end;
+		echo $end; 
 
-	}
+
+
+
+	} 
+	
 
 }
 ?>
