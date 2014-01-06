@@ -4331,19 +4331,19 @@ class genericClass
 
         }elseif ($text==2){
 
-            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 10 AND length(reffered_by) < 50 order by completed_on";
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 10 AND length(reffered_by) < 40 order by completed_on";
             
             $result= $db->getAll($q, array('borrowers', $date3, $date4));
 
         }elseif ($text==3){
 
-            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 50 AND length(reffered_by) < 100 order by completed_on";
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 40 AND length(reffered_by) < 55 order by completed_on";
 
             $result= $db->getAll($q, array('borrowers', $date3, $date4));
 
         }elseif ($text==4){
 
-            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 100 order by completed_on";
+            $q="SELECT * FROM ! WHERE active = 1 AND completed_on >=? AND completed_on <=? AND length(reffered_by) >= 55 order by completed_on";
                 
             $result= $db->getAll($q, array('borrowers', $date3, $date4));
         

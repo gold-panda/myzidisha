@@ -85,9 +85,9 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					<td><select id="text" name="text" >
 						<option value='0'>All</option>
 						<option value='1' <?php if($text==1) echo "Selected='true'";?>>Less than 10 characters</option>
-						<option value='2' <?php if($text==2) echo "Selected='true'";?>>10 - 50 characters</option>
-						<option value='3' <?php if($text==3) echo "Selected='true'";?>>50 - 100 characters</option>
-						<option value='4' <?php if($text==4) echo "Selected='true'";?>>Over 100 characters</option>
+						<option value='2' <?php if($text==2) echo "Selected='true'";?>>10 - 40 characters</option>
+						<option value='3' <?php if($text==3) echo "Selected='true'";?>>40 - 55 characters</option>
+						<option value='4' <?php if($text==4) echo "Selected='true'";?>>Over 55 characters</option>
 
 					</select></td>
 
