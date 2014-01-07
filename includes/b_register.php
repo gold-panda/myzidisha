@@ -263,6 +263,7 @@ if(empty($session->userid)){
 end commenting out language section & eligibility questions -->
 
 
+
 			<table class="detail">
 				<tbody>
 
@@ -308,19 +309,18 @@ end commenting out language section & eligibility questions -->
 										<img style="float:none" class="user-account-img" src="<?php echo SITE_URL.'images/tmp/'.$isPhoto_select ?>" height="50" width="50" alt=""/>
 								<?php } ?>
 							</div>
-							<!--[if lt IE 9]>
+							
 								<div>
 								<input type="file" name="bphoto" id="bphoto"   value="<?php echo $form->value("bphoto"); ?>" onchange="uploadfile(this)"/>
 								</div>
-								<![endif]-->
-							<!--[if !IE]> -->
+								
 								<div class='fileType_hide'>
 								<input type="file" name="bphoto" id="bphoto"   value="<?php echo $form->value("bphoto"); ?>" onchange="uploadfile(this)"/>
 								</div>
 								<div  class="customfiletype" onclick="getbphoto()"><?php echo $photolabel?></div>
 								<div style="clear:both"></div>
 								<div  id="bphoto_file"></div>
-							<!-- <![endif]-->
+							
 
 						</div>
 						<br/><span><?php echo $lang['register']['allowed'];?></span><br/><div id="bphoto_err"><?php echo $form->error("bphoto"); ?></div>
@@ -637,6 +637,8 @@ end commenting out language section & eligibility questions -->
 					end moved ID and recommendation form to optional verification page 27-12-13 -->
 
 </div>
+
+<!-- commenting out endorsement section
 				<?php $params['minendorser']= $database->getAdminSetting('MinEndorser');
 					  $endoresr_text= $session->formMessage($lang['register']['endorser'], $params);
 				?>
@@ -673,6 +675,8 @@ end commenting out language section & eligibility questions -->
 					<tr><td><input type="text" name="endorser_name10" value="<?php echo $form->value("endorser_name10"); ?>"/><?php echo $form->error("endorser_name10"); ?></td><td><input type="text" name="endorser_email10" value="<?php echo $form->value("endorser_email10"); ?>"/><?php echo $form->error("endorser_email10"); ?></td></tr>
 				</table>
 					<tr><td></td></tr>
+end endorser section -->
+
 
 				</tbody>
 			</table>

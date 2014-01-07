@@ -1238,6 +1238,7 @@ if($borrowerActive==1) {
 
 				end moved ID & recommendation form to optional verification page 27-12-13 -->
 
+<!-- endorsement section no longer required 
 
 			<?php $params['minendorser']= $database->getAdminSetting('MinEndorser');
 				  $endoresr_text= $session->formMessage($lang['register']['endorser'], $params);
@@ -1277,6 +1278,8 @@ if($borrowerActive==1) {
 				<tr><td><input type="text" name="endorser_name10" value="<?php echo $endorser_name10; ?>" <?php echo $disabled?> /><?php echo $form->error("endorser_name10"); ?></td><td><input type="text" name="endorser_email10" value="<?php echo $endorser_email10; ?>" <?php echo $disabled?> /><input type="hidden" name="endorser_id10" value="<?php echo $endorser_id10; ?>" /><?php echo $form->error("endorser_email10"); ?></td></tr>
 			</table>
 <br/><br/><br/>
+end endorsement section -->
+
 
 					<tr><br/><br/>
 						<td><strong>Terms of Use</strong></td>
