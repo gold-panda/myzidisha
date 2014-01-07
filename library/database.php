@@ -1183,6 +1183,7 @@ class genericClass
     function IsUserinvited($userid, $email) {
 
         global $db;
+
         if(isset($_COOKIE["invtduserjoins"])) {
             $cookie_val = $_COOKIE["invtduserjoins"];
             $q="select id,userid from ! where cookie_value = ?";
@@ -1190,15 +1191,18 @@ class genericClass
             $q1="UPDATE invites SET invitee_id = ? Where cookie_value = ? LIMIT 1";
             $res=$db->query($q1, array($userid, $cookie_val));
             setcookie ("invtduserjoins", "", time() - 3600);
-        
-//uses email to record invite, for case where invited user joins without cookie set
-        }else{
-            $q="select id,userid from ! where email = ?";
-            $result=$db->getRow($q, array('invites',$email));
+        }
+
+//use email to record invite, for case where invited user joins without cookie set
+   
+        $q="select id,userid from ! where email = ?";
+        $result=$db->getRow($q, array('invites',$email));
+        if(!empty($result)){
             $q1="UPDATE invites SET invitee_id = ? Where email = ? LIMIT 1";
             return $db->query($q1, array($userid, $email));
         }
     }
+    
     function getco_Organizers_Country() {
         global $db;
         $q = 'select distinct(country),c.name from ! as co,! as c where co.country=c.code and co.status=1 ORDER BY c.name';
@@ -5788,7 +5792,7 @@ class genericClass
     function getLastRepaidloanId($borrowerid)
     {
         global $db;
-        $sql = "SELECT loanid FROM ! WHERE borrowerid  = ? AND adminDelete = ? AND (active=? OR active=?) AND expires is NULL AND RepaidDate IS NOT NULL ORDER BY loanid DESC ";
+        $sql = "SELECT loanid FROM ! WHERE borrowerid  = ? AND adminDelete = ? AND (active=? OR active=?) AND expires is NULL ORDER BY loanid DESC ";
         $r3 = $db->getOne($sql, array('loanapplic', $borrowerid, 0, LOAN_REPAID, LOAN_DEFAULTED));
         return $r3;
     }
