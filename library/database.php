@@ -11036,6 +11036,13 @@ class genericClass
         }
     }
 
+    function sharebox_preference($id){
+        global $db;
+        $q = "SELECT sharebox_off FROM ! WHERE userid = ?";
+        $result= $db->getOne($q, array('lenders', $id));
+        return $result;
+    }
+
     function getCLBorrowers($rec_form_ofcr_no){
         global $db;
         $q="SELECT * FROM ! as b, ! as bext WHERE b.userid=bext.userid AND bext.rec_form_offcr_num=?";

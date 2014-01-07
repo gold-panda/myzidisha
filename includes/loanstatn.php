@@ -6,7 +6,11 @@ date_default_timezone_set ('EST');
 include_once("editables/".$path);
 $showShareBox=0;
 $RequestUrl = $_SERVER['REQUEST_URI'];
-if(isset($_SESSION['lender_bid_success1']) || isset($_SESSION['lender_bid_success2']) || isset($_SESSION['shareEmailValidate'])) {
+
+$userid = $session->userid;
+$sharebox_preference = $database->sharebox_preference($userid);
+
+if((isset($_SESSION['lender_bid_success1']) || isset($_SESSION['lender_bid_success2']) || isset($_SESSION['shareEmailValidate'])) && $sharebox_preference != 1) {
 	$showShareBox=1;
 	if(isset($_SESSION['shareEmailValidate'])) {
 		$formbidpos=$_SESSION['shareEmailValidate'];
@@ -237,7 +241,6 @@ if($session->userlevel==ADMIN_LEVEL)
 	$activeuser = 1;
 else if($session->userlevel==LENDER_LEVEL)
 {
-	$userid=$session->userid;
 	$res=$database->isTranslator($userid);
 	if($res==1)
 		$activeuser = 1;
