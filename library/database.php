@@ -11285,8 +11285,25 @@ class genericClass
         return $result;
 
     }
-
-
+	
+	public function getLoanFallBorrowers($lastProcessId=null){
+        global $db;
+		
+		if($lastProcessId!=0){
+			$qry="AND rs.userid>'".$lastProcessId."'";
+		}
+		
+        $q="SELECT rs.userid, rs.loanid, rs.duedate, rs.amount, rs.paidamt FROM ! as rs join ! as br on rs.userid=br.userid  WHERE rs.amount > ?  AND (rs.paidamt IS NULL || rs.paidamt<(rs.amount-?*(select rate from excrate where start=(select MAX(start) from excrate where currency=br.currency))))  AND rs.duedate<=(UNIX_TIMESTAMP() -?*24*60*60) AND rs.duedate >(UNIX_TIMESTAMP() -(?+1)*24*60*60) order by rs.userid asc";
+        $borrowers= $db->getAll($q, array('repaymentschedule', 'borrowers', 0, REPAYMENT_AMT_THRESHOLD, 60, 60));		
+	  return $borrowers;
+    }
+	
+	public function getVerifiedEmailBorrower($userid){
+		global $db;
+        $q="SELECT emailVerified FROM ! where userid=?";
+        $result=$db->getOne($q,array('users', $userid));
+        return $result;
+	}
 
 
 

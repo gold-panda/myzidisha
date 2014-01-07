@@ -2274,9 +2274,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				$this->invoiceShiftScience('create_new_account',$id,$about,$bizdesc,$reffered_by);
 			}
 			
-			if(!empty($id) && $submit_type == $lang['register']['RegisterComplete'])
+			if(!empty($id) && $submit_type == $lang['register']['Registerlater'])
 			{
-				if($cntct_type!='1'){
 					$From=EMAIL_FROM_ADDR;
 					require("editables/mailtext.php");
 					$templet="editables/email/simplemail.html";
@@ -2290,21 +2289,39 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 					$params['password'] = $pass1;
 					$message = $this->formMessage($lang['mailtext']['BorrowerReg-msg'], $params);
 					$this->mailSending($From, $To, $email, $Subject, $message,$templet, $replyTo);
-				}
 
-				$From=EMAIL_FROM_ADDR;
-				$templet="editables/email/simplemail.html";
-				$path=  getEditablePath('mailtext.php',$language);
-				require ("editables/".$path);
+					$Subject=$lang['mailtext']['email_verification_sub'];
+					$activate_key = $database->getActivationKey($id);
+					$link = SITE_URL."index.php?p=51&ident=$id&activate=$activate_key";
+					$params['verify_link'] = $link;
+					$message = $this->formMessage($lang['mailtext']['email_verification_body'], $params);
+					$reply = $this->mailSending($From, $To, $email, $Subject, $message,$templet);
+			}
+			
+			if(!empty($id) && $submit_type == $lang['register']['RegisterComplete'])
+			{
+				
+					$From=EMAIL_FROM_ADDR;
+					require("editables/mailtext.php");
+					$templet="editables/email/simplemail.html";
+					$path=  getEditablePath('mailtext.php',$language);
+					require ("editables/".$path);
 
-				$Subject=$lang['mailtext']['email_verification_sub'];
-				$To=$params['name'] = $namea." ".$nameb ;
-				$activate_key = $database->getActivationKey($id);
-				$link = SITE_URL."index.php?p=51&ident=$id&activate=$activate_key";
-				$params['verify_link'] = $link;
-				$message = $this->formMessage($lang['mailtext']['email_verification_body'], $params);
-				$reply = $this->mailSending($From, $To, $email, $Subject, $message,$templet);
-				$this->sendContactConfirmation($id);	// send SMS ommunity leader, family and neighborcontacts
+					$Subject=$lang['mailtext']['BorrowerReg-subject'];
+					$To=$params['name'] = $namea." ".$nameb ;
+					$replyTo = SERVICE_EMAIL_ADDR;
+					$params['username'] = $uname;
+					$params['password'] = $pass1;
+					$message = $this->formMessage($lang['mailtext']['BorrowerReg-msg'], $params);
+					$this->mailSending($From, $To, $email, $Subject, $message,$templet, $replyTo);
+
+					$Subject=$lang['mailtext']['email_verification_sub'];
+					$activate_key = $database->getActivationKey($id);
+					$link = SITE_URL."index.php?p=51&ident=$id&activate=$activate_key";
+					$params['verify_link'] = $link;
+					$message = $this->formMessage($lang['mailtext']['email_verification_body'], $params);
+					$reply = $this->mailSending($From, $To, $email, $Subject, $message,$templet);
+					$this->sendContactConfirmation($id);	// send SMS ommunity leader, family and neighborcontacts
 				if($reply)
 					Logger_Array("Email Verification mail sent to borrower ",'email, To', $email, $To);
 				$_SESSION['bEmailVerifiedPending']=true;
@@ -2454,8 +2471,10 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				$this->invoiceShiftScience('edit_account',$id,$about,$bizdesc,$reffered_by);
 			}
 			
-			if($rtn == 0 && $submit_type == $lang['register']['RegisterComplete']) {
-				if($cntct_type!='1'){
+			$isverified=$database->getVerifiedEmailBorrower($id);
+			
+			if($rtn == 0 && $submit_type == $lang['register']['Registerlater']) {				
+					if($isverified==0){
 					$From=EMAIL_FROM_ADDR;
 					require("editables/mailtext.php");
 					$templet="editables/email/simplemail.html";
@@ -2466,14 +2485,40 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 					$To=$params['name'] = $namea." ".$nameb ;
 					$message = $this->formMessage($lang['mailtext']['BorrowerReg-msg'], $params);
 					$this->mailSending($From, $To, $email, $Subject, $message,$templet, $replyTo);
-				}
-				$this->sendContactConfirmation($id);	// send SMS ommunity leader, family and neighborcontacts
-				$Subject=$lang['mailtext']['email_verification_sub'];
-				$activate_key = $database->getActivationKey($id);
-				$link = SITE_URL."index.php?p=51&ident=$id&activate=$activate_key";
-				$params['verify_link'] = $link;
-				$message = $this->formMessage($lang['mailtext']['email_verification_body'], $params);
-				$reply = $this->mailSending($From, $To, $email, $Subject, $message,$templet);
+
+					$Subject=$lang['mailtext']['email_verification_sub'];
+					$To=$params['name'] = $namea." ".$nameb ;
+					$activate_key = $database->getActivationKey($id);
+					$link = SITE_URL."index.php?p=51&ident=$id&activate=$activate_key";
+					$params['verify_link'] = $link;
+					$message = $this->formMessage($lang['mailtext']['email_verification_body'], $params);
+					$reply = $this->mailSending($From, $To, $email, $Subject, $message,$templet);
+					}
+			}		
+			
+			if($rtn == 0 && $submit_type == $lang['register']['RegisterComplete']) {			
+					
+					if($isverified==0){
+						$From=EMAIL_FROM_ADDR;
+						require("editables/mailtext.php");
+						$templet="editables/email/simplemail.html";
+						$path=  getEditablePath('mailtext.php',$language);
+						require ("editables/".$path);
+						$Subject=$lang['mailtext']['BorrowerReg-subject'];
+						$replyTo = SERVICE_EMAIL_ADDR;
+						$To=$params['name'] = $namea." ".$nameb ;
+						$message = $this->formMessage($lang['mailtext']['BorrowerReg-msg'], $params);
+						$this->mailSending($From, $To, $email, $Subject, $message,$templet, $replyTo);
+
+						$Subject=$lang['mailtext']['email_verification_sub'];
+						$To=$params['name'] = $namea." ".$nameb ;
+						$activate_key = $database->getActivationKey($id);
+						$link = SITE_URL."index.php?p=51&ident=$id&activate=$activate_key";
+						$params['verify_link'] = $link;
+						$message = $this->formMessage($lang['mailtext']['email_verification_body'], $params);
+						$reply = $this->mailSending($From, $To, $email, $Subject, $message,$templet);
+						$this->sendContactConfirmation($id);	// send SMS community leader, family and neighborcontacts
+					 }
 				if($reply)
 					Logger_Array("Email Verification mail sent to borrower ",'email, To', $email, $To);
 
@@ -8094,20 +8139,18 @@ function forgiveReminder(){
 //case where borrower has an active loan or fundraising application - we calculate credit limit based on current loan amount
 
 			$loanid= $database->getCurrentLoanid($userid);		
-			$ontime = 1;
-//assume current loan will be repaid on time for purpose of displaying future credit limits
-			$loanData= $database->getLoanApplic($loanid);
-			$currentloanamt=$loanData['AmountGot'];
+			$ontime = 1; //assume current loan will be repaid on time for purpose of displaying future credit limits
+
 												
 		}else{
 //case where borrower has repaid one or more loans and has not yet posted an application for a new one - we calculate credit limit based on most recently repaid loan amount
 							
-			$loanid= $database->getLastRepaidloanId($userid);
+			$loanid= $database->getLastRepaidloanId($borrowerid);
 			$ontime = $database->isRepaidOntime($userid, $loanid);			
-			$loanData= $database->getLoanApplic($loanid);
-			$currentloanamt=$loanData['AmountGot'];
-		}
 
+		}
+		$loanData= $database->getLoanApplic($loanid);
+		$currentloanamt=$loanData['AmountGot'];
 		
 		if($firstloan==0){
 //case where borrower has not yet received first loan disbursement - credit limit should equal admin 1st loan size plus invited borrower credit if applicable
@@ -8243,13 +8286,16 @@ function forgiveReminder(){
 
 
 						$currentlimit= ceil(($currentloanamt * $percentincrease) / 100) + $invitecredit;
-										}
+					
+					}				
 			
-					}
-				}			
+				}
+			}			
 
-		return $currentlimit;
+		
 	}
+
+	return $currentlimit;
 }
 
 /**** added by mohit 24-12-2013 ***/
@@ -8266,8 +8312,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  'aboutme' => $aboutMe,
 			  'aboutbusiness' => $aboutBusiness,
 			  'hearaboutzidisha' => $hearaAoutZidisha,
-			  '$time=' => $time
-			  
+			  '$time' => $time			  
 			);
 		}
 		
@@ -8278,7 +8323,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
 			  'facebookid' => $facebook_id,
-			   '$time=' => $time
+			   '$time' => $time
 			);
 		}
 		
@@ -8289,7 +8334,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
 			  '$login_status' => '$success',
-			  '$time=' => $time
+			  '$time' => $time
 			);
 		}
 		
@@ -8317,7 +8362,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  'loan_amount' => $loan_amnt,
-			  '$time=' => $time
+			  '$time' => $time
 			);
 		}
 		
@@ -8328,7 +8373,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$user_id' => $userid,
 			  'loan_amount' => $loan_amnt,
 			  'repayment_date' => $repay_date,
-			  '$time=' => $time
+			  '$time' => $time
 			);
 		}
 		
@@ -8361,7 +8406,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$is_bad' => true,
 			  '$reasons' => ['$fake'],
 			  '$description' => 'Borrower decline by Admin',
-			  '$time=' => $time
+			  '$time' => $time
 			);
 		}
 		
