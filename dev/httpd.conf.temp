@@ -567,6 +567,7 @@ SetEnv ENV_DB_PASS root
 SetEnv ENV_FULL_PATH 
 SetEnv ENV_ROOT_PATH 
 SetEnv ENV_SITE_URL http://localhost:8888/
+SetEnv ENV_COOKIE_SECURE false
 
 # mod rewrites for production environment only
 # RewriteEngine On
