@@ -1,7 +1,5 @@
 <?php
 
-	error_log("enviro name:" . $_SERVER['env_name']);
-
 /*	if (isset($_GET["p"])) {
 		error_log("value of GET['p']: " . $_GET["p"]);
 	} else {
