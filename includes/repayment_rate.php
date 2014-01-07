@@ -147,7 +147,7 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					$totalTodayinstallment_sum += $totalTodayinstallment;
 					$OnTimeinstallment_sum += $OnTimeinstallment;
 					$RepayRate_sum = ($OnTimeinstallment_sum / $totalTodayinstallment_sum) * 100;
-
+					$text_length = $database->getTextResponseLength($borrowerid);
 
 				
 
@@ -158,7 +158,7 @@ if($session->userlevel==ADMIN_LEVEL ) {
 							<td><a href="<?php echo $prurl;?>"><?php echo $zidisha_name; ?></a></td>
 							<td><?php echo $country; ?></td>
 
-							<td><span style='display:none'>$completed_on_sort</span><a href="<?php echo $link;?>"><?php echo $completed_on; ?></a></td>
+							<td><span style='display:none'>$completed_on_sort</span><a href="<?php echo $link;?>"><?php echo $completed_on; ?></a><br/><br/><?php echo $text_length; ?></td>
 
 
 							<td><?php echo number_format($OnTimeinstallment); ?></td>

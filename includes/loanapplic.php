@@ -24,16 +24,26 @@ if(!$session->logged_in)
 else
 {
 	$userid=$session->userid;
-//added by Julia to test weekly repayment schedule 15-12-2013
-	if ($userid == 11111) {
-		$weekly_inst = 1;
-	}
+	$data=$database->getBorrowerDetails($userid);
+	$country=$data['Country'];
 	$maxperiodValue_months = $database->getAdminSetting('maxperiodValue');
+
+    if ($country != 'BJ' && $country != 'BF' && $country != 'GN' && $country != 'NE' && $country != 'SN') {
+        
+        $weekly_inst = 1;
+
+    } else {
+
+    	$weekly_inst = 0;
+    }
+
 	if ($weekly_inst == 1) {
 		$maxperiodValue = $maxperiodValue_months * (52/12);
 	} else {
 		$maxperiodValue = $maxperiodValue_months;
 	}
+
+
 	if($session->userlevel != BORROWER_LEVEL)
 	{
 		echo $lang['loanapplic']['allow']."<br />".$lang['loanapplic']['Click']." <a href='index.php'>here</a> ".$lang['loanapplic']['cont'];
@@ -117,6 +127,20 @@ else
 			if(!empty($activeted))
 			{
 				$currency=$database->getUserCurrency($userid);
+
+
+				if ($currency==KES){
+
+					$amt_step=1000;
+					$inst_step=100;
+
+				}else{
+
+					$amt_step=1;
+					$inst_step=1;
+											
+				}
+
 				$rate=$database->getCurrentRate($userid);
 
 				if($sp==0)
@@ -151,17 +175,25 @@ else
 					if($back ==0)
 					{
 
+						$loan_amt=$form->value('amount');
+						if (empty($loan_amt) || $loan_amt==0){
 
-						$loan_amt= $form->value('amount');
+							$loan_amt=$maxBorrowerAmt;
+						}
+
 						$anul_int_rate = $form->value('interest');
+
 						$re_paymnet_per= $form->value('installment_amt');
+						if (empty($re_paymnet_per) || $re_paymnet_per==0){
+
+							$re_paymnet_per=maxBorrowerAmt;
+						}
+
 						$grace_p= $form->value('gperiod');
 						$loanuse= $form->value('loanuse');
 						$installment_day= $form->value('installment_day');
 						$installment_weekday= $form->value('installment_weekday');
-						if(!empty($loan_amt) && !empty($anul_int_rate)) {
-							$minIns=$session->getMinInstallment($loan_amt, $maxperiodValue, $anul_int_rate, $grace_p, $weekly_inst);
-						}
+
 					}
 					else
 					{
@@ -172,8 +204,46 @@ else
 						$loanuse= $_SESSION['la']['lu'];
 						$installment_day= $_SESSION['la']['iday'];
 						$installment_weekday= $_SESSION['la']['iwkday'];
-						$minIns=$session->getMinInstallment($loan_amt, $maxperiodValue, $anul_int_rate, $grace_p, $weekly_inst);
+					
 					}
+						
+					$loanamt_usd=$loan_amt / $rate;
+					if ($loanamt_usd <= 200){
+
+						$timethrshld = $database->getAdminSetting('TimeThrshld');
+
+					}elseif ($loanamt_usd <= 1000){
+
+						$timethrshld = $database->getAdminSetting('TimeThrshldMid1');
+	
+					}elseif ($loanamt_usd <= 3000){
+
+						$timethrshld = $database->getAdminSetting('TimeThrshldMid2');
+	
+					}elseif ($loanamt_usd > 3000){
+
+						$timethrshld = $database->getAdminSetting('TimeThrshld_above');
+					}	
+
+					if ($weekly_inst==1){
+
+						$min_period=$timethrshld * (52/12);
+
+					} else {
+
+						$min_period=$timethrshld;
+
+					}
+
+					$minIns=$session->getMinInstallment($loan_amt, $maxperiodValue, $anul_int_rate, $grace_p, $weekly_inst);
+							
+					$minIns_select = ceil($minIns / $inst_step) * $inst_step;
+
+					$maxIns=$loan_amt / $min_period;
+		
+					
+
+
 			?>
 					<div class="row">
 						<div>
@@ -198,16 +268,48 @@ else
 							</table>
 							<table class="detail">
 								<tbody>
+									<tr height='30px'><td colspan='3'></td></tr>	
+
 									<tr>
 										<td><strong><?php echo $lang['loanapplic']['loan_amt']; ?>:</strong><br/><br/><?php echo $lang['loanapplic']['loan_limit']." ".$currency." ".number_format($maxBorrowerAmt, 0, '', ',');?>.<br/>
 										<?php
 										echo"<a href='index.php?p=76' target='_blank' >{$lang['loanapplic']['crditLimit']}</a><br/><br/>";
 
-echo $lang['loanapplic']['note_amt_pr']; ?>
+										echo $lang['loanapplic']['note_amt_pr']; ?>
 										
 										</td>
-										<td style="vertical-align:top"><input style="width:50px" maxlength="10" type="text" name="amount" id="loanAppAmount" value="<?php echo $loan_amt;?>"/></td>
+
+										<td style="vertical-align:top">
+
+
+										<select style="width:120px" name="amount" id="loanAppAmount">
+
+										<option value='<?php echo $maxBorrowerAmt ?>' Selected='selected' ><?php echo $maxBorrowerAmt ?></option>
+
+										<?php
+
+										$amt_range = range($amt_step, $maxBorrowerAmt, $amt_step);
+
+										arsort($amt_range);
+
+										$i=0; 
+
+										foreach($amt_range as $amt_option) {  ?>
+
+											<option value='<?php echo $amt_option ?>' <?php if($form->value("amount")==$amt_option) echo "Selected='true'" ?>><?php echo $amt_option ?></option>
+
+										<?php		$i++;
+
+										}
+
+										?>
+
+										</select>
+
+										</td>
+
 										<td><div id="loanAppAmountError"><?php echo $form->error("amount"); ?></div></td>
+										
 									</tr>
 									<tr height='60px'><td colspan='3'></td></tr>
 									<?php
@@ -224,29 +326,30 @@ echo $lang['loanapplic']['note_amt_pr']; ?>
 										<td style="vertical-align:top">
 
 
-<select style="width:60px" id="loanAppInterest" name="interest">
+										<select style="width:120px" id="loanAppInterest" name="interest">
 
-<?php
+										<?php
 
-$int_range = range($webfee, $maxLoanAppInterest);
+										$int_range = range($webfee, $maxLoanAppInterest);
 
-arsort($int_range);
+										arsort($int_range);
 
-$i=0;
+										$i=0;
 
-foreach($int_range as $int_option) {  ?>
+										foreach($int_range as $int_option) {  ?>
 
-	<option value='<?php echo $int_option ?>' <?php if($form->value("interest")==$int_option) echo "Selected='true'" ?>><?php echo $int_option ?>%</option>
+										<option value='<?php echo $int_option ?>' <?php if($form->value("interest")==$int_option) echo "Selected='true'" ?>><?php echo $int_option ?>%</option>
 
-						<?php		$i++;
+										<?php		$i++;
 
-}
+										}
 
-?>
+										?>
 
-</select>
+										</select>
 
-</td>
+										</td>
+
 										<td style="float:left; display:block; margin-top: 6px;"></td><td><div id="loanAppInterestError"><?php echo $form->error("interest"); ?></div></td>
 									</tr>
 									
@@ -282,15 +385,48 @@ foreach($int_range as $int_option) {  ?>
 										<td><strong>
 											<?php if ($weekly_inst != 1) {
 
-												echo $lang['loanapplic']['monthly_repay_amt'].":</strong><br/><br/>".$lang['loanapplic']['installment_amt']." ".$maxperiodValue." ".$lang['loanapplic']['installment_amt2']." ".$currency." <span id='minLoanInsCalculated'>".number_format($minIns, 0, '', ',')."</span>.";
+												echo $lang['loanapplic']['monthly_repay_amt'].":</strong><br/><br/>".$lang['loanapplic']['monthly_installment_amt'];
 											} else {
 
-												echo $lang['loanapplic']['weekly_repay_amt'].":</strong><br/><br/>".$lang['loanapplic']['weekly_installment_amt']." ".$maxperiodValue." ".$lang['loanapplic']['weekly_installment_amt2']." ".$currency." <span id='minLoanInsCalculated'>".number_format($minIns, 0, '', ',')."</span>.";
-
+												echo $lang['loanapplic']['weekly_repay_amt'].":</strong><br/><br/>".$lang['loanapplic']['weekly_installment_amt'];
+												
 											} ?>
 
 </td>
+
+										<td style="vertical-align:top">
+
+
+										<select style="width:120px" name="installment_amt" id="loanAppInstallment">
+
+										<?php
+
+										$inst_range = range($minIns_select, $maxIns, $inst_step);
+
+										arsort($inst_range);
+
+										$i=0; 
+
+										foreach($inst_range as $inst_option) {  ?>
+
+											<option value='<?php echo $inst_option ?>' <?php if($form->value("installment_amt")==$inst_option) echo "Selected='true'" ?>><?php echo $inst_option ?></option>
+
+										<?php		$i++;
+
+										}
+
+										?>
+
+										</select>
+
+										</td>
+
+
+
+<!--
 										<td style="vertical-align:top"><input style="width:50px" maxlength="10" type="text" name="installment_amt" id="loanAppInstallment" value="<?php echo $re_paymnet_per;?>" /></td>
+-->
+
 										<td><div id="loanAppInstallmentError"><?php echo $form->error("installment_amt"); ?></div></td>
 									</tr>
 									<tr height='60px'><td colspan='3'></td></tr>
@@ -319,7 +455,7 @@ foreach($int_range as $int_option) {  ?>
 
 											<?php if ($weekly_inst != 1){ ?>
 
-												<select style="width:60px" name="installment_day" id="installment_day">
+												<select style="width:120px" name="installment_day" id="installment_day">
 													<option></option>
 												<?php for($i=1;$i<=31;$i++){?>
 													<option <?php if($installment_day==$i) echo"selected='selected'";?>value=<?php echo $i?>><?php echo $i?></option>
@@ -342,7 +478,7 @@ foreach($int_range as $int_option) {  ?>
 									<tr>
 										<td colspan=3>
 											<?php echo $lang['loanapplic']['use_loan'] ?><br/><br/>
-											<textarea name="loanuse" id="loanuse" style="width:600px; height:100px"><?php echo $loanuse;?></textarea><br/>
+											<textarea name="loanuse" id="loanuse" style="width:600px; height:300px"><?php echo $loanuse;?></textarea><br/>
 											<div><?php echo $form->error('loanuse') ?></div>
 										</td>
 									</tr>
@@ -454,12 +590,18 @@ foreach($int_range as $int_option) {  ?>
 					<div class="row">
 						<div>
 							<h3 class="subhead"><?php echo $lang['loanapplic']['loan_applic_con'] ?></h3>
+							
+							<br/><br/>
+
 							<p><?php echo $lang['loanapplic']['conferm_shedule'];?></p>
+
+							<br/><br/>
+
 							<form action="process.php" method="post">
 							<table class="detail">
 								<tbody>
 									<tr>
-										<td style="width:400px"><strong><?php echo $lang['loanapplic']['amt_req'] ?>:</strong><br /><?php echo $lang['loanapplic']['note_amt_pr'];?></td>
+										<td style="width:400px"><strong><?php echo $lang['loanapplic']['amt_req'] ?>:</strong><br /></td>
 										<td><?php echo $currency." ".$famt ?></td>
 									</tr>
 									<tr height='15px'><td colspan='3'></td></tr>
@@ -514,6 +656,9 @@ foreach($int_range as $int_option) {  ?>
 							</table>
 							<p><?php echo $lang['loanapplic']['shedule_assume']; ?></p>
 							<?php echo $sched; ?>
+
+							<br/><br/><br/>
+
 							<p>
 								<div style="float:left"><input class='btn' type=button value='<?php echo $lang['loanapplic']['Back'];?>' onclick='window.location="index.php?p=9&s=0&back=1"'>
 								
@@ -522,6 +667,9 @@ foreach($int_range as $int_option) {  ?>
 								<div style="float:right">
 									<input type="hidden" name="confirmApplication" />
 									<input type="hidden" name="user_guess" value="<?php echo generateToken('confirmApplication'); ?>"/>
+								
+							
+
 								<?php 
 									if($tnc)
 									{
@@ -535,8 +683,8 @@ foreach($int_range as $int_option) {  ?>
 								</div>
 							</p>
 							</form>
-						</div><!-- /bid-table -->
-					</div><!-- /row -->
+						</div>
+					</div>
 	<?php		}
 				else if($sp==2)
 				{	
