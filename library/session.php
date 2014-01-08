@@ -3276,6 +3276,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		$nextDuedate= $database->getNextDueDate($loanid);
 		$nextDuedateOrg=$nextDuedate;
 		$gracePeriod_limit=$database->getAdminSetting('maxGraceperiodValue');
+		$weekly_inst=$lonedata['weekly_inst'];
 		if(empty($nextDuedate))
 		{
 			$i=1;
@@ -3294,14 +3295,15 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		{
 			if(empty($nextDuedateOrg))
 			{
-				$remainPeriod=-round(($installment_date- $lastDuedate)/(30*24*60*60));
+				$remainPeriod=-$this->schInterval($lastDuedate,$installment_date,$weekly_inst);
 			}
 			else
 			{
 				if($installment_date >$lastDuedate)
-					$remainPeriod=-round(($installment_date- $lastDuedate)/(30*24*60*60));
+					$remainPeriod=-$this->schInterval($lastDuedate,$installment_date,$weekly_inst);
 				else
-					$remainPeriod=round(($lastDuedate- $installment_date)/(30*24*60*60));
+					//$remainPeriod=round(($lastDuedate- $installment_date)/(30*24*60*60));
+					$remainPeriod=$this->schInterval($lastDuedate,$installment_date,$weekly_inst);				
 			}
 		}
 		$max_repay_period= $database->getAdminSetting('maxRepayPeriod');
@@ -3325,7 +3327,16 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$allDates['remainPeriod']=$remainPeriod;
 		return $allDates;
 	}
-	function reScheduleLoan($period,$installment_amount, $installment_date,$original_period,$reschedule_reason,$confirmReScheduleLoan,$loanid,$propose_type, $weekly_inst)
+	
+	
+	function schInterval($lastDuedate,$installment_date,$weekly_inst){
+			if($weekly_inst==1)
+			   return round(($lastDuedate-$installment_date)/604800);
+			 else	
+			   return round(($lastDuedate-$installment_date)/2592000);	
+	}
+	
+	function reScheduleLoan($period,$installment_amount, $installment_date,$original_period,$reschedule_reason,$confirmReScheduleLoan,$loanid,$propose_type)
 	{	
 		global $database,$form;
 		$path=  getEditablePath('error.php');
@@ -3407,8 +3418,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		{
 			$maxDuedate=$allDates['maxDuedate'];
 			$totalrate = $rate + $fee;
-			$periodFromToday= $this->getPeriodFromTodayForReschedule($userid, $loanid, $amount, $totalrate, $installment_amount);
-
+			$periodFromToday= $this->getPeriodFromTodayForReschedule($userid, $loanid, $amount, $totalrate, $installment_amount); 
 			if(!empty($installment_amount)) {
 				if(($allDates['max_repay_period'] < $periodFromToday) || $periodFromToday < 0){
 					//$maxRP=$period - $allDates['remainPeriod'] + $allDates['max_repay_period'];
@@ -8406,7 +8416,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$is_bad' => true,
-			  '$reasons' => ['$fake'],
+			  'reasons' => 'declined',
 			  '$description' => 'Borrower decline by Admin',
 			  '$time' => $time
 			);
