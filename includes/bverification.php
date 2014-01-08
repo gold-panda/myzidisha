@@ -272,9 +272,15 @@ if(($session->userlevel==ADMIN_LEVEL || $session->userlevel==PARTNER_LEVEL) && i
 	
 	</tbody>
 	</table>
+<br/><br/>
+	
+<?php 
+
+$sift_profile = "https://siftscience.com/console/users/".$userid;
+
+echo "<a href='".$sift_profile."' target='_blank'>View Sift Science profile</a>"; ?>
+
 <br/><br/><br/>
-
-
 
 2.  If this applicant has received any endorsements, please review them below. If you have reason to doubt that the responses are genuine (for example, the wording is too similar, too many from the same IP address, or the responses are not consistent with the information in the rest of the application) then please ensure a telephone interview is conducted before activating this applicant.<br/><br/>
 If the endorsements are obviously not genuine (for example, more than three from the same IP address or the exact same wording across multiple endorsements) then please decline this applicant without an interview.
