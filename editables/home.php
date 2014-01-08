@@ -23,5 +23,5 @@ $lang['home']['check_blog']='Check Out Our Blog';
 $lang['home']['member_worldwide']='Members Worldwide';
 $lang['home']['hero_text1']='Become A';
 $lang['home']['hero_text2']='Humanitarian Banker.';
-$lang['home']['hero_text3']='Join the first peer-to-peer microlending community to link lenders and borrowers directly across international borders.';
+$lang['home']['hero_text3']='Join the global person-to-person microlending movement.';
 ?>

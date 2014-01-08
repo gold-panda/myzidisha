@@ -95,6 +95,8 @@ class Session
 			}
 		}
 		/* Username and userid have been set and not guest */
+		// var_dump($_SESSION);
+		//exit();
 		if(isset($_SESSION['username']) && isset($_SESSION['userid']) && $_SESSION['username'] != GUEST_NAME)
 		{
 			/* Confirm that username and userid are valid */

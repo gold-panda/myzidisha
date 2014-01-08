@@ -1498,7 +1498,7 @@ table .headerSortUp.purple, table .headerSortDown.purple {
   margin-bottom: 20px;
   font-size: 35px;
   font-family:'Trade Gothic W01 Light',"Helvetica Neue", Helvetica, Arial, sans-serif;
-  line-height: 1;
+  line-height: 45px;
   text-transform: none;
   letter-spacing: -1px;
   color: #ff8b00; 

@@ -28,15 +28,54 @@ onload = function() {
 	);
 	rand = Math.floor(Math.random()*images.length); // chose a random number, between 0 and the length of the array -1
 	currentImage = images[rand]; // set img to the random image's src
+	if(currentImage == "images/home1.jpg"){
+		herotext1=$('#herotext1').text('Lend Thilor');
+		herotext2=$('#herotext2').text('$20 for new fabric');
+	}
+	else if(currentImage == "images/home2.jpg"){
+		$('#herotext1').text('Lend Melita');
+		$('#herotext2').text('$100 for a dairy cow');
+	}
+	else if(currentImage == "images/home3.jpg"){
+		$('#herotext1').text('Lend Ruth');
+		$('#herotext2').text('$10 for fresh vegetables');
+	}
+	else if(currentImage == "images/home11.jpg"){
+		$('#herotext1').text('Lend Pherister');
+		$('#herotext2').text('$200 for a new schoolroom');
+	}
+	else if(currentImage == "images/home12.jpg"){
+		$('#herotext1').text('Lend Peter');
+		$('#herotext2').text('$60 for a sewing machine');
+	}
+	else if(currentImage == "images/home13.jpg"){
+		$('#herotext1').text('Lend David');
+		$('#herotext2').text('$30 for flour and sugar');
+	}
+	else if(currentImage == "images/home14.jpg"){
+		$('#herotext1').text('Lend Albake');
+		$('#herotext2').text('$20 to make silver bracelets');
+	}
+	else if(currentImage == "images/home15.jpg"){
+		$('#herotext1').text('Lend Justine');
+		$('#herotext2').text('$60 to publish her book');
+	}
 	document.getElementById("feature").style.backgroundImage = "url("+currentImage+")"; //for div background
 	//document.body.style.background = "url("+img+")"; // set the background image
 }
 </script>
-<div class="hero" id="feature">
-	<h1><?php echo $lang['home']['hero_text1']?> <span class="blue"><?php echo $lang['home']['hero_text2']?></span></h1>
-	<p><?php echo $lang['home']['hero_text3']?></p>
+<a href="microfinance/lend.html" style="text-decoration : none">
+	<div class="hero" id="feature">
+	<h1><div id="herotext1"></div>
+	<span class="blue"><div id="herotext2"></div></span></h1>
+	<!--
 	<div class="banner_btn">
-		<!-- a href="microfinance/lend.html"><img src="images/lend-button-3_text.png" height="45" width="226" alt="LEND" /></a -->
+		<a href="microfinance/lend.html"><img src="images/lend-button-3_text.png" height="45" width="226" alt="LEND" /></a>
 	</div>
-	<p><img src="images/featured-in.png" alt="As Featured in The Washington Post, Microfinance Focus and on National Public Radio" width="385" height="70" /></p>
+	-->
+	<p><?php echo $lang['home']['hero_text3']?>
+	
+	<img src="images/featured-in.png" alt="As Featured in The Washington Post, Microfinance Focus and on National Public Radio" width="385" height="70" /></p>
+	
 </div>
+</a>

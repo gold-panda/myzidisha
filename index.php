@@ -404,6 +404,8 @@ if($language==''){
 						echo "<div style='width:100%; background-color:red;color:white;text-align:center'>CSRF token invalid please try again</div>";
 				}	?>
 			</div>
+
+			
 			<div id="nav">
 				<table class="nav-table">
 					<tr>
@@ -418,6 +420,7 @@ if($language==''){
 					</tr>
 				</table>
 			</div>
+
 		
 <?php	if($page==0)
 		{
