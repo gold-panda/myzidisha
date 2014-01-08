@@ -45,7 +45,7 @@ onload = function() {
 		$('#herotext2').text('$200 for a new schoolroom');
 	}
 	else if(currentImage == "images/home12.jpg"){
-		$('#herotext1').text('Lend Peter');
+		$('#herotext1').text('Lend Stephen');
 		$('#herotext2').text('$60 for a sewing machine');
 	}
 	else if(currentImage == "images/home13.jpg"){
