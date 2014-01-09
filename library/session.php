@@ -769,8 +769,9 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 			$b_email=$bdetail['email'];
 			$To=$bdetail['name'];
 			$message = $this->formMessage($lang['mailtext']['payment_receipt'], $params);
+			$sms_message = $this->formMessage($lang['mailtext']['payment_receipt_sms'], $params);
 			$this->mailSending($From, $To, $b_email, $Subject, $message,$templet);
-			$this->SendSMS($message, $to_number);
+			$this->SendSMS($sms_message, $to_number);
 
 
 //if borrower who made payment is eligible to invite, send invite eligibility notification at same time as payment receipt, via email only

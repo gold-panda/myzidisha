@@ -571,11 +571,12 @@ Zidisha Team";
 
 $lang['mailtext']['payment_receipt_subject'] = "Zidisha Payment Received";
 
+$lang['mailtext']['payment_receipt_sms'] = "Your payment of %currency% %bpaidamt% has been credited to your Zidisha account.";
 
 //sent when borrower is eligible to invite others
 
 $lang['mailtext']['eligible_invite']="Dear %bname%,<br/><br/>
-Congratulations! Your on-time repayment rate is %pmtrate%%, and you are eligible to participate in the Zidisha invite program. You may give and receive credit limit bonuses for each new member you invite to join Zidisha as long as you remain eligible.<br/><br/>
+Congratulations! Your on-time repayment rate is high enough to qualify for the Zidisha invite program. You may give and receive credit limit bonuses for each new member you invite to join Zidisha as long as you remain eligible.<br/><br/>
 To learn more, go to <a href='%zidisha_link%' target='_blank'>www.zidisha.org</a> and log into your member account.<br/><br/>
 Best wishes,<br/><br/>
 Zidisha Team";
