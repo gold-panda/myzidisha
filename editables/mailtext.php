@@ -27,7 +27,7 @@ $lang['mailtext']['PartnerReg-subject'] = 'Welcome to Zidisha';
 //lender
 $lang['mailtext']['LenderReg-msg'] = 'Dear %name%, <br/><br/>'.
 'Thank you for joining the global peer-to-peer microlending movement.<br /><br />We are pioneering the world\'s first online microfinance community to connect lenders to borrowers directly, overcoming previously insurmountable barriers of geography, wealth and circumstance. It\'s an incredibly worthwhile thing to be a part of.<br/><br/>'
-.'Go to www.zidisha.org to start making a difference. You can find an entrepreneur to support, invite friends to join, and dialogue with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>'
+.'Go to <a href="%zidisha_link%" target="_blank">Zidisha.org</a> to start making a difference. You can find an entrepreneur to support, invite friends to join, and dialogue with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>'
 .'We look forward to seeing you there.<br/><br/>'
 .
 'The Zidisha Team ';
@@ -67,12 +67,10 @@ $lang['mailtext']['ActiveBid-subject'] = 'Zidisha Loan Disbursed';
 $lang['mailtext']['ActivateBorrower-msg'] = 'Dear %name%, <br/><br/>
 Congratulations! Your application to join Zidisha has been approved.<br/><br/>
 Zidisha is an internet-based community based on earned trust.  Membership is highly selective, and being accepted into Zidisha is something to take pride in.<br/><br/>
-You are now eligible to offer a loan agreement to Zidisha lenders.  To post a loan application on Zidisha, please log in to your member account and follow the instructions.<br/><br/>
+You are now eligible to offer a loan agreement to Zidisha lenders.  To post a loan application on Zidisha, please log in to your member account at <a href="%zidisha_link%" target="_blank">Zidisha.org</a> and follow the instructions.<br/><br/>
 IMPORTANT NOTE: If you were invited by another Zidisha member, you may be eligible for a loan size increase bonus.  To receive the bonus, ask the member who invited you to send you an invitation email from the "Invite New Members" page of his or her account before posting your loan application.<br/><br/>
 Best wishes,<br/><br/>
 Zidisha Team';
-
-
 
 $lang['mailtext']['ActivateBorrower-subject'] = 'Zidisha Account Activation';
 $lang['mailtext']['ActivatePartner-msg'] = 'Hi %name%, <br/><br/>'.
@@ -477,11 +475,11 @@ Your endorsement serves only to confirm the identity and trustworthy reputation 
  <br/><br/> 
  Zidisha Team';
 
-$lang['mailtext']['share_join_email_body']="%note%<br/><a href='%zidisha_link%' target='_blank'>www.zidisha.org</a><br/>";
-$lang['mailtext']['binvite_link'] = "Go to <a href='%zidisha_link%' target='_blank'>https://www.zidisha.org/microfinance/borrow.html</a> to accept this invite or to learn more.";
+$lang['mailtext']['share_join_email_body']="%note%<br/><a href='%zidisha_link%'>www.zidisha.org</a><br/>";
+$lang['mailtext']['binvite_link'] = "Go to <a href='https://www.zidisha.org/microfinance/borrow.html'>https://www.zidisha.org/microfinance/borrow.html</a> to accept this invite or to learn more.";
 $lang['mailtext']['breminder_advance'] = "Dear %bname%,<br/><br/>
 This is a courtesy reminder that your monthly loan repayment installment will be due on %duedate%.<br/><br/>
-You currently have an advance payment credit of %currency% %paidamt% .This will be subtracted from your balance due on %duedate%, for a net amount of %currency% %netdueamt% due on %duedate%.<br/><br/>
+You currently have an advance payment credit of %currency% %paidamt% .This will be credited toward your balance due on %duedate%, for a net amount of %currency% %netdueamt% due on %duedate%.<br/><br/>
 %repay_inst%<br/><br/>
 Please ensure that the due payment is made promptly, and contact us in case of difficulty.<br/><br/>
 Thank you,<br/><br/>
@@ -559,8 +557,31 @@ $lang['mailtext']['breminder_again_sub']='Reminder from Zidisha';
 
 
 
-/* ------- added by Julia 13-12-13 ----------- */
+//confirmation sent to contacts of new applicants 
 
 $lang['mailtext']['contact_confirmation_sms']="Dear %uname%, %bname% of tel. %bnumber% has shared your contacts in an application to join the Zidisha.org online lending community. We would like to confirm with you that %bname% can be trusted to repay loans. If you do not know or do not recommend %bname%, please inform us by SMS reply to this number. Thank you.";
+
+
+//email and SMS sent out to borrowers when payment is received
+
+$lang['mailtext']['payment_receipt'] = "Dear %bname%,<br/><br/>
+Thank you for your loan repayment of %currency% %bpaidamt%. This amount has been credited to your Zidisha account balance.<br/><br/>
+Best wishes,<br/><br/>
+Zidisha Team";
+
+$lang['mailtext']['payment_receipt_subject'] = "Zidisha Payment Received";
+
+
+//sent when borrower is eligible to invite others
+
+$lang['mailtext']['eligible_invite']="Dear %bname%,<br/><br/>
+Congratulations! Your on-time repayment rate is %pmtrate%%, and you are eligible to participate in the Zidisha invite program. You may give and receive credit limit bonuses for each new member you invite to join Zidisha as long as you remain eligible.<br/><br/>
+To learn more, go to <a href='%zidisha_link%' target='_blank'>www.zidisha.org</a> and log into your member account.<br/><br/>
+Best wishes,<br/><br/>
+Zidisha Team";
+
+$lang['mailtext']['eligible_invite_subject'] = "Zidisha Invite Bonuses";
+
+
 
 ?>

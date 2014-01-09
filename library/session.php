@@ -313,6 +313,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 			$To=$params['name'] = $bdetail['name'];
 			$prurl = getUserProfileUrl($this->userid);
 			$params['link'] = SITE_URL.$prurl ;
+			$params['zidisha_link']= SITE_URL."index.php";
 			$message = $this->formMessage($lang['mailtext']['ActivateBorrower-msg'], $params);
 			if($addmore == 0)
 				$reply=$this->mailSending($From, $To, $bdetail['email'], $Subject, $message,$templet, $replyTo);
@@ -750,7 +751,40 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		}
 		if($rtn==0)
 		{
-			if($sendMail)
+
+			$From=EMAIL_FROM_ADDR;
+			$templet="editables/email/simplemail.html";
+			require ("editables/mailtext.php");
+
+//send payment receipt to borrower via email and SMS
+			$Subject=$lang['mailtext']['payment_receipt_subject'];
+			$currency=$database->getUserCurrency($borrowerid);
+			$country= $database->getCountryCodeById($borrowerid);
+			$telnumber= $database->getPrevMobile($borrowerid);
+			$to_number = $this->FormatNumber($telnumber, $country);
+			$bdetail=$database->getEmailB($borrowerid);
+			$params['bname']=$bdetail['name'];
+			$params['currency']= $currency;
+			$params['bpaidamt']= $amount;
+			$b_email=$bdetail['email'];
+			$To=$bdetail['name'];
+			$message = $this->formMessage($lang['mailtext']['payment_receipt'], $params);
+			$this->mailSending($From, $To, $b_email, $Subject, $message,$templet);
+			$this->SendSMS($message, $to_number);
+
+
+//if borrower who made payment is eligible to invite, send invite eligibility notification at same time as payment receipt, via email only
+			$eligible_invite = $this->isEligibleToInvite($borrowerid);
+
+			if ($eligible_invite == 1){
+
+				$Subject=$lang['mailtext']['eligible_invite_subject'];
+				$message = $this->formMessage($lang['mailtext']['eligible_invite'], $params);
+				$this->mailSending($From, $To, $b_email, $Subject, $message,$templet);
+			
+			}
+
+			if($sendMail) //payment receipt notification for lenders who elect to receive these emails
 			{
 				for($i =0; $i < count($lendersArray); $i++)
 				{
@@ -763,14 +797,10 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 						$lenderInterest = ($lenderPrincipal * $lendersArray[$i]['intr'] * $period)/1200;
 						$amountToLender = $lenderPrincipal +  $lenderInterest;
 						$dollarAmountToLender = convertToDollar($amountToLender, $CurrencyRate);
-						$From=EMAIL_FROM_ADDR;
-						$templet="editables/email/simplemail.html";
-						require ("editables/mailtext.php");
 						$Subject=$lang['mailtext']['RecivedPayment-subject'];
 						$To=$params['name'] = $r['name'];
 						$params['avail_amount'] = $availAmt;
 						$params['amount'] = number_format(truncate_num(round($dollarAmountToLender, 4), 2), 2, ".", ",");
-						$params['bname'] = $b_name;
 						$params['lend_link'] = WEBSITE_ADDRESS.'?p=2';
 						$loanprurl = getLoanprofileUrl($borrowerid, $loanid);
 						$params['link'] = SITE_URL.$loanprurl;
@@ -4146,6 +4176,7 @@ function totalTodayinstallment($userid){
 				require ("editables/mailtext.php");
 				$Subject=$lang['mailtext']['LenderReg-subject'];
 				$To=$params['name'] = trim($fname." ".$lname);
+				$params['zidisha_link']= SITE_URL."index.php";
 				$message = $this->formMessage($lang['mailtext']['LenderReg-msg'], $params);
 				$reply=$this->mailSending($From, $To, $email, $Subject, $message,$templet);
 				/*$Subject=$lang['mailtext']['email_verification_sub'];
