@@ -573,6 +573,7 @@ $lang['mailtext']['payment_receipt_subject'] = "Zidisha Payment Received";
 
 $lang['mailtext']['payment_receipt_sms'] = "Your payment of %currency% %bpaidamt% has been credited to your Zidisha account.";
 
+
 //sent when borrower is eligible to invite others
 
 $lang['mailtext']['eligible_invite']="Dear %bname%,<br/><br/>
@@ -583,6 +584,7 @@ Zidisha Team";
 
 $lang['mailtext']['eligible_invite_subject'] = "Zidisha Invite Bonuses";
 
+$lang['mailtext']['eligible_invite_sms']="Congratulations! You now qualify for the Zidisha invite program. To participate, login to your account at Zidisha.org and follow the invite instructions.";
 
 
 ?>

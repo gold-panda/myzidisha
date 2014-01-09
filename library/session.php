@@ -781,8 +781,9 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 
 				$Subject=$lang['mailtext']['eligible_invite_subject'];
 				$message = $this->formMessage($lang['mailtext']['eligible_invite'], $params);
+				$sms_message = $this->formMessage($lang['mailtext']['eligible_invite_sms'], $params);
 				$this->mailSending($From, $To, $b_email, $Subject, $message,$templet);
-			
+				$this->SendSMS($sms_message, $to_number);
 			}
 
 			if($sendMail) //payment receipt notification for lenders who elect to receive these emails
