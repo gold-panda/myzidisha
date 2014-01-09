@@ -1321,9 +1321,12 @@ end endorsement section -->
 						<input type="hidden" name="id" value="<?php echo $id ;?>"/>
 						<?php if($borrowerActive!=1) {?>	
 						
-						<input  type="submit" name='submitform' id='borrowersubmitform' onclick="needToConfirm = false;" value="<?php echo $lang['register']['Registerlater'];?>"  class='btn'/>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="submit"   name='submitform' onclick="needToConfirm = false;" value="<?php echo $lang['register']['RegisterComplete'];?>"  class='btn'/>
+						<input type="submit"   name='submitform' align='center' onclick="needToConfirm = false;" value="<?php echo $lang['register']['RegisterComplete'];?>"  class='btn'/>
+					
+						<br/><br/><br/><br/>
+
+						<div align="left"><input  type="submit" name='submitform' id='borrowersubmitform' onclick="needToConfirm = false;" value="<?php echo $lang['register']['Registerlater'];?>"  class='btn'/></div>
+					
 					<?php } else {?>
 						<input type="submit"   name='submitform' id='borrowersubmitform' onclick="needToConfirm = false;" value="<?php 
 						echo $lang['register']['savechanges'];?>"  class='btn'/>
