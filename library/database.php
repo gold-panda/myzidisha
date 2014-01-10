@@ -1184,22 +1184,25 @@ class genericClass
 
         global $db;
 
-        if(isset($_COOKIE["invtduserjoins"])) {
+//use email to record invite, for case where invited user joins without cookie set
+   
+        $q="select id,userid from ! where email = ?";
+        
+        $result=$db->getRow($q, array('invites',$email));
+        
+        if(!empty($result)){
+            
+            $q1="UPDATE invites SET invitee_id = ? Where email = ? LIMIT 1";
+            
+            return $db->query($q1, array($userid, $email));
+        
+        } elseif(isset($_COOKIE["invtduserjoins"])) {
             $cookie_val = $_COOKIE["invtduserjoins"];
             $q="select id,userid from ! where cookie_value = ?";
             $result=$db->getRow($q, array('invites',$cookie_val));
             $q1="UPDATE invites SET invitee_id = ? Where cookie_value = ? LIMIT 1";
             $res=$db->query($q1, array($userid, $cookie_val));
             setcookie ("invtduserjoins", "", time() - 3600);
-        }
-
-//use email to record invite, for case where invited user joins without cookie set
-   
-        $q="select id,userid from ! where email = ?";
-        $result=$db->getRow($q, array('invites',$email));
-        if(!empty($result)){
-            $q1="UPDATE invites SET invitee_id = ? Where email = ? LIMIT 1";
-            return $db->query($q1, array($userid, $email));
         }
     }
     
