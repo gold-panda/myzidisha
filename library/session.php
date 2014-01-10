@@ -8202,29 +8202,26 @@ function forgiveReminder(){
 			$val=$database->getAdminSetting('firstLoanValue');
 
 			$invitedstatus=$database->getInvitee($userid);
-
-			if (!empty($invitedstatus)){
-				$invitedcredit=200; //adds bonus of USD 200 for new members who were invited by eligible existing members
-			}else{
-				$invitedcredit=0;
-			}
-
 			$text_length = $database->getTextResponseLength($userid);
 
-			if (!empty($text_length)){
+			if (!empty($invitedstatus)){
+				
+				$bonuscredit=200; //adds bonus of USD 200 for new members who were invited by eligible existing members
+			
+			}elseif (!empty($text_length)){
 
 				if ($text_length >= 40 && $text_length <= 60){
 
-					$textcredit=200; //adds bonus of USD 200 for new members who entered optimal length of text response to 'How did you hear about Zidisha' optional question in application
+					$bonuscredit=200; //adds bonus of USD 200 for new members who entered optimal length of text response to 'How did you hear about Zidisha' optional question in application
 				
 				}else{
 
-					$textcredit=0;
+					$bonuscredit=0;
 
 				}
 			}
 
-			$totalval=$val+$invitedcredit+$textcredit;
+			$totalval=$val+$bonuscredit;
 			$currentlimit=ceil(convertToNative($totalval, $rate));	
 			return $currentlimit;
 
