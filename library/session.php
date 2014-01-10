@@ -659,9 +659,14 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		$extra_period = $database->getLoanExtraPeriod($borrowerid, $loanid);
 		$period=$lonedata['period'] + $extra_period;    /* Actual repayment perieds which do not includes grace periods */
 		$grace=$lonedata['grace'];  /* grace periods before repayment starts */
-
-		$feelender=((($period)*$loanAmt*($rate))/1200); /* total interest amount of lenders for this loan */
-		$feeamount_org=((($period)*$loanAmt*($feerate))/1200);/* zidisha fee amount for this loan */
+		$weekly_inst=$lonedata['weekly_inst'];  /* intrest calculation based on if loan schedule weekly  on date 10-01-14*/
+		if($weekly_inst==1){
+			$feelender=((($period)*$loanAmt*($rate))/5200);
+			$feeamount_org=((($period)*$loanAmt*($feerate))/5200);
+		}else{
+			$feelender=((($period)*$loanAmt*($rate))/1200); /* total interest amount of lenders for this loan */
+			$feeamount_org=((($period)*$loanAmt*($feerate))/1200);/* zidisha fee amount for this loan */
+		}
 		$tamount_org=$loanAmt + $feelender + $feeamount_org; /* Total amount to be pay for by borrower */
 
 		$totalPayment = $database->getTotalPayment($borrowerid, $loanid);
@@ -686,7 +691,11 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		for($i =0; $i < count($lendersArray); $i++)
 		{
 			$lenderPrincipal = ($lendersArray[$i]['amount']/$total)*$pInCurrInstallment;
-			$lenderInterest = ($lenderPrincipal * $lendersArray[$i]['intr'] * $period)/1200;
+			if($weekly_inst==1){	/* Added by Mohit 10-01-14 */
+				$lenderInterest = ($lenderPrincipal * $lendersArray[$i]['intr'] * $period)/5200;
+			}else{
+				$lenderInterest = ($lenderPrincipal * $lendersArray[$i]['intr'] * $period)/1200;
+			}
 			$amountToLender = $lenderPrincipal +  $lenderInterest;
 			$dollarAmountToLender = convertToDollar($amountToLender, $CurrencyRate);
 			if($rtn==0)
@@ -796,7 +805,11 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 						$availableAmt = $this->amountToUseForBid($lendersArray[$i]['lenderid']);
 						$availAmt = number_format(truncate_num(round($availableAmt, 4), 2) , 2, '.', ',');
 						$lenderPrincipal = ($lendersArray[$i]['amount']/$total)*$pInCurrInstallment;
-						$lenderInterest = ($lenderPrincipal * $lendersArray[$i]['intr'] * $period)/1200;
+						if($weekly_inst==1){
+							$lenderInterest = ($lenderPrincipal * $lendersArray[$i]['intr'] * $period)/5200;
+						}else{
+							$lenderInterest = ($lenderPrincipal * $lendersArray[$i]['intr'] * $period)/1200;
+						}
 						$amountToLender = $lenderPrincipal +  $lenderInterest;
 						$dollarAmountToLender = convertToDollar($amountToLender, $CurrencyRate);
 						$Subject=$lang['mailtext']['RecivedPayment-subject'];
@@ -2738,7 +2751,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			}/* It is in native currency */
 			
 			/*-----------------------------*/
-			$maxBorrowerAmt =$this->getCurrentCreditLimit($this->userid,true); // added by Mohit on date 2-12-2013 
+			$maxBorrowerAmt =ceil($this->getCurrentCreditLimit($this->userid,true)); // added by Mohit on date 2-12-2013 
 
 			$minBorrowerAmt= ceil(convertToNative($database->getAdminSetting('minBorrowerAmt'), $rate));
 			if($minBorrowerAmt>$amount){
@@ -3396,6 +3409,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		$period=$brw2['period'];
 		$gperiod=$brw2['grace'];
 		$fee=$brw2['WebFee'];
+		$weekly_inst=$brw2['weekly_inst'];
 		if(empty($installment_amount) && !empty($installment_date)) {
 			$installment_amount=$database->getInstallmentByLoanid($loanid);
 			$reschdDates = $this->getRescheduleDates($loanid);
@@ -3452,8 +3466,16 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$totalrate = $rate + $fee;
 			$periodFromToday= $this->getPeriodFromTodayForReschedule($userid, $loanid, $amount, $totalrate, $installment_amount); 
 			if(!empty($installment_amount)) {
-				if(($allDates['max_repay_period'] < $periodFromToday) || $periodFromToday < 0){
-					//$maxRP=$period - $allDates['remainPeriod'] + $allDates['max_repay_period'];
+			
+			if($weekly_inst==1){
+			$maxperiodValue=$allDates['max_repay_period']*(52/12);
+			}else{
+			$maxperiodValue=$allDates['max_repay_period'];
+			}
+			
+			
+			if(($maxperiodValue < $periodFromToday) || $periodFromToday < 0){
+					$maxRP=$period - $allDates['remainPeriod'] + $allDates['max_repay_period'];
 					$possibleIns = $this->getMinInstallmentForReschedule($userid, $loanid, $amount, $totalrate);
 					$form->setError("installment_amount", $lang['error']['min_ins_amt']." ".$possibleIns);
 				}
@@ -3906,12 +3928,21 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		$remainAmt=$total['amttotal']-$total['paidtotal'];
 		$forgiveAmount=$database->getForgiveAmount($userid,$loanid);
 		$ratio=$database->getPrincipalRatio($loanid);
+		$lonedata=$database->getLoanDetails($loanid);
+		$weekly_inst=$lonedata['weekly_inst'];
+		
 		if($forgiveAmount)
 			$amountAfterForgive= $amount - ($forgiveAmount * $ratio);
 		else
 			$amountAfterForgive= $amount;
-		$PF2D =  ceil(($allDates['maxDuedate'] - $allDates['nextDuedate']) / (60*60*24*30));
-		$possibleIns = ceil(((1200 * $remainAmt) - ($amountAfterForgive  * ($totalrate) * $allDates['remainPeriod']) + ($amountAfterForgive  * ($totalrate) * $PF2D)) / (1200 * $PF2D));
+			
+		if($weekly_inst==1){
+			$PF2D =  ceil(($allDates['maxDuedate'] - $allDates['nextDuedate']) / (60*60*24*7));
+			$possibleIns = ceil(((5200 * $remainAmt) - ($amountAfterForgive  * ($totalrate) * $allDates['remainPeriod']) + ($amountAfterForgive  * ($totalrate) * $PF2D)) / (5200 * $PF2D));
+		}else{
+			$PF2D =  ceil(($allDates['maxDuedate'] - $allDates['nextDuedate']) / (60*60*24*30));
+			$possibleIns = ceil(((1200 * $remainAmt) - ($amountAfterForgive  * ($totalrate) * $allDates['remainPeriod']) + ($amountAfterForgive  * ($totalrate) * $PF2D)) / (1200 * $PF2D));
+		}
 		return $possibleIns;
 	}
 	function getPeriodFromTodayForReschedule($userid, $loanid, $amount, $totalrate, $installment_amount){
@@ -3923,12 +3954,18 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		$remainAmt=$total['amttotal']-$total['paidtotal'];
 		$forgiveAmount=$database->getForgiveAmount($userid,$loanid);
 		$ratio=$database->getPrincipalRatio($loanid);
+		$lonedata=$database->getLoanDetails($loanid);
+		$weekly_inst=$lonedata['weekly_inst'];
 		if($forgiveAmount)
 			$amountAfterForgive= $amount - ($forgiveAmount * $ratio);
 		else
 			$amountAfterForgive= $amount;
-
-		$periodFromToday=floor(((1200*$remainAmt)- ($amountAfterForgive  * ($totalrate) * $allDates['remainPeriod'])) / ((1200*$installment_amount)-($amountAfterForgive  * ($totalrate))));
+			
+		if($weekly_inst==1){		
+			$periodFromToday=floor(((5200*$remainAmt)- ($amountAfterForgive  * ($totalrate) * $allDates['remainPeriod'])) / ((5200*$installment_amount)-($amountAfterForgive  * ($totalrate))));
+		}else{
+			$periodFromToday=floor(((1200*$remainAmt)- ($amountAfterForgive  * ($totalrate) * $allDates['remainPeriod'])) / ((1200*$installment_amount)-($amountAfterForgive  * ($totalrate))));
+		}
 		return $periodFromToday;
 	}
 
@@ -8190,7 +8227,7 @@ function forgiveReminder(){
 		}else{
 //case where borrower has repaid one or more loans and has not yet posted an application for a new one - we calculate credit limit based on most recently repaid loan amount
 							
-			$loanid= $database->getLastRepaidloanId($borrowerid);
+			$loanid= $database->getLastRepaidloanId($userid);
 			$ontime = $database->isRepaidOntime($userid, $loanid);			
 
 		}

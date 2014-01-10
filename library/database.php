@@ -8113,11 +8113,19 @@ class genericClass
         global $db;
         $q="SELECT SUM(givenamount) amount, SUM(givenamount * bidint)/SUM(givenamount) intr FROM ! WHERE loanid =? and active = ? and lenderid=?";
         $res=$db->getRow($q, array('loanbids', $loanid, 1, $userid));
-        $q="SELECT period FROM ! WHERE loanid =?";
-        $period=$db->getOne($q, array('loanapplic', $loanid));
+        //$q="SELECT period,weekly_inst FROM ! WHERE loanid =?";
+		//$period=$db->getOne($q, array('loanapplic', $loanid));        
+		
+		$lonedata=$this->getLoanDetails($loanid);
+		$period=$lonedata['period'];
+		$weeklyInst=$lonedata['weekly_inst'];		
         $extraPeriod=$this->getLoanExtraPeriod($userid, $loanid);
         $newperiod=$extraPeriod+$period;
-        $intr=($res['amount'] * $res['intr'] * $newperiod)/1200;
+		if($weeklyInst==1){
+			$intr=($res['amount'] * $res['intr'] * $newperiod)/5200;
+		}else{
+			$intr=($res['amount'] * $res['intr'] * $newperiod)/1200;
+		}
         $total=$res['amount'] + $intr;
         $exRate=$this->getExRateByLoanId($loanid);
         $totalNative=$total * $exRate;

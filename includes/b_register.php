@@ -732,10 +732,8 @@ end endorser section -->
 							<input type="hidden" name="uploadfileanchor" id="uploadfileanchor" />
 							<input type="hidden" name="before_fb_data" id="before_fb_data" />
 							<input type="hidden" name="fb_data" id="fb_data" value='<?php echo urlencode(addslashes(serialize($fbData))); ?>'/>
-							<input type="submit" name='submitform' class="btn" align="center" value="<?php echo $lang['register']['RegisterComplete'];?>" onclick="needToConfirm = false;"  />
-							
-							<br/><br/><br/><br/>
-							<div align="left"><input type="submit" name='submitform'  id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" /></div>
+							<input type="submit" name='submitform' class="btn" align="center" value="<?php echo $lang['register']['RegisterComplete'];?>" onclick="needToConfirm = false;"  />							
+							<div align="left" style="margin-top: -32px;"><input type="submit" class="btn" name='submitform' class="btn" id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" /></div>
 							
 						</td>
 					</tr>

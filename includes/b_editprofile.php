@@ -1288,7 +1288,7 @@ end endorsement section -->
 
 					<tr>
 						<td align="center" style="vertical-align:text-top">
-							<div align="left" style="border: 1px solid black; padding: 0px 10px 10px; overflow: auto; line-height: 1.5em; width: 90%; height: 130px; background-color: rgb(255, 255, 255);">
+							<div align="left" style="border: 1px solid black; padding: 0px 10px 10px; overflow: auto; line-height: 1.5em; width: 144%; height: 130px; background-color: rgb(255, 255, 255);">
 							<?php
 								include_once("./editables/legalagreement.php");
 								include_once("./editables/register.php");
@@ -1319,13 +1319,11 @@ end endorsement section -->
 						<input type="hidden" name="uploadfileanchor" id="uploadfileanchor" />
 						<input type="hidden" name="user_guess" value="<?php echo generateToken('editborrower'); ?>"/>
 						<input type="hidden" name="id" value="<?php echo $id ;?>"/>
+						<br/>
 						<?php if($borrowerActive!=1) {?>	
 						
 						<input type="submit"   name='submitform' align='center' onclick="needToConfirm = false;" value="<?php echo $lang['register']['RegisterComplete'];?>"  class='btn'/>
-					
-						<br/><br/><br/><br/>
-
-						<div align="left"><input  type="submit" name='submitform' id='borrowersubmitform' onclick="needToConfirm = false;" value="<?php echo $lang['register']['Registerlater'];?>"  class='btn'/></div>
+						<div align="left" style="margin-top: -32px;"><input  type="submit" name='submitform' id='borrowersubmitform' onclick="needToConfirm = false;" value="<?php echo $lang['register']['Registerlater'];?>"  class='btn'/></div>
 					
 					<?php } else {?>
 						<input type="submit"   name='submitform' id='borrowersubmitform' onclick="needToConfirm = false;" value="<?php 
