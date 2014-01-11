@@ -26,6 +26,8 @@ $lang['register']['A_Yourself'] ='About Yourself (minimum 500 characters)<br/><b
 $lang['register']['capacha']='Please enter the security code from the image on the right:<font color="red"></font>'; 
 $lang['register']['ppassword'] ='Create Password<font color="red"></font>'; 
 $lang['register']['tel_mob_no'] ='Your Mobile Phone Number'; 
+$lang['register']['tel_safaricom,'] ='Please enter your Safaricom mobile phone number. <br/><br/><i>Important Note: This must be a Safaricom number registered under your own name. If you provide a number that is not yours, you will not receive a Zidisha loan.</i>'; 
+$lang['register']['tel_mtn'] ='Please enter your MTN mobile phone number. <br/><br/><i>Important Note: This must be an MTN number registered under your own name. If you provide a number that is not yours, you will not receive a Zidisha loan.</i>'; 
 $lang['register']['aincome'] ='Estimated Annual Income<font color="red"></font>'; 
 $lang['register']['bcurrency'] ='Currency<font color="red"></font>'; 
 $lang['register']['bdescription'] ='About Your Business or Income Source (minimum 500 characters)<br/><br/>

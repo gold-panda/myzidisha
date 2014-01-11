@@ -832,13 +832,19 @@ if($borrowerActive==1) {
 				<tr>
 					<td>
 																	<?php 
-//modified by Julia 1-11-2013
+						//display different phone number instructions for countries where we use mobile payments
 						if($form->value("bcountry")=='KE') {
-							echo "Please enter your Safaricom mobile phone number. This must be a Safaricom number registered under your own name.";
-						}else if($form->value("bcountry")=='GH') {
-						echo "Please enter your MTN mobile phone number. This must be an MTN number registered under your own name.";
+
+							echo $lang['register']['tel_safaricom'];
+
+						}else if($form->value("bcountry")=='GH' || $form->value("bcountry")=='ZM') {
+							
+							echo $lang['register']['tel_mtn'];
+						
 						}else {
-						echo $lang['register']['tel_mob_no'];
+							
+							echo $lang['register']['tel_mob_no'];
+						
 						}
 						?><a id="bmobileerr"></a>
 					</td>
