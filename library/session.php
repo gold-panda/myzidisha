@@ -1997,7 +1997,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 			return true;
 		}
 	}
-	function review_borrower($is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, $is_nat_id_uploaded, $is_rec_form_uploaded, $is_rec_form_offcr_name,$borrowerid,$is_photo_clear_other,$is_desc_clear_other,$is_addr_locatable_other,$is_number_provided_other,$is_nat_id_uploaded_other,$is_rec_form_uploaded_other,$is_rec_form_offcr_name_other,$is_pending_mediation,$is_pending_mediation_other) {
+	function review_borrower($borrowerid, $is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, $is_photo_clear_other,$is_desc_clear_other,$is_addr_locatable_other,$is_number_provided_other,$is_pending_mediation,$is_pending_mediation_other) {
 		global $database, $form;
 		if($is_photo_clear==-1) {
 			$is_photo_clear = $is_photo_clear_other;
@@ -2011,20 +2011,11 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		if( $is_number_provided==-1) {
 			 $is_number_provided = $is_number_provided_other;
 		}
-		if($is_nat_id_uploaded==-1) {
-			$is_nat_id_uploaded = $is_nat_id_uploaded_other;
-		}
-		if($is_rec_form_uploaded==-1) {
-			$is_rec_form_uploaded = $is_rec_form_uploaded_other;
-		}
-		if($is_rec_form_offcr_name==-1) {
-			$is_rec_form_offcr_name = $is_rec_form_offcr_name_other;
-		}
 		if($is_pending_mediation==-1) {
 			$is_pending_mediation = $is_pending_mediation_other;
 		}
 
-		$res= $database->review_borrower($is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, $is_nat_id_uploaded, $is_rec_form_uploaded, $is_rec_form_offcr_name, $borrowerid, $is_pending_mediation);
+		$res= $database->review_borrower($borrowerid, $is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, $is_pending_mediation);
 		if($res){
 			$_SESSION['review_complete']= true;
 			return 1;
