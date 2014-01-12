@@ -309,11 +309,11 @@ end commenting out language section & eligibility questions -->
 										<img style="float:none" class="user-account-img" src="<?php echo SITE_URL.'images/tmp/'.$isPhoto_select ?>" height="50" width="50" alt=""/>
 								<?php } ?>
 							</div>
-							
+							<!--
 								<div>
 								<input type="file" name="bphoto" id="bphoto"   value="<?php echo $form->value("bphoto"); ?>" onchange="uploadfile(this)"/>
 								</div>
-								
+							-->
 								<div class='fileType_hide'>
 								<input type="file" name="bphoto" id="bphoto"   value="<?php echo $form->value("bphoto"); ?>" onchange="uploadfile(this)"/>
 								</div>
