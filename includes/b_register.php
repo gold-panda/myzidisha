@@ -353,13 +353,20 @@ end commenting out language section & eligibility questions -->
 					 <tr><td>&nbsp;</td></tr>
 					 <tr>
 						<td><?php 
-//modified by Julia 1-11-2013
+
+						//display different phone number instructions for countries where we use mobile payments
 						if($form->value("bcountry")=='KE') {
-							echo "Please enter your Safaricom mobile phone number. This must be a Safaricom number registered under your own name.";
-						}else if($form->value("bcountry")=='GH') {
-						echo "Please enter your MTN mobile phone number. This must be an MTN number registered under your own name.";
+
+							echo $lang['register']['tel_safaricom'];
+
+						}else if($form->value("bcountry")=='GH' || $form->value("bcountry")=='ZM') {
+							
+							echo $lang['register']['tel_mtn'];
+						
 						}else {
-						echo $lang['register']['tel_mob_no'];
+							
+							echo $lang['register']['tel_mob_no'];
+						
 						}
 						?><a id="bmobileerr"></a></td>
 						<td><input type="text" id="bmobile" name="bmobile" maxlength="15" class="inputcmmn-1" value="<?php echo $form->value("bmobile"); ?>" /><br/><div id="mobileerror"><?php echo $form->error("bmobile"); ?></div></td>
@@ -732,10 +739,8 @@ end endorser section -->
 							<input type="hidden" name="uploadfileanchor" id="uploadfileanchor" />
 							<input type="hidden" name="before_fb_data" id="before_fb_data" />
 							<input type="hidden" name="fb_data" id="fb_data" value='<?php echo urlencode(addslashes(serialize($fbData))); ?>'/>
-							<input type="submit" name='submitform' class="btn" align="center" value="<?php echo $lang['register']['RegisterComplete'];?>" onclick="needToConfirm = false;"  />
-							
-							<br/><br/><br/><br/>
-							<div align="left"><input type="submit" name='submitform'  id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" /></div>
+							<input type="submit" name='submitform' class="btn" align="center" value="<?php echo $lang['register']['RegisterComplete'];?>" onclick="needToConfirm = false;"  />							
+							<div align="left" style="margin-top: -32px;"><input type="submit" class="btn" name='submitform' class="btn" id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" /></div>
 							
 						</td>
 					</tr>

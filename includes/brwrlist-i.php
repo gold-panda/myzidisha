@@ -2,25 +2,7 @@
 <script src="includes/scripts/jquery.custom.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="includes/scripts/brwrlist-i.js?q=<?php echo RANDOM_NUMBER ?>"></script>
 <script type="text/javascript" src="extlibs/tiny_mce/tiny_mce.js"></script>
-<!-- <script type="text/javascript">
-	// Default skin
-	tinyMCE.init({
-		// General options
-	mode : "exact",
-		elements : "emailmessage",
-		theme : "advanced",
-        skin : "o2k7",
-        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|forecolor,backcolor",
-        theme_advanced_buttons2 : "",
-        theme_advanced_buttons3 : "",
-		// Theme options
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
-		theme_advanced_resizing : true,
 
-	});
-</script> -->
 <script type="text/javascript">
 	$(function() {		
 		$(".tablesorter_borrowers").tablesorter({sortList:[[4,1]], widgets: ['zebra']});
@@ -144,9 +126,7 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 			<table class="zebra-striped tablesorter_borrowers">
 				<thead>
 					<tr>
-					<!-- // Anupam 9-Jan-2013 commented photo column  bug# 219 -->
-						<!-- <th><?php echo "Borrower"; ?></th> -->
-					<!--	<th><?php echo $lang['brwrlist-i']['Location']; ?></th>-->
+					
 						<th>Name</th>
 
 						<th>Location</th>
@@ -220,35 +200,22 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 						$modDateToSort = $rows['LastModified'];
 					?>
 						<tr>
-							<!-- // Anupam 9-Jan-2013 commented photo column  bug# 219 -->
-							<!-- <td><div align='center'><a href='<?php echo $prurl?>'><img src='library/getimage.php?id=<?php echo $userid;?>&width=100&height=100' border=0/></a></div></td> -->
-							<!--<td style='width:40%'><?php echo $about;?></td>-->
-														<td><?php echo $fname;?> &nbsp; <?php echo $lname;?></td>
+							
+							<td><?php echo $fname;?> &nbsp; <?php echo $lname;?></td>
 
-<td><?php echo "$country<br/>$city";?>
+							<td><?php echo "$country<br/>$city";?>
 
-<td><?php echo $email?><br/><br/><?php echo $telmob?></td> 
+							<td><?php echo $email?><br/><br/><?php echo $telmob?></td> 
 
-<td><?php echo $rec_form_ofcr_no.'<br/><br/> '.$rec_form_offcr_name;?></td> 
+							<td><?php echo $rec_form_ofcr_no.'<br/><br/> '.$rec_form_offcr_name;?></td> 
 
 							<td><span style="display:none"><?php echo $completed_on_toSort?></span>
 							<?php echo $completed_on;?></td>
+							
 							<td><span style="display:none"><?php echo $modDateToSort?></span>
 							<?php echo $modDate;?></td>
-							<td><?php echo $status;?><br/><br/><a href='index.php?p=7&id=<?php echo $userid;?>'><?php echo $lang['brwrlist-i']['link_Activate'];?></a><br/><br/><br/>
-				<?php			if($session->userlevel==LENDER_LEVEL || $session->userlevel==ADMIN_LEVEL)
-								{
-									$delete_btn1="<form name='del".$userid."' id='".$userid."' method='post' action='process.php'>".
-									"<input name='deleteBorrower' type='hidden' />".
-									"<input type='hidden' name='user_guess' value='".generateToken('deleteBorrower')."'/>".
-									"<input name='borrowerid' value='$userid' type='hidden' />".
-									"<input name='inactiveBorrower' type='hidden' />".
-									"<a href='javascript:void(0)' style='color:red' onclick='javascript:mySubmit(2,del$userid);'>".$lang['admin']['delete_button']."</a>".
-									"</form>";
-						?>
-								
-									<?php echo $delete_btn1 ?>
-						<?php	}	?>
+							
+							<td><?php echo $status;?><br/><br/><a href='index.php?p=7&id=<?php echo $userid;?>'><?php echo $lang['brwrlist-i']['link_Activate'];?></a><br/><br/><br/>	
 							</td>
 						</tr>
 			<?php	}	?>
@@ -354,7 +321,7 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 					$m=1;
 					$status = 'activated';
 				}
-				// 18-Jan-2013 Anupam check if borrower have inactive
+				
 				if($assignedStatus==1) {
 					$status = 'Active';
 				}elseif($assignedStatus==-2 && $assignedTo!=0){ 
@@ -414,48 +381,7 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 								<td><strong><?php echo $lang['brwrlist-i']['application_status'];?>:</strong></td>
 								<td><?php echo $status;?></td>
 							</tr>
-
-							<!-- 
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['nationId'];?></strong></td>
-								<td><?php echo $nationId;?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['annual_income'];?></strong></td>
-								<td><?php echo $UserCurrency." ".$income;?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['community_name_no'];?></strong></td>
-								<td><?php echo nl2br($community_name_no);?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['officialName'];?></strong></td>
-								<td><?php echo $refName;?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['officialNumber'];?></strong></td>
-								<td><?php echo $refNumber;?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['verifctnComment'];?></strong></td>
-								<td><?php echo nl2br($verfComment);?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['lending_inst_name'];?></strong></td>
-								<td><?php echo $lending_inst_name;?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['lending_inst_add'];?></strong></td>
-								<td><?php echo $lending_inst_add;?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['lending_inst_phone'];?></strong></td>
-								<td><?php echo $lending_inst_phone;?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['brwrlist-i']['lending_inst_officer'];?></strong></td>
-								<td><?php echo $lending_inst_officer;?></td>
-							</tr> -->
+							
 							<tr height="10px"></tr>
 							<tr>
 								<td colspan=2><strong><?php echo $lang['brwrlist-i']['onbehalf']?>:</strong></td>
@@ -480,13 +406,12 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 						</tbody>
 					</table>
 					<div class="row" style="clear:both">
-					<!-- Step 1 Review for Completeness section starts--->
+					<!-- Step 1 Review for Completeness section starts -->
 <?php 
 	$is_photo_clear= '';
 	$is_desc_clear= '';
 	$is_number_provided= '';
 	$is_nat_id_uploaded= '';
-	$is_rec_form_uploaded= '';
 	$is_pending_mediation= '';
 	$is_rec_form_offcr_name= '';
 	$is_addr_locatable= '';
@@ -495,7 +420,6 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 	$is_desc_clear_other= '';
 	$is_number_provided_other= '';
 	$is_nat_id_uploaded_other= '';
-	$is_rec_form_uploaded_other= '';
 	$is_pending_mediation_other= '';
 	$is_rec_form_offcr_name_other= '';
 	$breviewDetail= $database->getBorrowerReviewDetail($userid); 
@@ -504,10 +428,7 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 		$is_desc_clear= $breviewDetail['is_desc_clear'];
 		$is_addr_locatable= $breviewDetail['is_addr_locatable'];
 		$is_number_provided= $breviewDetail['is_number_provided'];
-		$is_nat_id_uploaded= $breviewDetail['is_nat_id_uploaded'];
-		$is_rec_form_uploaded= $breviewDetail['is_rec_form_uploaded'];
 		$is_pending_mediation= $breviewDetail['is_pending_mediation'];
-		$is_rec_form_offcr_name= $breviewDetail['is_rec_form_offcr_name'];
 		if($is_photo_clear!='1' && $is_photo_clear!='0' && !empty($is_photo_clear)){
 			$is_photo_clear_other= $is_photo_clear;
 			$is_photo_clear= '-1';
@@ -524,21 +445,9 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 			$is_addr_locatable_other= stripslashes($is_addr_locatable);
 			$is_addr_locatable= '-1';
 		}
-		if($is_nat_id_uploaded!='1' && $is_nat_id_uploaded!='0' && !empty($is_nat_id_uploaded)){
-			$is_nat_id_uploaded_other= stripslashes($is_nat_id_uploaded);
-			$is_nat_id_uploaded= '-1';
-		}
-		if($is_rec_form_uploaded!='1' && $is_rec_form_uploaded!='0' && !empty($is_rec_form_uploaded)){
-			$is_rec_form_uploaded_other= stripslashes($is_rec_form_uploaded);
-			$is_rec_form_uploaded= '-1';
-		}
 		if($is_pending_mediation!='1' && $is_pending_mediation!='0' && !empty($is_pending_mediation)){
 			$is_pending_mediation_other= stripslashes($is_pending_mediation);
 			$is_pending_mediation= '-1';
-		}
-		if($is_rec_form_offcr_name!='1' && $is_rec_form_offcr_name!='0' && !empty($is_rec_form_offcr_name)){
-			$is_rec_form_offcr_name_other= stripslashes($is_rec_form_offcr_name);
-			$is_rec_form_offcr_name= '-1';
 		}
 	}
 ?>
@@ -553,7 +462,7 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 											1.
 										</td>
 
-<td><?php echo $lang['brwrlist-i']['is_photo_clear']; ?></td>
+										<td><?php echo $lang['brwrlist-i']['is_photo_clear']; ?></td>
 
 
 																			</tr>
@@ -589,10 +498,10 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 									</tr>
 									 <tr>
 										<td></td>
-										<!-- <td><strong><?php echo $lang['brwrlist-i']['PostAddress'];?></strong></td> -->
+										
 										<td><?php
 
-echo "<p><i>How did you hear about Zidisha?  </i>".$reffered_by; 
+											echo "<p><i>How did you hear about Zidisha?  </i>".$reffered_by; 
 											echo "<p><i>About Me:  </i>".$about;
 											echo"</p>";
 											echo "<p><i>About My Business:  </i>".$bizdesc;
@@ -633,7 +542,6 @@ echo "<p><i>How did you hear about Zidisha?  </i>".$reffered_by;
 									</tr>
 									 <tr>
 										<td></td>
-										<!-- <td><strong><?php echo $lang['brwrlist-i']['PostAddress'];?></strong></td> -->
 										<td><?php 
 											echo "<br/>";
 											echo $address;
@@ -755,72 +663,10 @@ echo "<p><i>How did you hear about Zidisha?  </i>".$reffered_by;
 													</td>
 												</tr>
 											</table>
-									<tr height='15px'></tr>
 
+									<tr height='15px'></tr>
 									<tr>
 										<td width="30px" style="text-align:right; vertical-align: top;<?php echo $padding_top?>">5.</td>
-
-<td>
-
-<?php if(!empty($details['addressProof'])) {?>
-
-		Open the Recommendation Form submitted by <?php  echo trim($fname." ".$lname)?>: 	<strong><a href="<?php echo SITE_URL.'download.php?u='.$userid.'&doc=addressProof'; ?>" onclick="needToConfirm = false;">Open Recommendation Form</a></strong><br/><br/>
-
-		Confirm that the Recommendation Form is <strong>signed and stamped by the leader</strong> of a school, a religious institution or social organization. Examples of leaders who meet this criteria are the headmaster of a primary or secondary school, president of a university, pastor, priest, imam, director of a registered NGO, president of a registered cooperative or association, or the director of a large company. Recommendation forms may not be completed by government officials, or by private individuals who are not the leaders of recognized community institutions.<br/><br/>
-
-		<?php echo $lang['brwrlist-i']['is_rec_form_uploaded']; ?>
-
-<?php } else { ?>
-
-		Next, use the link below to check the Facebook account information submitted.  Make sure the Facebook account link is still valid and the information appears consistent with that in the application.  Note that using a nickname in Facebook is not by itself grounds for ineligibility, but the gender and general biographical information should match.<br/><br/>
-
-<table class='detail'>
-												<?php if(!empty($fb_data)){
-													if(isset($fb_data['user_friends']['data'])){
-														$no_of_friends= count($fb_data['user_friends']['data']);
-													}else{
-														$no_of_friends= count($fb_data['user_friends']);
-													}
-												} ?>
-												<tr>
-												<td><?php echo $lang['brwrlist-i']['bhlf_name'];?>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $fb_data['user_profile']['name'];?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<?php echo $lang['brwrlist-i']['fb_friends'];?>&nbsp;&nbsp;
-												<?php echo $no_of_friends; ?><br/><br/>
-												<a href="<?php echo 'index.php?p=91&userid='.$userid; ?>"><?php echo $lang['brwrlist-i']['view_fb_data']?></a></td>
-
-	</tr>
-</table>							
-												Is the Facebook information valid and consistent with the application?			
-
-<?php } ?>
-
-								</td>
-										
-									</tr>
-									<tr>
-									<td></td>
-									<td colspan=2> <br/><br/>
-										<input type='radio' name='is_rec_form_uploaded' id='is_rec_form_uploaded_yes' value='1' <?php 	if($is_rec_form_uploaded== '1') echo "checked";?> onclick="showtext(this.value, 'is_rec_form_uploaded_other_text')">Yes&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-										<input type='radio' name='is_rec_form_uploaded' id='is_rec_form_uploaded_no' value='0' <?php 	if($is_rec_form_uploaded== '0') echo "checked";?> onclick="showtext(this.value, 'is_rec_form_uploaded_other_text')">No
-									</td>
-								</tr>
-								<tr>
-										<td></td>
-										<td>
-											<table class='detail'>
-												<tr>
-													<td ><input type='radio' name='is_rec_form_uploaded' id='is_rec_form_uploaded_other' value='-1' <?php 	if($is_rec_form_uploaded== '-1') echo "checked";?> onclick="showtext(this.value, 'is_rec_form_uploaded_other_text')"><span >Other (Please explain):</span></td>
-													<td>
-														<textarea name="is_rec_form_uploaded_other" id="is_rec_form_uploaded_other_text" rows='10' cols='40' class="textareacmmn" style="<?php if($is_rec_form_uploaded== '-1') echo 'display'; else echo 'display:none'; ?>"><?php echo $is_rec_form_uploaded_other; ?></textarea>
-													</td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-								
-									<tr height='15px'></tr>
-									<tr>
-										<td width="30px" style="text-align:right; vertical-align: top;<?php echo $padding_top?>">6.</td>
 										<td>
 Next, review the following list of all applicants and members whose recommending Community Leader has the same phone number as this applicant's Community Leader.  If any members recommended by this Community Leader are <strong>in arrears</strong>, use the email form below to inform the applicant that all members recommended by the leader must be current with loan repayments before we can accept the recommendation.<br/><br/>
 
@@ -947,6 +793,8 @@ if (!empty($rec_form_ofcr_no)) {
 									</tr>
 									<tr height='15px'></tr>
 
+<!-- commented out national ID check 11 Jan 2014
+
 									<?php if(!empty($details['frontNationalId'])) { ?>
 									<tr>
 										<td width="30px" style="text-align:right; vertical-align: top;<?php echo $padding_top?>">7.</td>
@@ -999,46 +847,9 @@ Has the applicant uploaded a legible copy of a government-issued identity card t
 									
 									<tr height='15px'></tr>
 									</table>
-<!-- commented out loan contract check 5 Dec 2013
 
-										<td><?php echo $lang['brwrlist-i']['is_rec_form_offcr_name']; ?></td>
-										
-									</tr>
-							<?php if(!empty($details['legalDeclaration'])) {?>
-							<tr>
-								<td></td>
-								<td colspan=2><strong><a href="<?php echo SITE_URL.'download.php?u='.$userid.'&doc=legalDeclaration'; ?>" onclick="needToConfirm = false;"><?php echo $lang['brwrlist-i']['dwn_legal_dec'];?></a></strong></td>
-							</tr>
-							<?php } if(!empty($details['legal_declaration2'])) {?>
-							<tr>
-								<td></td>
-								<td colspan=2>
-									<strong><a href="<?php echo SITE_URL.'download.php?u='.$userid.'&doc=legal_declaration2'; ?>" onclick="needToConfirm = false;"><?php echo $lang['brwrlist-i']['dwn_legal2_dec'];?></a></strong><br/><br/>
-								</td>
-							</tr>
-								<?php }?>
-							<tr height="15px;"></tr>
-							<tr>
-								<td></td>
-								<td colspan='2'>
-									<input type='radio' name='is_rec_form_offcr_name' id='is_rec_form_offcr_name_yes' value='1' <?php 	if($is_rec_form_offcr_name== '1') echo "checked";?> onclick="showtext(this.value, 'is_rec_form_offcr_name_other_text')">Yes&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-								<input type='radio' name='is_rec_form_offcr_name' id='is_rec_form_offcr_name_no' value='0' <?php 	if($is_rec_form_offcr_name== '0') echo "checked";?> onclick="showtext(this.value, 'is_rec_form_offcr_name_other_text')">No
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									<table class='detail'>
-										<tr>
-											<td ><input type='radio' name='is_rec_form_offcr_name' id='is_rec_form_offcr_name_other' value='-1' <?php 	if($is_rec_form_offcr_name== '-1') echo "checked";?> onclick="showtext(this.value, 'is_rec_form_offcr_name_other_text')"><span >Other (Please explain):</span></td>
-											<td>
-												<textarea name="is_rec_form_offcr_name_other" id="is_rec_form_offcr_name_other_text" rows='10' cols='40' class="textareacmmn" style="<?php if($is_rec_form_offcr_name== '-1') echo 'display'; else echo 'display:none'; ?>"><?php echo $is_rec_form_offcr_name_other; ?></textarea>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-end loan contract check commenting out -->
+end commented out national ID check 11 Jan 2014 -->
+
 
 
 								<tr height='20px'></tr>
@@ -1161,19 +972,10 @@ end loan contract check commenting out -->
 										if($breview['is_number_provided']==0){
 											$emailApplicantBody.= $lang['mailtext']['if_tel_num_missing-msg']."<br/>";
 										}
-										if($breview['is_nat_id_uploaded']==0){
-											$emailApplicantBody.= $lang['mailtext']['if_nat_id_missing-msg']."<br/>";
-										}
-
-										if($breview['is_rec_form_uploaded']==0){
-											$emailApplicantBody.= $lang['mailtext']['if_rec_form_missing-msg']."<br/>";
-										}
 										if($breview['is_pending_mediation']==0){
 											$emailApplicantBody.= $lang['mailtext']['if_pending_mediation-msg']."<br/>";
 										}
-/*										if($breview['is_rec_form_offcr_name']==0){
-											$emailApplicantBody.= $lang['mailtext']['if_contr_form_missing-msg']."<br/>";
-										}
+/*										
 */
 									$bname = trim($fname." ".$lname);
 									$formSender = $form->value("sendername");
@@ -1267,7 +1069,7 @@ end loan contract check commenting out -->
 											<tr><td>Enter Your Name Here:</td></tr>
 											<tr>
 												<td><a id="sendername"></a>
-													<input type="text" name="sendername" style="width:350px;" value="<?php echo $breviewSendername; ?>"/><br/>
+													<input type="text" name="sendername" style="width:350px;" value="<?php echo $session->fullname; ?>"/><br/>
 													<?php echo $form->error("sendername"); ?>
 												</td>
 											</tr>
@@ -1276,330 +1078,19 @@ end loan contract check commenting out -->
 									</table>
 								</form>
 				<?php unset($_SESSION['review_not_complete']); } ?>
-							<!-- Step 1 Review for Completeness section ends--->
+							<!-- Step 1 Review for Completeness section ends -->
 
-							<!-- Step 2 verification section starts--->
+							<!-- Step 2 verification section starts -->
 							<?php 
 
-//if($details['Assigned_to']==5023 || $session->userid== $details['Assigned_to']){
+
 								include('bverification.php');
 
-//							}
+							}
 							?>
-							<!-- Step 2 verification section ends--->		
-	
+							<!-- Step 2 verification section ends -->		
 
-
-							
-<!--						<?php echo "<h3 class='subhead'></h3>";}	?>
-
-						<h3 class="subhead"><?php echo $lang['brwrlist-i']['About']." ".$name; ?></h3>
-						<p style="text-align:justify;"><?php echo $about ?></p>
-
-						<h3 class="subhead"><?php echo $lang['brwrlist-i']['loanhist']; ?></h3>
-						<p style="text-align:justify;"><?php echo $loanHist ?></p>
-
-						<h3 class="subhead"><?php echo $lang['brwrlist-i']['BusinessDesc']; ?></h3>
-						<p style="text-align:justify;"><?php echo $bizdesc ?></p>
-
--->
-
-
-		<?php		/*	if($session->userlevel==ADMIN_LEVEL)
-								{
-									
-						?>		
-							</div>
-
-	<?php 			$results=$database->getPartnerCommentby($uid,$partnetId,0);
-					if(!empty($results))
-					{	?>
-						<div class="row">
-							<h3 class="subhead"><?php echo $lang['brwrlist-i']['FeedbackDis']; ?></h3>
-							<table class="detail">
-								<thead>
-									<tr>
-										<th width="65px"><?php echo $lang['brwrlist-i']['Date_Loan'];?></th>
-										<th width="65px"><?php echo $lang['brwrlist-i']['Amount'];?></th>
-										<th width="75px"><?php echo $lang['brwrlist-i']['lpaid'];?></th>
-										<th width="60px"><?php echo $lang['brwrlist-i']['ontime'];?></th>
-										<th width="75px"><?php echo $lang['brwrlist-i']['feedback'];?></th>
-										<th><?php echo $lang['brwrlist-i']['comment'];?></th>
-										<th width="40px"><?php echo $lang['brwrlist-i']['Edit'];?></th>
-									</tr>
-								</thead>
-								<tbody>
-							<?php 	foreach($results as $rew1)
-									{
-										// id  partid  userid  date  amount  lpaid  ontime  feedback  comment
-										$commentid=$rew1['id1'];
-										$commentdate=date('M d, Y', $rew1['date']);
-										$commentamount=$rew1['amount'];
-										if($rew1['lpaid']==0)
-											$commentlp="No";
-										else
-											$commentlp="Yes";
-										//$commentlp=$rew1['lpaid'];
-										//$commentlp='<img src="'.SITE_URL.'images/layout/icons/'.$rew1['lpaid'].'.gif">';
-										if($rew1['ontime']==0)
-											$commentont="No";
-										else
-											$commentont="Yes";
-										//$commentont=$rew1['ontime'];
-										//$commentont='<img src="images/layout/icons/'.$rew1['ontime'].'.gif">';
-										$commentf='<img src="images/layout/icons/'.$rew1['feedback'].'.gif">';
-										$comment1=$rew1['comment'];
-										//$f=strlen($comment1);///
-										//if($f>50)
-										//$comment1= substr($rew1['comment'], 0,50)."...&nbsp;<a href='index.php?p=7&id=$uid&cid=$commentid'>more</a>";
-						?>
-										<tr>
-											<td><?php echo $commentdate;?></td>
-											<td><?php echo $commentamount;?></td>
-											<td><?php echo $commentlp;?></td>
-											<td><?php echo $commentont;?></td>
-											<td><?php echo $commentf;?></td>
-											<td><?php echo $comment1;?></td>
-											<td><a href='index.php?p=7&id=<?php echo $userid.'&cid='.$commentid.'#e2';?>'><img src="images/layout/icons/edit.png" border=0/></a></td>
-										</tr>
-						<?php 		}	?>
-								</tbody>
-							</table>
-						</div>
-			<?php 	}
-					if($details['Assigned_status']==2)
-					{	?>
-						<div class="row">
-							<h3 class="subhead"><?php echo $lang['brwrlist-i']['dec_details']; ?></h3>
-							<table class="detail">
-								<thead>
-									<tr>
-										<th><?php echo $lang['brwrlist-i']['date'];?></th>
-										<th><?php echo $lang['brwrlist-i']['dec_by'];?></th>
-										<th><?php echo $lang['brwrlist-i']['dec_reason'];?></th>
-										<th><?php echo $lang['brwrlist-i']['Edit'];?></th>
-									</tr>
-								</thead>
-								<tbody>
-						<?php		$date=date('M d, Y', $details['Assigned_date']);
-									$partner=$database->getNameById($details['Assigned_to']);
-									$commentdec=$details['declined_reason'];
-									if($did!=0)
-									{
-										$editcommentdec=$commentdec;
-									}
-									else
-										$editcommentdec="";
-						?>
-									<tr>
-										<td><?php echo $date;?></td>
-										<td><?php echo $partner;?></td>
-										<td><?php echo $commentdec;?></td>
-										<td><a href='index.php?p=7&id=<?php echo $userid.'&did=1#e2';?>'><img src="images/layout/icons/edit.png" border=0/></a></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-			<?php 	}
-					if(1)
-					{	?>
-						<!-- <table class='detail'>
-							<tbody>
-
-							
-								<tr>
-									<td>
-<br /><br /><b><?php echo $lang['brwrlist-i']['is_this_applicant'] ?></b></td>
-									<td>
-										<div id="eligible-tab">
-											<input name="email_print_radio-1" id="email_print_radio-1" value="yes" <?php if($form->value("activateBorrower")) echo 'checked="checked"'; ?> type="radio"><?php echo $lang['brwrlist-i']['yes'] ?>
-											<input name="email_print_radio-1" id="email_print_radio-1" value="no" <?php if($form->value("declinedBorrower")) echo 'checked="checked"'; ?> type="radio"><?php echo $lang['brwrlist-i']['no'] ?>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table> -->
-			<?php	}
-					$ontime=1;
-					$lpaid=1;
-					if($cid > 0)
-					{
-						//get detail of particular comment by comment id
-						$resultsrow=$database->getPartnerCommentby($uid,$partnetId,$cid,0);
-						if(!empty($resultsrow))
-						{
-							//id  partid  userid  date  amount  lpaid  ontime  feedback  comment
-							$ldate=date("m/d/Y", $resultsrow['date']);
-							$lamount=number_format($resultsrow['amount'], 0, ".","");
-							$lpaid=$resultsrow['lpaid'];
-							$ontime=$resultsrow['ontime'];
-							$feedback=$resultsrow['feedback'];
-							$comment=$resultsrow['comment'];
-							$lendername=$resultsrow['lender'];
-						}
-					} 
-					$lamount="";
-					$ldate="";
-					$lendername="";
-					$feedback="";
-					$comment="";
-					$refoficialname = '';
-					$refoficialno = '';
-					if(!isset($editcommentdec)) {
-						$editcommentdec="";
-					}
-					$temp = $form->value("date");
-					if(isset($temp) && $temp != '')
-						$ldate=$form->value("date");
-					$temp = $form->value("loanamount");
-					if(isset($temp) && $temp != '')
-						$lamount=$form->value("loanamount");
-					$temp = $form->value("loanpaid");
-					if(isset($temp) && $temp != '')
-						$lpaid=$form->value("loanpaid");
-					$temp = $form->value("ontimepaid");
-					if(isset($temp) && $temp != '')
-						$ontime=$form->value("ontimepaid");
-					$temp = $form->value("feedback");
-					if(isset($temp) && $temp != '')
-						$feedback=$form->value("feedback");
-					$temp = $form->value("comment");
-					if(isset($temp) && $temp != '')
-						$comment=$form->value("comment");
-					$temp = $form->value("lendername");
-					if(isset($temp) && $temp != '')
-						$lendername=$form->value("lendername");
-
-					$temp = $form->value("refOfficial_name");
-					if(isset($temp) && $temp != '')
-						$refoficialname = $form->value("refOfficial_name");
-					
-					$temp = $form->value("refOfficial_number");
-					if(isset($temp) && $temp != '')
-						$refoficialno=$form->value("refOfficial_number");
-
-			?>
-		<!-- 		<div id='approveDiv' style="<?php if(!$form->value("activateBorrower") && $cid == 0 ) echo 'display:none'; ?>">
-					<form method='post' action='updateprocess.php'>
-							<table class='detail'>
-								<tbody>
-									<tr>
-										<td ><strong><font style='font-size:20'><a name='e2'></a><?php echo $lang['brwrlist-i']['Amount_lone']. ' (' .$UserCurrency.')' ?></font></strong></td>
-										<td><input id="loanamount" name="loanamount" type="text" value="<?php echo $lamount;?>"/></td>
-										<td><?php echo $form->error('loanamount'); ?></td>
-									</tr>
-									<tr height="12px"></tr>
-									<tr>
-										<td><strong><font style='font-size:20'><?php echo $lang['brwrlist-i']['Date_desc']; ?></font></b></td>
-										<td><input id="datepicker"  name="date" type="text"value='<?php echo $ldate ;?>' autocomplete="off" />
-											<script type="text/javascript">
-											$(document).ready(function(){
-													$("#datepicker").datepicker();
-													$('#ui-datepicker-div').hide();
-											});
-
-$(function() {		
-	$(".tablesorter_pending_borrowers").tablesorter({sortList:[[2,1]], widgets: ['zebra']});
-	});	
-
-											//
-											</script>
-										</td>
-										<td><?php echo $form->error('date'); ?></td>
-									</tr>
-									<tr height="12px"></tr>
-									<tr>
-										<td><strong><font style='font-size:20'><?php echo $lang['brwrlist-i']['lender']; ?></font></strong></td>
-										<td><input id="lendername" name="lendername" type="text" value="<?php echo $lendername;?>"/></td>
-										<td><?php echo $form->error('lendername'); ?></td>
-									</tr>
-									<tr height="12px"></tr>
-									<tr>
-										<td><strong><font style='font-size:20'><?php echo $lang['brwrlist-i']['Lone_repaid']; ?></font></strong></td>
-										<td>
-											<input type="radio" id='loanpaid' name="loanpaid" value=1 <?php if($lpaid==1)echo "checked='yes'"?>/> <?php echo $lang['brwrlist-i']['yes'];?>
-											<input type="radio" id='loanpaid' name="loanpaid" value=0 <?php if($lpaid==0)echo "checked='yes'"?>/><?php echo $lang['brwrlist-i']['no'];?>
-										</td>
-										<td><div id="loanpaiderror"><?php echo $form->error('loanpaid'); ?></div></td>
-									</tr>
-									<tr height="12px"></tr>
-									<tr>
-										<td><strong><font style='font-size:20'><?php echo $lang['brwrlist-i']['Lone_repaid_time']; ?></font></strong></td>
-										<td>
-											<input type="radio" name="ontimepaid" value=1 <?php if($ontime==1)echo "checked='yes'"?>/><?php echo $lang['brwrlist-i']['yes'];?>
-											<input type="radio" name="ontimepaid" value=0 <?php if($ontime==0)echo "checked='yes'"?>/><?php echo $lang['brwrlist-i']['no'];?>
-										</td>
-										<td><div id="ontimepaiderror"><?php echo $form->error('ontimepaid'); ?></div></td>
-									</tr>
-									<tr height="12px"></tr>
-									<tr>
-										<td><br /><strong><?php echo $lang['brwrlist-i']['Transaction_Feedback_Rating']; ?></strong></td>
-										<td>
-											<SELECT id ='feedback' NAME="feedback">
-												<OPTION VALUE="2" <?php if($feedback==2)echo "selected='true'"?>><?php echo $lang['brwrlist-i']['first'];?>
-												<OPTION VALUE="3"  <?php if($feedback==3)echo "selected='true'"?>><?php echo $lang['brwrlist-i']['second'];?>
-												<OPTION VALUE="4"  <?php if($feedback==4)echo "selected='true'"?>><?php echo $lang['brwrlist-i']['third'];?>
-											</SELECT><br />
-										</td>
-										<td><div id="feedbackerror"><?php echo $form->error('feedback'); ?></div></td>
-									</tr>
-									<tr height="12px"></tr>
-									<tr>
-										<td><strong><?php echo $lang['brwrlist-i']['Partner_Comment']; ?></strong></td>
-										<td colspan=2><textarea  rows=10 cols=40 id='pcomment' name='comment'><?php echo $comment;?></textarea><br /><div id="pcommenterror"><?php echo $form->error('comment'); ?></div></td>
-									</tr>
-									<tr height="12px"></tr>
-									<tr>
-										<td ><strong><font style='font-size:20'><a name='e2'></a><?php echo $lang['brwrlist-i']['officialName'] ?></font></strong></td>
-										<td><input id="officialName" name="refOfficial_name" type="text" value="<?php echo $refoficialname;?>"/></td>
-										<td><?php echo $form->error('refOfficial_name'); ?></td>
-									</tr>
-									<tr height="12px"></tr>
-									<tr>
-										<td ><strong><font style='font-size:20'><a name='e2'></a><?php echo $lang['brwrlist-i']['officialNumber'] ?></font></strong></td>
-										<td><input id="officialnumber" name="refOfficial_number" type="text" value="<?php echo $refoficialno;?>"/></td>
-										<td><?php echo $form->error('refOfficial_number'); ?></td>
-									</tr>
-									<tr height="12px"></tr>
-									<tr>
-										<td style='text-align:center' colspan='2'>
-											<br/><br/>
-											<input type='hidden' name='activateBorrower' value="1"/>
-											<input type="hidden" name="user_guess" value="<?php echo generateToken('activateBorrower'); ?>"/>
-											<input type='hidden' name='userid' value='<?php echo $uid;?>' />
-											<input type='hidden' name='commentid' value='<?php echo $cid;?>' />
-											<?php 	if(($cid > 0)&&(!$m)) {?>
-												<input class='btn' type='submit' name='Edit' value='Save' />&nbsp&nbsp&nbsp
-											<?php 	}else{if($e==0) {?>
-												<input class='btn' type='submit' name='Activate' value='<?php echo $lang['brwrlist-i']['btnActivate']; ?>' />
-												&nbsp&nbsp&nbsp
-											<?php }if (!$m){?>
-												<input class='btn' type='submit' name='AddMore' value='<?php echo $lang['brwrlist-i']['btnaddmore']; ?>' />
-											<?php }} ?>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
-					</div>
-					<div id='declineDiv' style="<?php if(!$form->value("declinedBorrower") && $did == 0 ) echo 'display:none'; ?>">
-						<form method='post' action='updateprocess.php'>
-							<table class='detail'>
-								<tbody>
-									<tr>
-										<td width="30%"><b><?php echo $lang['brwrlist-i']['declined_reason']; ?></b></td>
-										<td colspan=2><textarea style="width:460px;height:100px" id='dreason' name='dreason'><?php echo $editcommentdec?></textarea><br /><div id="dreasonerror"><?php echo $form->error('dreason'); ?></div></td>
-									</tr>
-									<tr>
-										<td><input type='hidden' name='declinedBorrower' value="1"/><input type="hidden" name="user_guess" value="<?php echo generateToken('declinedBorrower'); ?>"/><input type='hidden' name='userid' value='<?php echo $uid;?>' /></td>
-										<td><input class='btn' type='submit' name='Submit' value='<?php if($did==0) echo "Submit"; else echo "Update"; ?>' /></td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
-					</div> -->
-				</div>
-	<?php	}*/
+		<?php		
 		}
 		else
 		{
@@ -1610,7 +1101,7 @@ $(function() {
 }
 ?>
 	<script type="text/javascript">
-	<!--
+	
 function tablesort(type)
 	{
 		<?php 
@@ -1629,11 +1120,11 @@ function tablesort(type)
 				window.location = 'index.php?p=7&type='+type+'&ord=ASC';
 		}
 	}
-	//-->
+	
 	</script>
 <script language="JavaScript">
-  var ids = new Array('is_photo_clear_yes','is_photo_clear_no', 'is_photo_clear_other', 'is_addr_locatable_yes','is_addr_locatable_no','is_addr_locatable_other','is_nat_id_uploaded_yes','is_nat_id_uploaded_no','is_nat_id_uploaded_other','is_rec_form_uploaded_yes','is_rec_form_uploaded_no','is_rec_form_uploaded_other','is_pending_mediation_yes','is_pending_mediation_no','is_pending_mediation_other', 'is_rec_form_offcr_name_yes','is_rec_form_offcr_name_no','is_rec_form_offcr_name_other','is_adrs_verfd_by_brwr_yes','is_adrs_verfd_by_brwr_no','is_adrs_verfd_by_brwr_other','is_adrs_verfd_by_brwr_other_text','is_witness_locatable_yes','is_witness_locatable_no','is_witness_locatable_other','is_witness_locatable_other_text','is_loan_addr_locatable_yes','is_loan_addr_locatable_no','is_loan_addr_locatable_other','is_loan_addr_locatable_other_text','is_neigh_addr_locatable_yes','is_neigh_addr_locatable_no','is_neigh_addr_locatable_other','is_neigh_addr_locatable_other_text','is_loan_history_yes','is_loan_history_no','is_loan_history_other','is_loan_history_other_text','lastloanamount','is_repaid_on_full_yes','is_repaid_on_full_no','is_repaid_on_full_other','is_repaid_on_full_other_text','is_repaid_on_time_yes','is_repaid_on_time_no','is_repaid_on_time_other','is_repaid_on_time_other_text','is_recomnd_addr_locatable_yes','is_recomnd_addr_locatable_no','is_recomnd_addr_locatable_other','is_recomnd_addr_locatable_other_text','is_recomnd_sign_yes','is_recomnd_sign_no','is_recomnd_sign_other','is_recomnd_sign_other_text');
-  var values = new Array('', '', '', '', '', '', '', '', '', '', '', '', '','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','', '','','','');
+  var ids = new Array('is_photo_clear_yes','is_photo_clear_no', 'is_photo_clear_other', 'is_addr_locatable_yes','is_addr_locatable_no','is_addr_locatable_other','is_pending_mediation_yes','is_pending_mediation_no','is_pending_mediation_other', 'is_rec_form_offcr_name_yes','is_rec_form_offcr_name_no','is_rec_form_offcr_name_other','is_adrs_verfd_by_brwr_yes','is_adrs_verfd_by_brwr_no','is_adrs_verfd_by_brwr_other','is_adrs_verfd_by_brwr_other_text','is_witness_locatable_yes','is_witness_locatable_no','is_witness_locatable_other','is_witness_locatable_other_text','is_loan_addr_locatable_yes','is_loan_addr_locatable_no','is_loan_addr_locatable_other','is_loan_addr_locatable_other_text','is_neigh_addr_locatable_yes','is_neigh_addr_locatable_no','is_neigh_addr_locatable_other','is_neigh_addr_locatable_other_text','is_loan_history_yes','is_loan_history_no','is_loan_history_other','is_loan_history_other_text','lastloanamount','is_repaid_on_full_yes','is_repaid_on_full_no','is_repaid_on_full_other','is_repaid_on_full_other_text','is_repaid_on_time_yes','is_repaid_on_time_no','is_repaid_on_time_other','is_repaid_on_time_other_text','is_recomnd_addr_locatable_yes','is_recomnd_addr_locatable_no','is_recomnd_addr_locatable_other','is_recomnd_addr_locatable_other_text','is_recomnd_sign_yes','is_recomnd_sign_no','is_recomnd_sign_other','is_recomnd_sign_other_text');
+  var values = new Array('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
   var needToConfirm = true;
 </script>
 <script type="text/JavaScript" src="includes/scripts/navigateaway.js"></script>
@@ -1641,7 +1132,7 @@ function tablesort(type)
   populateArrays();
 </script>
 <script type="text/javascript">
-<!--
+
 	function showtext(value, str) { 
 		if(value=='-1'){
 			document.getElementById(str).style.display ='';
@@ -1651,5 +1142,5 @@ function tablesort(type)
 		}
 	}
 
-//-->
+
 </script>

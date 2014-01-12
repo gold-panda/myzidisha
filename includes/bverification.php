@@ -175,7 +175,10 @@ if(($session->userlevel==ADMIN_LEVEL || $session->userlevel==PARTNER_LEVEL) && i
 					<?php $padding_top = '0px'; ?><a id="is_eligible_ByAdminerr"></a>
 
 <br/>
-1.  Review the below list of other Zidisha accounts that were created from the same IP address as this applicant.  If there are any red flags, such as too many accounts being created in a short space of time from the same IP address, or other accounts from this IP address being declined or in arrears, then please ensure a telephone interview is conducted before activating this applicant.<br/><br/>
+1.  Review the below list of other Zidisha accounts that were created from the same <strong>IP address</strong> as this applicant.<br/><br/>
+If there are any red flags, such as too many accounts being created in a short space of time from the same IP address, or other accounts from this IP address being declined or in arrears, then please ensure a telephone interview is conducted before activating this applicant.
+
+<br/><br/><br/>
 
 
 	<?php 
@@ -272,42 +275,16 @@ if(($session->userlevel==ADMIN_LEVEL || $session->userlevel==PARTNER_LEVEL) && i
 	
 	</tbody>
 	</table>
-<br/><br/>
-	
-<?php 
-
-$sift_profile = "https://siftscience.com/console/users/".$userid;
-
-echo "<a href='".$sift_profile."' target='_blank'>View Sift Science profile</a>"; ?>
-
-<br/><br/><br/>
-
-2.  If this applicant has received any endorsements, please review them below. If you have reason to doubt that the responses are genuine (for example, the wording is too similar, too many from the same IP address, or the responses are not consistent with the information in the rest of the application) then please ensure a telephone interview is conducted before activating this applicant.<br/><br/>
-If the endorsements are obviously not genuine (for example, more than three from the same IP address or the exact same wording across multiple endorsements) then please decline this applicant without an interview.
-<br/><br/>
-
-				<?php 
-				$endorse_details= $database->getEndorserRecived($userid); 
-				if (!empty($endorse_details)){
-					foreach($endorse_details as $endorse_detail){
-					if(!empty($endorse_detail['endorserid'])){
-						$e_profile = getUserProfileUrl($endorse_detail['endorserid']);
-						$e_number= $database->getPrevMobile($endorse_detail['endorserid']);
-						$e_ip_address = $database->getUserIP($endorse_detail['endorserid']);
- 
-						$endorsedbrwr= $database->getBrwrDetailFrmEndorser($endorse_detail['endorserid']);
-
-						echo "<a href='$e_profile'>".$endorse_detail['ename']."</a>, ".$e_number."<br/>".$endorsedbrwr['e_know_brwr']."<br/>".$endorsedbrwr['e_cnfdnt_brwr']."<br/>IP Address:".$e_ip_address."<br/><br/>";
-					}}
-				} else {
-						echo "<i>No endorsements received</i>";
-				} ?>
-
 
 <br/><br/><br/><br/>
 
-3.  Next, review the following list of all applicants and members whose recommending Community Leader has the same phone number as this applicant's Community Leader.  If any applicants recommended by this Community Leader were declined, then do not activate this applicant without a telephone interview.  <br/><br/>
+
+2.  Review the following list of all applicants and members whose recommending <strong>Community Leader</strong> has the same phone number as this applicant's Community Leader.  
+
+<br/><br/>If any applicants recommended by this Community Leader were declined, then do not activate this applicant without a telephone interview.  <br/><br/>
 If the Recommendation Form was signed by a Community Leader that has been involved in fraudulent applications in the past, then please decline this applicant without an interview.
+
+<br/><br/><br/>
 
 	<table class="zebra-striped tablesorter_pending_borrowers">
 	<thead>
@@ -371,7 +348,7 @@ if (!empty($rec_form_ofcr_no)) {
 		$loanid=$brwrandLoandetail['loanid'];
 		$repaysched= 'index.php?p=37&l='.$loanid.'&u='.$clborrowerid;
 		$dynamic_data= $database->getRepayDynamicData($clborrowerid);                                                                                                      
-                $note = stripslashes($dynamic_data['note']);
+        $note = stripslashes($dynamic_data['note']);
 
 
 	?>
@@ -399,22 +376,144 @@ if (!empty($rec_form_ofcr_no)) {
 	</tbody>
 	</table>
 
-<br/><br/><br />
+<br/><br/><br /><br/>
 
-4.  Finally, review the below profile text to ensure it appears to have been genuinely written by the applicant.  If in doubt, paste an excerpt from the profile text into an internet search engine to ensure the content has not been copied from any other source.  If the content has been copied, the applicant is permanently disqualified. Select "This applicant is not eligible" below and include a note to please not reactivate this application.
+
+3.  Use the link below to check the <strong>Facebook account</strong> information submitted by the applicant.  
+
+<br/><br/>Make sure the Facebook account link is still valid and the information appears consistent with that in the application.  Note that using a nickname in Facebook is not by itself grounds for ineligibility, but the gender and general biographical information should match.
+
+<br/><br/><br/>
+ 
+<table class='detail'>
+
+	 <?php 
+
+	if(!empty($fb_data)){
+
+		if(isset($fb_data['user_friends']['data'])){
+ 
+ 			$no_of_friends= count($fb_data['user_friends']['data']);
+ 			
+ 		}else{
+			
+			$no_of_friends= count($fb_data['user_friends']);
+ 
+ 		}
+
+ 	} ?>
+ 
+ 	<tr>
+ 
+ 		<td>
+
+ 		<strong>Name:</strong>  <?php echo $fb_data['user_profile']['name'];?><br/><br/>
+
+ 		<strong>Friends:</strong>  <?php echo $no_of_friends; ?><br/><br/><br/>
+ 
+ 		<strong><a href="<?php echo 'http://www.facebook.com/'.$fb_data['user_profile']['id']; ?>" target="_blank">View Facebook Profile</a></strong>
+
+ 		</td>
+ 	
+
+	</tr>
+
+</table>              
+
+<br/><br/><br/><br/>
+
+
+4.  Review the below <strong>profile text</strong> to ensure it appears to have been genuinely written by the applicant.  If in doubt, paste an excerpt from the profile text into an internet search engine to ensure the content has not been copied from any other source.  If the content has been copied, the applicant is permanently disqualified. Select "This applicant is not eligible" below and include a note to please not reactivate this application.
 
 <br/><br/><br/>
 
 <?php 
-											echo "<p><i>How did you hear about Zidisha?  </i>".$reffered_by; 
-											echo "<p><i>About Me:  </i>".$about;
-											echo"</p>";
-											echo "<p><i>About My Business:  </i>".$bizdesc;
-											echo"</p>";
-													
-										?>
 
-<br/><br/><br/>
+	echo "<p><i>How did you hear about Zidisha?  </i>".$reffered_by; 
+	
+	echo "<p><i>About Me:  </i>".$about;
+	
+	echo"</p>";
+	
+	echo "<p><i>About My Business:  </i>".$bizdesc;
+	
+	echo"</p>";
+													
+?>
+
+<br/><br/><br/><br/>
+
+
+
+<?php 
+
+$sift_score_num = $database->getSiftScore($userid);
+$sift_score = (number_format($sift_score_num*100));
+$sift_profile = "https://siftscience.com/console/users/".$userid;
+
+
+if (!empty($sift_score) && $sift_score >75 && $sift_score <90){
+
+	?>
+	5. This applicant has a <strong>Sift Score</strong> of <strong><?php echo $sift_score; ?></strong>, indicating an unusually high level of risk. <br/><br/>
+
+	Please review this applicant's Sift Science profile at the link below.  If you notice any red flags, please conduct a telephone interview or request a second opinion before activating this applicant.<br/><br/>
+
+	<?php echo "<a href='".$sift_profile."' target='_blank'>View Sift Science profile</a>"; 
+
+} elseif (!empty($sift_score) && $sift_score >=90){
+
+	?>
+	5. This applicant has a <strong>Sift Score</strong> of <strong><?php echo $sift_score; ?></strong>, indicating a very high level of risk. <br/><br/>
+
+	Please consult the director before activating this applicant.<br/><br/>
+
+	<?php echo "<a href='".$sift_profile."' target='_blank'>View Sift Science profile</a>"; 
+
+} elseif (!empty($sift_score)){
+
+	?>
+	5. This applicant has a <strong>Sift Score</strong> of <strong><?php echo $sift_score; ?></strong>, indicating a low level of risk. <br/><br/>
+
+	You may proceed without further review of the Sift Science score.
+	<br/><br/><br/>
+
+	<?php echo "<a href='".$sift_profile."' target='_blank'>View Sift Science profile</a>"; 
+
+} ?>
+
+
+<br/><br/><br/><br/>
+
+<?php
+
+$endorse_details= $database->getEndorserRecived($userid); 
+
+if (!empty($endorse_details)){ ?>
+	
+	6.  Please review the <strong>endorsement(s)</strong> received by this applicant below. If you have reason to doubt that the responses are genuine (for example, the wording is too similar, too many from the same IP address, or the responses are not consistent with the information in the rest of the application) then please ensure a telephone interview is conducted before activating this applicant.<br/><br/>
+	If the endorsements are obviously not genuine (for example, more than three from the same IP address or the exact same wording across multiple endorsements) then please decline this applicant without an interview.
+	
+	<br/><br/><br/>
+
+	<?php 
+	
+	foreach($endorse_details as $endorse_detail){
+		
+		if(!empty($endorse_detail['endorserid'])){
+			$e_profile = getUserProfileUrl($endorse_detail['endorserid']);
+			$e_number= $database->getPrevMobile($endorse_detail['endorserid']);
+			$e_ip_address = $database->getUserIP($endorse_detail['endorserid']);
+ 
+			$endorsedbrwr= $database->getBrwrDetailFrmEndorser($endorse_detail['endorserid']);
+
+			echo "<a href='$e_profile'>".$endorse_detail['ename']."</a>, ".$e_number."<br/>".$endorsedbrwr['e_know_brwr']."<br/>".$endorsedbrwr['e_cnfdnt_brwr']."<br/>IP Address:".$e_ip_address."<br/><br/>";
+			}
+	}
+} ?>
+
+<br/><br/><br/><br/>
+
 					<strong>Please select one of the following:</strong><br/><br/>
 					<input type='radio' name='is_eligible_ByAdmin' id="is_eligible_yes" value='1' onclick="show_no_text(this.value)"  <?php 	if($is_eligible_ByAdmin== '1')
 							echo "checked";

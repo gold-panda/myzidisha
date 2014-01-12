@@ -1184,22 +1184,25 @@ class genericClass
 
         global $db;
 
-        if(isset($_COOKIE["invtduserjoins"])) {
+//use email to record invite, for case where invited user joins without cookie set
+   
+        $q="select id,userid from ! where email = ?";
+        
+        $result=$db->getRow($q, array('invites',$email));
+        
+        if(!empty($result)){
+            
+            $q1="UPDATE invites SET invitee_id = ? Where email = ? LIMIT 1";
+            
+            return $db->query($q1, array($userid, $email));
+        
+        } elseif(isset($_COOKIE["invtduserjoins"])) {
             $cookie_val = $_COOKIE["invtduserjoins"];
             $q="select id,userid from ! where cookie_value = ?";
             $result=$db->getRow($q, array('invites',$cookie_val));
             $q1="UPDATE invites SET invitee_id = ? Where cookie_value = ? LIMIT 1";
             $res=$db->query($q1, array($userid, $cookie_val));
             setcookie ("invtduserjoins", "", time() - 3600);
-        }
-
-//use email to record invite, for case where invited user joins without cookie set
-   
-        $q="select id,userid from ! where email = ?";
-        $result=$db->getRow($q, array('invites',$email));
-        if(!empty($result)){
-            $q1="UPDATE invites SET invitee_id = ? Where email = ? LIMIT 1";
-            return $db->query($q1, array($userid, $email));
         }
     }
     
@@ -3861,17 +3864,17 @@ class genericClass
         $result=$db->getOne($q1, array('loans_to_forgive',$loanid));
         return $result;
     }
-    function review_borrower($is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, $is_nat_id_uploaded, $is_rec_form_uploaded, $is_rec_form_offcr_name, $borrowerid, $is_pending_mediation) {
+    function review_borrower($borrowerid, $is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, $is_pending_mediation) {
         global $db, $session;
         $q1= "SELECT count(*) FROM ! where borrower_id=?";
         $result=$db->getOne($q1, array('borrower_review',$borrowerid));
         if($result > 0) {
-            $q = "UPDATE ! SET is_photo_clear=?, is_desc_clear =?, is_addr_locatable=?, is_number_provided=?, is_nat_id_uploaded=?, is_rec_form_uploaded=?, is_rec_form_offcr_name = ?, modified = ?, modified_by = ?, is_pending_mediation=? WHERE borrower_id = ?";
-            $res = $db->query($q, array('borrower_review', $is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, $is_nat_id_uploaded, $is_rec_form_uploaded, $is_rec_form_offcr_name, time(), $session->userid, $is_pending_mediation, $borrowerid));
+            $q = "UPDATE ! SET is_photo_clear=?, is_desc_clear =?, is_addr_locatable=?, is_number_provided=?, modified = ?, modified_by = ?, is_pending_mediation=? WHERE borrower_id = ?";
+            $res = $db->query($q, array('borrower_review', $is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, time(), $session->userid, $is_pending_mediation, $borrowerid));
 
         }else {
-            $q="INSERT INTO ! (borrower_id,is_photo_clear,is_desc_clear, is_addr_locatable,is_number_provided,is_nat_id_uploaded,is_rec_form_uploaded,is_rec_form_offcr_name,created	,created_by, is_pending_mediation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $res = $db->query($q, array('borrower_review',$borrowerid, $is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, $is_nat_id_uploaded, $is_rec_form_uploaded, $is_rec_form_offcr_name,time(), $session->userid, $is_pending_mediation));
+            $q="INSERT INTO ! (borrower_id,is_photo_clear,is_desc_clear, is_addr_locatable,is_number_provided, created,created_by, is_pending_mediation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $res = $db->query($q, array('borrower_review',$borrowerid, $is_photo_clear, $is_desc_clear, $is_addr_locatable, $is_number_provided, time(), $session->userid, $is_pending_mediation));
 
         }
         $review = $this->is_borrowerReviewComplete($borrowerid);
@@ -3886,8 +3889,8 @@ class genericClass
     }
     function is_borrowerReviewComplete($borrowerid) {
         global $db;
-        $q1= "SELECT * FROM ! where borrower_id=? AND (is_photo_clear=? || is_desc_clear = ? || is_addr_locatable = ? || is_pending_mediation = ? || is_nat_id_uploaded = ? || is_rec_form_uploaded = ? || is_pending_mediation = ?)";
-        $result=$db->getRow($q1, array('borrower_review',$borrowerid, '0','0','0','0','0','0','0'));
+        $q1= "SELECT * FROM ! where borrower_id=? AND (is_photo_clear=? || is_desc_clear = ? ||  is_number_provided=? || is_addr_locatable = ? || is_pending_mediation = ?)";
+        $result=$db->getRow($q1, array('borrower_review',$borrowerid, '0','0','0','0','0'));
         return $result;
     }
     // 18-Jan-2013 Anupam if all review in positive we set -1 in active column in borrower table to indicate that review has been completed for this borrower, if any of review is in negative we set 0 for that
@@ -4119,8 +4122,8 @@ class genericClass
         global $db;
         $review_exist= $this->getBorrowerReviewDetail($userid);
         if(!empty($review_exist)){
-            $q1="select * from ! where borrower_id=? AND (is_photo_clear=? || is_desc_clear = ? || is_addr_locatable = ? || is_pending_mediation = ? || is_nat_id_uploaded = ? || is_rec_form_uploaded = ? || is_number_provided = ?)";
-            $res= $db->getRow($q1, array('borrower_review',$userid, '0','0','0','0','0','0','0'));
+            $q1="select * from ! where borrower_id=? AND (is_photo_clear=? || is_desc_clear = ? || is_addr_locatable = ? || is_pending_mediation = ? || is_number_provided = ?)";
+            $res= $db->getRow($q1, array('borrower_review',$userid, '0','0','0','0','0'));
             if(empty($res))
                 return True;
             else
@@ -8110,11 +8113,19 @@ class genericClass
         global $db;
         $q="SELECT SUM(givenamount) amount, SUM(givenamount * bidint)/SUM(givenamount) intr FROM ! WHERE loanid =? and active = ? and lenderid=?";
         $res=$db->getRow($q, array('loanbids', $loanid, 1, $userid));
-        $q="SELECT period FROM ! WHERE loanid =?";
-        $period=$db->getOne($q, array('loanapplic', $loanid));
+        //$q="SELECT period,weekly_inst FROM ! WHERE loanid =?";
+		//$period=$db->getOne($q, array('loanapplic', $loanid));        
+		
+		$lonedata=$this->getLoanDetails($loanid);
+		$period=$lonedata['period'];
+		$weeklyInst=$lonedata['weekly_inst'];		
         $extraPeriod=$this->getLoanExtraPeriod($userid, $loanid);
         $newperiod=$extraPeriod+$period;
-        $intr=($res['amount'] * $res['intr'] * $newperiod)/1200;
+		if($weeklyInst==1){
+			$intr=($res['amount'] * $res['intr'] * $newperiod)/5200;
+		}else{
+			$intr=($res['amount'] * $res['intr'] * $newperiod)/1200;
+		}
         $total=$res['amount'] + $intr;
         $exRate=$this->getExRateByLoanId($loanid);
         $totalNative=$total * $exRate;
@@ -11305,8 +11316,32 @@ class genericClass
         return $result;
 	}
 
+//returns Sift Science score of a user
+    function getSiftScore($userid){
+        // create curl resource 
+        $ch = curl_init(); 
 
+        $api_key = SHIFT_SCIENCE_KEY;
 
+        // set url 
+        curl_setopt($ch, CURLOPT_URL, "https://api.siftscience.com/v203/score/$userid/?api_key=$api_key"); 
+
+        //return the transfer as a string 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+
+        // $output contains the output string 
+        $output = curl_exec($ch); 
+
+        // close curl resource to free up system resources 
+        curl_close($ch); 
+
+        $sift_data = json_decode($output);
+
+        $sift_score = $sift_data->score;
+
+        return $sift_score;
+
+    }
 
 
 };

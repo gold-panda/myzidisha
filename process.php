@@ -1711,22 +1711,10 @@ class Process
 		if(!isset($_POST['is_number_provided'])) {
 			$_POST['is_number_provided']='0';
 		}
-		if(!isset($_POST['is_nat_id_uploaded'])) {
-			$_POST['is_nat_id_uploaded']='0';
-		}
-		if(!isset($_POST['is_rec_form_uploaded'])) {
-			$_POST['is_rec_form_uploaded']='0';
-		}
-		if(!isset($_POST['is_rec_form_offcr_name'])) {
-			$_POST['is_rec_form_offcr_name']='0';
-		}
 		if(!isset($_POST['is_pending_mediation'])) {
 			$_POST['is_pending_mediation']='0';
 		}
-		if(!isset($_POST['borrowerid'])) {
-			$_POST['borrowerid']='0';
-		}
-		$res = $session->review_borrower($_POST['is_photo_clear'], $_POST['is_desc_clear'], $_POST['is_addr_locatable'], $_POST['is_number_provided'], $_POST['is_nat_id_uploaded'], $_POST['is_rec_form_uploaded'], $_POST['is_rec_form_offcr_name'], $_POST['borrowerid'],$_POST['is_photo_clear_other'],$_POST['is_desc_clear_other'],$_POST['is_addr_locatable_other'],$_POST['is_number_provided_other'],$_POST['is_nat_id_uploaded_other'],$_POST['is_rec_form_uploaded_other'],$_POST['is_rec_form_offcr_name_other'],$_POST['is_pending_mediation'],$_POST['is_pending_mediation_other']);
+		$res = $session->review_borrower($_POST['borrowerid'], $_POST['is_photo_clear'], $_POST['is_desc_clear'], $_POST['is_addr_locatable'], $_POST['is_number_provided'], $_POST['is_photo_clear_other'],$_POST['is_desc_clear_other'],$_POST['is_addr_locatable_other'],$_POST['is_number_provided_other'],$_POST['is_pending_mediation'],$_POST['is_pending_mediation_other']);
 
 		header("location: index.php?p=7&id=".$_POST['borrowerid']."#review_message");
 		exit;

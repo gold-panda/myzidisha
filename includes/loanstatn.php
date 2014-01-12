@@ -1227,7 +1227,7 @@ if($brw2['active']==LOAN_OPEN )
 					if($p >= 1 && $brw2['active'] < LOAN_FUNDED)
 					{
 						$loneAcceptDate=time();
-						$sched=$session->getSchedule($lamount, $interestrate + $webfee, $period, $gperiod,$loneAcceptDate,$webfee);
+						$sched=$session->getSchedule($lamount, $interestrate + $webfee, $period, $gperiod,$loneAcceptDate,$webfee, $weekly_inst);
 						echo $sched;
 			?>
 						<table class='detail'>
@@ -1428,7 +1428,7 @@ if($brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['a
 else if($brw2['active']==LOAN_FUNDED && $displyall)
 {
 	$loneAcceptDate=time();
-	$sched=$session->getSchedule($lamount, $interestrate + $webfee, $period, $gperiod,$loneAcceptDate,$webfee);
+	$sched=$session->getSchedule($lamount, $interestrate + $webfee, $period, $gperiod,$loneAcceptDate,$webfee, $weekly_inst);
 	?>
 	<div class="row">
 		<div class="span16">
