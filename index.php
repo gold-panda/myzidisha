@@ -975,6 +975,5 @@ if($language==''){
 		<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1005464495/?value=0&amp;label=KMo7CNGm6gMQr9e43wM&amp;guid=ON&amp;script=0"/>
 		</div>
 	</noscript>
-	<!-- testing -->
 </body>
 </html>
