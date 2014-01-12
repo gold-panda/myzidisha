@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="css/default/redesign.css" type="text/css" media="screen">
 <?php include_once("library/session.php");
 include_once("./editables/admin.php");
 require_once('library/recaptcha/recaptchalib.php');
@@ -37,8 +38,9 @@ include_once("./editables/".$path);
 		window.location=url;
 	}
 </script>
-<div class="span12">
-<?php
+<div id="span12_full">
+	<div class="span12">
+	<?php
 
 if(empty($t))
 {	?>
@@ -49,20 +51,15 @@ if(empty($t))
 			echo "<br/>".$lang['register']['select_type']."<br/><br/>";
 		}?>
 	</div>
-	<table>
-		<tr>test
-			<td><strong><?php echo $lang['register']['user_type'];?></strong></td>
-			<td>
-				<select name="usertype" id="usertype" class="selectcmmn"													onchange="window.location='index.php?p=1&sel='+(this).value+'&lang=<?php echo $language ?>'">
-					<option></option>
-					<option value="1"<?php if($select==1)echo "Selected='true'"; ?>><?php echo $lang['register']['Borrower'];?></option>
-					<option value="2"<?php if($select==2)echo "Selected='true'"; ?>><?php echo $lang['register']['Lender'];?></option>
-					<!-- <option value="5"<?php if($select==5)echo "Selected='true'"; ?>><?php echo $lang['register']['LenderGroup'];?></option> -->
-					<!-- <option value="3"<?php if($select==3)echo "Selected='true'"; ?>><?php echo $lang['register']['Partner'];?></option> -->
-				</select>
-			</td>
-		</tr>
-	</table>
+	<div id="register_tabs" class="group">
+		<?php if($select==1) { ?>
+			<div class="register_eachtab register_activetab" ><?php echo $lang['register']['Borrower'];?></div>
+			<div class="register_eachtab" onclick="window.location='index.php?p=1&sel=2&redesign&lang=<?php echo $language ?>'" ><?php echo $lang['register']['Lender'];?></div>
+		<?php } else { ?>
+			<div class="register_eachtab" onclick="window.location='index.php?p=1&sel=1&redesign&lang=<?php echo $language ?>'" ><?php echo $lang['register']['Borrower'];?></div>
+			<div class="register_eachtab register_activetab" ><?php echo $lang['register']['Lender'];?></div>
+		<?php } ?>
+	</div>
 <?php
 }
 if($select==1)
@@ -103,7 +100,7 @@ else if($select==4)
 			<?php echo $lang['register']['confirming'];?><br />
 			<?php echo $lang['register']['find_partner'];?><br /><br />-->
 			<?php echo $lang['register']['wadmin'];?>
-			<?php include("includes/welcome.php")?>
+			<?php include("includes/welcome.php") ?>
 <?php
 		//}
 		if(isset($_SESSION['bEmailVerifiedPending'])){
@@ -192,4 +189,5 @@ else if($select==4)
 	}
 }
 ?>
+	</div>
 </div>
