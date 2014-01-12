@@ -8373,11 +8373,25 @@ function forgiveReminder(){
 /**** added by mohit 24-12-2013 ***/
 function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=null,$hearaAoutZidisha=null,$facebook_id=null,$loan_amnt,$repay_date,$comment=null,$subject=null,$senderid){
 	
-	$time=time();
-	if($event_type=='create_new_account' || $event_type=='edit_account'){
+		$time=time();
+		if($event_type=='create_new_account'){
 			
 			$data = array(
-			  '$type' => $event_type,
+			  '$type' => $create_account,
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$session_id' => session_id(),
+			  'aboutme' => $aboutMe,
+			  'aboutbusiness' => $aboutBusiness,
+			  'hearaboutzidisha' => $hearaAoutZidisha,
+			  '$time' => $time			  
+			);
+		}
+
+		if($event_type=='edit_account'){
+			
+			$data = array(
+			  '$type' => $update_account,
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
@@ -8392,7 +8406,6 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			$data = array(
 			  '$type' => $event_type,
 			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
 			  'facebookid' => $facebook_id,
 			   '$time' => $time
@@ -8414,6 +8427,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			$data = array(
 			  '$type' => '$login',
 			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
 			  '$login_status' => 'failure'
 			);
@@ -8423,6 +8437,7 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			$data = array(
 			  '$type' => '$logout',
 			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
 			  '$user_id' => $userid,
 			  '$session_id' => session_id()
 			);
@@ -8476,8 +8491,8 @@ function invoiceShiftScience($event_type,$userid,$aboutMe=null,$aboutBusiness=nu
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$is_bad' => true,
-			  'reasons' => 'declined',
-			  '$description' => 'Borrower decline by Admin',
+			  'reasons' => 'Declined',
+			  '$description' => 'Borrower application declined',
 			  '$time' => $time
 			);
 		}
