@@ -3229,7 +3229,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			return 0;
 		}
 	}
-	function getSchedule($amount, $rate, $period, $grace, $loneAcceptDate, $webrate, $newperiod=0, $installment=0, $weekly_inst)
+	function getSchedule($amount, $rate, $period, $grace, $loneAcceptDate, $webrate, $weekly_inst)
 	{
 		global $database;
 		require("editables/loanstatn.php");
@@ -3237,6 +3237,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		require("editables/".$path);
 		traceCalls(__METHOD__, __LINE__);
 		//Principal + (Number of years of repayment period * ((Principal * Aggregate annual Lender interest rate) + (Principal * % annual fee charged by website)))0
+		$newperiod=0;
+		$installment=0;
 		if(!empty($newperiod)) {
 			$newperiod+=$period;
 		} else {
