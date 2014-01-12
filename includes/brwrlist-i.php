@@ -1069,7 +1069,7 @@ end commented out national ID check 11 Jan 2014 -->
 											<tr><td>Enter Your Name Here:</td></tr>
 											<tr>
 												<td><a id="sendername"></a>
-													<input type="text" name="sendername" style="width:350px;" value="<?php echo $breviewSendername; ?>"/><br/>
+													<input type="text" name="sendername" style="width:350px;" value="<?php echo $session->fullname; ?>"/><br/>
 													<?php echo $form->error("sendername"); ?>
 												</td>
 											</tr>

@@ -11316,8 +11316,32 @@ class genericClass
         return $result;
 	}
 
+//returns Sift Science score of a user
+    function getSiftScore($userid){
+        // create curl resource 
+        $ch = curl_init(); 
 
+        $api_key = SHIFT_SCIENCE_KEY;
 
+        // set url 
+        curl_setopt($ch, CURLOPT_URL, "https://api.siftscience.com/v203/score/$userid/?api_key=$api_key"); 
+
+        //return the transfer as a string 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+
+        // $output contains the output string 
+        $output = curl_exec($ch); 
+
+        // close curl resource to free up system resources 
+        curl_close($ch); 
+
+        $sift_data = json_decode($output);
+
+        $sift_score = $sift_data->score;
+
+        return $sift_score;
+
+    }
 
 
 };
