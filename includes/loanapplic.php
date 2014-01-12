@@ -134,9 +134,29 @@ else
 					$amt_step=1000;
 					$inst_step=100;
 
+				}elseif ($currency==XOF){
+
+					$amt_step=5000;
+					$inst_step=500;
+
+				}elseif ($currency==IDR){
+
+					$amt_step=100000;
+					$inst_step=10000;
+
+				}elseif ($currency==ZMW){
+
+					$amt_step=50;
+					$inst_step=5;
+
+				}elseif ($currency==GNF){
+
+					$amt_step=50000;
+					$inst_step=5000;
+
 				}else{
 
-					$amt_step=1;
+					$amt_step=10;
 					$inst_step=1;
 											
 				}

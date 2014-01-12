@@ -432,7 +432,7 @@ else
 			$amount=$row['Amount'];
 			$amtinusd=convertToDollar($amount,$CurrencyRate);
 			$b_reg_fee=number_format($amtinusd,2);
-			$b_reg_fee_native=number_format($amount,2);
+			$b_reg_fee_native=number_format($amount,0);
 		 }
 	}
 	else
@@ -1221,6 +1221,10 @@ if($brw2['active']==LOAN_OPEN )
 				<a name='e3'></a>
 				<p><strong><?php echo $lang['loanstatn']['total_bids'] ?>:</strong>	USD <?php echo number_format($totBid, 2, '.', ',') ?></p>
 				<p><strong><?php echo $lang['loanstatn']['amt_stil_need'] ?>:</strong>	USD <?php echo number_format($stilneed, 2, '.', ',') ?></p>
+
+
+<!-- Borrower funded loan bid acceptance section starts -->
+
 		<?php	if(($session->userlevel == BORROWER_LEVEL) && ($displyall) && !empty($bids))
 				{
 					$p = $database->getTotalBid($ud,$ld) / $damount;
@@ -1228,22 +1232,160 @@ if($brw2['active']==LOAN_OPEN )
 					{
 						$loneAcceptDate=time();
 						$sched=$session->getSchedule($lamount, $interestrate + $webfee, $period, $gperiod,$loneAcceptDate,$webfee, $weekly_inst);
-						echo $sched;
-			?>
-						<table class='detail'>
+						$currency=$database->getUserCurrency($ud);
+
+						if ($country=='BF' || $country=='GN'){
+
+							$bid_note = $lang['loanstatn']['acceptBid_note_BF'];
+
+						} elseif ($country=='ID'){
+
+							$bid_note = $lang['loanstatn']['acceptBid_note_ID'];
+
+						} else {
+
+							$bid_note = $lang['loanstatn']['acceptBid_note'];
+
+						}
+
+						?>
+						
+						<br/><br/>
+
+						<?php echo "<a name='acceptbids' id='acceptbids'></a>"; ?>
+
+						<br/><br/>
+						
+						<strong><?php echo $lang['loanstatn']['accept_instructions'];?></strong>
+
+						<br/><br/><br/>
+
+						
+
+						<table class="detail_new" cellspacing="0" cellpadding="8" >
+							<tbody>
+				
+							<tr>
+							
+								<td style="width:250px"><strong><?php echo $lang['loanstatn']['requested'] ?>:</strong></td>
+						
+								<td>
+								
+								<?php echo $tmpcurr." ".number_format(round_local($brw2['AmountGot']),0,'.',',');
+						
+								?>
+								</td>
+				
+							</tr>
+
+							<tr>
+								
+								<td><strong><?php echo $lang['loanstatn']['pd'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_pd'] ?></span><span class='bottom'></span></span></a></strong></td>
+					
+								<td><?php echo $period ?> <?php echo $periodText ?></td>
+							
+							</tr>
+				
+							<tr>
+					
+								<td><strong><?php echo $lang['loanstatn']['final_intr_rate'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['final_intr_rate_tooltip']?></span><span class='bottom'></span></span></a></strong></td>
+					
+								<td><?php echo number_format($maxInterestRate, 2, '.', ',') ?>%</td>
+							
+							</tr>
+							
+							<tr>
+								
+								<td><strong><?php echo $lang['loanstatn']['webfee'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_atf']?></span><span class='bottom'></span></span></a></strong></td>
+					
+								<td><?php echo number_format($webfee, 2, '.', ','); ?>%</td>
+							
+							</tr>
+				
+							<?php if(!$bfrstloan){	?>
+				
+							<tr>
+								
+								<td><strong><?php echo $lang['loanstatn']['b_reg_fee'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_webfee']?></span><span class='bottom'></span></span></a></strong></td>
+					
+								<td>
+				
+								<?php echo $tmpcurr." ".$b_reg_fee_native; ?>
+					
+								</td>
+				
+							</tr>
+							
+							<?php }	?>
+
+							<tr>
+							
+								<td><strong><?php echo $lang['loanstatn']['tot_int_fee'] ?>:</strong></td>
+					
+								<td>
+				
+								<?php echo $tmpcurr." ".number_format(round_local($totToPayBack-($brw2['AmountGot'])), 0)." (". number_format( $totFee , 2, '.', ',')."% annual rate for ".$period." ".$periodText.")";
+								
+								?>
+					
+								</td>
+							
+							</tr>
+
+							<tr>
+							
+								<td><strong><?php echo $lang['loanstatn']['tba'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_tba']?></span><span class='bottom'></span></span></a></strong></td>
+					
+								<td>
+				
+								<?php echo $tmpcurr." ".number_format(round_local($totToPayBack), 0);
+								
+								?>
+					
+								</td>
+							
+							</tr>
+				
+				
+						</tbody>
+					</table>
+
+					<br/><br/><br/>
+
+					<div align="center"><strong><?php echo $lang['loanstatn']['repayment_sched']; ?></strong></div>
+
+					<br/><br/>
+		
+					<?php echo $sched; ?>
+
+					
+					<br/><br/><br/>
+
+
+						<table>
 							<form method='post' action='updateprocess.php'>
 							<tr>
-								<td><?php echo $lang['loanstatn']['acceptBid_note'] ?></td>
-								<td width='100px;'><textarea rows="10" cols="30" id="acceptbid_note" name="acceptbid_note"><?php echo $form->value('acceptbid_note'); ?></textarea><br/><?php echo $form->error('acceptBid_note'); ?></td>
+								<td><?php echo $bid_note; ?></td>
+								<td width='100px;'><textarea rows="5" cols="60" id="acceptbid_note" name="acceptbid_note"><?php echo $form->value('acceptbid_note'); ?></textarea><br/><?php echo $form->error('acceptBid_note'); ?></td>
 							</tr>
-							<tr><td></td><td align="right">
+						
+							<tr>
+								<td height='20px;'></td><td></td>
+							</tr>
+
+							<tr><td></td><td align='center'>
 								<input type='hidden' name='acceptbids' />
 								<input type="hidden" name="user_guess" value="<?php echo generateToken('acceptbids'); ?>"/>
 								<input type='hidden' name='loanid' value="<?php echo $ld ?>"/>
-								<input style='float:right' class='btn' type='submit' value="<?php echo $lang['loanstatn']['accept_bids'] ?>" />
+								<input style='float:center' class='btn' type='submit' value="<?php echo $lang['loanstatn']['accept_bids'] ?>" />
 							</td></tr>
-							</form></table>
-			<?php	}
+						</form></table>
+						
+			<?php	} 
+
+// Borrower funded loan bid acceptance section ends 
+
+			
 					else
 					{?>
 						<table><tr><td style="text-align:right"><input type='submit' value="<?php echo $lang['loanstatn']['accept_bids'] ?>" disabled='disabled'/></td></tr></table>
@@ -1267,19 +1409,7 @@ if($brw2['active']==LOAN_OPEN )
 						}
 					</script>
 					<a name="e6" ></a>
-					<!--<p><em><?php echo $lang['loanstatn']['bid_for_this_loan'] ?> USD <?php echo $database->getAdminSetting('minAmount');?>. <?php echo $lang['loanstatn']['interest_rate_limit'] ?>
-					<?php
-						$ramount=number_format($brw2['reqdamt'], 0, "", "");
-						if($totBid>=$ramount)
-						{
-							echo $interestrate."%.";
-						}
-						else
-						{
-							echo $interest1."%.";
-						}
-					?>
-					</em></p>-->
+	
 					<?php $val = $form->value('bidid'); ?>
 					<form id='bidform' name="bidform" action="process.php" method="post">
 						<input type="hidden" id="editBidAmount" name="editBidAmount" value="<?php echo $form->value('editBidAmount') ?>" />
@@ -1665,7 +1795,6 @@ if($brw2['active'] == LOAN_REPAID)
 				include_once("./editables/profile.php");
 				$path=	getEditablePath('profile.php');
 				include_once("editables/".$path);
-				echo"<a name='acceptbids' id='acceptbids'></a>";
 				include_once("includes/b_comments.php");
 		?>
 	</div><!-- /span16 -->

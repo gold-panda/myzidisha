@@ -2,29 +2,6 @@
 <table class="detail" width="315px;">
 	<tbody>
 
-<!-- added by Julia 16-10-2013 -->
-
-		<tr>
-
-<?php	
-						
-						
-						$active1=
-						"<form name='deactiveform".$userid."'method='post' action='process.php'>".
-						"<input name='deactivateBorrower' type='hidden' />".
-						"<input type='hidden' name='user_guess' value='".generateToken('deactivateBorrower')."'/>".
-						"<input name='borrowerid' value='$userid' type='hidden' />".
-						"<input name='set' value = 0 type='hidden' />".
-						"<a href='javascript:void(0)' style='color:red' onclick='document.forms.deactiveform".$userid.".submit()'>Deactivate Account</a>".
-						"</form>";
-					
-					echo $active1;
-
-?>
-
-		</tr>
-
-
 
 		<tr>
 			<td width="220px"><strong><?php echo $lang['profile']['firstName'] ?>:</strong></td>
