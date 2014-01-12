@@ -71,7 +71,7 @@ if(empty($session->userid)){
 			}
 		}
 	?>
-	<div class="row"><!--testing file -->
+	<div class="row">
 		<form enctype="multipart/form-data" id="sub-borrower" name="sub-borrower" method="post" action="process.php">
 
 			<table class='detail'>
