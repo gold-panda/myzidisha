@@ -8381,26 +8381,26 @@ function invoiceShiftScience($event_type,$userid,$uname=null,$namea=null,$nameb=
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
-			  '$username' => $uname,  
-			  '$first_name' => $namea,
-			  '$last_name' => $nameb,
-			  '$address' => $post,
-			  '$city' => $city,
-			  '$country' => $country,
-			  '$national_id' => $bnationid,
+			  'username' => $uname,  
+			  'first_name' => $namea,
+			  'last_name' => $nameb,
+			  'address' => $post,
+			  'city' => $city,
+			  'country' => $country,
+			  'national_id' => $bnationid,
 			  '$user_email' => $email,
 			  '$phone' => $mobile,
-			  '$family_contact_1' => $bfamilycont1,
-			  '$family_contact_' => $bfamilycont2,
-			  '$family_contact_3' => $bfamilycont3,
-			  '$neighbor_contact_1' => $bneighcont1,
-			  '$neighbor_contact_2' => $bneighcont2,
-			  '$neighbor_contact_3' => $bneighcont3,
-			  '$community_leader' => $rec_form_offcr_name,
-			  '$community_leader_phone' => $rec_form_offcr_num,
-			  '$about_me' => $aboutMe,
-			  '$about_business' => $aboutBusiness,
-			  '$hear_about_zidisha' => $hearaAoutZidisha,
+			  'family_contact_1' => $bfamilycont1,
+			  'family_contact_' => $bfamilycont2,
+			  'family_contact_3' => $bfamilycont3,
+			  'neighbor_contact_1' => $bneighcont1,
+			  'neighbor_contact_2' => $bneighcont2,
+			  'neighbor_contact_3' => $bneighcont3,
+			  'community_leader' => $rec_form_offcr_name,
+			  'community_leader_phone' => $rec_form_offcr_num,
+			  'about_me' => $aboutMe,
+			  'about_business' => $aboutBusiness,
+			  'hear_about_zidisha' => $hearaAoutZidisha,
 			  '$time' => $time			  
 			);
 		}
@@ -8412,26 +8412,26 @@ function invoiceShiftScience($event_type,$userid,$uname=null,$namea=null,$nameb=
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$session_id' => session_id(),
-			  '$username' => $uname,  
-			  '$first_name' => $namea,
-			  '$last_name' => $nameb,
-			  '$address' => $post,
-			  '$city' => $city,
-			  '$country' => $country,
-			  '$national_id' => $bnationid,
+			  'username' => $uname,  
+			  'first_name' => $namea,
+			  'last_name' => $nameb,
+			  'address' => $post,
+			  'city' => $city,
+			  'country' => $country,
+			  'national_id' => $bnationid,
 			  '$user_email' => $email,
 			  '$phone' => $mobile,
-			  '$family_contact_1' => $bfamilycont1,
-			  '$family_contact_' => $bfamilycont2,
-			  '$family_contact_3' => $bfamilycont3,
-			  '$neighbor_contact_1' => $bneighcont1,
-			  '$neighbor_contact_2' => $bneighcont2,
-			  '$neighbor_contact_3' => $bneighcont3,
-			  '$community_leader' => $rec_form_offcr_name,
-			  '$community_leader_phone' => $rec_form_offcr_num,
-			  '$about_me' => $aboutMe,
-			  '$about_business' => $aboutBusiness,
-			  '$hear_about_zidisha' => $hearaAoutZidisha,
+			  'family_contact_1' => $bfamilycont1,
+			  'family_contact_' => $bfamilycont2,
+			  'family_contact_3' => $bfamilycont3,
+			  'neighbor_contact_1' => $bneighcont1,
+			  'neighbor_contact_2' => $bneighcont2,
+			  'neighbor_contact_3' => $bneighcont3,
+			  'community_leader' => $rec_form_offcr_name,
+			  'community_leader_phone' => $rec_form_offcr_num,
+			  'about_me' => $aboutMe,
+			  'about_business' => $aboutBusiness,
+			  'hear_about_zidisha' => $hearaAoutZidisha,
 			  '$time' => $time			  
 			);
 		}
@@ -8441,7 +8441,7 @@ function invoiceShiftScience($event_type,$userid,$uname=null,$namea=null,$nameb=
 			  '$type' => '$facebook_link',
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$session_id' => session_id(),
-			  '$facebookid' => $facebook_id,
+			  'facebookid' => $facebook_id,
 			  '$time' => $time
 			);
 		}
@@ -8472,7 +8472,6 @@ function invoiceShiftScience($event_type,$userid,$uname=null,$namea=null,$nameb=
 			  '$type' => '$logout',
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  '$user_id' => $userid,
 			  '$session_id' => session_id()
 			);
 		}
@@ -8482,7 +8481,7 @@ function invoiceShiftScience($event_type,$userid,$uname=null,$namea=null,$nameb=
 			  '$type' => '$loan_disbursement',
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  '$loan_amount' => $loan_amnt,
+			  'loan_amount' => $loan_amnt,
 			  '$time' => $time
 			);
 		}
@@ -8492,8 +8491,8 @@ function invoiceShiftScience($event_type,$userid,$uname=null,$namea=null,$nameb=
 			  '$type' => '$loan_repayment',
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  '$repayment_amount' => $loan_amnt,
-			  '$repayment_date' => $repay_date,
+			  'repayment_amount' => $loan_amnt,
+			  'repayment_date' => $repay_date,
 			  '$time' => $time
 			);
 		}
@@ -8503,8 +8502,8 @@ function invoiceShiftScience($event_type,$userid,$uname=null,$namea=null,$nameb=
 			  '$type' => '$comment_post',
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
-			  '$comment' => $comment,
-			  '$sender' => $senderid
+			  'comment' => $comment,
+			  'sender' => $senderid
 			);
 		}
 		
@@ -8514,8 +8513,8 @@ function invoiceShiftScience($event_type,$userid,$uname=null,$namea=null,$nameb=
 			  '$api_key' => SHIFT_SCIENCE_KEY,
 			  '$user_id' => $userid,
 			  '$subject' => $subject,
-			  '$comment' => $comment,
-			  '$sender' => $senderid
+			  'comment' => $comment,
+			  'sender' => $senderid
 			);
 		}
 		
