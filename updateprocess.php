@@ -810,7 +810,7 @@ class updateProcess
 			$database->rollbackTxn();
 			$_SESSION['value_array']=$_POST;
 			$_SESSION['error_array']=$form->getErrorArray();
-		header("Location:index.php?p=14&l=".$_POST['loanid']);
+		header("Location:index.php?p=50");
 	}
 	function pfreport()
 	{
