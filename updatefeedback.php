@@ -58,7 +58,7 @@ if(isset($_POST['feedback']))
 			$commentid=$database->subFeedback1($userid,$senderid,$comment,$type,$reply);
 			
 			/**** Integration with shift science on date 26-12-2013******/
-			$session->invoiceShiftScience('borrower_comments',$userid,'','','','','','',$comment,'',$senderid);
+			$session->getBCommentSiftData($userid, $comment);
 			
 			$res=$database->getCommentFile($senderid,$receiverid,0);
             $resParent=$database->nextCommentId($senderid,$userid,0);
@@ -194,7 +194,7 @@ if(isset($_POST['feedback']))
 			$replyid=$database->forumFeedback($senderid,$receiverid,$subject,$message,$parentid,$thread,$forumid);
 			
 			/**** Integration with shift science on date 26-12-2013******/
-			$session->invoiceShiftScience('comments_reply',$receiverid,'','','','','','',$message,$subject,$senderid);
+			$session->getBCommentSiftData($senderid,$message);
 			
 			rebuildTree($parentid,1,$thread,$db); // added by mohit $thread replaceby $parentid on date 21-10-13
 			$res=$database->ForumId($senderid, $receiverid, $forumid);

@@ -170,7 +170,7 @@ class Session
 
 		if($form->num_errors > 0){
 			/**** Integration with shift science on date 27-12-2013******/		
-			$this->invoiceShiftScience('invalid_login_event');	
+			$this->getLoginSiftData('invalid_login_event');	
 			return 0;
 		}
 		$userinfo = $database->getUserInfo($subuser);
@@ -211,7 +211,7 @@ class Session
 		}
 			
 		/**** Integration with shift science on date 24-12-2013******/		
-		$this->invoiceShiftScience('login_event',$this->userid);
+		$this->getLoginSiftData('login_event',$this->userid);
 		
 		return 1;
 
@@ -248,7 +248,7 @@ class Session
 		/* Unset PHP session variables */
 		
 		/**** Integration with shift science on date 24-12-2013******/		
-		$this->invoiceShiftScience('logout_event',$_SESSION['userid']);
+		$this->getLoginSiftData('logout_event',$_SESSION['userid']);
 		
 		unset($_SESSION['username']);
 		unset($_SESSION['userid']);
@@ -731,7 +731,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		$totalPaidAmt = $loandetail['totalPaidAmt'];
 		
 		/**** Integration with shift science on date 26-12-2013******/
-		$this->invoiceShiftScience('loan_repayments',$borrowerid,'','','','',$amount,$date);
+		$this->getBPaymentSiftData('repayment', $borrowerid, $amount);
 		
 		if($rtn==0)
 		{
@@ -1151,7 +1151,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				$message = $this->formMessage($lang['mailtext']['loan_disburse_body'], $params);
 				$this->mailSending($From, $To, $r['email'], $Subject, $message,$templet);
 				/**** Integration with shift science on date 24-12-2013 by Mohit ******/		
-				$this->invoiceShiftScience('disbursement',$pid,'','','','',$a_amount);
+				$this->getBPaymentSiftData('disbursement',$pid,$a_amount);
 				return 1;//success
 			}
 		}
@@ -2121,7 +2121,7 @@ function verify_borrower($identity_verify, $identity_verify_other, $participate_
 		}
 		if($is_eligible_ByAdmin=='0'){
 			$this->declinedBorrower($borrowerid,$eligible_no_reason);
-			$this->invoiceShiftScience('decline_borrower',$borrowerid);
+			$this->getDeclineSiftData($borrowerid);
 			$_SESSION['Declined']=true;
 			return 0;
 		}else if($is_eligible_ByAdmin = '1'){
@@ -2307,9 +2307,10 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			
 			$id = $database->getUserId($uname);
 			
-			/**** Integration with shift science on date 24-12-2013******/
-			if(!empty($id)){				  
-				$this->invoiceShiftScience('create_new_account',$id,$uname,$namea,$nameb,$post,$city,$country,$bnationid,$email,$mobile,$bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1,$bneighcont2,$bneighcont3,$rec_form_offcr_name, $rec_form_offcr_num, $about,$bizdesc,$reffered_by);
+			if(!empty($id)){	
+
+				$this->getNewBAccountSiftData('create_new_account',$userid,$uname,$namea,$nameb,$post,$city,$country,$bnationid,$email,$mobile,$bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1,$bneighcont2,$bneighcont3,$rec_form_offcr_name, $rec_form_offcr_num, $aboutMe,$aboutBusiness,$hearaAoutZidisha);
+	
 			}
 			
 			if(!empty($id) && $submit_type == $lang['register']['Registerlater'])
@@ -2504,9 +2505,10 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		{	
 			$rtn=$database->updateBorrower($uname,$namea,$nameb, $pass1, $post, $city,$country,$email, $mobile,$reffered_by, $income, $about, $bizdesc,$id,$bnationid, $language, $community_name_no, $repaidPast, $debtFree,$share_update,$onbehalf, $behalf_name, $behalf_number, $behalf_email, $behalf_town, $borrower_behalf_id, $completeLater, $bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1, $bneighcont2, $bneighcont3, $home_no, $rec_form_offcr_name, $rec_form_offcr_num, $refer_member, $volunteer_mentor, $fb_data, $endorser_name, $endorser_email, $endorser_id);
 			
-			/**** Integration with shift science on date 24-12-2013******/
-			if($rtn == 0){				  
-				$this->invoiceShiftScience('edit_account',$id,$uname,$namea,$nameb,$post,$city,$country,$bnationid,$email,$mobile,$bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1,$bneighcont2,$bneighcont3,$rec_form_offcr_name, $rec_form_offcr_num, $about,$bizdesc,$reffered_by);
+			if($rtn == 0){		
+
+				$this->getNewBAccountSiftData('edit_account',$userid,$uname,$namea,$nameb,$post,$city,$country,$bnationid,$email,$mobile,$bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1,$bneighcont2,$bneighcont3,$rec_form_offcr_name, $rec_form_offcr_num, $aboutMe,$aboutBusiness,$hearaAoutZidisha);
+	
 			}
 			
 			$isverified=$database->getVerifiedEmailBorrower($id);
@@ -8370,176 +8372,6 @@ function forgiveReminder(){
 	return $currentlimit;
 }
 
-/**** added by mohit 24-12-2013 ***/
-function invoiceShiftScience($event_type,$userid,$uname=null,$namea=null,$nameb=null,$post=null,$city=null,$country=null,$bnationid=null,$email=null,$mobile=null,$bfamilycont1=null,$bfamilycont2=null,$bfamilycont3=null, $bneighcont1=null,$bneighcont2=null,$bneighcont3=null,$rec_form_offcr_name=null, $rec_form_offcr_num=null, $aboutMe=null,$aboutBusiness=null,$hearaAoutZidisha=null,$facebook_id=null,$loan_amnt,$repay_date,$comment=null,$subject=null,$senderid){
-	
-		$time=time();
-		if($event_type=='create_new_account'){
-			
-			$data = array(
-			  '$type' => '$create_account',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  '$session_id' => session_id(),
-			  'username' => $uname,  
-			  'first_name' => $namea,
-			  'last_name' => $nameb,
-			  'address' => $post,
-			  'city' => $city,
-			  'country' => $country,
-			  'national_id' => $bnationid,
-			  '$user_email' => $email,
-			  '$phone' => $mobile,
-			  'family_contact_1' => $bfamilycont1,
-			  'family_contact_' => $bfamilycont2,
-			  'family_contact_3' => $bfamilycont3,
-			  'neighbor_contact_1' => $bneighcont1,
-			  'neighbor_contact_2' => $bneighcont2,
-			  'neighbor_contact_3' => $bneighcont3,
-			  'community_leader' => $rec_form_offcr_name,
-			  'community_leader_phone' => $rec_form_offcr_num,
-			  'about_me' => $aboutMe,
-			  'about_business' => $aboutBusiness,
-			  'hear_about_zidisha' => $hearaAoutZidisha,
-			  '$time' => $time			  
-			);
-		}
-
-		if($event_type=='edit_account'){
-			
-			$data = array(
-			  '$type' => '$update_account',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  '$session_id' => session_id(),
-			  'username' => $uname,  
-			  'first_name' => $namea,
-			  'last_name' => $nameb,
-			  'address' => $post,
-			  'city' => $city,
-			  'country' => $country,
-			  'national_id' => $bnationid,
-			  '$user_email' => $email,
-			  '$phone' => $mobile,
-			  'family_contact_1' => $bfamilycont1,
-			  'family_contact_' => $bfamilycont2,
-			  'family_contact_3' => $bfamilycont3,
-			  'neighbor_contact_1' => $bneighcont1,
-			  'neighbor_contact_2' => $bneighcont2,
-			  'neighbor_contact_3' => $bneighcont3,
-			  'community_leader' => $rec_form_offcr_name,
-			  'community_leader_phone' => $rec_form_offcr_num,
-			  'about_me' => $aboutMe,
-			  'about_business' => $aboutBusiness,
-			  'hear_about_zidisha' => $hearaAoutZidisha,
-			  '$time' => $time			  
-			);
-		}
-		
-		if($event_type=='facebook_connect'){			
-			$data = array(
-			  '$type' => '$facebook_link',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$session_id' => session_id(),
-			  'facebookid' => $facebook_id,
-			  '$time' => $time
-			);
-		}
-		
-		if($event_type=='login_event'){			
-			$data = array(
-			  '$type' => '$login',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  '$session_id' => session_id(),
-			  '$login_status' => '$success',
-			  '$time' => $time
-			);
-		}
-		
-		if($event_type=='invalid_login_event'){			
-			$data = array(
-			  '$type' => '$login',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  '$session_id' => session_id(),
-			  '$login_status' => 'failure'
-			);
-		}
-
-		if($event_type=='logout_event'){			
-			$data = array(
-			  '$type' => '$logout',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  '$session_id' => session_id()
-			);
-		}
-		
-		if($event_type=='disbursement'){			
-			$data = array(
-			  '$type' => '$loan_disbursement',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  'loan_amount' => $loan_amnt,
-			  '$time' => $time
-			);
-		}
-		
-		if($event_type=='loan_repayments'){			
-			$data = array(
-			  '$type' => '$loan_repayment',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  'repayment_amount' => $loan_amnt,
-			  'repayment_date' => $repay_date,
-			  '$time' => $time
-			);
-		}
-		
-		if($event_type=='borrower_comments'){			
-			$data = array(
-			  '$type' => '$comment_post',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  'comment' => $comment,
-			  'sender' => $senderid
-			);
-		}
-		
-		if($event_type=='comments_reply'){			
-			$data = array(
-			  '$type' => '$comment_reply',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  '$subject' => $subject,
-			  'comment' => $comment,
-			  'sender' => $senderid
-			);
-		}
-		
-		if($event_type=='decline_borrower'){			
-			$data = array(
-			  '$type' => '$decline',
-			  '$api_key' => SHIFT_SCIENCE_KEY,
-			  '$user_id' => $userid,
-			  '$is_bad' => true,
-			  'reasons' => 'Declined',
-			  '$description' => 'Borrower application declined',
-			  '$time' => $time
-			);
-		}
-		
-		if($event_type=='decline_borrower') {
-			$url_send ="https://api.siftscience.com/v203/users/".$userid."/labels"; 
-		}else{
-			$url_send ="https://api.siftscience.com/v203/events"; 
-		}
-		
-		$str_data = json_encode($data);	
-		$this->sendPostData($url_send, $str_data);
-		
-}
 
 function sendPostData($url, $post){
 	  $ch = curl_init($url);
@@ -8618,10 +8450,169 @@ function isEligibleToInvite($userid){
 	return $eligible;
 }
 
+function getLoginSiftData($event_type,$userid){
+
+	$time=time();
+	
+	if($event_type=='login_event'){			
+		
+		$data = array(
+			  '$type' => '$login',
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$session_id' => session_id(),
+			  '$login_status' => '$success',
+			  '$time' => $time
+			);		
+	
+	}elseif($event_type=='invalid_login_event'){			
+				
+		$data = array(
+			  '$type' => '$login',
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$session_id' => session_id(),
+			  '$login_status' => '$failure',
+			  '$time' => $time
+			);		
+	
+	}elseif($event_type=='logout_event'){	
+	
+		$data = array(
+			'$type' => '$logout',
+			'$api_key' => SHIFT_SCIENCE_KEY,
+			'$user_id' => $userid,
+			'$session_id' => session_id()
+			);
+	}
+
+	$url_send ="https://api.siftscience.com/v203/events"; 
+	$str_data = json_encode($data);	
+	$this->sendPostData($url_send, $str_data);
+		
+}
+
+function getNewBAccountSiftData($event_type,$userid,$uname=null,$namea=null,$nameb=null,$post=null,$city=null,$country=null,$bnationid=null,$email=null,$mobile=null,$bfamilycont1=null,$bfamilycont2=null,$bfamilycont3=null, $bneighcont1=null,$bneighcont2=null,$bneighcont3=null,$rec_form_offcr_name=null, $rec_form_offcr_num=null, $aboutMe=null,$aboutBusiness=null,$hearaAoutZidisha=null){
+	
+		$time=time();
+
+		if($event_type=='create_new_account'){
+
+			$typelabel = '$create_account';
+
+		}elseif($event_type=='edit_account'){
+			
+			$typelabel ='$update_account';
+
+		}
+
+		$data = array(
+			  '$type' => $typelabel,
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$session_id' => session_id(),
+			  'username' => $uname,  
+			  'first_name' => $namea,
+			  'last_name' => $nameb,
+			  'address' => $post,
+			  'city' => $city,
+			  'country' => $country,
+			  'national_id' => $bnationid,
+			  '$user_email' => $email,
+			  '$phone' => $mobile,
+			  'family_contact_1' => $bfamilycont1,
+			  'family_contact_' => $bfamilycont2,
+			  'family_contact_3' => $bfamilycont3,
+			  'neighbor_contact_1' => $bneighcont1,
+			  'neighbor_contact_2' => $bneighcont2,
+			  'neighbor_contact_3' => $bneighcont3,
+			  'community_leader' => $rec_form_offcr_name,
+			  'community_leader_phone' => $rec_form_offcr_num,
+			  'about_me' => $aboutMe,
+			  'about_business' => $aboutBusiness,
+			  'hear_about_zidisha' => $hearaAoutZidisha,
+			  '$time' => $time			  
+			);
+		
+		$url_send ="https://api.siftscience.com/v203/events"; 
+		$str_data = json_encode($data);	
+		$this->sendPostData($url_send, $str_data);
+		
+}
+
+function getBInviteSiftData($userid,$invited_by){
+
+		$time=time();
+		$data = array(
+			  '$type' => 'borrower_invite',
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$session_id' => session_id(),
+			  'invited_by' => $invited_by,
+			  '$time' => $time	 		  
+			);
+		
+		$url_send ="https://api.siftscience.com/v203/events"; 
+		$str_data = json_encode($data);	
+		$this->sendPostData($url_send, $str_data);
+		
+}
+
+function getBPaymentSiftData($event_type, $userid, $amount){
+
+	$time=time();
+
+	$data = array(
+		'$type' => $event_type,
+		'$api_key' => SHIFT_SCIENCE_KEY,
+		'$user_id' => $userid,
+		'amount' => $amount,
+		'$time' => $time
+		);
+
+	$url_send ="https://api.siftscience.com/v203/events"; 
+	$str_data = json_encode($data);	
+	$this->sendPostData($url_send, $str_data);
+		
+}
+
+function getBCommentSiftData($userid, $comment){
+
+	$time=time();
+
+	$data = array(
+		'$type' => 'comment_post',
+		'$api_key' => SHIFT_SCIENCE_KEY,
+		'$user_id' => $userid,
+		'comment' => $comment,
+		'$time' => $time
+		);
+
+	$url_send ="https://api.siftscience.com/v203/events"; 
+	$str_data = json_encode($data);	
+	$this->sendPostData($url_send, $str_data);
+		
+}
 
 
+function getDeclineSiftData($userid){
 
-
+		$time=time();
+		
+		$data = array(
+			  '$type' => 'decline',
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$is_bad' => true,
+			  'reasons' => 'Declined',
+			  '$description' => 'Borrower application declined',
+			  '$time' => $time
+		);
+		
+		$url_send ="https://api.siftscience.com/v203/users/".$userid."/labels"; 
+		$str_data = json_encode($data);	
+		$this->sendPostData($url_send, $str_data);
+		
+}
 
 
 /***** end here ******/

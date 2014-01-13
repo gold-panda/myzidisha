@@ -1194,7 +1194,7 @@ class genericClass
             
             $q1="UPDATE invites SET invitee_id = ? Where email = ? LIMIT 1";
             
-            return $db->query($q1, array($userid, $email));
+            $res= $db->query($q1, array($userid, $email));
         
         } elseif(isset($_COOKIE["invtduserjoins"])) {
             $cookie_val = $_COOKIE["invtduserjoins"];
@@ -1204,6 +1204,16 @@ class genericClass
             $res=$db->query($q1, array($userid, $cookie_val));
             setcookie ("invtduserjoins", "", time() - 3600);
         }
+
+        if(!empty($res)){
+
+            $invited_by = $this->getInvitee($userid);
+
+            $session->getBInviteSiftData($userid,$invited_by);
+
+        }
+
+        return $res;
     }
     
     function getco_Organizers_Country() {
@@ -7290,8 +7300,7 @@ class genericClass
             $q1="insert into ! (facebook_id, userid, facebook_data, accept, date, zidisha_email, ip_address, fail_reason) values(?,?,?,?,?,?,?,?)";
             $res=$db->query($q1, array('facebook_info', $facebook_id, $userid, $fbData, $web_acc, $date, $email, $ip, $fail_reason));
         }
-		/**** Integration with shift science on date 24-12-2013******/
-		$session->invoiceShiftScience('facebook_connect',$userid,'','','',$facebook_id);
+		$session->getFBSiftData($facebook_id);
         return $res;
     }
 
