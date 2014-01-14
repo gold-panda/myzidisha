@@ -726,7 +726,7 @@ else
 			<tbody>
 				<tr>
 					<td style="width:180px;"><strong><?php echo $lang['loanstatn']['requested'] ?>:</strong></td>
-					<td>USD <?php echo number_format($brw2['reqdamt'], 2, ".", "") ?></td>
+					<td>USD <?php echo number_format($brw2['reqdamt'], 2, ".", ",") ?></td>
 				</tr>
 				<tr>
 					<td>
@@ -806,18 +806,48 @@ else
 				<form id='bidform1' name="bidform1" action="process.php" method="post" style='margin-top: 20px;'>
 					<p>&nbsp;</p>
 					<?php if($loginError = $form->error('bid_userid1')){ echo "<div>".$loginError."</div><br/>";}?>
+					
+
 					<div class="clearfix">
+						
 						<label style="width:auto" for="pamount1"><?php echo $lang['loanstatn']['loan_amount'] ?> (USD)</label>
-						<div class="input inputex"><input class="medium" id="pamount1" name="pamount1" size="20" type="text"  value="<?php echo $pamount1; ?>"></div>
+						
+<!-- drop-down menu for lenders to select bid amount -->
+						<div class="input inputex">
+
+							<select class"medium" style="width:120px" id="pamount1" name="pamount1">
+
+								<?php
+
+								$amt_range = range(1, $brw2['reqdamt']);
+
+								arsort($amt_range);
+								
+								$i=0;
+
+								foreach($amt_range as $amt_option) {  ?>
+
+									<option value='<?php $amt_option; ?>' <?php if($form->value("$pamount1")==$amt_option) echo "Selected='true'" ?>>$<?php echo number_format($amt_option) ?></option>
+
+									<?php		
+
+									$i++;
+
+								} ?>
+
+							</select>
+						
+						</div>
+					
 						<div class="input inputex" id="pamounterr1"><?php echo $form->error('pamount1'); ?></div>
-					</div><!-- /clearfix -->
+					
+					</div>
+
 					<div class="clearfix">
+
 						<label style="width:auto" for="pinterest1">
-						<?php 
-							 
-							$params['prposeintr'] = number_format($maxInterestRate, 2, '.', ',');
-							$enter_intr = $session->formMessage($lang['loanstatn']['prop_intr'], $params);
-						?><?php echo $enter_intr;?> 
+						
+						<?php echo $lang['loanstatn']['prop_intr'];?> 
 						
 						<img src='library/tooltips/help.png' class="intr2-tooltip-target tooltip-target" id="intr2-target-1" style='border-style:none;display:inline' />
 						<div class="tooltip-content tooltip-content" id="intr2-content-1">
@@ -834,9 +864,33 @@ else
 						</div>
 						</label>
 
-						<div class="input inputex"><input class="medium" id="pinterest1" name="pinterest1" size="20" type="text" value="<?php echo $pinterest1; ?>"></div>
-						<div class="input inputex" id="pintrerr1"><?php echo $form->error('pinterest1'); ?></div>
+
+<!-- drop-down menu for lenders to select interest rate -->
+						<div class="input inputex">
+							<select class"medium" style="width:120px" id="pinterest1" name="pinterest1">
+
+								<?php
+
+								$int_range = range(0, $maxInterestRate);
+
+								$i=0;
+
+								foreach($int_range as $int_option) {  ?>
+
+									<option value='<?php echo $int_option; ?>' <?php if($form->value("$pinterest1")==$int_option) echo "Selected='true'" ?>><?php echo $int_option ?>%</option>
+
+									<?php		
+
+									$i++;
+
+								} ?>
+
+							</select>
+						</div>
+						
+
 					</div><!-- /clearfix -->
+
 			<?php	if(isset($_SESSION['lender_bid_success1']))
 					{	?>
 						<div class="clearfix" style="color:green">

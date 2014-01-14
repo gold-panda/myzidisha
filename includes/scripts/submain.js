@@ -310,49 +310,13 @@ $(document).ready(function(){
 				}
 			}
 		);
-		$("#pinterest").blur(
-			function(event){
-				var intrest=$(this).val();
-				intrest=intrest.replace('%', '');
-				if((intrest.length) < 1){
-					$("#pintrerr").css({'color':'red'}).html("** Please enter Interest..");
-				}
-				else
-				{
-					var filter = /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;;
-					if(!filter.test(intrest)){
-						$("#pintrerr").css({'color':'red'}).html("** Please enter an interest rate in numerical format.");
-						}else{
-							$("#pintrerr").css({'color':'red'}).html("");
-						}
-				}
-			}
-		);
-		$("#pinterest1").blur(
-			function(event){
-				var intrest=$(this).val();
-				intrest=intrest.replace('%', '');
-				if((intrest.length) < 1){
-					$("#pintrerr1").css({'color':'red'}).html("** Please enter Interest..");
-				}
-				else
-				{
-					var filter = /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;;
-					if(!filter.test(intrest)){
-						$("#pintrerr1").css({'color':'red'}).html("** Please enter an interest rate in numerical format.");
-						}else{
-							$("#pintrerr1").css({'color':'red'}).html("");
-						}
-				}
-			}
-		);
 	
 	})
 function verifyTnC(){
 needToConfirm = false;
 	if(document.getElementById('agree').checked) {
 		document.getElementById('tnc').value=1;
-	}else{
+	}e** Please enter Interest..lse{
 		alert("You must accept the Terms of Use in order to create an account");
 		return false;
 	}
