@@ -733,9 +733,7 @@ end endorser section -->
 							<input type="hidden" name="before_fb_data" id="before_fb_data" />
 							<input type="hidden" name="fb_data" id="fb_data" value='<?php echo urlencode(addslashes(serialize($fbData))); ?>'/>
 							<input type="submit" name='submitform' class="btn" align="center" value="<?php echo $lang['register']['RegisterComplete'];?>" onclick="needToConfirm = false;"  />
-							
-							<br/><br/><br/><br/>
-							<div align="left"><input type="submit" name='submitform'  id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" /></div>
+							<div align="left" style="margin-top: -32px;"><input type="submit" class="btn" name='submitform' class="btn" id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" /></div>
 							
 						</td>
 					</tr>
@@ -1146,7 +1144,7 @@ end endorser section -->
 				document.getElementById("telephone_contact").style.display = 'none';
 				document.getElementById("tele_contacts").style.display = '';
 				document.getElementById("contact_type").style.display = 'none';
-				document.getElementById('endorser').style.display='';
+				//document.getElementById('endorser').style.display='';
 				document.getElementById('brwr_behalf').style.display='none';
 				document.getElementById('facebook_optional').style.display='none';
 				document.getElementById('facebook_result').style.display='none';
@@ -1156,7 +1154,7 @@ end endorser section -->
 				document.getElementById("telephone_contact").style.display = '';
 				document.getElementById("tele_contacts").style.display = 'none';
 				document.getElementById("contact_type").style.display = '';
-				document.getElementById('endorser').style.display='none';
+				//document.getElementById('endorser').style.display='none';
 				document.getElementById('brwr_behalf').style.display='';
 				document.getElementById('facebook_optional').style.display='';
 				document.getElementById('facebook_result').style.display='';

@@ -23,20 +23,7 @@ include_once("./editables/".$path);
 ?>
 <script type="text/javascript" src="includes/scripts/submain.js?q=<?php echo RANDOM_NUMBER ?>"></script>
 <script type="text/javascript" src="includes/scripts/generic.js?q=<?php echo RANDOM_NUMBER ?>"></script>
-<script type="text/javascript">
-	function refC(){
-		document.getElementById('ci').src = 'library/captcha/captcha.php?'+Math.random();
-	}
-	function setLanguage(lan){
-		var siteurl = "<?php echo SITE_URL ?>";
-		var requrl = "<?php echo $url ?>";
-		if(lan=='en')
-			url= siteurl+requrl;
-		else
-			url= siteurl+lan+"/"+requrl+"&lang="+lan;
-		window.location=url;
-	}
-</script>
+
 <div class="span12">
 <?php
 
