@@ -14,6 +14,11 @@ $(function() {
 </script>
 <div class='span12'>
 <div align='left' class='static'><h1>Loans Funded</h1></div><br/>
+
+<p>This report shows the on-time repayment rate of all loans funded within a given date range. On-time payments are defined here as the amounts paid in full (within a threshold of $1 or the value of the installment amount, whichever is lesser) within 24 hours of the due date.  The report shows repayment data for installments due over two days ago only, to allow time for data entry.</p>
+
+<br/><br/>
+
 <?php 
 if($session->userlevel==ADMIN_LEVEL ) {
 	$v=0;
@@ -67,6 +72,8 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					<th>Name</th>
 					<th>Country</th>
 					<th>Date Funded</th>
+					<th>First Installment On Time</th>
+					<th>First Installment Due</th>
 					<th>Payments Made On Time (This Loan Only)</th>
 					<th>Payments Due (This Loan Only)</th>
 					<th>On-Time Repayment Rate (This Loan Only)</th>
@@ -86,23 +93,35 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					$funded_on_sort = $rows['AcceptDate'];
 					$funded_on = date('M d, Y', $funded_on_sort);
 					$country=$database->mysetCountry($rows['Country']);
-					$loanDetail= $database->isAllInstallmentOnTime($borrowerid, $loanid);
+					$loanDetail= $database->onTimeInstallmentsNoThreshold($borrowerid, $loanid);
 					$totalTodayinstallment=$loanDetail['totalTodayinstallment'];
 					$OnTimeinstallment=$loanDetail['totalTodayinstallment']- $loanDetail['missedInst'];
 					$RepayRate=($OnTimeinstallment/$totalTodayinstallment)*100;
 					$totalTodayinstallment_sum += $totalTodayinstallment;
 					$OnTimeinstallment_sum += $OnTimeinstallment;
 					$RepayRate_sum = ($OnTimeinstallment_sum / $totalTodayinstallment_sum) * 100;
-					
-
+					$firstinst_ontime = $database->wasFirstInstalOnTime($borrowerid, $loanid);
+					if ($totalTodayinstallment>=1){
+						$firstinst_due = 1;
+					}else{
+						$firstinst_due = 0;
+					}
+					$firstinst_ontime_sum += $firstinst_ontime;
+					$firstinst_due_sum += $firstinst_due;
+					$firstinst_rate_sum = ($firstinst_ontime_sum / $firstinst_due_sum)*100;
 ?>
 						<tr>
 
 
 							<td><a href="<?php echo $prurl;?>"><?php echo $zidisha_name; ?></a></td>
+							
 							<td><?php echo $country; ?></td>
 
 							<td><span style='display:none'>$funded_on_sort</span><a href="<?php echo $link;?>"><?php echo $funded_on; ?></a></td>
+
+							<td><?php echo $firstinst_ontime; ?></td>
+							
+							<td><?php echo $firstinst_due; ?></td>
 
 							<td><?php echo number_format($OnTimeinstallment); ?></td>
 
@@ -118,14 +137,25 @@ if($session->userlevel==ADMIN_LEVEL ) {
 }
 	?>
 	</tbody>
-				<tfoot>
-					<tr>
-						<th>Total Payments On Time:</th>
-						<th><?php echo number_format($OnTimeinstallment_sum); ?></th>
-						<th>Total Payments Due:</th>
-						<th><?php echo $totalTodayinstallment_sum; ?></th>						<th>Total On-Time Repayment Rate:</th>
-						<th><?php echo number_format($RepayRate_sum); ?>%</th>
-					</tr>
-				</tfoot>
+			
 </table>
+
+<br/><br/><br/>
+
+<strong>
+<p>Total 1st Installments On Time:  <?php echo number_format($firstinst_ontime_sum); ?></p>
+						
+<p>Total 1st Installments Due:  <?php echo number_format($firstinst_due_sum); ?></p>
+						
+<p>1st Installment On-Time Repayment Rate:  <?php echo number_format($firstinst_rate_sum); ?>%</p>
+						
+<p>Total Payments On Time: <?php echo number_format($OnTimeinstallment_sum); ?></p>
+						
+<p>Total Payments Due: <?php echo $totalTodayinstallment_sum; ?></p>
+
+<p>Total On-Time Repayment Rate:  <?php echo number_format($RepayRate_sum); ?>%</p>
+
+</strong>
+
+
 </div>

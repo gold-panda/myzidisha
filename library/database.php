@@ -11353,6 +11353,172 @@ class genericClass
     }
 
 
+/* Used in calculating on-time repayment rate without large 
+thresholds, to give more immediate feedback on any delinquencies 
+for internal performance tracking purposes. Do not use this function 
+for published on-time repayment rates. */
+
+function onTimeInstallmentsNoThreshold($userid, $loanid) {
+        global $db,$database;
+        $schedule = $this->getSchedulefromDB($userid, $loanid);
+        $actualSchedule = $this->getRepaySchedulefromDB($userid, $loanid);
+        $paidBalance = 0;
+        $time_threshold = 86400; //one-day threshold
+        $amt_threshold = 1; // allow threshold of only $1 to determine lateness
+        $yesterday= time() - (86400 * 2); //subtract two days to consider only installments due over one day ago
+        for($i = 0, $j=0; $i < count($schedule); $i++) {
+            $flag=0;
+            $printSchedule[$i]['dueAmt']=$schedule[$i]['amount'];
+            $printSchedule[$i]['dueDate']=$schedule[$i]['duedate'];
+            $inst=0;
+            $inst=$schedule[$i]['amount'];
+            while($paidBalance >0)
+            {
+                if($inst >0)
+                {
+                    if($inst <= $paidBalance)
+                    {
+                        $printSchedule[$i]['sub'][][$actualSchedule[$j-1]['paiddate']]=$inst;
+                        $paidBalance=number_format(($paidBalance-$inst), 6, '.', '');
+                        $inst=0;
+                        break;
+                    }
+                    else
+                    {
+                        $printSchedule[$i]['sub'][][$actualSchedule[$j-1]['paiddate']]=$paidBalance;
+                        $inst = number_format(($inst - $paidBalance), 6, '.', '');
+                        $paidBalance=0;
+                    }
+                }
+                else
+                    break;
+            }
+            if($paidBalance==0)
+            {
+                for($k=0; $j < count($actualSchedule); $j++)
+                {
+                    if($inst >0)
+                    {
+                        if($inst <= $actualSchedule[$j]['paidamt'])
+                        {
+                            $printSchedule[$i]['sub'][][$actualSchedule[$j]['paiddate']]=$inst;
+                            $paidBalance=number_format(($actualSchedule[$j]['paidamt']-$inst), 6, '.', '');
+                            $j++;
+                            $flag=1;
+                            break;
+                        }
+                        else
+                        {
+
+                            $printSchedule[$i]['sub'][][$actualSchedule[$j]['paiddate']]=$actualSchedule[$j]['paidamt'];
+                            $inst = number_format(($inst - $actualSchedule[$j]['paidamt']), 6, '.', '');
+                            $flag=1;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if($inst >0 && $flag!=1 &&($yesterday - $printSchedule[$i]['dueDate']) > 0){ 
+                    $printSchedule[$i]['sub'][][$yesterday]=$inst;
+                }
+            }
+        }
+        $totalinstall =0;
+        $missedInst = 0;
+        if(!empty($printSchedule)) {
+            foreach($printSchedule as $repayschedule) {
+                if(isset($repayschedule['sub'])) {
+                    $thresholdamount = 0;
+                    $multipartInst = 0;
+                    $totpaidins = 0;
+                    for($l=0; $l < count($repayschedule['sub']);$l++) {
+                        $paid_date = key($repayschedule['sub'][$l]);
+                        $paid_amt = $repayschedule['sub'][$l][$paid_date];
+                        $CurrencyRate = $this->getExRateById($paid_date,$userid);
+                        
+
+                        $adminthreshold = convertToNative($amt_threshold, $CurrencyRate);
+
+                        // set threshold shortfall allowed for an installment to be considered repaid in full as equal to a specified threshold amount, or the size of one installment, whichever is lesser
+                        if ($adminthreshold < $schedule[$i]['amount']){
+                            
+                            $thresholdamount = $adminthreshold;
+                        
+                        } else {
+
+                            $thresholdamount = $schedule[$i]['amount'];
+
+                        }
+
+                        if(($paid_date - $repayschedule['dueDate']) > $time_threshold) {
+                            $multipartInst+=$paid_amt;
+
+                        }
+                        $totpaidins+=$paid_amt;
+                    }
+                    $due_amt = $repayschedule['dueAmt'];
+                    if($due_amt - $totpaidins < $thresholdamount) {
+                        $totalinstall++;
+                    }
+                    if($multipartInst > $thresholdamount) {
+                        $missedInst++;
+                    }
+                }
+            }
+        }
+ 
+        $totalTodayinstallment= $this->getTotalInstalAsOf($loanid, $userid);
+
+        $retarr['loanid'] = $loanid;
+        $retarr['totalTodayinstallment'] = $totalTodayinstallment;
+        $retarr['TotalInstlment'] = $totalinstall;
+        $retarr['missedInst'] = $missedInst;
+        return $retarr;
+    }
+
+
+//gets total installments due as of the date specified 
+function getTotalInstalAsOf($loanid, $userid){
+    global $db;
+    $asof_day = time() - (86400 * 2); //subtract two days to consider only installments due over one day ago
+    $q1="SELECT COUNT( id ) FROM  ! WHERE duedate <= ? AND loanid =? AND userid =? AND amount >?";
+    $res=$db->getOne($q1, array('repaymentschedule', $asof_day, $loanid, $userid, 0));
+    return $res;
+}
+
+//determines whether first installment of a given loan was paid on time, given the time and amount parameters specified
+function wasFirstInstalOnTime($userid, $loanid){ 
+    global $db;
+
+    $asof_day = time() - (86400 * 2); //subtract two days to consider only installments due over one day ago
+    $timethreshold=86400; //anything paid within 24 hours of due date is on time
+    $dollar_threshold=1; //set amount threshold to one dollar
+    $CurrencyRate = $this->getExRateById($userid);
+                        
+    $local_threshold = convertToNative($dollar_threshold, $CurrencyRate);
+
+    $q1="SELECT min(duedate) from ! WHERE loanid = ? AND amount>0 AND duedate <= ?"; 
+    $res1=$db->getOne($q1, array('repaymentschedule', $loanid, $asof_day));
+
+    $q2="SELECT COUNT(id) from ! WHERE loanid = ? AND duedate = ? AND paiddate <= duedate + $timethreshold AND amount - paidamt <= $local_threshold AND amount - paidamt <= amount"; //shortfall cannot be more than one dollar or size of installment
+    $res2=$db->getOne($q2, array('repaymentschedule', $loanid, $res1));
+
+
+    if ($res2 > 0){
+        $ontime = 1; //on time
+    }else{
+        $ontime = 0; //not on time
+    }
+
+    return $ontime;
+}
+
+
+
+
+
 };
 $database= new genericClass;
 ?>
