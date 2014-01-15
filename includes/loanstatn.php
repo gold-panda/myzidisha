@@ -789,6 +789,10 @@ else
 			</tbody>
 		</table>
 		<?php echo $session->getStatusBar($ud,$ld); ?>
+
+
+<!-- start lender bid form -->
+
 <?php	if($brw2['active']==LOAN_OPEN)
 		{
 			if($session->userlevel  == LENDER_LEVEL || empty($session->userid))
@@ -797,12 +801,7 @@ else
 				if($brw2['active'] == LOAN_OPEN)
 				{
 ?>
-				<script type="text/javascript">
-					function fillAmount1()
-					{
-						document.bidform1.pamount1.value="<?php echo number_format($stilneed, 2, '.', ''); ?>";
-					}
-				</script>
+			
 				<form id='bidform1' name="bidform1" action="process.php" method="post" style='margin-top: 20px;'>
 					<p>&nbsp;</p>
 					<?php if($loginError = $form->error('bid_userid1')){ echo "<div>".$loginError."</div><br/>";}?>
@@ -815,7 +814,7 @@ else
 <!-- drop-down menu for lenders to select bid amount -->
 						<div class="input inputex">
 
-							<select class"medium" style="width:120px" id="pamount1" name="pamount1">
+							<select class"medium" style="width:230px" id="pamount1" name="pamount1">
 
 								<?php
 
@@ -833,13 +832,16 @@ else
 									<option value='<?php $amt_option; ?>' 
 										<?php 
 
+										$display_amtoption="$".number_format($amt_option);
+
 										if($form->value("$pamount1")==$amt_option){
 											echo "Selected='true'";
 										}elseif ($amt_option==$stilneed){
 												echo "Selected='true'";
+												$display_amtoption="Complete ".$brw['FirstName']."'s Loan: $".number_format($amt_option);
 										}
 										
-										?>>$<?php echo number_format($amt_option) ?>
+										?>><?php echo $display_amtoption; ?>
 									</option>
 
 									<?php		
@@ -880,7 +882,7 @@ else
 
 <!-- drop-down menu for lenders to select interest rate -->
 						<div class="input inputex">
-							<select class"medium" style="width:120px" id="pinterest1" name="pinterest1">
+							<select class"medium" style="width:230px" id="pinterest1" name="pinterest1">
 
 								<?php
 
@@ -915,11 +917,7 @@ else
 
 						</div>
 			<?php	} ?>
-			<?php	if($stilneed > 0){ ?>
-					<div class="clearfix">
-						<a href="javascript:void(0)" onClick='fillAmount1();'><strong>Complete <?php echo $brw['FirstName'] ?>'s Loan (USD <?php echo number_format($stilneed, 2, '.', '') ?>)</strong></a>
-					</div>
-					<?php } ?>
+
 					<input type="hidden" id="lenderbidUp" name="lenderbidUp" value="" />
 					<input type="hidden" name="user_guess" value="<?php echo generateToken('lenderbidUp'); ?>"/>
 					<input type="hidden" id="borrowerid1" name="bid" value="<?php echo $ud ?>" />
@@ -1463,9 +1461,11 @@ if($brw2['active']==LOAN_OPEN )
 
 					echo "<p align='left'>".$lang['loanstatn']['nobid']."</p>";
 				}
+
+/* second bid form removed 15-1-2013
+
 				if($session->userlevel  == LENDER_LEVEL || empty($session->userid))
 				{
-					/* now bidding form is displaying for not logged in users */
 					if($brw2['active'] == LOAN_OPEN)
 					{
 ?>
@@ -1541,7 +1541,11 @@ if($brw2['active']==LOAN_OPEN )
 						<?php } ?>
 					</form>
 			<?php	}
-				}	?>
+				}	
+
+*/
+
+				?>
 			</div><!-- /bid-table -->
 		</div><!-- /span16 -->
 	</div><!-- /row -->
@@ -2004,6 +2008,7 @@ if($brw2['active'] == LOAN_REPAID)
 											</tr>
 										</table>
 									</div>
+
 									<div class="shareTab3Detail" style="<?php if(!isset($_SESSION['shareEmailValidate']) || isset($_SESSION['ShareEmailSent'])) {echo 'display:none';} ?>">
 										<form name="bidform1" action="process.php" method="post">
 											<table class="form_text" align="center" cellpadding="0" cellspacing="0" width="100%">
