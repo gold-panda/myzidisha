@@ -1,2 +1,5 @@
 
 .DS_Store
+
+# exclude .htaccess file used in dev environment
+/.htaccess
