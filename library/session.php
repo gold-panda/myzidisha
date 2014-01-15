@@ -2309,7 +2309,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			
 			if(!empty($id)){	
 
-				$this->getNewBAccountSiftData('create_new_account',$userid,$uname,$namea,$nameb,$post,$city,$country,$bnationid,$email,$mobile,$bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1,$bneighcont2,$bneighcont3,$rec_form_offcr_name, $rec_form_offcr_num, $aboutMe,$aboutBusiness,$hearaAoutZidisha);
+				$this->getNewBAccountSiftData('create_new_account',$id,$uname,$namea,$nameb,$post,$city,$country,$bnationid,$email,$mobile,$bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1,$bneighcont2,$bneighcont3,$rec_form_offcr_name, $rec_form_offcr_num, $aboutMe,$aboutBusiness,$hearaAoutZidisha);
 	
 			}
 			
@@ -2593,7 +2593,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		}
 	}
 
-		function additional_verification($id, $language, $documents, $uploadedDocs, $fb_data, $endorser_name, $endorser_email, $endorser_id)
+		function additional_verification($id, $language, $documents, $submitformvalue, $uploadedDocs, $fb_data, $endorser_name, $endorser_email, $endorser_id)
 	{
 		global $database, $form, $mailer,$validation ;
 		traceCalls(__METHOD__, __LINE__);
@@ -2644,6 +2644,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 					}
 				
 			}
+
 				$this->updateBorrowerDocument($id, $documents);
 				return $rtn;
 		}
