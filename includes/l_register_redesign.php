@@ -8,6 +8,8 @@
 			<?php } ?>
 		</div>
 		<div class="holder_342 group">
+			<br/>
+			<p class="blue_color uppercase formTitle">Dummy category</p>
 
 			<!-- username -->
 			<label><?php echo $lang['register']['username'];?><span class="red">*</span></label>
@@ -102,7 +104,7 @@
 			</div>
 			<br/><?php echo $form->error("lcountry"); ?>
 
-			<!-- Photom -->
+			<!-- Photoes -->
 			<?php 
 				if($select==5)
 					echo $lang['register']['photo_logo'];
@@ -120,7 +122,9 @@
 			<?php	}	?>
 			<br/><?php echo $form->error("lphoto"); ?>
 			<input type="hidden" name="isPhoto_select" value="<?php echo $form->value("isPhoto_select"); ?>" />
+		</div>
 
+		<div class="holder_522 group">
 			<!-- About yourself -->
 			<label><?php echo $lang['register']['A_Yourself_l'];?> <?php echo $lang['register']['l_optional'];?></label>
 			<textarea class="textareacmmn" name="labout" id="labout" ><?php echo $form->value("labout"); ?></textarea>
@@ -139,8 +143,125 @@
 			<div class="radio_s">
 				<INPUT TYPE="Radio" id="hide_Amount1" class="left" name="hide_Amount" value="1" tabindex="4"  />
 				<span class="left"><?php echo $lang['register']['no'];?></span>
-			</div>		
+			</div>	
 
+			<!-- radio 2 -->
+			<label><?php echo $lang['register']['d_mailinglist_preferences_onloanRepayment_credited']; ?></label>
+			<div class="radio_s">
+				<INPUT TYPE="Radio" id="loan_repayment_credited" name="loan_repayment_credited" value="1" tabindex="3" checked />
+				<span class="left"><?php echo $lang['register']['yes'];?></span>
+			</div>	
+			<div class="radio_s">
+				<INPUT TYPE="Radio" id='loan_repayment_credited1' name="loan_repayment_credited" value="0" tabindex="4"  />
+				<span class="left"><?php echo $lang['register']['no'];?></span>
+			</div>	
+
+			<!-- radio 3 -->
+			<label><?php echo $lang['register']['d_mailinglist_preferences_onloanComment']; ?></label>
+			<div class="radio_s">
+				<INPUT TYPE="Radio" id="loan_comment" name="loan_comment" value="1" tabindex="3" checked />
+				<span class="left"><?php echo $lang['register']['yes'];?></span>
+			</div>	
+			<div class="radio_s">
+				<INPUT TYPE="Radio" id='loan_comment1' name="loan_comment" value="0" tabindex="4"  />
+				<span class="left"><?php echo $lang['register']['no'];?></span>
+			</div>	
+
+			<!-- radio 4 -->
+			<label><?php echo $lang['register']['wd_new_loan_app']; ?></label>
+			<div class="radio_s">
+				<INPUT TYPE="Radio" id="loan_app_notify" name="loan_app_notify" value="1" tabindex="3" checked />
+				<span class="left"><?php echo $lang['register']['yes'];?></span>
+			</div>	
+			<div class="radio_s">
+				<INPUT TYPE="Radio" id='loan_app_notify1' name="loan_app_notify" value="0" tabindex="4"  />
+				<span class="left"><?php echo $lang['register']['no'];?></span>
+			</div>
+
+			<!-- radio 5 -->
+			<label>
+				<?php echo $lang['register']['mailinglist_preferences_subscribe_newsletter']; ?><br/>
+				<a href="http://us1.campaign-archive2.com/?u=c8b5366ff36890ecbc3bf00cc&id=f5b7c5b570" target='_blank'>View a sample</a>
+			</label>
+			<div class="radio_s">
+				<INPUT TYPE="Radio" id="subscribe_newsletter" name="subscribe_newsletter" value="1" tabindex="3" checked />
+				<span class="left"><?php echo $lang['register']['yes'];?></span>
+			</div>	
+			<div class="radio_s">
+				<INPUT TYPE="Radio" id='subscribe_newsletter1' name="subscribe_newsletter" value="0" tabindex="4"  />
+				<span class="left"><?php echo $lang['register']['no'];?></span>
+			</div>
+		</div>
+		<div class="holder_522 group">
+
+			<!-- gift card -->
+			<label><?php echo $lang['register']['card_code']; ?></label>
+			<input type="text" name="card_code" id="card_code" maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("card_code"); ?>" />
+			<br/>
+			<?php echo $form->error("card_code"); ?>
+
+			<!-- referral code -->
+			<?php $isCampaign= $database->IsActiveCampaign(); 
+			
+			if($isCampaign){?>
+		 		<?php $invalid_referral_code=$form->value("referral_code");
+				if(!empty($invalid_referral_code))
+					$referral_code_value=$form->value("referral_code");
+			else
+				if(isset($_GET['rc']))
+					$referral_code_value=	$_GET['rc'];
+			else
+					$referral_code_value='';
+			?>
+			<label><?php echo $lang['register']['referral_code']; ?></label>
+			<input type="text" id="referral_code" name="referral_code" maxlength="20" class="inputcmmn-1" value="<?php echo $referral_code_value; ?>" />
+			<br/>
+			<div id="referror"><?php echo $form->error("referral_code"); ?></div>
+			<?php  }?>
+		</div>
+
+		<!-- captcha -->
+		<div>
+			<label><?php echo $lang['register']['capacha'];?><span class="red">*</span></label>
+			<?php echo  recaptcha_get_html(RECAPCHA_PUBLIC_KEY, $form->error("user_guess")); ?>
+		</div><br/><br/>
+
+		<div class="holder_645 group">
+
+			<!-- terms -->
+			<p class="blue_color uppercase formTitle"><?php echo $lang['register']['t_c'];?></p>
+			<div align="left" style="border: 1px solid black; padding: 0px 10px 10px; overflow: auto; line-height: 1.5em; width: 90%; height: 130px; background-color: rgb(255, 255, 255);">
+				<?php
+					include_once("./editables/lenderagreement.php");
+					$path1=	getEditablePath('lenderagreement.php');
+					include_once("./editables/".$path1);
+					echo $lang['lenderagreement']['l_tnc'];
+				?>		
+			</div>
+
+			<div style="display:none;">
+				<label><?php echo $lang['register']['capacha'];?></label>
+				<div style="margin-top:20px"><?php echo  recaptcha_get_html(RECAPCHA_PUBLIC_KEY, $form->error("user_guess")); ?></div>
+				<a id="recaptcha_response_fielderr"></a>
+			</div>
+			<br/><br/>
+
+			<!-- Accept terms -->
+			<label><?php echo $lang['register']['a_a']; ?><span class="red">*</span></label>
+			<div class="radio_s">
+				<INPUT TYPE="Radio" name="agree" id="agree" value="1" tabindex="3" />
+				<span class="left"><?php echo $lang['register']['yes'];?></span>
+			</div>	
+			<div class="radio_s">
+				<INPUT TYPE="Radio" name="agree" id="agree" value="0" tabindex="4" checked />
+				<span class="left"><?php echo $lang['register']['no'];?></span>
+			</div>
+
+			<!-- Register button -->
+			<input type="hidden" name="reg-lender" />
+			<input type="hidden" name="tnc"  id="tnc" value=0 />
+			<input type="hidden" name="member_type"  id="member_type" value="<?php echo $select ?>"/>
+			<input class='btn' id="lender_submit_btn" type="submit" value="<?php echo $lang['register']['Register'];?>" onclick="return verifyTnC()"  />
 		</div>
 	</form>
 </div>

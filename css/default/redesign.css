@@ -149,7 +149,7 @@
 	border-color:#e5e5e5;
 	box-shadow:none;
 }
-#submit_btn, #borrowersubmitform, {
+#submit_btn, #borrowersubmitform {
 	width:241px!important;
 	float:left;
 	font-size:15px;
@@ -175,7 +175,8 @@
 	color: rgb(255, 0, 0);
 }
 .radio_s {
-	width:50%;
+	margin-right: 20px;
+	margin-bottom: 15px;
 	float: left;
 }
 .radio_s span {
@@ -183,7 +184,27 @@
 	margin-left: 5px;
 	color: #7e7e7e;
 }
+.radio_s input {
+	float:left;
+}
 .radio_s input[type="radio"],
 .radio_s input[type="radio"] {
 	width:auto!important;
+}
+#lender_submit_btn {
+	float:left;
+	font-size:15px;
+	text-transform: uppercase;
+	color:#fff;
+	padding:10px 12px;
+	border:none;
+	background-image: none;
+	margin:0 20px 0 0;
+	text-shadow:none;
+	font-family: Arial;
+	border-radius: 4px;
+	cursor: pointer;
+	background-color: #ff8b00!important;
+	width:auto!important;
+	clear: both;
 }

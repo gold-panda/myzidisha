@@ -94,7 +94,31 @@ if(empty($session->userid)){
 					</select>
 				</div>
 				<br/><?php echo $form->error("bcountry"); ?>
+			</div>
 
+				<!-- Hidden info for BF -->
+				<?php
+					$brwrBehalf = $form->value('borrower_behalf');
+					if($form->value("bcountry")!='BF') {
+						$brwrBehalf=0;
+				}?>
+				<div style="margin-bottom:0px; <?php //if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" id= "brwr_behalf" >
+					<a id="borrower_behalferr"></a>
+					<label><?php echo $lang['register']['borrower_behalf'];?></label>
+
+					<!-- option 1 -->
+					<div class="radio_s">
+						<input type="radio" id="borrower_behalf" name="borrower_behalf" onclick ="document.getElementById('borwr_behalf_section').style.display = 'none';" class="inputcmmn-1" value="0" <?php if($brwrBehalf=='0' || !isset($brwrBehalf)) echo"checked";?> />
+						<span class="left"><?php echo $lang['register']['borrower_behalf1'];?></span>
+					</div>	
+					<div class="radio_s">
+						<input type="radio" id="borrower_behalf" name="borrower_behalf" onclick ="document.getElementById('borwr_behalf_section').style.display = '';" class="inputcmmn-1" value="1" <?php if($brwrBehalf!='0') echo"checked";?> />
+						<span class="left"><?php echo $lang['register']['borrower_behalf2'];?></span>
+					</div>
+
+				</div>
+
+			<div class="holder_342 group">
 				<!-- facebook button -->
 				<div id="fb_mandatory" style="<?php if($form->value("bcountry")!='BF')echo "display:''"; else echo "display:none"; ?>" >
 					<label>Login with Facebook</label>
@@ -126,11 +150,6 @@ if(empty($session->userid)){
 						}?>
 					</label>
 				</div>
-				<?php
-				$brwrBehalf = $form->value('borrower_behalf');
-				if($form->value("bcountry")!='BF') {
-					$brwrBehalf=0;
-				}?>
 
 				<!-- Create username -->
 				<label><?php echo $lang['register']['endorser_uname'];?><a name="busernameerr" id="busernameerr"></a></label>
@@ -388,7 +407,7 @@ if(empty($session->userid)){
 					?>
 				</div>
 
-				<div style="display:none;">
+				<div>
 					<label><?php echo $lang['register']['capacha'];?></label>
 					<div style="margin-top:20px"><?php echo  recaptcha_get_html(RECAPCHA_PUBLIC_KEY, $form->error("user_guess")); ?></div>
 					<a id="recaptcha_response_fielderr"></a>
