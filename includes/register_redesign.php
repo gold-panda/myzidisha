@@ -77,7 +77,14 @@ if($select==1)
 }
 else if($select==2 || $select==5)
 {
-	include_once("l_register.php");
+	if(isset($_GET['redesign']))
+	{
+		include_once("l_register_redesign.php");
+	}
+	else
+	{
+		include_once("l_register.php");
+	}
 }
 else if($select==3)
 {
