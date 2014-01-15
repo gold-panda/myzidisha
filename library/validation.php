@@ -297,7 +297,7 @@ class Validation
 		//$this->checkDocuments($documents);
 		
 		//$this->checkCommunityNameAndNo($community_name_no, "community_name_no");
-		//$this->checkCapcha($user_guess, "user_guess");
+		$this->checkCapcha($user_guess, "user_guess");
 	}
 	function validateBorrowerEdit($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $country, $email, $mobile,$reffered_by, $income, $about, $bizdesc, $photo,$bnationid, $community_name_no,$File, $repaidPast, $debtFree, $share_update, $onbehalf, $behalf_name, $behalf_number, $behalf_email, $behalf_town, $submit_type, $uploadedDocs, $bfamilycont1, $bfamilycont2, $bfamilycont3, $bneighcont1, $bneighcont2, $bneighcont3,$home_no, $rec_form_offcr_name, $rec_form_offcr_num, $cntct_type, $fb_data, $endorser_name, $endorser_email,$id) 
 	{
