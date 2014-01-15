@@ -316,7 +316,7 @@ function verifyTnC(){
 needToConfirm = false;
 	if(document.getElementById('agree').checked) {
 		document.getElementById('tnc').value=1;
-	}e** Please enter Interest..lse{
+	}else /*Please enter Interest..*/{
 		alert("You must accept the Terms of Use in order to create an account");
 		return false;
 	}
