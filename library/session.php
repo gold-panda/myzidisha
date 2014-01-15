@@ -4343,18 +4343,7 @@ function totalTodayinstallment($userid){
 			$damount=$database->getOpenLoanAmount($brwid, $loanid, false);
 			$CurrencyRate = $database->getCurrentRate($brwid);
 			$BidAmt=$database->getTotalBid($brwid,$loanid);
-			if(empty($amount)){
-				$form->setError($field, $lang['error']['empty_bid_amt']);
-			}else if(!is_numeric($amount)){
-				$form->setError($field, $lang['error']['invalid_bidamt']);
-			}
-			else if($database->getMinimumFund() > $amount){
-				$form->setError($field, $lang['error']['greater_bidamt']." USD ". number_format($database->getMinimumFund(),2, '.', ','));
-			}
-			else if($damount < $amount){
-				$form->setError($field, $lang['error']['lower_bidamt']." USD ". number_format($damount,2, '.', ','));
-			}
-			else if($availableAmt < $amount){
+			if($availableAmt < $amount){
 				//$form->setError($field, $lang['error']['insuffi_amount']." USD ". number_format($availableAmt,2, '.', ','));
 				if($auto_lend) {
 					return 3;
