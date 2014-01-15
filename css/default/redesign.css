@@ -88,6 +88,8 @@
 }
 .arrow_hider_big {
 	width:522px;
+	overflow:hidden;
+	clear:both;
 }
 .arrow_hider_big .custom_select {
    width: 120%; 
