@@ -149,7 +149,7 @@
 	border-color:#e5e5e5;
 	box-shadow:none;
 }
-#submit_btn, #borrowersubmitform, {
+#submit_btn, #borrowersubmitform {
 	width:241px!important;
 	float:left;
 	font-size:15px;
