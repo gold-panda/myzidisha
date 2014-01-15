@@ -810,7 +810,7 @@ else
 
 					<div class="clearfix">
 						
-						<label style="width:auto" for="pamount1"><?php echo $lang['loanstatn']['loan_amount'] ?> (USD)</label>
+						<label style="width:auto" for="pamount1"><?php echo $lang['loanstatn']['loan_amount'] ?> </label>
 						
 <!-- drop-down menu for lenders to select bid amount -->
 						<div class="input inputex">
@@ -819,7 +819,10 @@ else
 
 								<?php
 
-								$amt_range = range(1, $brw2['reqdamt']);
+								$amt_range = range(10, $brw2['reqdamt'], 10);
+								array_push($amt_range, 1);
+								array_push($amt_range, $stilneed);
+								array_push($amt_range, $brw2['reqdamt']);
 
 								arsort($amt_range);
 								
@@ -827,7 +830,17 @@ else
 
 								foreach($amt_range as $amt_option) {  ?>
 
-									<option value='<?php $amt_option; ?>' <?php if($form->value("$pamount1")==$amt_option) echo "Selected='true'" ?>>$<?php echo number_format($amt_option) ?></option>
+									<option value='<?php $amt_option; ?>' 
+										<?php 
+
+										if($form->value("$pamount1")==$amt_option){
+											echo "Selected='true'";
+										}elseif ($amt_option==$stilneed){
+												echo "Selected='true'";
+										}
+										
+										?>>$<?php echo number_format($amt_option) ?>
+									</option>
 
 									<?php		
 
