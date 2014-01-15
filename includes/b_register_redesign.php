@@ -144,7 +144,7 @@ if(empty($session->userid)){
 				<br/>
 				<div id="passerror"><?php echo $form->error("bpass1"); ?></div>
 
-				<!-- Cofirm password -->
+				<!-- Confirm password -->
 				<label><?php echo $lang['register']['CPassword'];?></label>
 				<input type="password" id="bpass2" name="bpass2" class="inputcmmn-1" value="<?php echo $form->value("bpass2"); ?>"/>
 
@@ -165,6 +165,7 @@ if(empty($session->userid)){
 					Please upload a clear, close, well lit photo of yourself.
 					<strong><a href="library/getimagenew.php?id=sample_photo&amp;width=640&amp;height=480" target="_blank">View Example</a></strong><a id="bphotoerr"></a>
 				</label>
+
 				<div>
 					<div style="float:left;padding-top:10px;">
 						<?php $photolabel = $lang['register']['upload_photo'];
@@ -175,9 +176,13 @@ if(empty($session->userid)){
 								<img style="float:none" class="user-account-img" src="<?php echo SITE_URL.'images/tmp/'.$isPhoto_select ?>" height="50" width="50" alt=""/>
 						<?php } ?>
 					</div>
+					
+
 					<div class='fileType_hide'>
-						<input type="file" name="bphoto" id="bphoto" value="<?php echo $form->value("bphoto"); ?>" onchange="uploadfile(this)"/>
+						<input type="file" name="bphoto" id="bphoto"   value="<?php echo $form->value("bphoto"); ?>" onchange="uploadfile(this)"/>
 					</div>
+								
+
 					<div class="customfiletype" onclick="getbphoto()">
 						<span><?php echo $photolabel?></span>
 					</div>
