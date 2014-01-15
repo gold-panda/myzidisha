@@ -96,13 +96,12 @@ if($session->userlevel  == BORROWER_LEVEL || $session->userlevel  == ADMIN_LEVEL
 			$b_reg_fee_native=number_format($row['Amount'],2);
 		 }
 	}
-	$interestrate = number_format($database->getAvgBidInterest($ud, $ld), 2, '.', ',');
+	//$interestrate = number_format($database->getAvgBidInterest($ud, $ld), 2, '.', ',');
 	if($brw2['active']==LOAN_FUNDED)
 	{
 		$loneAcceptDate=time();
-		$interestrate=number_format($interestrate, 2, '.', ','); 	
-		$sched=$session->getSchedule($lamount, $interestrate + $webfee, $period, $gperiod,$loneAcceptDate,$webfee, $extraPeriod);
-		
+		//$interestrate=number_format($interestrate, 2, '.', ','); 		// $extraPeriod replaced by $weekly_inst on date 1-01-14 by Mohit
+		$sched=$session->getSchedule($lamount, $interestrate + $webfee, $period, $gperiod,$loneAcceptDate,$webfee, $weekly_inst);
 ?>
 		<div class="row">
 			<div>
@@ -157,7 +156,7 @@ if($session->userlevel  == BORROWER_LEVEL || $session->userlevel  == ADMIN_LEVEL
 							<?php }	?>
 							<tr>
 								<td><strong><?php echo $lang['loanstatn']['tot_int_due_lend'] ?>:</strong></td>
-								<td><?php echo number_format(round_local($feelender),0, '.', ',')." ".$tmpcurr." (".$interestrate."%)"; ?></td>
+								<td><?php echo number_format(round_local($feelender),0, '.', ',')." ".$tmpcurr." (".number_format($interestrate, 2, '.', ',')."%)"; ?></td>
 							</tr>
 							<tr>
 								<td><strong><?php echo $lang['loanstatn']['br_trn_fee'] ?>:</strong></td>

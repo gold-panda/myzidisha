@@ -2507,7 +2507,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			
 			if($rtn == 0){		
 
-				$this->getNewBAccountSiftData('edit_account',$userid,$uname,$namea,$nameb,$post,$city,$country,$bnationid,$email,$mobile,$bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1,$bneighcont2,$bneighcont3,$rec_form_offcr_name, $rec_form_offcr_num, $aboutMe,$aboutBusiness,$hearaAoutZidisha);
+				$this->getNewBAccountSiftData('edit_account',$this->userid,$uname,$namea,$nameb,$post,$city,$country,$bnationid,$email,$mobile,$bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1,$bneighcont2,$bneighcont3,$rec_form_offcr_name, $rec_form_offcr_num, $aboutMe,$aboutBusiness,$hearaAoutZidisha);
 	
 			}
 			
