@@ -372,6 +372,13 @@ if(empty($session->userid)){
 			<hr/>
 			<div class="holder_522 group" style="<?php if($form->value("bcountry")!='BF')echo "display:block"; else echo "display:none"; ?>" id="tele_contacts">
 				<p class="blue_color uppercase formTitle">credibility</p>
+
+				<!-- telephone contact -->
+				<div id="telephone_contact" style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" >
+					<label><?php echo $lang['register']['tel_contact']?></label>
+					<input type="radio" name="cntct_type" id="tel_cntct" onclick="open_contact(this.value);" value="0" <?php if($form->value("cntct_type")=='0') echo"checked";?> >
+				</div>
+
 				<label><?php echo $lang['register']['family_contact']?><a id="bfamilycontact"></a></label>
 
 				<!-- family 1 -->
