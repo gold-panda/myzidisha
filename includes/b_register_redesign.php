@@ -527,7 +527,7 @@ if(empty($session->userid)){
 					?>
 				</div>
 
-				<div>
+				<div style="display:none;">
 					<label><?php echo $lang['register']['capacha'];?></label>
 					<div style="margin-top:20px"><?php echo  recaptcha_get_html(RECAPCHA_PUBLIC_KEY, $form->error("user_guess")); ?></div>
 					<a id="recaptcha_response_fielderr"></a>
