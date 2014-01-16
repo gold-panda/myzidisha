@@ -4155,12 +4155,23 @@ class genericClass
         return  floor($interval) ;
 
     }
+
+    //gets all installments due for a loan up to today or the final payment date, whichever is greater
     function getTotalInstalToday($loanid, $userid){
         global $db;
-        $q1="SELECT COUNT( id ) FROM  ! WHERE duedate <= ? AND loanid =? AND userid =? AND amount >?";
-        $res=$db->getOne($q1, array('repaymentschedule', time(), $loanid, $userid, 0));
+
+        //gets the date of the last payment made toward this loan
+        $r="SELECT MAX(id) FROM ! WHERE userid=? and loanid=?";
+        $id2= $db->getOne($r , array('repaymentschedule_actual',$userid,$loanid));
+        $s="SELECT paiddate FROM ! WHERE id=?";
+        $paiddate= $db->getOne($s , array('repaymentschedule_actual',$id2));
+        
+        //limits results to installments that fell due before today and before the final payment was made
+        $q1="SELECT COUNT( id ) FROM  ! WHERE duedate <= ? AND duedate <= ? AND loanid =? AND userid =? AND amount >?";
+        $res=$db->getOne($q1, array('repaymentschedule', time(), $paiddate, $loanid, $userid, 0));
         return $res;
     }
+
     function getLastRepaidAmount($brwrid, $checkOnTime=false) {
         global $db;
         $lid=0;
@@ -5273,7 +5284,7 @@ class genericClass
                     {
                         $repayrate[$key]=$session->RepaymentRate($row['userid']);
 
-                        $totalTodayinstallment[$key]=$session->totalTodayinstallment($row['userid']);
+                        $totalTodayinstallment[$key]=$this->getTotalInstalAllLoans($row['userid']);
 
                         $bfrstloan=$this->getBorrowerFirstLoan($row['userid']);
                         if($bfrstloan==0){
@@ -11516,7 +11527,18 @@ function wasFirstInstalOnTime($userid, $loanid){
 }
 
 
+function getTotalInstalAllLoans($userid){
+    global $db;
 
+    $loans=$this->getLoansForRepayRate($userid);
+    foreach ($loans as $loan){
+        $loanid= $loan['loanid'];
+        $installments=$this->getTotalInstalToday($loanid, $userid);
+        $total_installments += $installments;
+    }
+
+    return $total_installments;
+}
 
 
 };

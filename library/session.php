@@ -3991,32 +3991,6 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 
 	}
 
-//added by Julia 15-10-2013 to generate total monthly installments statistic
-
-function totalTodayinstallment($userid){
-		global $database;
-		traceCalls(__METHOD__, __LINE__);
-		$loans= $database->getLoansForRepayRate($userid);
-		$missdInstll=0;
-		$onTimeInstall=0;
-		$totalTodayinstallment=0;
-		foreach($loans as $loan){ 
-			$loanDetail= $database->isAllInstallmentOnTime($userid, $loan['loanid']);
-			$missdInstll= $missdInstll+$loanDetail['missedInst'];
-			$totalTodayinstallment=$totalTodayinstallment+$loanDetail['totalTodayinstallment'];
-			$timelyInstall= $loanDetail['totalTodayinstallment']- $loanDetail['missedInst'];
-			$onTimeInstall= $onTimeInstall+$timelyInstall ;
-		}	
-		if($totalTodayinstallment==0){
-			$repayRate=100;
-		}else{
-			$brwr_repayRate= ($onTimeInstall/$totalTodayinstallment)*100;
-			$repayRate= number_format($brwr_repayRate,2, '.', ',');
-		}
-		return $totalTodayinstallment;
-
-	}
-
 
 	function register_e($uname, $namea, $nameb, $pass1, $pass2, $postadd, $city, $country, $email, $mobile, $user_guess, $id, $bnationid, $home_no, $fb_data, $validation_code, $babout, $bconfdnt, $e_candisplay)
 	{ 
