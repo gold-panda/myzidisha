@@ -324,104 +324,105 @@ if(empty($session->userid)){
 				<label><?php echo $lang['register']['email'];?><a id="bemailerr"></a></label>
 				<input type="text" id="bemail" name="bemail" maxlength="50" class="inputcmmn-1"  value="<?php echo $form->value("bemail"); ?>" />
 				<br/>
-				<div id="emailerror"><?php echo $form->error("bemail"); ?>
+				<div id="emailerror"><?php echo $form->error("bemail"); ?></div>
 
-				<!-- memeber name -->
-				<label><?php echo $lang['register']['reffered_member'];?><a id="refer_membererr"></a></label>
-				<div class="arrow_hider_big">
-					<select id="refer_member" class="custom_select" name="refer_member"><option value='0'>None</option>
-					<?php foreach($borrowers as $borrower){ ?>
-							<option value="<?php echo $borrower['userid']?>" <?php if($form->value("refer_member")==$borrower['userid']) echo "Selected";?>><?php echo $borrower['FirstName']." ".$borrower['LastName']." (".$borrower['City'].")";?></option>
-					<?php } ?>		
-					</select>
-				</div>
-				<br/>
-				<div id="refer_membererror"><?php echo $form->error("refer_member"); ?></div>
-
-				<!-- town ot village located -->
-				<label><?php echo $lang['register']['nearest_city'];?><a id="volunteer_mentorerr"></a></label>
-				<div class="arrow_hider_big">
-					<select class="custom_select" id="vm_city" name="vm_city" onchange="get_volunteers(this.value)">
-						<?php 
-							if(!empty($vmcities)){?>
-						<?php	for($x=0;$x<count($vmcities);$x++){?>
-									<option value="<?php echo $vmcities[$x]?>" <?php if(strcasecmp($form->value("vm_city"), $vmcities[$x])==0) echo "Selected"?>><?php echo $vmcities[$x];?></option>
-						<?php	}
-							}?>
-					</select>
-				</div>
-
-				<!-- Volunteer mentor -->
-				<label><?php echo $lang['register']['volunteer_mentor'];?></label>
-				<div class="arrow_hider_big">
-					<select id="volunteer_mentor" class="custom_select" name="volunteer_mentor">
-						<?php  if(!empty($vmByCity)){
-								foreach($vmByCity as $key=>$row){
-									$name= $database->getNameById($key);?>
-									<option value='<?php echo $key ?>' <?php if($form->value("volunteer_mentor")==$key){ echo 'selected'; } ?>><?php echo $name ?></option>
-						<?php	}
-							} else { ?>		
-								<option></option>
-						<?php	} ?>
+				<div>
+					<!-- memeber name -->
+					<label><?php echo $lang['register']['reffered_member'];?><a id="refer_membererr"></a></label>
+					<div class="arrow_hider_big">
+						<select id="refer_member" class="custom_select" name="refer_member"><option value='0'>None</option>
+						<?php foreach($borrowers as $borrower){ ?>
+								<option value="<?php echo $borrower['userid']?>" <?php if($form->value("refer_member")==$borrower['userid']) echo "Selected";?>><?php echo $borrower['FirstName']." ".$borrower['LastName']." (".$borrower['City'].")";?></option>
+						<?php } ?>		
 						</select>
-					<br/><div id="volunteer_mentorerror"><?php echo $form->error("volunteer_mentor"); ?></div>
-				</div>
+					</div>
+					<br/>
+					<div id="refer_membererror"><?php echo $form->error("refer_member"); ?></div>
 
-				<!-- Sign reconform name -->
-				<label>
-					<?php echo $lang['register']['sign_recomform_name'];?>
-					<a id="sign_recomform_nameerr"></a>
-				</label>
-				<input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_name"); ?>" />
-				<br/>
-				<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div>
-
-				<!-- Sign reconform num -->
-				<label>
-					<?php echo $lang['register']['sign_recomform_num'];?>
-					<a id="sign_recomform_numerr"></a>
-				</label>
-				<input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_num"); ?>" />
-				<br/>
-				<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div>
-
-				<!-- Contact type -->
-				<div style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" id="contact_type" >
-					<label>
-						<?php echo $lang['register']['contact_type']?>
-						<a id="cntct_type"></a>
-					</label>
-					<br/><?php echo $form->error("contact_type"); ?>
-				</div>
-
-				<!-- facebook_optional -->
-				<div style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo "display:''";?>" id="facebook_optional">
-					<div class="radio_s no_left">
-						<input type="radio" name="cntct_type" id="FB_cntct" value="1" onclick="needToConfirm = false;open_contact(this.value);submitform1();" <?php if($form->value("cntct_type")=='1' || isset($_SESSION['FB_Detail'])) echo"checked"; ?>>
-						<div>
-							<div><?php echo $lang['register']['FB_contact']." (This must be your own, actively used Facebook account.)";?></div>
-							<div id="fb_instruction" style="margin: 15px 0 0 15px; <?php if($form->value("cntct_type")=='1')echo "display:block;"; else echo "display:none;"; ?>"><?php echo $lang['register']['fb_instruction']; ?></div><br/>
-							<?php echo $form->error("cntct_type"); ?>
-						</div>
-						<div>
-							<?php
-							if($fbData['loginUrl']==''){ ?>
-								<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="javascript:login_popup('<?php echo $fbData['logoutUrl']?>');return false;" style="<?php if($form->value("cntct_type")=='1' || isset($_SESSION['FB_Detail']))echo "display:''"; else echo "display:none"; ?>"><img src="images/f_disconnect.jpg"/></a>
-							<?php }else{?>
-								<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="login_popup('<?php echo $fbData['loginUrl']?>');" style="<?php if($form->value("cntct_type")=='1' || isset($_SESSION['FB_Detail']))echo "display:block"; else echo "display:none"; ?>"><img src="images/facebook-connect.png"/></a>
-							<?php }?>
-						</div>
-						<div  style="<?php if($form->value("bcountry")!='BF' || $fbmsg_hide==1) echo 'display:none'; else echo 'display:block';?>" id="facebook_result">
+					<!-- town ot village located -->
+					<label><?php echo $lang['register']['nearest_city'];?><a id="volunteer_mentorerr"></a></label>
+					<div class="arrow_hider_big">
+						<select class="custom_select" id="vm_city" name="vm_city" onchange="get_volunteers(this.value)">
 							<?php 
-								if(isset($_SESSION['FB_Detail'])){
-									echo "<div align='center'><font color=green><strong>Your Facebook account is now linked to Zidisha.</strong></font></div><br/>";
-								}
-								if(isset($_SESSION['FB_Error'])){
-									echo $_SESSION['FB_Error'];
-							}?>
+								if(!empty($vmcities)){?>
+							<?php	for($x=0;$x<count($vmcities);$x++){?>
+										<option value="<?php echo $vmcities[$x]?>" <?php if(strcasecmp($form->value("vm_city"), $vmcities[$x])==0) echo "Selected"?>><?php echo $vmcities[$x];?></option>
+							<?php	}
+								}?>
+						</select>
+					</div>
+
+					<!-- Volunteer mentor -->
+					<label><?php echo $lang['register']['volunteer_mentor'];?></label>
+					<div class="arrow_hider_big">
+						<select id="volunteer_mentor" class="custom_select" name="volunteer_mentor">
+							<?php  if(!empty($vmByCity)){
+									foreach($vmByCity as $key=>$row){
+										$name= $database->getNameById($key);?>
+										<option value='<?php echo $key ?>' <?php if($form->value("volunteer_mentor")==$key){ echo 'selected'; } ?>><?php echo $name ?></option>
+							<?php	}
+								} else { ?>		
+									<option></option>
+							<?php	} ?>
+							</select>
+						<br/><div id="volunteer_mentorerror"><?php echo $form->error("volunteer_mentor"); ?></div>
+					</div>
+
+					<!-- Sign reconform name -->
+					<label>
+						<?php echo $lang['register']['sign_recomform_name'];?>
+						<a id="sign_recomform_nameerr"></a>
+					</label>
+					<input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_name"); ?>" />
+					<br/>
+					<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div>
+
+					<!-- Sign reconform num -->
+					<label>
+						<?php echo $lang['register']['sign_recomform_num'];?>
+						<a id="sign_recomform_numerr"></a>
+					</label>
+					<input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_num"); ?>" />
+					<br/>
+					<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div>
+
+					<!-- Contact type -->
+					<div style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" id="contact_type" >
+						<label>
+							<?php echo $lang['register']['contact_type']?>
+							<a id="cntct_type"></a>
+						</label>
+						<br/><?php echo $form->error("contact_type"); ?>
+					</div>
+
+					<!-- facebook_optional -->
+					<div style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo "display:''";?>" id="facebook_optional">
+						<div class="radio_s no_left">
+							<input type="radio" name="cntct_type" id="FB_cntct" value="1" onclick="needToConfirm = false;open_contact(this.value);submitform1();" <?php if($form->value("cntct_type")=='1' || isset($_SESSION['FB_Detail'])) echo"checked"; ?>>
+							<div>
+								<div><?php echo $lang['register']['FB_contact']." (This must be your own, actively used Facebook account.)";?></div>
+								<div id="fb_instruction" style="margin: 15px 0 0 15px; <?php if($form->value("cntct_type")=='1')echo "display:block;"; else echo "display:none;"; ?>"><?php echo $lang['register']['fb_instruction']; ?></div><br/>
+								<?php echo $form->error("cntct_type"); ?>
+							</div>
+							<div>
+								<?php
+								if($fbData['loginUrl']==''){ ?>
+									<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="javascript:login_popup('<?php echo $fbData['logoutUrl']?>');return false;" style="<?php if($form->value("cntct_type")=='1' || isset($_SESSION['FB_Detail']))echo "display:''"; else echo "display:none"; ?>"><img src="images/f_disconnect.jpg"/></a>
+								<?php }else{?>
+									<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="login_popup('<?php echo $fbData['loginUrl']?>');" style="<?php if($form->value("cntct_type")=='1' || isset($_SESSION['FB_Detail']))echo "display:block"; else echo "display:none"; ?>"><img src="images/facebook-connect.png"/></a>
+								<?php }?>
+							</div>
+							<div  style="<?php if($form->value("bcountry")!='BF' || $fbmsg_hide==1) echo 'display:none'; else echo 'display:block';?>" id="facebook_result">
+								<?php 
+									if(isset($_SESSION['FB_Detail'])){
+										echo "<div align='center'><font color=green><strong>Your Facebook account is now linked to Zidisha.</strong></font></div><br/>";
+									}
+									if(isset($_SESSION['FB_Error'])){
+										echo $_SESSION['FB_Error'];
+								}?>
+							</div>
 						</div>
 					</div>
-				</div>
 
 			</div>
 
