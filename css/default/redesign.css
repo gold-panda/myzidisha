@@ -208,3 +208,7 @@
 	width:auto!important;
 	clear: both;
 }
+.no_left.radio_s{
+	clear: both;
+	margin-bottom: 0px;
+}

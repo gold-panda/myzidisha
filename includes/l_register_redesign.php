@@ -111,22 +111,34 @@
 				else 
 					echo $lang['register']['Photo'];
 			?> 
-			<?php echo $lang['register']['l_optional']; ?>
 			<br/>
-			<?php echo $lang['register']['photo_msg'];?>
-			<input type="file" name="lphoto" id='lphoto' value="<?php echo $form->value("lphoto"); ?>" />
+			<?php $photolabel = $lang['register']['upload_photo']; ?>
 			<?php	$isPhoto_select=$form->value("isPhoto_select");
 			    if(!empty($isPhoto_select))
 				{	?>
 					<img class="user-account-img" src="<?php echo SITE_URL.'images/tmp/'.$isPhoto_select ?>" height="50" width="50" alt=""/>
 			<?php	}	?>
+
+			<div class='fileType_hide'>
+				<input type="file" name="lphoto" id='lphoto' value="<?php echo $form->value("lphoto"); ?>" />
+			</div>
+
+			<div class="customfiletype" onclick="getbphoto()">
+				<span><?php echo $photolabel?></span>
+			</div>
+
+			<div style="clear:both"></div>
+			<?php echo $lang['register']['l_optional']; ?>
+			<?php echo $lang['register']['photo_msg'];?>
+
 			<br/><?php echo $form->error("lphoto"); ?>
+
 			<input type="hidden" name="isPhoto_select" value="<?php echo $form->value("isPhoto_select"); ?>" />
 		</div>
 
 		<div class="holder_522 group">
 			<!-- About yourself -->
-			<label><?php echo $lang['register']['A_Yourself_l'];?> <?php echo $lang['register']['l_optional'];?></label>
+			<label><?php echo $lang['register']['A_Yourself_l'];?><?php echo $lang['register']['l_optional'];?></label>
 			<textarea class="textareacmmn" name="labout" id="labout" ><?php echo $form->value("labout"); ?></textarea>
 		</div>
 

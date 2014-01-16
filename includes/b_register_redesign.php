@@ -102,20 +102,68 @@ if(empty($session->userid)){
 					if($form->value("bcountry")!='BF') {
 						$brwrBehalf=0;
 				}?>
-				<div style="margin-bottom:0px; <?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block'; ?>" id= "brwr_behalf" >
+				<div class="group" style="margin-bottom:0px; <?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block'; ?>" id= "brwr_behalf" >
 					<a id="borrower_behalferr"></a>
 					<label><?php echo $lang['register']['borrower_behalf'];?></label>
 
 					<!-- option 1 -->
-					<div class="radio_s">
+					<div class="radio_s no_left">
 						<input type="radio" id="borrower_behalf" name="borrower_behalf" onclick ="document.getElementById('borwr_behalf_section').style.display = 'none';" class="inputcmmn-1" value="0" <?php if($brwrBehalf=='0' || !isset($brwrBehalf)) echo"checked";?> />
 						<span class="left"><?php echo $lang['register']['borrower_behalf1'];?></span>
 					</div>	
-					<div class="radio_s">
+					<div class="radio_s no_left">
 						<input type="radio" id="borrower_behalf" name="borrower_behalf" onclick ="document.getElementById('borwr_behalf_section').style.display = '';" class="inputcmmn-1" value="1" <?php if($brwrBehalf!='0') echo"checked";?> />
 						<span class="left"><?php echo $lang['register']['borrower_behalf2'];?></span>
 					</div>
+					<br/><div id=""><?php echo $form->error("borrower_behalf"); ?></div>
 
+				</div>
+
+				<?php $display = '';
+				if($brwrBehalf=='0') {
+						
+						$display='display:none';
+				}?> 
+				<div class="holder_342 group">
+					<div id='borwr_behalf_section' style="clear:both;margin-top:25px;text-decoration:none;<?php echo $display?>" >
+						<a href="https://sites.google.com/site/zidishavolunteermentor/working-with-new-applicants" target="_blank"><?php echo $lang['register']['behalf_guideline'];?>
+						
+						<!-- field one -->
+						<label>
+							<?php echo $lang['register']['behalf_name'];?>
+							<a id="behalf_nameerr"></a>
+						</label>
+						<input type="text" id="behalf_name" name="behalf_name" value="<?php echo $form->value("behalf_name"); ?>"/>
+						<br/>
+						<div id="behalf_name"><?php echo $form->error("behalf_name"); ?></div>
+
+						<!-- field two -->
+						<label>
+							<?php echo $lang['register']['behalf_number'];?>
+							<a id="behalf_numbererr"></a>
+						</label>
+						<input type="text" id="behalf_number" name="behalf_number" maxlength="100" class="inputcmmn-1" value="<?php echo $form->value("behalf_number"); ?>" />
+						<br/>
+						<div id=""><?php echo $form->error("behalf_number"); ?></div>
+
+						<!-- field three -->
+						<label>
+							<?php echo $lang['register']['behalf_email'];?>
+							<a id="behalf_emailerr"></a>
+						</label>
+						<input type="text" id="behalf_email" name="behalf_email" maxlength="100" class="inputcmmn-1" value="<?php echo $form->value("behalf_email"); ?>" />
+						<br/>
+						<div id="behalf_email"><?php echo $form->error("behalf_email"); ?></div>
+
+						<!-- field four -->
+						<label>
+							<?php echo $lang['register']['behalf_town'];?>
+							<a id="behalf_townerr"></a>
+						</label>
+						<input type="text" id="behalf_town" name="behalf_town" maxlength="100" class="inputcmmn-1" value="<?php echo $form->value("behalf_town"); ?>" />
+						<br/>
+						<div id="behalf_town"><?php echo $form->error("behalf_town"); ?></div>
+					</div>
 				</div>
 
 			<div class="holder_342 group">
