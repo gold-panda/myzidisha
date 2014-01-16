@@ -6304,15 +6304,15 @@ class genericClass
         }
         return $result;
     }
-    function updateLoanApp($userid, $loanid, $amount, $interest, $loanuse, $inst_day, $gperiod, $weekly_inst, $inst_weekday)
+    function updateLoanApp($userid, $loanid, $amount, $interest, $loanuse, $inst_day, $gperiod, $weekly_inst, $inst_weekday,$repay_period)
     {
         global $db;
         $p="SELECT applydate  from ! where loanid = ? AND borrowerid=? ";
         $applydate=$db->getOne($p,array('loanapplic',$loanid, $userid));
         $rate=$this->getExRateById($applydate, $userid);
-        $damount=$amount/$rate;
-        $r = "UPDATE ! set Amount =?, interest =?, loanuse =?, reqdamt =?,  installment_day=?, grace =?, weekly_inst=?, installment_weekday=? where loanid = ? AND borrowerid=?";
-        $res=$db->query($r, array('loanapplic', $amount, $interest,$loanuse, $damount,$inst_day, $gperiod, $weekly_inst, $inst_weekday, $loanid, $userid));
+        $damount=round($amount/$this->getCurrentRate($userid));
+        $r = "UPDATE ! set Amount =?, interest =?, loanuse =?, reqdamt =?,  installment_day=?, grace =?, weekly_inst=?, installment_weekday=?,period=? where loanid = ? AND borrowerid=?";
+        $res=$db->query($r, array('loanapplic', $amount, $interest,$loanuse, $damount,$inst_day, $gperiod, $weekly_inst, $inst_weekday,$repay_period, $loanid, $userid));
         return $res;
     }
     function getMinMaxBidIntr($loanid)

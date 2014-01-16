@@ -962,7 +962,9 @@ class Process
 			$inst_day = $_POST['installment_day'];
 			$inst_weekday = $_POST['installment_weekday'];
 			$gperiod = $_POST['gperiod'];
-			$result=$session->editLoanApplication($_POST['loanid'], $_POST['amount'], $interest, $_POST['loanuse'], $inst_amount, $inst_day,  $inst_weekday,$gperiod);
+			$repay_period=$_POST['repay_period'];
+			$result=$session->editLoanApplication($_POST['loanid'], $_POST['amount'], $interest, $_POST['loanuse'], $inst_amount, $inst_day, $inst_weekday,$gperiod,0,$repay_period);
+
 			if($result==0)
 			{
 				$_SESSION['value_array']=$_POST_ORG;
@@ -1177,7 +1179,7 @@ class Process
 		global $session, $form, $database;
 		$_POST_ORG=$_POST;
 		$_POST = sanitize_custom($_POST);
-		$amount = str_replace(array(',','$'),"",$_POST['pamount']);
+		$amount = $_POST['pamount'];
 		$interest = trim(str_replace("%","",$_POST['pinterest']));
 		$loanprurl = getLoanprofileUrl($_POST['bid'],$_POST['lid']);
 		if(!empty($_POST['bidid'])){
@@ -1216,7 +1218,7 @@ class Process
 		global $session, $form;
 		$_POST_ORG=$_POST;
 		$_POST = sanitize_custom($_POST);
-		$amount = str_replace(array(',','$'),"",$_POST['pamount1']);
+		$amount = $_POST['pamount1'];
 		$interest = trim(str_replace("%","",$_POST['pinterest1']));
 		$bid=sanitize($_POST['bid']);//borrower id
 		$lid=sanitize($_POST['lid']);

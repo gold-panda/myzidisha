@@ -2828,7 +2828,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		}
 		return 1;
 	}
-	function editLoanApplication($loanid, $amount, $interest, $loanuse, $inst_amount, $inst_day, $inst_weekday, $gperiod, $validate=0)
+	function editLoanApplication($loanid, $amount, $interest, $loanuse, $inst_amount, $inst_day, $inst_weekday, $gperiod, $validate=0, $repay_period)
 	{
 		global $database, $form;
 		$path=  getEditablePath('error.php');
@@ -2932,7 +2932,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		else if($validate == 1) {
 			return 1;
 		}else {
-			$ret=$database->updateLoanApp($userid, $loanid, $amount, $interest, $loanuse, $inst_day, $gperiod, $weekly_inst, $inst_weekday);
+			$ret=$database->updateLoanApp($userid, $loanid, $amount, $interest, $loanuse, $inst_day, $gperiod, $weekly_inst, $inst_weekday, $repay_period);
 			return $ret;
 		}
 	}

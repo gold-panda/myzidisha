@@ -20,8 +20,9 @@ if(!$session->logged_in)
 else
 {
 	$userid=$session->userid;
-	//added by Julia to test weekly repayment schedule 15-12-2013
-	if ($userid == 11111) {
+	$country=$database->getCountryCodeById($userid);
+//countries Kenya, Ghana & Indonesia transitioned to weekly installments 19-12-2013
+	if ($country == 'KE' || $country == 'GH' || $country == 'ID')  {
 		$weekly_inst = 1;
 	}
 	$maxperiodValue_months = $database->getAdminSetting('maxperiodValue');
@@ -318,7 +319,7 @@ echo $lang['loanapplic']['note_amt_pr']; ?>
 						$tot_interest=(($newperiod)/12)*(($editamount*($editintr/100)));
 
 					}
-					$sched = $session->getSchedule($editamount, $editintr, $newperiod, $gperiod,time(),$webfee,0,$installment, $weekly_inst);
+					$sched = $session->getSchedule($editamount, $editintr, $newperiod, $gperiod,time(),$webfee,$weekly_inst);
 					$totalamt=number_format(($editamount+$tot_interest), 0, ".", ",");
 					$tot_interest_show=number_format($tot_interest, 0, ".", ",");
 					?>
@@ -384,6 +385,7 @@ echo $lang['loanapplic']['note_amt_pr']; ?>
 								<input type="hidden" name="interest" value="<?php echo $_SESSION['la']['editintr'];?>"/>
 								<input type="hidden" name="loanid" value="<?php echo $_SESSION['la']['loanid'];?>" />
 								<input type="hidden" name="loanuse" value="<?php echo $_SESSION['la']['editloanuse'];?>"/>
+								<input type="hidden" name="repay_period" value="<?php echo $newperiod;?>"/>
 								<input type="hidden" name="gperiod" value="<?php echo $_SESSION['la']['gperiod'];?>"/>
 								<input type="hidden" name="installment_day" value="<?php echo $_SESSION['la']['edit_inst_day'];?>"/>
 								<input type="hidden" name="installment_weekday" value="<?php echo $_SESSION['la']['edit_inst_weekday'];?>"/>

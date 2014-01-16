@@ -602,7 +602,7 @@ else
 					$installment_amt = number_format($loan['installment_amt'], 0, ".", ",");
 					$webfee=$database->getAdminSetting('fee');//website fee rate
 					$loneAcceptDate=time();
-					$sched=$session->getSchedule($amount, $interest, $period, $grace,$loneAcceptDate,$webfee,0,$loan['installment_amt'], $weekly_inst);
+					$sched=$session->getSchedule($amount, $interest, $period, $grace,$loneAcceptDate,$webfee,$weekly_inst);
 					$totalamt=number_format(($amount+$tot_interest), 0, ".", ",");
 					$tot_interest_show=number_format($tot_interest, 0, ".", ",");
 
