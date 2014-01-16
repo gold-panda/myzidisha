@@ -799,64 +799,29 @@ else
 			{
 				/* now bidding form is displaying for not logged in users */
 				if($brw2['active'] == LOAN_OPEN)
-				{
-?>
+				{ ?>
 			
-				<form id='bidform1' name="bidform1" action="process.php" method="post" style='margin-top: 20px;'>
-					<p>&nbsp;</p>
-					<?php if($loginError = $form->error('bid_userid1')){ echo "<div>".$loginError."</div><br/>";}?>
-					
-
-					<div class="clearfix">
-						
-						<label style="width:auto" for="pamount1"><?php echo $lang['loanstatn']['loan_amount'] ?> </label>
-						
-<!-- drop-down menu for lenders to select bid amount -->
-						<div class="input inputex">
-
-							<select class"medium" style="width:230px" id="pamount1" name="pamount1">
-
-								<?php
-
-								$amt_range = range(10, $brw2['reqdamt'], 10);
-								array_push($amt_range, 1);
-								array_push($amt_range, $stilneed);
-								array_push($amt_range, $brw2['reqdamt']);
-
-								arsort($amt_range);
-								
-								$i=0;
-
-								foreach($amt_range as $amt_option) {  ?>
-
-									<option value='<?php $amt_option; ?>' 
-										<?php 
-
-										$display_amtoption="$".number_format($amt_option);
-
-										if($form->value("$pamount1")==$amt_option){
-											echo "Selected='true'";
-										}elseif ($amt_option==$stilneed){
-												echo "Selected='true'";
-												$display_amtoption="Complete ".$brw['FirstName']."'s Loan: $".number_format($amt_option);
-										}
-										
-										?>><?php echo $display_amtoption; ?>
-									</option>
-
-									<?php		
-
-									$i++;
-
-								} ?>
-
-							</select>
-						
-						</div>
-					
-						<div class="input inputex" id="pamounterr1"><?php echo $form->error('pamount1'); ?></div>
-					
-					</div>
+					<!-- lender bid amount -->
+					<script type="text/javascript">
+                        function fillAmount1()
+                        {
+                            document.bidform1.pamount1.value="<?php echo number_format($stilneed, 2, '.', ''); ?>";
+                        }
+                    </script>
+                    
+                    <form id='bidform1' name="bidform1" action="process.php" method="post" style='margin-top: 20px;'>
+                    <p>&nbsp;</p>
+                        
+                    <?php if($loginError = $form->error('bid_userid1')){ echo "<div>".$loginError."</div><br/>";}?>
+                     
+                     <div class="clearfix">
+                        
+                        <label style="width:auto" for="pamount1"><?php echo $lang['loanstatn']['loan_amount'] ?></label>
+                        
+                        <div class="input inputex"><input class="medium" id="pamount1" name="pamount1" size="20" type="text"  value="<?php echo $pamount1; ?>"></div>
+                        
+                        <div class="input inputex" id="pamounterr1"><?php echo $form->error('pamount1'); ?></div>
+                    </div>
 
 					<div class="clearfix">
 
@@ -882,7 +847,7 @@ else
 
 <!-- drop-down menu for lenders to select interest rate -->
 						<div class="input inputex">
-							<select class"medium" style="width:230px" id="pinterest1" name="pinterest1">
+							<select class"medium" style="width:150px" id="pinterest1" name="pinterest1">
 
 								<?php
 
@@ -916,7 +881,13 @@ else
 							}?>
 
 						</div>
-			<?php	} ?>
+			<?php	} 
+
+			if($stilneed > 0){ ?>
+                <div class="clearfix">
+                	<a href="javascript:void(0)" onClick='fillAmount1();'><strong>Complete <?php echo $brw['FirstName'] ?>'s Loan (USD <?php echo number_format($stilneed, 2, '.', '') ?>)</strong></a>
+                </div>
+            <?php } ?>
 
 					<input type="hidden" id="lenderbidUp" name="lenderbidUp" value="" />
 					<input type="hidden" name="user_guess" value="<?php echo generateToken('lenderbidUp'); ?>"/>
@@ -935,13 +906,7 @@ else
 <?php	}?>
 <?php	if($brw2['active']==LOAN_OPEN && ((($session->userlevel == BORROWER_LEVEL) && ($displyall))||($session->userlevel == ADMIN_LEVEL)))
 		{	?>
-			<!--<form method='post' action='updateprocess.php'>
-				<input type='hidden' name='cancelloan' />
-				<input type="hidden" name="user_guess" value="<?php echo generateToken('cancelloan'); ?>"/>
-				<input type='hidden' name='loanid' value="<?php echo $ld ?>" />
-				<input type='hidden' name='borrowerid' value="<?php echo $ud ?>"/>
-				<input type='submit' value='Cancel Loan' />
-			</form>-->
+			
 <?php	}?>
 	</div><!-- /loan-profile-->
 </div><!-- /span12-->
