@@ -219,6 +219,8 @@ if($session->logged_in)
                 <p><strong><a href="<?php echo $loanprurl?>"><?php echo $lang['loginform']['view_crnt_loan'] ?></a></strong></p>
                 <?php } ?>
                 <p><strong><a href="index.php?p=13"><?php echo $lang['loginform']['eprofile'] ?></a></strong></p>
+                <p><strong><a href="index.php?p=111"><?php echo $lang['loginform']['additional_verification'] ?></a></strong></p>
+                
                 <?php     
                 $loan_status=$database->getBorrowerCurrentLoanStatus($userid);
                 if($loan_status==LOAN_ACTIVE)
