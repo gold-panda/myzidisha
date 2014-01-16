@@ -117,7 +117,6 @@ if($isvolunteer==1 || $session->userlevel==ADMIN_LEVEL){
 			echo "<td><a href='$prurl'>$fname $lname</a><br /><br />Username: $username<br /><br />$address<br />$telmob<br />$email<br /></td>";
 			echo "<td><div align='center'>$country<br/>$city</div></td>";
 			echo "<td>";
-//added by Julia 22-10-2013
 			if(!empty($is_endorser)){
 				echo "Endorser";
 			}elseif(!empty($is_completelater)){
@@ -128,46 +127,7 @@ if($isvolunteer==1 || $session->userlevel==ADMIN_LEVEL){
 				echo "";
 			}
 			echo "<br/><br/><a href='$link'>Activation Page</a><br/><br/>";
-			if(!empty($details['frontNationalId'])){
-				echo "ID Uploaded";
-			}
-			// added by mohit 11-10-13
-		/*removed by Julia 16-10-2013, moved to bprofileToadmin.php
-
-			if($brwr_type=='pndng_act' || $brwr_type=='active'){
-
-			if($active==0){
-
-		
-						$active1="<form name='activeform".$userid."' method='post' action='process.php'>".
-						"<input name='deactivateBorrower' type='hidden' />".
-						"<input name='countryCode' type='hidden' value='".$_GET['c']."' />".
-						"<input name='brwr_type' type='hidden' value='".$brwr_type."' />".
-						"<input name='search' type='hidden' value='".$search."' />".
-						"<input type='hidden' name='user_guess' value='".generateToken('deactivateBorrower')."'/>".
-						"<input name='borrowerid' value='$userid' type='hidden' />".
-						"<input name='set' value = 1 type='hidden' />".
-						"<a href='javascript:void(0)' style='color:red' onclick='document.forms.activeform".$userid.".submit()'>Activate Account</a>".
-						"</form>";
-
-		
-					}
-					else{
-						$active1=//"<a href=#>Deactivate</a>";
-						"<form name='deactiveform".$userid."'method='post' action='process.php'>".
-						"<input name='deactivateBorrower' type='hidden' />".
-						"<input name='countryCode' type='hidden' value='".$_GET['c']."' />".
-						"<input name='brwr_type' type='hidden' value='".$brwr_type."' />".
-						"<input name='search' type='hidden' value='".$search."' />".
-						"<input type='hidden' name='user_guess' value='".generateToken('deactivateBorrower')."'/>".
-						"<input name='borrowerid' value='$userid' type='hidden' />".
-						"<input name='set' value = 0 type='hidden' />".
-						"<a href='javascript:void(0)' style='color:red' onclick='document.forms.deactiveform".$userid.".submit()'>Deactivate Account</a>".
-						"</form>";
-					}
-				echo $active1;
-					  }
-			*/
+			
 			echo "</td>";
 			// end here
 			echo "<td><span style='display:none'>$lastvisited</span><input type='text' name='lastvisited' id='lastVisited$userid'  value = '$lastvisited'></td>";

@@ -182,6 +182,8 @@ if($isvolunteer==1 || $session->userlevel==ADMIN_LEVEL){
 				$bid_accpt_date=$borrower['AcceptDate'];
 				$accept_date=date('d M, Y',$borrower['AcceptDate']);
 				$bfrstloan=$database->getBorrowerFirstLoan($userid);
+				$activationdate=$database->getborrowerActivatedDate($userid);
+							
 				
 				/************* Amount Summary ***************/
 				
@@ -271,7 +273,29 @@ if($isvolunteer==1 || $session->userlevel==ADMIN_LEVEL){
 					echo "<td>$location</td>";
 					echo "<td>$nationId</td>";
 					echo "<td>$number</td>";
-					echo "<td>$bid_notes</td>";
+					echo "<td>$bid_notes<br/><br/>";
+
+				/* 
+				If borrower was activated since the date we removed the ID card 
+				and recommendation form from pre-activation requirements, display 
+				an alert to check these newly uploaded documents before disbursing 
+				the loan. 
+				*/
+
+					if ($activation_date > 1389835131){
+						$details=$database->getBorrowerById($userid); 
+
+						if(!empty($details['frontNationalId'])){
+							echo "<strong>This member has uploaded a national ID card since activation. Please open the profile page and check the national ID card to ensure it is legible and matches the member's name before disbursing this loan.</strong>";
+						}
+
+						if(!empty($details['addressProof'])){
+							echo "<strong>This member has uploaded a Recommendation Form since activation. Please open the profile page and check the Recommendation Form to ensure it matches the member's name and has been signed by an eligible community leader before disbursing this loan.</strong>";
+						}
+
+					}
+
+					echo"</td>";
 					echo "<td><span style='display:none'>$bid_accpt_date</span>$accept_date</td>";
 					echo "<td>$amount_smry</td>";
 				
