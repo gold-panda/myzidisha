@@ -563,9 +563,15 @@ $lang['mailtext']['breminder_again_sub']='Reminder from Zidisha';
 
 
 
+//SMS confirmation sent to member who invited new applicant 
+
+$lang['mailtext']['invite_alert']="Dear %uname%, your Zidisha account was used to issue an invite bonus to %bname% of tel. %bnumber%. The repayment performance of %bname% will now affect your own credit limit. If you did not authorize this invite, please inform us by SMS reply to this number. Thank you.";
+
+
 //confirmation sent to contacts of new applicants 
 
 $lang['mailtext']['contact_confirmation_sms']="Dear %uname%, %bname% of tel. %bnumber% has shared your contacts in an application to join the Zidisha.org online lending community. We would like to confirm with you that %bname% can be trusted to repay loans. If you do not know or do not recommend %bname%, please inform us by SMS reply to this number. Thank you.";
+
 
 
 //email and SMS sent out to borrowers when payment is received

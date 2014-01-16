@@ -8204,13 +8204,14 @@ function forgiveReminder(){
 
 			if (!empty($invitedstatus)){
 				
-				$bonuscredit=200; //adds bonus of USD 200 for new members who were invited by eligible existing members
-			
+				$bonuscredit=100; //adds bonus for new members who were invited by eligible existing members
+				
+
 			}elseif (!empty($text_length)){
 
 				if ($text_length >= 40 && $text_length <= 60){
 
-					$bonuscredit=200; //adds bonus of USD 200 for new members who entered optimal length of text response to 'How did you hear about Zidisha' optional question in application
+					$bonuscredit=100; //adds bonus of for new members who entered optimal length of text response to 'How did you hear about Zidisha' optional question in application
 				
 				}else{
 
@@ -8388,11 +8389,15 @@ function isEligibleToInvite($userid){
 
 		} else {
 
-			$invitedmember= $database->getInvitedMember($userid);
+			$invitedmember= $database->getInviteesWithLoans($userid); //count only those invited members who have raised loans
 
 			if (empty($invitedmember)){
 
 				$eligible = 1;
+
+			} elseif (count($invitedmember>=100)){
+
+				$eligible = 0; //each person can recruit no more than 100 members with loans via invite function
 
 			} else {
 
@@ -8579,6 +8584,27 @@ function getDeclineSiftData($userid){
 		$this->sendPostData($url_send, $str_data);
 		
 }
+
+//sends SMS alert to mobile number associated with the account that invited a borrower, to prevent unauthorized invites being sent from member accounts
+function sendInviteAlert($inviteeid){
+		global $database;
+		require("editables/mailtext.php");
+		$userid = $database->getInvitee($inviteeid);
+		$language= $database->getPreferredLang($userid);
+		$path=  getEditablePath('mailtext.php',$language);
+		require ("editables/".$path);
+		$user_detail=$database->getEmailB($userid);
+		$country=$database->getCountryCodeById($userid);
+		$telnumber= $database->getPrevMobile($userid);
+		$to_number = $this->FormatNumber($telnumber, $country);
+		$params['uname']=$user_detail['name'];
+		$params['bnumber']=$database->getPrevMobile($inviteeid);
+		$params['bname']=$database->getNamebyId($inviteeid);
+		$content= $this->formMessage($lang['mailtext']['invite_alert'], $params);
+		if(!empty($telnumber)){
+			$this->SendSMS($content, $to_number);
+		}
+	}
 
 
 /***** end here ******/

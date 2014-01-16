@@ -1209,6 +1209,8 @@ class genericClass
 
             $invited_by = $this->getInvitee($userid);
 
+            $session->sendInviteAlert($userid);
+
             $session->getBInviteSiftData($userid,$invited_by);
 
         }
