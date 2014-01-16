@@ -196,17 +196,23 @@ $lang['mailtext']['bid_down_body'] = "Dear %lname%,<br/><br/>".
 "Best wishes,<br/><br/>".
 "The Zidisha Team";
 
-$lang['mailtext']['lender_donation_sub'] = "Thank You for Your Donation!";
+$lang['mailtext']['lender_donation_sub'] = "Zidisha Donation Receipt";
 $lang['mailtext']['lender_donation_body'] = "Zidisha Inc.<br/>".
 "21900 Muirfield Circle #302<br/>".
 "Sterling, Virginia 20164<br/><br/>".
-"%date%<br/><br/>".
 "Dear %lname%,<br/><br/>".
-"Thank you for your donation of $%donation_amt% to Zidisha Inc.<br/><br/>".
-"This letter may be used as a receipt for tax purposes, and certify that Zidisha Inc. did not provide any goods or services in exchange for your donation.<br/><br/>".
+"Thank you for your donation of $%donation_amt% to Zidisha Inc. on %date%<br/><br/>".
+
+"Zidisha Inc. is a 501(c)(3) charitable organization per the United States Internal Revenue Service, and did not provide any goods or services in exchange for your donation.  Our Employment Identification Number (EIN) is 80-049-4876.<br/><br/>".
+
+"This letter may be used as a receipt for tax purposes.  Should you have any questions or concerns, please do not hesitate to contact us by replying to this email.<br/><br/>".
+
 "Sincerely,<br/><br/>".
+
 "Julia Kurnia<br/><br/>".
+
 "Director, Zidisha Inc.<br/><br/>".
+
 "<a href='%zidisha_link%' target='_blank'>www.zidisha.org</a>";
 
 $lang['mailtext']['lender_upload_amt_sub'] = "Lender credit confirmation";

@@ -8,6 +8,7 @@ $lang['loginform']['newAc']='New to Zidisha? <a href="index.php?p=1&sel=0">Join<
 $lang['loginform']['Partner']='Partner';
 $lang['loginform']['profile']='View My Public Profile';
 $lang['loginform']['eprofile']='Edit Profile';
+$lang['loginform']['additional_verification']='Add Verification Credentials';
 $lang['loginform']['Logout']='Log Out';
 $lang['loginform']['search_b']='Pending Activation';
 $lang['loginform']['my_buss']='My Businesses';

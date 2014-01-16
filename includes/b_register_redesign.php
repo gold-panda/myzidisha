@@ -102,7 +102,7 @@ if(empty($session->userid)){
 					if($form->value("bcountry")!='BF') {
 						$brwrBehalf=0;
 				}?>
-				<div style="margin-bottom:0px; <?php //if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" id= "brwr_behalf" >
+				<div style="margin-bottom:0px; <?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block'; ?>" id= "brwr_behalf" >
 					<a id="borrower_behalferr"></a>
 					<label><?php echo $lang['register']['borrower_behalf'];?></label>
 
@@ -120,36 +120,43 @@ if(empty($session->userid)){
 
 			<div class="holder_342 group">
 				<!-- facebook button -->
+
 				<div id="fb_mandatory" style="<?php if($form->value("bcountry")!='BF')echo "display:''"; else echo "display:none"; ?>" >
-					<label>Login with Facebook</label>
+					<label>
+						<?php echo $lang['register']['facebook_mandatory']; ?>
+						<?php echo $form->error("cntct_type"); ?>
+					</label>
+						
 					<?php $fbData=$session->facebook_connect();
 						if(!empty($fbData['user_profile']['id'])){
-								$database->saveFacebookInfo($fbData['user_profile']['id'], serialize($fbData), $web_acc, 0, '', $fb_fail_reason);
+							$database->saveFacebookInfo($fbData['user_profile']['id'], serialize($fbData), $web_acc, 0, '', $fb_fail_reason);
 						}
 						if($fbData['loginUrl']==''){ 
 							$showShareBox=1;
+							
 							if(isset($_REQUEST['fb_join']) || $_SESSION['FB_Error']!=false){ 
 								$showShareBox=0;
-							}
-							?>
+							} ?>
+					
 							<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="javascript:login_popup('<?php echo $fbData['logoutUrl']?>');return false;"><img src="images/f_disconnect.jpg"/></a>
+						
 						<?php }else{?>
-							<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="login_popup('<?php echo $fbData['loginUrl']?>');" ><img src="images/connect-facebook.png"/></a>
-					<?php }?>
+								<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="login_popup('<?php echo $fbData['loginUrl']?>');" ><img src="images/facebook-connect.png"/></a>
+						<?php }?>
+						
 				</div>
 
-				<!-- facebook BF country -->
-				<div style="<?php if(($form->value("bcountry")!='BF') && $fbmsg_hide!=1)echo "display:block"; else echo "display:none"; ?>">
-					<label>
-						<?php 
-						if(isset($_SESSION['FB_Detail'])){
-							echo "<div align='center'><font color=green><strong>Your Facebook account is now linked to Zidisha.</strong></font></div><br/>";
-						}
-						if(isset($_SESSION['FB_Error'])){
-							echo $_SESSION['FB_Error'];
-						}?>
-					</label>
+				<div style="<?php if(($form->value("bcountry")!='BF') && $fbmsg_hide!=1)echo "display:block"; else echo "display:none"; ?>" >
+					<?php 
+					if(isset($_SESSION['FB_Detail'])){
+						echo "<div align='center'><font color=green><strong>Your Facebook account is now linked to Zidisha.</strong></font></div><br/>";
+					}
+						
+					if(isset($_SESSION['FB_Error'])){
+						echo $_SESSION['FB_Error'];
+					}?>
 				</div>
+
 
 				<!-- Create username -->
 				<label><?php echo $lang['register']['endorser_uname'];?><a name="busernameerr" id="busernameerr"></a></label>

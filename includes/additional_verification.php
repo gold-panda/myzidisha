@@ -3,6 +3,8 @@
 $showShareBox=0;
 $fbmsg_hide=0;
 $web_acc=0;
+
+
 $fb_fail_reason='Borrower Edit Profile : '.isset($_SESSION['FB_Fail_Reason']) ? $_SESSION['FB_Fail_Reason'] : '';
 if(!empty($form->values)){
 	$_SESSION['fb_data']=$form->values;
@@ -42,6 +44,8 @@ if(isset($_SESSION['hide_fbmsg'])){
 	$fbmsg_hide=1;
 	unset($_SESSION['hide_fbmsg']);
 }
+
+
 $id=$session->userid;
 $data=$database->getBorrowerDetails($id); 
 $language=$data['lang'];
@@ -88,6 +92,8 @@ $endorser_id9='';
 $endorser_name10='';
 $endorser_email10='';
 $endorser_id10='';
+
+
 $endorser_details= $database->getEndorserDetail($id);
 if(!empty($endorser_details)){
 	$k=1;
@@ -98,12 +104,15 @@ if(!empty($endorser_details)){
 		$k++;
 	}
 }
+
+
 $save_fb_data= $data['fb_data'];
 if(!empty($facebook_id)){
-	//$fbData= unserialize($save_fb_data);
 	$_SESSION['FB_Detail']=true;
 	$_SESSION['FB_Error']=false;
 }
+
+
 $temp = $form->value("labellang");
 if(isset($temp) && $temp != '')
 	$language=$form->value("labellang");
@@ -141,22 +150,25 @@ $disabled='';
 if($borrowerActive==1) {
 	$disabled = 'disabled';
 }
-?>
-<?php
-	include_once("./editables/register.php");
-	$path1=	getEditablePath('register.php');
-	include_once("./editables/".$path1);
+
+include_once("./editables/register.php");
+$path1=	getEditablePath('register.php');
+include_once("./editables/".$path1);
 								
 ?>
+
+<!-- page title -->
 <div class="row">
 <div align='left' class='static'><h1><?php echo $lang['register']['additional_verification'] ?></h1></div>
 <tr><td>&nbsp;</td></tr>
 
+<!-- saved changes success message -->
 <?php if(isset($_SESSION['bedited'])) {?>
 	<div id='error' align='center'><font color='green'><?php echo $lang['register']['edited'];?></font></div><br/>
 <?php unset($_SESSION['bedited']);
 	} ?>
-	
+
+<!-- instructions section -->
 <tr><td>&nbsp;</td></tr>
 <div align='left' class='static'><p><?php echo $lang['register']['av_instructions'] ?></p></div>
 
@@ -166,6 +178,7 @@ if($borrowerActive==1) {
 				<tr><td>&nbsp;</td></tr>
 				<tr><td>&nbsp;</td></tr>
 
+			<!-- Facebook link section -->
 			<tr><td colspan="3"><h3 class="subhead"><?php echo $lang['register']['step_one'] ?></h3></td></tr>
 
 				<tr id="fb_mandatory" style="<?php if(empty($facebook_id))echo "display:''"; else echo "display:none"; ?>" >
@@ -207,6 +220,7 @@ if($borrowerActive==1) {
 				<tr><td>&nbsp;</td></tr>
 				<tr><td>&nbsp;</td></tr>
 				
+				<!-- national ID section -->
 				<tr><td colspan="3"><h3 class="subhead"><?php echo $lang['register']['step_two'] ?></h3></td></tr>
 				
 				 <tr style="<?php if (empty($data['frontNationalId'])) echo "display:''"; else echo "display:none"; ?>" >
@@ -260,12 +274,9 @@ if($borrowerActive==1) {
 								<input type="file" name="front_national_id" id="front_national_id" value="C:\fakepath\ok" onchange="uploadfile(this)"/>
 							</div>
 							
-								<div class="fileType_hide">
-									<input type="file" name="front_national_id" id="front_national_id" value="C:\fakepath\ok" onchange="uploadfile(this)"/>
-								</div>
+								
 							<?php } ?>
-								<div class="customfiletype" onclick="getfrontNationalId()"><?php echo $FrntNatidlabel?></div>
-								<div style="clear:both"></div>
+								
 							
 							<div  id="front_national_id_file"></div>
 							<br/>
@@ -285,7 +296,7 @@ if($borrowerActive==1) {
 				<tr><td>&nbsp;</td></tr>
 				<tr><td>&nbsp;</td></tr>
 				
-
+				<!-- recommendation form section -->
 				<tr><td colspan="3"><h3 class="subhead"><?php echo $lang['register']['step_three'] ?></h3></td></tr>
 				
 					<tr style="<?php if(empty($addresProof)) echo "display:''"; else echo "display:none"; ?>" >
@@ -310,6 +321,7 @@ if($borrowerActive==1) {
 				<tr style="<?php if(empty($addresProof)) echo "display:''"; else echo "display:none"; ?>" >
 
 					<td>
+						<br/><br/>
 						<?php echo $lang['register']['address_proof'];?>
 						<a id="address_prooferr"></a>
 					</td>
@@ -350,13 +362,8 @@ if($borrowerActive==1) {
 								<div>
 									<input type="file" name="address_proof" id="address_proof" value="" onchange="uploadfile(this)"/>
 								</div>
-								
-								<div class="fileType_hide">
-									<input type="file" name="address_proof" id="address_proof" value="" onchange="uploadfile(this)"/>
-								</div>
+			
 
-								<div class="customfiletype" onclick="getAddressProof()"><?php echo $addrprflabel?></div>
-								<div  id="address_proof_file"></div>
 								<div style="clear:both"></div>
 							
 							<br/><span><?php echo $lang['register']['allowed']; ?></span>
@@ -376,7 +383,7 @@ if($borrowerActive==1) {
 				<tr><td>&nbsp;</td></tr>
 				<tr><td>&nbsp;</td></tr>
 				
-			
+				<!-- endorser section -->
 				<tr><td colspan="3"><h3 class="subhead"><?php echo $lang['register']['step_four'] ?></h3></td></tr>
 				
 				<?php $params['minendorser']= $database->getAdminSetting('MinEndorser');
@@ -422,6 +429,7 @@ if($borrowerActive==1) {
 				<tr><td>&nbsp;</td></tr>
 				<tr><td>&nbsp;</td></tr>
 
+				<!-- submit form -->
 				<tr>
 					<td style="text-align:center;">
 						<input type="hidden" name="uploadedDocs[]" value="<?php echo $docuploaded['fronNationalid']?>" />
@@ -449,6 +457,8 @@ if($borrowerActive==1) {
 		</table>
 	</form>
 </div>
+
+<!-- sharebox - modal box to share via social media, displays upon linking FB account -->
 <?php 
 $bidMessage="You have successfully linked your Facebook account.";
 $post_link= SITE_URL;
@@ -600,108 +610,17 @@ $short_url = "https%3A%2F%2Fwww.zidisha.org";
 			</div><!--container closed -->
 		</div>		
 	</div>
-</script>
+
+
+<!-- navigate away warning if unsaved changes -->
 <script type="text/JavaScript" src="includes/scripts/navigateaway.js"></script>
-<script language="JavaScript">
-	var ids = new Array('bpass1', 'bpass2', 'bfname','blname','bphoto','bpostadd','bcity','bcountry','bnationid','bloanhist','community_name_no','bemail','bmobile','bincome','babout','bbizdesc','front_national_id','back_national_id','address_proof','legal_declaration', 'bfamilycont', 'bneighcont');
-	var values = new Array('','','','','','','','','','','','','','','','','','','','', '', '');
-	var needToConfirm = true;
-</script>
-<script language="JavaScript">
-populateArrays();
-function validateborwredit() {
-	needToConfirm = false;
-	var adresspr = document.getElementById('address_proof').value;
-	var Frntid = document.getElementById('front_national_id').value;
-	var legaldec = document.getElementById('legal_declaration').value;
-	if(!document.getElementById('repaidpast').checked || !document.getElementById('debtfree').checked
-		|| !document.getElementById('share_update').checked) {
-		document.getElementById('share_update_err').innerHTML='<font color="red">You must be able to answer \"yes"\ to the eligibility questions in order to complete this form.</font>';
-			//alert('You must be able to answer \"yes"\ to the eligibility questions in order to complete this form.')
-		return false;
-		//document.getElementById('repaidpast').checked=true;
-	}else {
-		document.getElementById('share_update_err').innerHTML='';
-	}
-<?php if(!isset($fronNationalid) || empty($fronNationalid)) { ?>
-		if(!Frntid || 0 === Frntid.length) {
-			document.getElementById('front_national_id_err').innerHTML='<font color="red">Please upload a copy of the front of your national identification card.</font>';
-			//alert('Please upload a copy of the front of your national identification card.')
-			return false;
-		}else {
-			document.getElementById('front_national_id_err').innerHTML='';
-		}
-<?php } ?>
-<?php if(!isset($addresProof) || empty($addresProof)) { ?>	
-		if(!adresspr || 0 === adresspr.length) {
-			document.getElementById('address_proof_err').innerHTML='<font color="red">Please upload a copy of the Recommendation Form.</font>';
-			//alert('Please upload a copy of the Recommendation Form.')
-			return false;
-		}else {
-			document.getElementById('address_proof_err').innerHTML='';;
-		}
-<?php }?>
 
-<?php if(!isset($legalDeclaration) || empty($legalDeclaration)) { ?>	
-		if(!legaldec || 0 === legaldec.length) {
-			document.getElementById('legal_declaration_err').innerHTML='<font color="red">Please upload a copy of the Recommendation Form.</font>';
-			//alert('Please upload a copy of the Recommendation Form.')
-			return false;
-		}else {
-			document.getElementById('legal_declaration_err').innerHTML='';;
-		}
-<?php }?>
-	
-}
- $('#bcountry').bind('change', function(event) {
-	
-	var countrycode = $('#bcountry').val();
-	var data = "activeborrowers="+countrycode;
-	$.ajax({
-		url: 'process.php',
-		type: 'post',
-		//dataType: 'json',
-		data: data,
-		success: function(data, textStatus) {
-			$("#refer_member").html(data);
-		}
-		//alert(data);
-	});
-  });
 
-  $('#bcountry').bind('change', function(event) {
-	
-	var countrycode = $('#bcountry').val();
-	var data = "volunteer_mentor="+countrycode;
-	$.ajax({
-		url: 'process.php',
-		type: 'post',
-		//dataType: 'json',
-		data: data,
-		success: function(data, textStatus) {
-			$("#volunteer_mentor").html(data);
-		}
-		//alert(data);
-	});
-  });
+<!-- javascript for sharebox functions -->
 
-  function open_contact(value){
-	  if(value!=1){  
-		$('.facebook-auth').hide();
-		document.getElementById('tele_contacts').style.display='';
-		document.getElementById('fb_instruction').style.display='none';
-		document.getElementById('endorser').style.display='none';
-		document.getElementById('facebook_result').style.display='none';
-	  }else{
-		$('.facebook-auth').show();
-		document.getElementById('tele_contacts').style.display='none';
-		document.getElementById('fb_instruction').style.display='';
-		document.getElementById('endorser').style.display='';
-		document.getElementById('facebook_result').style.display='';
-	  }
-  }
+<script>
 
-  if(<?php echo $showShareBox; ?>){
+if(<?php echo $showShareBox; ?>){
 	jQuery.facebox({ div: '#shareForm' });
 }
 function showBox(box)
@@ -782,6 +701,8 @@ function twtshare()
 	 return false;
 	}
 </script>
+
+
 <script>
 
 function submitform1()
@@ -789,53 +710,9 @@ function submitform1()
 	document.getElementById("before_fb_data").value = "1";
 	document.forms["sub-borrower"].submit();
 }
-function show_tele_cntct(country){
-	if(country!='BF'){
-			document.getElementById("telephone_contact").style.display = 'none';
-			document.getElementById("tele_contacts").style.display = '';
-			document.getElementById("contact_type").style.display = 'none';
-			document.getElementById('endorser').style.display='';
-			document.getElementById('brwr_behalf').style.display='none';
-			document.getElementById('facebook_optional').style.display='none';
-			document.getElementById('facebook_result').style.display='none';
-			document.getElementById('fb_mandatory').style.display='';
-			$('#FB_cntct').attr('checked',true);
-	}else{
-			document.getElementById("telephone_contact").style.display = '';
-			document.getElementById("tele_contacts").style.display = 'none';
-			document.getElementById("contact_type").style.display = '';
-			document.getElementById('endorser').style.display='none';
-			document.getElementById('brwr_behalf').style.display='';
-			document.getElementById('facebook_optional').style.display='';
-			document.getElementById('facebook_result').style.display='';
-			document.getElementById('fb_mandatory').style.display='none';
-			$('#FB_cntct').attr('checked',false);
-	}
-}
-function get_volunteers(vm_city){
-	if (window.XMLHttpRequest){
-		xmlhttp=new XMLHttpRequest();
-	}
-	else{
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-		document.getElementById("volunteer_mentor").innerHTML=xmlhttp.responseText;
-		}
-	}
-	var a="vm_city="+vm_city;
-	xmlhttp.open("POST","process.php",true);
-	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.setRequestHeader("Content-length",a.length);
-	xmlhttp.setRequestHeader("Connection","close");
-	xmlhttp.send(a);
-}
+
 </script>
-<div id='ResidentialaddrExample' style="display:none">
-<div class="instruction_space" style="margin-top:10px;height:160px">
-	<div class="instruction_text"><?php echo $lang['register']['addresexample']?></div>
+
+<!-- end sharebox -->
 </div>
 </div>

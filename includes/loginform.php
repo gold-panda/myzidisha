@@ -17,21 +17,7 @@
  background: url(images/arrow-down.png) no-repeat 0% 65%
 }
 </style>
-<script type="text/javascript">
-<!--
-	$(function() {
-    // --- first section initially expanded:
-    $(".expand").toggler();
-    // --- Other options:
-    //$("h4.expand").toggler({method: "toggle", speed: 0});
-    //$("h4.expand").toggler({method: "toggle"});
-    //$("h4.expand").toggler({speed: "fast"});
-    //$("h4.expand").toggler({method: "fadeToggle"});
-    //$("h4.expand").toggler({method: "slideFadeToggle"});
-    $("#content").expandAll({trigger: "h4.expand", ref: "div.demo",  speed: 300, oneSwitch: false});
-});
-//-->
-</script>
+
 <?php
 require_once("library/session.php");
 include_once("./editables/loginform.php");
@@ -44,6 +30,8 @@ if($session->logged_in)
 	$userid=$session->userid;
 	$prurl = getUserProfileUrl($session->userid);
 	$co_access= $database->isBorrowerAlreadyAccess($session->userid);
+	
+	//left panel menu options for partner accounts
 	if($session->userlevel==PARTNER_LEVEL)
 	{ 
 ?>	
@@ -71,7 +59,6 @@ if($session->logged_in)
 		</div>
 		<?php }?>
 		
-		<!--<p><a href="process.php"><?php echo $lang['loginform']['Logout'] ?></a></p>-->
 		<p>&nbsp;</p>
 
 		<h2><?php echo $lang['loginform']['mystatistics'] ?></h2>
@@ -90,6 +77,8 @@ if($session->logged_in)
 		<p>&nbsp;</p>
 <?php
 	}
+
+	//left panel menu options for lender accounts
 	if($session->userlevel==LENDER_LEVEL)
 	{
 		$active_investamtDisplay=$database->amountInActiveBidsDisplay($session->userid);
@@ -104,9 +93,6 @@ if($session->logged_in)
 		<p><a href="index.php?p=17"><?php echo $lang['loginform']['lender_withdraw'] ?></a></p>
 		<p><a href="index.php?p=74"><?php echo $lang['loginform']['auto_lend'] ?></a></p>
 		<p><a href="index.php?p=30"><?php echo $lang['loginform']['invite_frnds'] ?></a></p>
-<!-- comment by Julia 27-10-2013
-		<p><a href="index.php?p=103"><?php echo $lang['loginform']['donatebirthday'] ?></a></p>
--->
 		<p><a href='index.php?p=80'><?php echo $lang['loginform']['lendingGroups']?></a></strong></p>
 		<?php if($co_access==1) {
 			$country_code=$database->getCountryCodeById($session->userid); 
@@ -164,16 +150,10 @@ if($session->userlevel==LENDER_LEVEL)
 		</div>
 <?php }?>
 
-
-		<!--<p><a href="process.php"><?php echo $lang['loginform']['Logout'] ?></a></p>-->
-		<p>&nbsp;</p>
+	<!-- My Impact statistics display for lender accounts -->
+	<p>&nbsp;</p>
 
 		<h2><?php echo $lang['loginform']['mystatistics'] ?></h2>
-		<!---<?php  $funduploaded = $database->getFundUploaded($userid);
-				$fundonation = $database->getFundDonation($userid);
-				$trfee = $database->getTransactionFee($userid);
-				$actualfundupload = number_format($funduploaded+$fundonation+$trfee,2, '.', ',');?>
-		<p><strong><span><?php echo $lang['loginform']['funduploaded'] ?>:</span> USD <?php echo $actualfundupload; ?></p> ---->
 		<p><strong><span><?php echo $lang['loginform']['total_avl_amt'] ?>:</span> USD 
 		<?php 
 			$amtUseforbid = round($session->amountToUseForBid($userid), 4);
@@ -187,7 +167,6 @@ if($session->userlevel==LENDER_LEVEL)
 				$creditavail = 0;
 			}
 			echo number_format(truncate_num($creditavail, 4, 2) , 2, '.', ','); 
-//added by Julia 27-10-2013
 		?></p>
 		<p><?php
 			$creditincart = $amtUseforbid - $creditavail;
@@ -215,6 +194,8 @@ if($session->userlevel==LENDER_LEVEL)
 		<p>&nbsp;</p>
 <?php
 	}
+
+	//left panel menu options for borrower accounts
 	if($session->userlevel==BORROWER_LEVEL)
 	{
 		$lastLoan=$database->getLastloan($session->userid);
@@ -222,6 +203,9 @@ if($session->userlevel==LENDER_LEVEL)
 ?>		
 		<h2><?php echo $lang['loginform']['my_account'];?></h2>
 		<p><strong><a href="index.php?p=50"><?php echo $lang['loginform']['welcome_page'] ?></a></strong></p>
+		<p><strong><a href="index.php?p=37&l=<?php echo $lastLoan['loanid']; ?>"><?php echo $lang['loginform']['ac_detail'] ?></a></strong></p>
+		<p><strong><a href="index.php?p=71&u=<?php echo $userid;?>"><?php echo $lang['loginform']['b_repayment_instructions'] ?></a></strong></p>
+		
 		<?php $loanstatus=$database->getLoanStatus($userid);
 			 if($loanstatus == LOAN_ACTIVE || $loanstatus == LOAN_OPEN || $loanstatus == NO_LOAN) {
 		?>
@@ -234,10 +218,11 @@ if($session->userlevel==LENDER_LEVEL)
 		?>
 		<p><strong><a href="<?php echo $loanprurl?>"><?php echo $lang['loginform']['view_crnt_loan'] ?></a></strong></p>
 		<?php } ?>
-		<!-- <p><a href="index.php?p=12&u=<?php echo $userid;?>"><?php echo $lang['loginform']['profile'] ?></a></strong></p> -->
 		<p><strong><a href="index.php?p=13"><?php echo $lang['loginform']['eprofile'] ?></a></strong></p>
-		<p><strong><a href="index.php?p=37&l=<?php echo $lastLoan['loanid']; ?>"><?php echo $lang['loginform']['ac_detail'] ?></a></strong></p>
-<?php	$loan_status=$database->getBorrowerCurrentLoanStatus($userid);
+		<p><strong><a href="index.php?p=111"><?php echo $lang['loginform']['additional_verification'] ?></a></strong></p>
+		
+		<?php	
+		$loan_status=$database->getBorrowerCurrentLoanStatus($userid);
 		if($loan_status==LOAN_ACTIVE)
 		{				
 						$status=$database->canBorrowerReSchedule($userid,$lastLoan['loanid']);
@@ -261,7 +246,9 @@ if($session->userlevel==LENDER_LEVEL)
 		{	?>
 				<p><strong><a href="index.php?p=49"><?php echo $lang['loginform']['referral_program'] ?></a></strong></p>
 <?php	}	?>
-		<p><strong><a href="index.php?p=71&u=<?php echo $userid;?>"><?php echo $lang['loginform']['b_repayment_instructions'] ?></a></strong></p>
+		
+
+		<!-- pages for Volunteer Mentors -->
 		<?php if($co_access==1) {
 			$country_code=$database->getCountryCodeById($session->userid); 	
 		?>
@@ -278,10 +265,11 @@ if($session->userlevel==LENDER_LEVEL)
 			</div>
 		</div>
 		<?php }?><br/>
-		<!--<p><strong><a href="process.php"><?php echo $lang['loginform']['Logout'] ?></a></strong></p>-->
-
+		
 <?php
 	}
+
+	//left panel menu options for admin account
 	if($session->userlevel==ADMIN_LEVEL)
 	{
 ?>
@@ -293,22 +281,9 @@ if($session->userlevel==LENDER_LEVEL)
 				   <ul> 
 				   <li><a href="index.php?p=102"><?php echo $lang['loginform']['find_brwr'] ?></a></li>
 				   <li><a href="index.php?p=7&type=3&ord=DESC"><?php echo $lang['loginform']['search_b'];?></a></li>
-
-<!-- moved to admin settings page by Julia 16-10-2013
-
-				   <li><a href="index.php?p=85"><?php echo $lang['loginform']['pendingemail'] ?></a></li>
-				   <li><a href="index.php?p=94"><?php echo $lang['loginform']['pendingendorser'] ?></a></li>
-				    <li><a href="index.php?p=8&type=1&ord=ASC"><?php echo $lang['loginform']['act_borrower'];?></a></li>
-				   <li><a href="index.php?p=87"><?php echo $lang['loginform']['decliened_borrower'];?></a></li>
-				   <li><a href="index.php?p=95"><?php echo $lang['loginform']['endorser'];?></a></li>
-
--->
-				   <li><a href="index.php?p=99"><?php echo $lang['loginform']['pending_disbursed'];?></a></li>
+					<li><a href="index.php?p=99"><?php echo $lang['loginform']['pending_disbursed'];?></a></li>
 				   <li><a href="index.php?p=11&a=1&type=1&ord=ASC"><?php echo $lang['loginform']['view_b'];?></a></li>
-					<!--<li><a href="index.php?p=11&a=12"><?php echo $lang['loginform']['activate_deactivate_loan'];?></a></li>
-				    -->
-					<!--   <li><a href="index.php?p=49"><?php echo $lang['loginform']['b_referral'];?></a></li> -->
-				   <li><a href="index.php?p=45"><?php echo $lang['loginform']['rescheduled_loans'];?></a></li>
+					<li><a href="index.php?p=45"><?php echo $lang['loginform']['rescheduled_loans'];?></a></li>
 				   <li><a href="index.php?p=73"><?php echo $lang['loginform']['loan_forgiveness'] ?></a></li>
 				   <li><a href="index.php?p=84"><?php echo $lang['loginform']['community_organizer'] ?></a></li>
 				   <li><a href="index.php?p=39"><?php echo $lang['loginform']['change_password'];?></a></li>
@@ -325,9 +300,7 @@ if($session->userlevel==LENDER_LEVEL)
 							<li><a href="index.php?p=63"><?php echo $lang['loginform']['nr'];?></a></li>
 							<li><a href="index.php?p=29"><?php echo $lang['loginform']['mng_exp_card'];?></a></li>
 							<li><a href="index.php?p=53"><?php echo $lang['loginform']['lender_credit'] ?></a></li>
-											<li><a href="index.php?p=25">Activate Volunteers</a></li>
-							<!-- //26-10-2012  Anupam , Julia requested to remove "LenderTotalImpact" page from admin interface-->
-							<!-- <li><a href="index.php?p=78"><?php echo $lang['loginform']['LenderTotalImpact'];?></a></li> -->
+							<li><a href="index.php?p=25">Activate Volunteers</a></li>
 						</ul>
 						</div>
 			 </div>
@@ -342,20 +315,7 @@ if($session->userlevel==LENDER_LEVEL)
 						</ul>
 					</div>
 			 </div>
-	<!---		 <div style='margin-top :10px;' class="demo">
-				<h3 class="expand">Website Settings</h3>
-					<div class="collapse small_link_col">
-						<ul>
-							<li><a href="index.php?p=11&a=11"><?php echo $lang['loginform']['addCurrency'];?></a></li>
-							<li><a href="index.php?p=11&a=4"><?php echo $lang['loginform']['ex_rate'];?></a></li>
-							<li><a href="index.php?p=77"><?php echo $lang['loginform']['commentscredit'] ?></a></li>
-						   <li><a href="index.php?p=21"><?php echo $lang['loginform']['registration_fee'];?></a></li>
-							<li><a href="index.php?p=11&a=13"><?php echo $lang['loginform']['b_repayment_instructions'] ?></a></li>
-							<li><a href="index.php?p=11&a=10"><?php echo $lang['loginform']['Settings'];?></a></li>
-							<li><a href="index.php?p=36"><?php echo $lang['loginform']['extra'];?></a></li>
-						</ul>
-				  </div>
-			 </div>--->
+	
 			 <div style='margin-top:10px;' class="demo">
 				<h3 class="expand">Reports</h3>
 					<div class="collapse small_link_col">
@@ -364,7 +324,6 @@ if($session->userlevel==LENDER_LEVEL)
 
 							<li><a href="index.php?p=31"><?php echo $lang['loginform']['repay_report'];?></a></li>
 							<li><a href="index.php?p=23"><?php echo $lang['loginform']['pfreport'];?></a></li>
-					<!--		<li><a href="index.php?p=72"><?php echo 'Balance Outstanding';?></a></li>-->
 							<li><a href="index.php?p=114">Loans Funded</a></li>
 							<li><a href="index.php?p=112">Invite Report</a></li>
 							<li><a href="index.php?p=109">New Member Activation Rate</a></li>
@@ -374,22 +333,7 @@ if($session->userlevel==LENDER_LEVEL)
 						</ul>
 				  </div>
 			 </div>
-			<!--<p><strong>
-			<a href="index.php?p=12&u=<?php echo $userid;?>"><?php echo $lang['loginform']['profile'] ?></a></p>
-			<p><a href="index.php?p=11"><?php echo $lang['loginform']['Administration_Home'];?></a></p> -->
-			<!--<p><a href="process.php"><?php echo $lang['loginform']['Logout'];?></a></p>-->
-
-			<!--<p><a href="index.php?p=11&a=2"><?php echo $lang['loginform']['view_p'];?></a></p>
-			<p><a href="index.php?p=20"><?php echo $lang['loginform']['send_email'];?></a></p>
-			<p><a href="index.php?p=39"><?php echo $lang['loginform']['change_password'];?></a></p></strong></p>-->
-			<strong>
-			<!-- <p><a href="index.php?p=16"><?php echo $lang['loginform']['ac_detail'];?></a></p> -->
-			</strong>
-		</div>
-		<!-- <h2><?php echo $lang['loginform']['partner_details'] ?></h2>
-		<p><strong><span class="blue"><?php echo $lang['loginform']['pend_ptr'] ?>:</span> <?php echo $database->pendingPartners();?></p>
-		<p><span class="blue"><?php echo $lang['loginform']['total_ptr'] ?>:</span> <?php echo $database->totalPartners();?></strong></p>
-		<p>&nbsp;</p> -->
+			
 
 <?php
 	}

@@ -2622,9 +2622,11 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 					for($i=0; $i<10; $i++){ 
 						if(!empty($endorser_name[$i]) && !empty($endorser_email[$i])){ 
 							$e_details= $database->getEndorserForEmail($id, $endorser_name[$i], $endorser_email[$i]);
+							$bdetail=$database->getBorrowerDetails($id);
+							
 							if(empty($e_details['message'])){
 								$validation_code= $e_details['validation_code'];
-								$From=$email;
+								$From=$bdetail['email'];
 								$reg_link = SITE_URL."index.php?p=93&vd=$validation_code";
 								$params['reg_link']= $reg_link;
 								require("editables/mailtext.php");
@@ -2634,7 +2636,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 								$e_email= $endorser_email[$i];
 								$Subject=$namea." ".$nameb." ".$lang['mailtext']['borrowerEndorser-subject'];
 								$To=$params['name'] = $endorser_name[$i] ;
-								$params['bname']= $namea." ".$nameb;
+								$params['bname'] = $bdetail['FirstName']." ".$bdetail['LastName'];
 								$replyTo = SERVICE_EMAIL_ADDR;
 								$message = $this->formMessage($lang['mailtext']['BorrowerEndorser-msg'], $params);
 								$reply= $this->mailSending($From, $To, $e_email, $Subject, $message,$templet, $replyTo); 

@@ -353,13 +353,16 @@ end commenting out language section & eligibility questions -->
 					 <tr><td>&nbsp;</td></tr>
 					 <tr>
 						<td><?php 
-//modified by Julia 1-11-2013
+
 						if($form->value("bcountry")=='KE') {
-							echo "Please enter your Safaricom mobile phone number. This must be a Safaricom number registered under your own name.";
-						}else if($form->value("bcountry")=='GH') {
-						echo "Please enter your MTN mobile phone number. This must be an MTN number registered under your own name.";
-						}else {
-						echo $lang['register']['tel_mob_no'];
+							
+ 							echo $lang['register']['tel_safaricom'];
+ 
+ 				         }else if($form->value("bcountry")=='GH' || $form->value("bcountry")=='ZM') {
+               
+							echo $lang['register']['tel_mtn'];
+ 				         }else {
+							echo $lang['register']['tel_mob_no'];
 						}
 						?><a id="bmobileerr"></a></td>
 						<td><input type="text" id="bmobile" name="bmobile" maxlength="15" class="inputcmmn-1" value="<?php echo $form->value("bmobile"); ?>" /><br/><div id="mobileerror"><?php echo $form->error("bmobile"); ?></div></td>
