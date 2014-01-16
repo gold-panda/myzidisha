@@ -366,18 +366,76 @@ if(empty($session->userid)){
 						</select>
 					<br/><div id="volunteer_mentorerror"><?php echo $form->error("volunteer_mentor"); ?></div>
 				</div>
+
+				<!-- Sign reconform name -->
+				<label>
+					<?php echo $lang['register']['sign_recomform_name'];?>
+					<a id="sign_recomform_nameerr"></a>
+				</label>
+				<input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_name"); ?>" />
+				<br/>
+				<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div>
+
+				<!-- Sign reconform num -->
+				<label>
+					<?php echo $lang['register']['sign_recomform_num'];?>
+					<a id="sign_recomform_numerr"></a>
+				</label>
+				<input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_num"); ?>" />
+				<br/>
+				<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div>
+
+				<!-- Contact type -->
+				<div style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" id="contact_type" >
+					<label>
+						<?php echo $lang['register']['contact_type']?>
+						<a id="cntct_type"></a>
+					</label>
+					<br/><?php echo $form->error("contact_type"); ?>
+				</div>
+
+				<!-- facebook_optional -->
+				<div style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo "display:''";?>" id="facebook_optional">
+					<div class="radio_s no_left">
+						<input type="radio" name="cntct_type" id="FB_cntct" value="1" onclick="needToConfirm = false;open_contact(this.value);submitform1();" <?php if($form->value("cntct_type")=='1' || isset($_SESSION['FB_Detail'])) echo"checked"; ?>>
+						<div>
+							<div><?php echo $lang['register']['FB_contact']." (This must be your own, actively used Facebook account.)";?></div>
+							<div id="fb_instruction" style="margin: 15px 0 0 15px; <?php if($form->value("cntct_type")=='1')echo "display:block;"; else echo "display:none;"; ?>"><?php echo $lang['register']['fb_instruction']; ?></div><br/>
+							<?php echo $form->error("cntct_type"); ?>
+						</div>
+						<div>
+							<?php
+							if($fbData['loginUrl']==''){ ?>
+								<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="javascript:login_popup('<?php echo $fbData['logoutUrl']?>');return false;" style="<?php if($form->value("cntct_type")=='1' || isset($_SESSION['FB_Detail']))echo "display:''"; else echo "display:none"; ?>"><img src="images/f_disconnect.jpg"/></a>
+							<?php }else{?>
+								<a class="facebook-auth" href="javascript:void()" id="FB_cntct_button" onclick="login_popup('<?php echo $fbData['loginUrl']?>');" style="<?php if($form->value("cntct_type")=='1' || isset($_SESSION['FB_Detail']))echo "display:block"; else echo "display:none"; ?>"><img src="images/facebook-connect.png"/></a>
+							<?php }?>
+						</div>
+						<div  style="<?php if($form->value("bcountry")!='BF' || $fbmsg_hide==1) echo 'display:none'; else echo 'display:block';?>" id="facebook_result">
+							<?php 
+								if(isset($_SESSION['FB_Detail'])){
+									echo "<div align='center'><font color=green><strong>Your Facebook account is now linked to Zidisha.</strong></font></div><br/>";
+								}
+								if(isset($_SESSION['FB_Error'])){
+									echo $_SESSION['FB_Error'];
+							}?>
+						</div>
+					</div>
+				</div>
+
 			</div>
 
 			<!--  Start Credibility -->
 			<hr/>
-			<div class="holder_522 group" style="<?php if($form->value("bcountry")!='BF')echo "display:block"; else echo "display:none"; ?>" id="tele_contacts">
-				<p class="blue_color uppercase formTitle">credibility</p>
+			<div class="holder_522 group" id="telephone_contact" style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>">
+				<div class="radio_s no_left">
+					<input type="radio" name="cntct_type" id="tel_cntct" onclick="open_contact(this.value);" value="0" <?php if($form->value("cntct_type")=='0') echo"checked";?>>
+					<span class="left" style="color:#444444;" ><?php echo $lang['register']['tel_contact']?></span>
+				</div> 
+			</div>
 
-				<!-- telephone contact -->
-				<div id="telephone_contact" style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" >
-					<label><?php echo $lang['register']['tel_contact']?></label>
-					<input type="radio" name="cntct_type" id="tel_cntct" onclick="open_contact(this.value);" value="0" <?php if($form->value("cntct_type")=='0') echo"checked";?> >
-				</div>
+			<div class="holder_522 group" style="<?php if($form->value("bcountry")!='BF')echo "display:block"; else echo "display:none"; ?> margin-top: 25px;" id="tele_contacts">
+				<p class="blue_color uppercase formTitle">credibility</p>
 
 				<label><?php echo $lang['register']['family_contact']?><a id="bfamilycontact"></a></label>
 
@@ -892,7 +950,7 @@ if(empty($session->userid)){
 				document.getElementById("telephone_contact").style.display = 'none';
 				document.getElementById("tele_contacts").style.display = '';
 				document.getElementById("contact_type").style.display = 'none';
-				document.getElementById('endorser').style.display='';
+				//document.getElementById('endorser').style.display='';
 				document.getElementById('brwr_behalf').style.display='none';
 				document.getElementById('facebook_optional').style.display='none';
 				document.getElementById('facebook_result').style.display='none';
@@ -902,7 +960,7 @@ if(empty($session->userid)){
 				document.getElementById("telephone_contact").style.display = '';
 				document.getElementById("tele_contacts").style.display = 'none';
 				document.getElementById("contact_type").style.display = '';
-				document.getElementById('endorser').style.display='none';
+				//document.getElementById('endorser').style.display='none';
 				document.getElementById('brwr_behalf').style.display='';
 				document.getElementById('facebook_optional').style.display='';
 				document.getElementById('facebook_result').style.display='';
