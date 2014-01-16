@@ -224,7 +224,7 @@ if(!empty($openloans))
 //added by Julia 15-10-2013
 
 		
-		$totalTodayinstallment=$session->totalTodayinstallment($userid);
+		$totalTodayinstallment=$database->getTotalInstalAllLoans($userid);
 
 
 

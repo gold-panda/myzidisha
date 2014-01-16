@@ -325,7 +325,7 @@ else
 //added by Julia 15-10-2013
 
 		
-	$totalTodayinstallment=$session->totalTodayinstallment($ud);
+	$totalTodayinstallment=$database->getTotalInstalAllLoans($ud);
 
 	if($brw['tr_BizDesc']==null || $brw['tr_BizDesc']=="")
 		$biz=$brw['BizDesc'];

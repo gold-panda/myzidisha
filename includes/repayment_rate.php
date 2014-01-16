@@ -142,7 +142,7 @@ if($session->userlevel==ADMIN_LEVEL ) {
 					$completed_on = date('M d, Y', $rows['completed_on']);
 					$country=$database->mysetCountry($rows['Country']);
 					$RepayRate=$session->RepaymentRate($borrowerid);
-					$totalTodayinstallment=$session->totalTodayinstallment($borrowerid);
+					$totalTodayinstallment=$database->getTotalInstalAllLoans($borrowerid);
 					$OnTimeinstallment=($RepayRate/100)*$totalTodayinstallment;
 					$totalTodayinstallment_sum += $totalTodayinstallment;
 					$OnTimeinstallment_sum += $OnTimeinstallment;
