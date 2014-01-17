@@ -199,10 +199,20 @@ if(!empty($Lendingcart) && $cont == 0 ) {
 		?>
 		<form action="process.php" method="post">
 			<table class="detail">
+
+				 <tr>
+					<td><?php echo $lang['withdraw']['tran_fee'];?>: <a  style='margin-left:0px;cursor:pointer;' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['withdraw']['paypal_desc1_new2'];?></span><span class='bottom'></span></span></a></td>
+					
+					<td>USD <?php echo number_format($transfee, 2, ".", ""); ?></td>
+					
+				</tr> 
+				<tr height="20px"></tr>
+
 				<tr>
 					<td>Subtotal:</td>
+					
 					<td>USD <?php echo number_format($amtincart, 2, ".", ",");?></td>
-					<td></td>
+										
 				</tr>
 				<tr height="20px"></tr>
 				<tr>
@@ -229,13 +239,7 @@ if(!empty($Lendingcart) && $cont == 0 ) {
 					<td><a href="javascript:void()" id='nodonation' >No donation</a></td>
 				</tr>
 				<tr height="20px"></tr>
-				<!--3-Feb-2013 Anupam since commented fee section for temporarily for experiment adding hidden element for transaction fee in case-->
-
-				 <tr>
-					<td><?php echo $lang['withdraw']['tran_fee'];?>: <a  style='margin-left:0px;cursor:pointer;' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['withdraw']['paypal_desc1_new2'];?></span><span class='bottom'></span></span></a></td>
-					<td><input type="text" size=5 name="paypal_transaction" id="paypal_transaction_cart" value="<?php echo number_format($transfee, 2, ".", ""); ?>" autocomplete=off readonly="true"></td>
-				</tr> 
-				<tr height="20px"></tr>
+				
 				<tr>
 					<td><strong>Total Payment:</strong></td>
 					<td ><strong>USD <span id="tot_amt_cart"><?php echo number_format($totAmt, 2, ".", ",");?></span></strong></td>
@@ -298,7 +302,6 @@ if(!empty($Lendingcart) && $cont == 0 ) {
 				
 				<tr>
 					<td colspan='3' style="text-align:right;padding-right:50px;">
-					<!--3-Feb-2013 Anupam since commented fee section for temporarily for experiment adding hidden element for transaction fee in case-->
 						<input type="hidden" size=5 name="paypal_transaction" id="paypal_transaction_cart" value="<?php echo number_format($transfee, 2, ".", ""); ?>" autocomplete=off readonly="true">
 						<input type="hidden" id='AmtIncart' name="AmtIncart" value='<?php echo $amtincart?>'>
 						<input type="hidden" id='creditavailable' name="cravail" value="<?php echo $amountavail?>">

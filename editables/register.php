@@ -113,7 +113,7 @@ $lang['register']['lgcity']='City or Village of Residence';
 $lang['register']['lguserName']='Create Username <font color="red">*</font>';
 $lang['register']['borrower_note']="<strong>Note from Zidisha:</strong> Due to the high volume of applications, we are temporarily pausing activation of new borrower accounts. You are still welcome to create an account, but please be aware that it may be some time before we are able to activate it so that you may post a loan application for funding with Zidisha.  We are reviewing and activating all eligible accounts for each country in the order they are received, and current wait time is estimated at up to two months.";
 $lang['register']['photo_note']='<br/>Please upload a clear, close, well lit photo of yourself.<br/><br/>
-<strong><a href="library/getimagenew.php?id=sample_photo&width=640&height=480" target="_blank">View Example</strong></a>';
+<i>Your loan applications will attract lenders more easily if your photo is smiling and of good quality.</i>';
 $lang['register']['Registerlater']='Save and Complete Later'; 
 $lang['register']['RegisterComplete']='Submit Final Application'; 
 $lang['register']['savechanges']='Save Changes'; 
@@ -159,8 +159,8 @@ $lang['register']['lending_institution_officer']='Please enter the name of the l
 $lang['register']['reffered_by']='How did you hear about Zidisha?';
 $lang['register']['reffered_member']='Please select the name of the member who referred you to Zidisha:';
 $lang['register']['volunteer_mentor']='Please choose one person from this list to serve as your Volunteer Mentor:';
-$lang['register']['sign_recomform_name']='Please enter the name, name of institution and official title of a community leader, such as the leader of a local school, religious institution or other community organization, who knows you well and can recommend you for a Zidisha loan';
-$lang['register']['sign_recomform_num']='Please enter the mobile telephone number of the community leader here';
+$lang['register']['sign_recomform_name']='Please enter the name, name of institution and official title of a community leader, such as the leader of a local school, religious institution or other community organization, who knows you well and can recommend you for a Zidisha loan.';
+$lang['register']['sign_recomform_num']='Please enter the mobile telephone number of the community leader here:';
 $lang['register']['contact_type']='Please choose an account authentication method:';
 $lang['register']['FB_contact']='Link my Facebook profile';
 $lang['register']['tel_contact']='Request telephone contacts to vouch for me';
@@ -218,4 +218,8 @@ $lang['register']['step_two_complete'] ='Congratulations! You have completed Ste
 $lang['register']['step_three_complete'] ='Congratulations! You have completed Step Three.'; 
 $lang['register']['cl_name'] ='Your Community Leader Name';
 $lang['register']['cl_tel'] ='Your Community Leader Telephone Number';
+$lang['register']['create_account'] ='Create Account';
+$lang['register']['contact_info'] ='Contact Information';
+$lang['register']['references'] ='References';
+$lang['register']['public_profile'] ='Your Public Profile';
 ?>

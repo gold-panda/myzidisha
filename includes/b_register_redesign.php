@@ -74,10 +74,12 @@ if(empty($session->userid)){
 	<div class="row">
 		<p class="register_info"><?php echo $lang['register']['borrower_inst']; ?></p>
 		<form enctype="multipart/form-data" id="sub-borrower" name="sub-borrower" method="post" action="process.php">
+			
 			<div class="holder_342 group">
-				<p class="blue_color uppercase formTitle">personal details</p>
+				<p class="blue_color uppercase formTitle"><?php echo $lang['register']['create_account']; ?></p>
 
 				<!-- country -->
+				<br/>
 				<label>
 					<?php echo $lang['register']['Country']?>
 					<a id="bcountryerr"></a>
@@ -170,6 +172,7 @@ if(empty($session->userid)){
 				<!-- facebook button -->
 
 				<div id="fb_mandatory" style="<?php if($form->value("bcountry")!='BF')echo "display:''"; else echo "display:none"; ?>" >
+					<br/>
 					<label>
 						<?php echo $lang['register']['facebook_mandatory']; ?>
 						<?php echo $form->error("cntct_type"); ?>
@@ -207,106 +210,89 @@ if(empty($session->userid)){
 
 
 				<!-- Create username -->
+				<br/>
 				<label><?php echo $lang['register']['endorser_uname'];?><a name="busernameerr" id="busernameerr"></a></label>
 				<input type="text" id="busername" name="busername" maxlength="100" class="inputcmmn-1" value="<?php echo $form->value("busername"); ?>" />
 				<br/>
 				<div id="bunerror"><?php echo $form->error("busername"); ?></div>
 
 				<!-- Create password -->
+				<br/>
 				<label><?php echo $lang['register']['ppassword'];?><a id="bpass1err"></a></label>
 				<input type="password" id="bpass1" name="bpass1" class="inputcmmn-1" value="<?php echo $form->value("bpass1"); ?>" />
 				<br/>
 				<div id="passerror"><?php echo $form->error("bpass1"); ?></div>
 
 				<!-- Confirm password -->
+				<br/>
 				<label><?php echo $lang['register']['CPassword'];?></label>
 				<input type="password" id="bpass2" name="bpass2" class="inputcmmn-1" value="<?php echo $form->value("bpass2"); ?>"/>
 
+				<!-- E-mail address -->
+				<br/>
+				<label><?php echo $lang['register']['email'];?><a id="bemailerr"></a></label>
+				<input type="text" id="bemail" name="bemail" maxlength="50" class="inputcmmn-1"  value="<?php echo $form->value("bemail"); ?>" />
+				<br/>
+				<div id="emailerror"><?php echo $form->error("bemail"); ?></div>
+			</div>
+
+			<!-- hr tag and beginning Contact Info -->
+			
+			<div class="holder_522 group">
+				<br/>
+				<hr/>
+				<p class="blue_color uppercase formTitle"><?php echo $lang['register']['contact_info']; ?></p>
+
 				<!-- First name -->
+				<br/>
 				<label><?php echo $lang['register']['b_fname'];?><a id="bfnameerr"></a></label>
 				<input type="text" name="bfname" id='bfname' maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("bfname"); ?>"/>
 				<br/>
 				<?php echo $form->error("bfname"); ?>
 
 				<!-- Last name -->
+				<br/>
 				<label><?php echo $lang['register']['b_lname'];?><a id="blnameerr"></a></label>
 				<input type="text" name="blname" id="blname" maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("blname"); ?>"/>
 				<br/>
 				<?php echo $form->error("blname"); ?>
 
-				<!-- Upload a photo -->
-				<label>
-					Please upload a clear, close, well lit photo of yourself.
-					<strong><a href="library/getimagenew.php?id=sample_photo&amp;width=640&amp;height=480" target="_blank">View Example</a></strong><a id="bphotoerr"></a>
-				</label>
-
-				<div>
-					<div style="float:left;padding-top:10px;">
-						<?php $photolabel = $lang['register']['upload_photo'];
-						$isPhoto_select=$form->value("isPhoto_select");
-							if(!empty($isPhoto_select))
-							{ $photolabel = $lang['register']['upload_diffphoto'];
-							?>
-								<img style="float:none" class="user-account-img" src="<?php echo SITE_URL.'images/tmp/'.$isPhoto_select ?>" height="50" width="50" alt=""/>
-						<?php } ?>
-					</div>
-					
-
-					<div class='fileType_hide'>
-						<input type="file" name="bphoto" id="bphoto"   value="<?php echo $form->value("bphoto"); ?>" onchange="uploadfile(this)"/>
-					</div>
-								
-
-					<div class="customfiletype" onclick="getbphoto()">
-						<span><?php echo $photolabel?></span>
-					</div>
-					<div style="clear:both"></div>
-					<div  id="bphoto_file"></div>
-				</div>
-				<span><?php echo $lang['register']['allowed'];?></span>
-				<div id="bphoto_err">
-					<?php echo $form->error("bphoto"); ?>
-				</div>
-				<input type="hidden" name="isPhoto_select" value="<?php echo $form->value("isPhoto_select"); ?>" />
-			</div>
-
-			<!-- hr tag and beginning contact details -->
-			
-			<div class="holder_522 group">
-				<hr/>
-				<p class="blue_color uppercase formTitle">contact details</p>
-
 				<?php $params['padd_ex']= $_SERVER['REQUEST_URI'].'#ResidentialaddrExample'; 
 				$paddress= $session->formMessage($lang['register']['paddress'], $params); ?>
 
 				<!-- Neighborhood -->
+				<br/>
 				<label><?php echo $paddress;?><a id="bpostadderr"></a></label>
 				<textarea name="bpostadd" id='bpostadd' class="textareacmmn" ><?php echo $form->value("bpostadd"); ?></textarea>
 				<br/>
 				<?php echo $form->error("bpostadd"); ?>
 
 				<!-- House number -->
+				<br/>
 				<label><?php echo $lang['register']['home_no'];?><a id="home_noerr"></a></label>
 				<textarea name="home_no" id='home_no' class="textareacmmn" ><?php echo $form->value("home_no"); ?></textarea>
 				<br/>
 				<?php echo $form->error("home_no"); ?>
 
 				<!-- City or village -->
+				<br/>
 				<label><?php echo $lang['register']['City'];?><a id="bcityerr"></a></label>
 				<input type="text" name="bcity" id="bcity" maxlength="50" class="inputcmmn-1" value="<?php echo $form->value("bcity"); ?>"/>
 				<br/>
 				<?php echo $form->error("bcity"); ?>
 
 				<!-- National ID Number -->
+				<br/>
 				<label><?php echo $lang['register']['nationid'];?><a id="bnationiderr"></a></label>
 				<input type="text" name="bnationid" id='bnationid' maxlength="50" class="inputcmmn-1" value="<?php echo $form->value("bnationid"); ?>" />
 				<br/>
 				<?php echo $form->error("bnationid"); ?>
 
 				<!-- Phone/mobile number -->
+				<br/>
 				<label>
 					<?php 
-					//modified by Julia 1-11-2013
+					
 					if($form->value("bcountry")=='KE') {
 						echo "Please enter your Safaricom mobile phone number. This must be a Safaricom number registered under your own name.";
 					} else if($form->value("bcountry")=='GH') {
@@ -319,81 +305,87 @@ if(empty($session->userid)){
 				<input type="text" id="bmobile" name="bmobile" maxlength="15" class="inputcmmn-1" value="<?php echo $form->value("bmobile"); ?>" />
 				<br/>
 				<div id="mobileerror"><?php echo $form->error("bmobile"); ?></div>
+				
 
-				<!-- E-mail address -->
-				<label><?php echo $lang['register']['email'];?><a id="bemailerr"></a></label>
-				<input type="text" id="bemail" name="bemail" maxlength="50" class="inputcmmn-1"  value="<?php echo $form->value("bemail"); ?>" />
+			<!--  Start References -->
+
+			<div class="holder_522 group">
+				<hr/>
+				<p class="blue_color uppercase formTitle"><?php echo $lang['register']['references']; ?></p>
+		
+				<!-- member name -->
 				<br/>
-				<div id="emailerror"><?php echo $form->error("bemail"); ?></div>
+				<label><?php echo $lang['register']['reffered_member'];?><a id="refer_membererr"></a></label>
+				<div class="arrow_hider_big">
+					<select id="refer_member" class="custom_select" name="refer_member"><option value='0'>None</option>
+					<?php foreach($borrowers as $borrower){ ?>
+						<option value="<?php echo $borrower['userid']?>" <?php if($form->value("refer_member")==$borrower['userid']) echo "Selected";?>><?php echo $borrower['FirstName']." ".$borrower['LastName']." (".$borrower['City'].")";?></option>
+					<?php } ?>		
+					</select>
+				</div>
+				<br/>
+				<div id="refer_membererror"><?php echo $form->error("refer_member"); ?></div>
 
-				<div>
-					<!-- memeber name -->
-					<label><?php echo $lang['register']['reffered_member'];?><a id="refer_membererr"></a></label>
-					<div class="arrow_hider_big">
-						<select id="refer_member" class="custom_select" name="refer_member"><option value='0'>None</option>
-						<?php foreach($borrowers as $borrower){ ?>
-								<option value="<?php echo $borrower['userid']?>" <?php if($form->value("refer_member")==$borrower['userid']) echo "Selected";?>><?php echo $borrower['FirstName']." ".$borrower['LastName']." (".$borrower['City'].")";?></option>
-						<?php } ?>		
+				<!-- town or village located -->
+				<br/>
+				<label><?php echo $lang['register']['nearest_city'];?><a id="volunteer_mentorerr"></a></label>
+				<div class="arrow_hider_big">
+					<select class="custom_select" id="vm_city" name="vm_city" onchange="get_volunteers(this.value)">
+						<?php 
+							if(!empty($vmcities)){?>
+						<?php	for($x=0;$x<count($vmcities);$x++){?>
+									<option value="<?php echo $vmcities[$x]?>" <?php if(strcasecmp($form->value("vm_city"), $vmcities[$x])==0) echo "Selected"?>><?php echo $vmcities[$x];?></option>
+						<?php	}
+							}?>
+					</select>
+				</div>
+
+				<!-- Volunteer mentor -->
+				<br/>
+				<label><?php echo $lang['register']['volunteer_mentor'];?></label>
+				<div class="arrow_hider_big">
+					<select id="volunteer_mentor" class="custom_select" name="volunteer_mentor">
+						<?php  if(!empty($vmByCity)){
+								foreach($vmByCity as $key=>$row){
+									$name= $database->getNameById($key);?>
+									<option value='<?php echo $key ?>' <?php if($form->value("volunteer_mentor")==$key){ echo 'selected'; } ?>><?php echo $name ?></option>
+						<?php	}
+							} else { ?>		
+								<option></option>
+						<?php	} ?>
 						</select>
-					</div>
+					<br/><div id="volunteer_mentorerror"><?php echo $form->error("volunteer_mentor"); ?></div>
+				</div>
+
+				<!-- Sign reconform name -->
+				<br/>
+				<label>
+					<?php echo $lang['register']['sign_recomform_name'];?>
+					<a id="sign_recomform_nameerr"></a>
+				</label>
+				<input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_name"); ?>" />
+				<br/>
+				<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div>
+
+				<!-- Sign reconform num -->
+				<br/>
+				<label>
+					<?php echo $lang['register']['sign_recomform_num'];?>
+					<a id="sign_recomform_numerr"></a>
+				</label>
+				<input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_num"); ?>" />
+				<br/>
+				<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div>
+
+				<!-- Contact type -->
+				<div style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" id="contact_type" >
 					<br/>
-					<div id="refer_membererror"><?php echo $form->error("refer_member"); ?></div>
-
-					<!-- town ot village located -->
-					<label><?php echo $lang['register']['nearest_city'];?><a id="volunteer_mentorerr"></a></label>
-					<div class="arrow_hider_big">
-						<select class="custom_select" id="vm_city" name="vm_city" onchange="get_volunteers(this.value)">
-							<?php 
-								if(!empty($vmcities)){?>
-							<?php	for($x=0;$x<count($vmcities);$x++){?>
-										<option value="<?php echo $vmcities[$x]?>" <?php if(strcasecmp($form->value("vm_city"), $vmcities[$x])==0) echo "Selected"?>><?php echo $vmcities[$x];?></option>
-							<?php	}
-								}?>
-						</select>
-					</div>
-
-					<!-- Volunteer mentor -->
-					<label><?php echo $lang['register']['volunteer_mentor'];?></label>
-					<div class="arrow_hider_big">
-						<select id="volunteer_mentor" class="custom_select" name="volunteer_mentor">
-							<?php  if(!empty($vmByCity)){
-									foreach($vmByCity as $key=>$row){
-										$name= $database->getNameById($key);?>
-										<option value='<?php echo $key ?>' <?php if($form->value("volunteer_mentor")==$key){ echo 'selected'; } ?>><?php echo $name ?></option>
-							<?php	}
-								} else { ?>		
-									<option></option>
-							<?php	} ?>
-							</select>
-						<br/><div id="volunteer_mentorerror"><?php echo $form->error("volunteer_mentor"); ?></div>
-					</div>
-
-					<!-- Sign reconform name -->
 					<label>
-						<?php echo $lang['register']['sign_recomform_name'];?>
-						<a id="sign_recomform_nameerr"></a>
+						<?php echo $lang['register']['contact_type']?>
+						<a id="cntct_type"></a>
 					</label>
-					<input type="text" id="rec_form_offcr_name" name="rec_form_offcr_name"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_name"); ?>" />
-					<br/>
-					<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_name"); ?></div>
-
-					<!-- Sign reconform num -->
-					<label>
-						<?php echo $lang['register']['sign_recomform_num'];?>
-						<a id="sign_recomform_numerr"></a>
-					</label>
-					<input type="text" id="rec_form_offcr_num" name="rec_form_offcr_num"  class="inputcmmn-1" value="<?php echo $form->value("rec_form_offcr_num"); ?>" />
-					<br/>
-					<div id="sign_recomform"><?php echo $form->error("rec_form_offcr_num"); ?></div>
-
-					<!-- Contact type -->
-					<div style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>" id="contact_type" >
-						<label>
-							<?php echo $lang['register']['contact_type']?>
-							<a id="cntct_type"></a>
-						</label>
-						<br/><?php echo $form->error("contact_type"); ?>
-					</div>
+					<br/><?php echo $form->error("contact_type"); ?>
+				</div>
 
 					<!-- facebook_optional -->
 					<div style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo "display:''";?>" id="facebook_optional">
@@ -426,8 +418,7 @@ if(empty($session->userid)){
 
 			</div>
 
-			<!--  Start Credibility -->
-			<hr/>
+
 			<div class="holder_522 group" id="telephone_contact" style="<?php if($form->value("bcountry")!='BF') echo 'display:none'; else echo 'display:block';?>">
 				<div class="radio_s no_left">
 					<input type="radio" name="cntct_type" id="tel_cntct" onclick="open_contact(this.value);" value="0" <?php if($form->value("cntct_type")=='0') echo"checked";?>>
@@ -436,69 +427,119 @@ if(empty($session->userid)){
 			</div>
 
 			<div class="holder_522 group" style="<?php if($form->value("bcountry")!='BF')echo "display:block"; else echo "display:none"; ?> margin-top: 25px;" id="tele_contacts">
-				<p class="blue_color uppercase formTitle">credibility</p>
 
+				<br/>
 				<label><?php echo $lang['register']['family_contact']?><a id="bfamilycontact"></a></label>
 
 				<!-- family 1 -->
+				<br/>
 				<label><?php echo $lang['register']['family_contact1']?>:<a id="bfamilycontact1"></a></label>
-				<textarea name="bfamilycont1" id='bfamilycont1' class="textareacmmn" ><?php echo $form->value("bfamilycont1"); ?></textarea>
+				<input type="text" name="bfamilycont1" id='bfamilycont1' class="textareacmmn" ><?php echo $form->value("bfamilycont1"); ?></textarea>
 				<br/>
 				<?php echo $form->error("bfamilycont1"); ?>
 
 				<!-- family 2 -->
+				<br/>
 				<label><?php echo $lang['register']['family_contact2']?>:<a id="bfamilycontact2"></a></label>
-				<textarea name="bfamilycont2" id='bfamilycont2' class="textareacmmn" ><?php echo $form->value("bfamilycont2"); ?></textarea>
+				<input type="text" name="bfamilycont2" id='bfamilycont2' class="textareacmmn" ><?php echo $form->value("bfamilycont2"); ?></textarea>
 				<br/>
 				<?php echo $form->error("bfamilycont2"); ?>
 
 				<!-- family 3 -->
+				<br/>
 				<label><?php echo $lang['register']['family_contact3']?>:<a id="bfamilycontact3"></a></label>
-				<textarea name="bfamilycont3" id='bfamilycont3' class="textareacmmn" ><?php echo $form->value("bfamilycont3"); ?></textarea>
+				<input type="text" name="bfamilycont3" id='bfamilycont3' class="textareacmmn" ><?php echo $form->value("bfamilycont3"); ?></textarea>
 				<br/>
 				<?php echo $form->error("bfamilycont3"); ?>
 
 				<!-- info text -->
+				<br/>
 				<label><?php echo $lang['register']['neigh_contact'];?><a id="bneighcontact"></a></label>
 
 				<!-- neighboor 1 -->
+				<br/>
 				<label><?php echo $lang['register']['neigh_contact1']?>:<a id="bneighcontact1"></a></label>
-				<textarea name="bneighcont1" id='bneighcont1' class="textareacmmn" ><?php echo $form->value("bneighcont1"); ?></textarea>
+				<input type="text" name="bneighcont1" id='bneighcont1' class="textareacmmn" ><?php echo $form->value("bneighcont1"); ?></textarea>
 				<br/>
 				<?php echo $form->error("bneighcont1"); ?>
 
 				<!-- neighboor 2 -->
+				<br/>
 				<label><?php echo $lang['register']['neigh_contact2']?>:<a id="bneighcontact2"></a></label>
-				<textarea name="bneighcont2" id='bneighcont2' class="textareacmmn" ><?php echo $form->value("bneighcont2"); ?></textarea>
+				<input type="text" name="bneighcont2" id='bneighcont2' class="textareacmmn" ><?php echo $form->value("bneighcont2"); ?></textarea>
 				<br/>
 				<?php echo $form->error("bneighcont2"); ?>
 
 				<!-- neighboor 3 -->
+				<br/>
 				<label><?php echo $lang['register']['neigh_contact3']?>:<a id="bneighcontact3"></a></label>
-				<textarea name="bneighcont3" id='bneighcont3' class="textareacmmn" ><?php echo $form->value("bneighcont3"); ?></textarea>
+				<input type="text" name="bneighcont3" id='bneighcont3' class="textareacmmn" ><?php echo $form->value("bneighcont3"); ?></textarea>
 				<br/>
 				<?php echo $form->error("bneighcont3"); ?>
+			
+
+				<!-- hear about zidisha -->
+				<br/>
+				<label><?php echo $lang['register']['reffered_by'];?><a id="breffered_by"></a></label>
+				<textarea name="reffered_by" id='reffered_by' class="textareacmmn" style="height:130px;"><?php echo $form->value("reffered_by"); ?></textarea><br/>
+				<div id="reffered_by_err"><?php echo $form->error("reffered_by"); ?>
+				</div>
 			</div>
 
-			<!-- Start personal info -->
+			<!-- Start Public Profile -->
+			<br/>
 			<hr/>
 			<div class="holder_522 group">
-				<p class="blue_color uppercase formTitle">personal info</p>
+				<p class="blue_color uppercase formTitle"><?php echo $lang['register']['public_profile']; ?></p>
 
+				<div>
+
+				<!-- Upload a photo -->
+				<br/>
+				<label>
+					<?php echo $lang['register']['photo_note']; ?><br/>
+				</label>
+
+				<div>
+					<div style="float:left;padding-top:10px;">
+						<?php $photolabel = $lang['register']['upload_photo'];
+						$isPhoto_select=$form->value("isPhoto_select");
+							if(!empty($isPhoto_select))
+							{ $photolabel = $lang['register']['upload_diffphoto'];
+							?>
+								<img style="float:none" class="user-account-img" src="<?php echo SITE_URL.'images/tmp/'.$isPhoto_select ?>" height="50" width="50" alt=""/>
+						<?php } ?>
+					</div>
+					
+
+					<div class='fileType_hide'>
+						<input type="file" name="bphoto" id="bphoto"   value="<?php echo $form->value("bphoto"); ?>" onchange="uploadfile(this)"/>
+					</div>
+								
+
+					<div class="customfiletype" onclick="getbphoto()">
+						<span><?php echo $photolabel?></span>
+					</div>
+					<div style="clear:both"></div>
+					<div  id="bphoto_file"></div>
+				</div>
+				<span><?php echo $lang['register']['allowed'];?></span>
+				<div id="bphoto_err">
+					<?php echo $form->error("bphoto"); ?>
+				</div>
+				<input type="hidden" name="isPhoto_select" value="<?php echo $form->value("isPhoto_select"); ?>" />
+			
 				<!-- about yourself -->
+				<br/>
 				<label><?php echo $lang['register']['A_Yourself'];?><a id="babouterr"></a></label>
 				<textarea name="babout" id='babout' class="textareacmmn" style="height:130px;"><?php echo $form->value("babout"); ?></textarea><br/>
 				<div id="babout_err"><?php echo $form->error("babout"); ?></div>
 
 				<!-- your business -->
+				<br/>
 				<label><?php echo $lang['register']['bdescription'];?><a id="bbizdescerr"></a></label>
 				<textarea name="bbizdesc" id='bbizdesc' class="textareacmmn" style="height:130px;"><?php echo $form->value("bbizdesc"); ?></textarea><br/>
 				<div id="brbizdesc_err"><?php echo $form->error("bbizdesc"); ?></div>
-
-				<!-- hear about zidisha -->
-				<label><?php echo $lang['register']['reffered_by'];?><a id="breffered_by"></a></label>
-				<textarea name="reffered_by" id='reffered_by' class="textareacmmn" style="height:130px;"><?php echo $form->value("reffered_by"); ?></textarea><br/>
-				<div id="reffered_by_err"><?php echo $form->error("reffered_by"); ?>
 
 				<?php
 					$displayreferrer = '';
@@ -512,10 +553,11 @@ if(empty($session->userid)){
 					<br/>
 					<div id="error"><?php echo $form->error("referrer"); ?></div>					
 				</div>
-				</div>
+				
 			</div>
 
 			<!-- start terms -->
+			<br/>
 			<hr/>
 			<div class="holder_645 group">
 				<p class="blue_color uppercase formTitle"><?php echo $lang['register']['t_c'];?></p>
@@ -527,22 +569,27 @@ if(empty($session->userid)){
 						echo $lang['legalagreement']['b_tnc'];
 					?>
 				</div>
+			<br/>
+			<br/>
 
+				<!-- CAPTCHA no longer displayed -->
 				<div style="display:none;">
 					<label><?php echo $lang['register']['capacha'];?></label>
 					<div style="margin-top:20px"><?php echo  recaptcha_get_html(RECAPCHA_PUBLIC_KEY, $form->error("user_guess")); ?></div>
 					<a id="recaptcha_response_fielderr"></a>
 				</div>
 
+				<!-- submit final form -->
 				<div class="group" style="margin-top:25px;">
 					<input type="hidden" name="reg-borrower" />
 					<input type="hidden" name="tnc" id="tnc" value=0 />	
 					<input type="hidden" name="uploadfileanchor" id="uploadfileanchor" />
 					<input type="hidden" name="before_fb_data" id="before_fb_data" />
-					<input type="hidden" name="fb_data" id="fb_data" value='<?php echo urlencode(addslashes(serialize($fbData))); ?>'/>
-
-					<input type="submit" name='submitform' id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" />
+					<input type="hidden" name="fb_data" id="fb_data" value='<?php echo urlencode(addslashes(serialize($fbData))); ?>'/>	
 					<input type="submit" name='submitform' id="submit_btn" class="btn" align="center" value="<?php echo $lang['register']['RegisterComplete'];?>" onclick="needToConfirm = false;"  />
+				
+					<input type="submit" name='submitform' id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" />
+
 				</div>
 
 			</div>

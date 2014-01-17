@@ -295,7 +295,7 @@ date_default_timezone_set ('EST');
 					<tr>
 						<td>
 							<input id="priority6" type='radio' name='priority'  <?php if($preference ==AUTO_LEND_AS_PREV_LOAN )
-						echo "checked='true'"; ?>value="<?php echo AUTO_LEND_AS_PREV_LOAN ?>">Match bids made manually by other lenders<br/>
+						echo "checked='true'"; ?>value="<?php echo AUTO_LEND_AS_PREV_LOAN ?>">Match bids made manually by other lenders.<br/>
 								<?php echo $form->error('priority');?>
 						</td>
 					</tr>

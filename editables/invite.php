@@ -13,7 +13,7 @@ $lang['invite']['subject'] = 'Subject';
 $lang['invite']['enter_subject'] = 'Zidisha invitation from';
 $lang['invite']['invite_message'] = 'Invite Message';
 $lang['invite']['binvite_frnds']='Invite New Members';
-$lang['invite']['binvite_inst']="This page allows members who have earned invite privileges to send high-value invite credits to new members.  
+$lang['invite']['binvite_inst']="This page allows members who have earned invite privileges to send high-value invite credits to up to 100 new members whom they know and trust.  
 <br/><br/>The new members who receive the high-value invite credits join with a larger starting loan size than ordinary members, commensurate with the trust we place in the Zidisha members who have invite privileges.<br/><br/>
 For a limited time, current Zidisha members with invite privileges may also earn bonus credit limit increases by inviting new members who participate responsibly in our lending community. Under this program, your maximum credit limit will increase by a
 bonus amount of %currency% %binvite_credit% for each of your invited members who maintains a %minreapayrate%% or higher on-time monthly installment repayment rate.<br/><br/>

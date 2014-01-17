@@ -18,20 +18,26 @@ $(document).ready(function(){
 		if(isset($_POST['brwr_limit']) && $_POST['brwr_limit'] > 0) {
 			$limit  = $_POST['brwr_limit'];
 		}
-		$q="SELECT email,users.userid  FROM `lenders` join users on lenders.userid= users.userid WHERE `Active` = 1  $where ORDER BY lenders.userid DESC limit $limit";
+		$q="SELECT email FROM `lenders` ORDER BY userid DESC limit $limit";
 		$content='';
-		//$content="Borrower emails\n";
+		
 		$result=$db->getAll($q);
 		//ob_end_clean();
 		foreach($result as $row) {
-			$content .= $row['email'].","."<br/>";
+			$content .= "<li>".$row['email'].","."</li><br/>";
+			$content1 .= $row['email'].","."<br/>";
+
 		}
-		echo $content;
+		
+		echo "<ol>".$content."</ol>";
+
+		echo $content1;
+
 		//header("Content-type: text/csv");
 		//header("Content-Disposition: attachment; filename=file.csv");
 		//header("Pragma: no-cache");
 		//header("Expires: 0");
-		echo $content;
+
 		exit;
 	}else if(!empty($_POST)) {
 		echo"<font color='red'>You are not authorized to view this page!</font>";

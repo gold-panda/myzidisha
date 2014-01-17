@@ -33,7 +33,7 @@ She obtained a law degree from Pontificia Universidad Catolica Madre y Maestra, 
 
 											
 
-<h4 style="display:inline">VINCENT CASANOVA, Francophone Country Liaison Intern</h4>
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/VincentC.html">VINCENT CASANOVA</a>, Francophone Country Liaison Intern</h4>
 							
 							<p style="margin-top:10px;">I am located in the South of France. I have a master\'s degree in Management and about three years of experience in financial auditing and controlling. These experiences brought me to various parts of our planet including Belgium, Spain, the United States, the UK, and France.</p>
 
@@ -44,7 +44,7 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 
 											
 
-<h4 style="display:inline">RACHEL JEANTY, Francophone Country Liaison Intern</h4>
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/RachelJ.html">RACHEL JEANTY</a>, Francophone Country Liaison Intern</h4>
 							
 							<p style="margin-top:10px;">Rachel was born and currently lives in New York. She holds a master\'s degree in Education and a bachelor\'s in Political Science with a minor in Sociocultural Anthropology. Since transitioning from a teaching career, she has explored opportunities to incorporate her previous work experiences and academic work with her bilingual skills while devoting time to worthwhile volunteer efforts such as language translation, interpreting and now, microfinance.</p>
 							
@@ -75,21 +75,7 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 							
 							<br />
 
-<h4 style="display:inline">DILSHER DHILLON, Kenya Country Liaison Intern</h4>
-							
-							
-							<p style="margin-top:10px;">Born and raised in New Delhi, Dilsher Dhillon has been passionate about international development since childhood, having worked on a number of community service projects all over rural India. He has a Bachelor of Science degree in Finance and Economics from the University of Virginia. He aims to use his volunteering experience with Zidisha to get a better understanding of the behind-the-scenes operations of microfinance. An avid musicophile and writer, he is currently writing a picaresque coming-of-age novel and teaching himself how to play the banjo in his spare time.</p>
-							
-							<br />
 
-
-
-<h4 style="display:inline">JAIMIE HOFFMAN, Kenya Country Liaison Intern</h4>
-							
-							
-							<p style="margin-top:10px;">Jaimie grew up in rural Pennsylvania and is a 2013 graduate from Bloomsburg University, where she earned her degree in Political Science. While there, most of her research and studies focused on international affairs, as well as doing research on social media\'s role in education. As an undergraduate student, she was a member of several student organizations and was president of Model United Nations where she was able to grasp a better understanding of the economic hardships around the world. In fall of 2014, she plans on returning to school to earn her master\'s degree in Diplomacy. Jaimie currently resides in Atlanta, Georgia.</p>
-							
-							<br />
 
 <h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/ajordan.html" target="_blank">ALISSA JORDAN</a>, Kenya Country Liaison Intern</h4>
 							
@@ -108,7 +94,7 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 
 
 
-<h4 style="display:inline">CHRISTIAN OLEG ZEBALLOS, Kenya Country Liaison Intern</h4>
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/czeballos.html">CHRISTIAN OLEG ZEBALLOS</a>, Kenya Country Liaison Intern</h4>
 							
 							
 							<p style="margin-top:10px;">Christian is a graduate from the University of Edinburgh, where he earned
@@ -122,19 +108,12 @@ business mechanisms and entrepreneurship. Christian grew up in Bolivia and
 currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 							<br />
 
-<h4 style="display:inline">MEAGHAN PATRICK, Kenya Country Liaison Intern</h4>
-							
-							
-							<p style="margin-top:10px;">Meaghan is a University of Virginia student, graduating this May with a B.A. in Foreign Affairs. She first became involved with Zidisha as a Client Relationship Intern during her study abroad experience in Dakar, Senegal. She loved working for the organization on the ground, connecting with local entrepreneurs and seeing firsthand how microloans make a difference in those individuals\' lives. Meaghan was thrilled to find a way to remain involved with Zidisha while finishing her undergraduate studies in Charlottesville. She is looking forward to learning more about the behind-the-scenes process that is so vital to Zidisha\'s success. Meaghan also interns for the UVA Education Abroad Office and the Peace Appeal Foundation.</p>
-							
-							<br />
 
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/kevinzeigler.html">KEVIN ZEIGLER</a>, Kenya Country Liaison Intern</h4>
+							
+							
+							<p style="margin-top:10px;">Kevin Zeigler grew up in a small town outside Richmond, Virginia.  After graduating from James Madison University with an undergraduate degree in Accounting and Computer Information Systems, he began working for a global accounting firm and obtained his Certified Public Accountant license.  His interest in poverty alleviation began in college after helping to start an organization dedicated to supporting education and community infrastructure based programs in a community outside León, Nicaragua.  After working for two and a half years in IT Risk Advisory services in Richmond and New York City, he decided to leave his job to pursue opportunities with innovative organizations on the forefront of poverty alleviation and social enterprise.  Kevin is excited about the opportunity to work with Zidisha and hopes to bring his business driven background to the table while learning more about microfinance and P2P lending.</p>
 
-<h4 style="display:inline">HRIDAY (DAY) THAKKAR, Kenya Country Liaison Intern</h4>
-							
-							
-							<p style="margin-top:10px;">Hriday was raised in the Silicon Valley of India, Bangalore, and moved to the United States two years ago to pursue undergraduate studies in economics. Having seen the poverty and hunger in India, especially in the villages while accompanying his father on his Biodiesel projects, and wanting to do his part to uplift their lives, Day developed a passion towards economic development. He first fell in love with the concept of microfinance after getting involved with the Microcredit Club at college and traveling to Malawi, Africa in 2012. This experience allowed him to witness firsthand the impact it is having on its borrowers. He believes Zidisha is an innovative model that challenges the conventional method of providing access to credit via microfinance institutions, and it\'s an opportunity to continue making a difference in the lives of underprivileged families in developing countries. Day recently graduated with an associate\'s degree in Economics from Foothill College, California and is taking a gap year to gain hands-on experience in international development and entrepreneurship. Subsequently, he wants to transfer to Georgetown University to pursue a bachelor\'s in international economics and a master\'s in a related field. He aspires to be a social entrepreneur upon completing his studies and later on work in the government on economic policies. </p>
-							
 							<br />
 
 
@@ -146,7 +125,7 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 							<br />
 
 
-<h4 style="display:inline">ASHLEE BEAZLEY, Communications Associate</h4>
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/ashleeandjeanelle.html">ASHLEE BEAZLEY</a>, Communications Associate</h4>
 							
 							
 							<p style="margin-top:10px;">Ashlee is from Auckland, New Zealand. Currently enrolled at the University of Auckland, she is studying a conjoint degree in Arts (majoring in history) and Law. After visiting Vietnam on a high school history trip, Ashlee realised the vast social, financial and educational challenges those in poverty face; this inspired her to search for a means by which to help change this. Microfinance proved to be the answer, and Ashlee is now also Project Leader of the Zidisha Initiative, part of the Auckland Microfinance Initiative, where she is working to further promote microfinance and Zidisha on campus. When not working or studying, Ashlee enjoys baking, cooking, travelling, practicing yoga and reading.</p>
@@ -156,7 +135,7 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 
 
 
-<h4 style="display:inline">DENISE OWEN, Translation Team Coordinator</h4>
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/pentatonicscale.html">DENISE OWEN</a>, Translation Team Coordinator</h4>
 							
 							
 							<p style="margin-top:10px;">Denise Owen teaches elementary and middle school music at an international Christian school in Tokyo, Japan. She is a graduate of Oberlin College, where she lived in French House and German House, and Regent College, where she majored in Old Testament and Hebrew. Now she uses Japanese and English on a daily basis, but linguistics and translation continue to be her hobby. She is happy to be able to put her French to use to help alleviate poverty through Zidisha.</p>
@@ -250,21 +229,5 @@ You can contact Ronnie at <a href="mailto:ronniezidisha@gmail.com">ronniezidisha
 							
 							<h4 style="display:inline">WHITNEY HOLMES, Attorney</h4>
 							
-							<p style="margin-top:10px;">A partner with Morrison & Foerster, Whitney Holmes has extensive experience counseling clients, including boards of directors, special committees and audit committees, in corporate governance and compliance matters, compliance with the Sarbanes-Oxley Act of 2002, federal and state securities laws and stock exchange rules. Mr. Holmes was recently recognized as a top attorney for mergers and acquisitions in Colorado Super Lawyers and Super Lawyers Ð Corporate Counsel Edition. From 2002-2005, Mr. Holmes served as Chair of the Securities Law Subsection of the Colorado Bar Association\'s Business Law Counsel. He was selected by Colorado in-house counsel for inclusion in the 2008 Corporate Counsel Black Book in several areas, including Corporate Finance, Securities and Mergers and Acquisitions. Mr. Holmes was selected as one of the top 10 business newsmakers in Banking and Finance in the 2006 Power Book published by the Denver Business Journal.</p>
-							
-							<br />
-							
-							<h4 style="display:inline">THOMAS KARIMI MWAURA, Lending Program Advisor</h4>
-							
-							<p style="margin-top:10px;">Mr. Mwaura is a head teacher of Mugaa Secondary School, a rural school in Nakuru county in Kenya. He holds a bachelor\'s degree in Education (Science) from Kenyatta University, and is currently pursuing a master\'s degree in Education (Management). He has taught in different secondary schools in many parts of Nakuru for several years, and is currently the Vice Chairman of the Kenya Secondary Schools Heads Association Gilgil Chapter. Mr. Mwaura is also experienced in the management of savings and loan programs, having served as Vice Chairman of the delegates of Mwalimu Savings And Credit Co-Operative Organisation in Nakuru.  He has a heart and is always looked upon by the community members to help the needy and to give direction to the youth in his immediate neighborhood and in the churches. He is called upon even from far and wide where he is known. He is the point man of Zidisha in Nakuru county in Kenya, where he visits borrowers and shares with them about Zidisha.
-
-Mr. Mwaura is married to one wife, Muthoni, and has four daughters, Purity, Neema, Abigail and Melissa. Mrs. Muthoni holds a master\'s degree in Public Health and the children are in school.</p>
-							
-							<br />
-							
-							<h4 style="display:inline">DANIEL ROZAS, Risk Advisor  &nbsp; &nbsp; &nbsp; <a href="http://www.danielrozas.com/" target="_blank">View Weblog</a></h4>
-							
-							
-							
-							<p style="margin-top:10px;">Daniel Rozas is a microfinance consultant based in Brussels. He has worked with some of the leading organizations in the sector, including the Center for Financial Inclusion, CGAP, the Smart Campaign, M-CRIL and MicroRate, and has been advising Zidisha since before its founding.  Much of Daniel\'s work centers on the risk management side of microfinance, and he has authored several research papers on the subject. Daniel is also a regular contributor to <a href="http://www.microfinancefocus.com/category/experts/daniel-rozas" target="_blank">Microfinance Focus</a> and the <a href="http://financialaccess.org/blog" target="_blank">Financial Access Initiative</a> blog. </p>';
+							<p style="margin-top:10px;">A partner with Morrison & Foerster, Whitney Holmes has extensive experience counseling clients, including boards of directors, special committees and audit committees, in corporate governance and compliance matters, compliance with the Sarbanes-Oxley Act of 2002, federal and state securities laws and stock exchange rules. Mr. Holmes was recently recognized as a top attorney for mergers and acquisitions in Colorado Super Lawyers and Super Lawyers Ð Corporate Counsel Edition. From 2002-2005, Mr. Holmes served as Chair of the Securities Law Subsection of the Colorado Bar Association\'s Business Law Counsel. He was selected by Colorado in-house counsel for inclusion in the 2008 Corporate Counsel Black Book in several areas, including Corporate Finance, Securities and Mergers and Acquisitions. Mr. Holmes was selected as one of the top 10 business newsmakers in Banking and Finance in the 2006 Power Book published by the Denver Business Journal.</p>';
 ?>
