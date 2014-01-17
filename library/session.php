@@ -8462,6 +8462,26 @@ function getLoginSiftData($event_type,$userid){
 		
 }
 
+
+function getFBSiftData($userid,$facebook_id){
+
+		$time=time();
+		$data = array(
+			  '$type' => 'facebook_link',
+			  '$api_key' => SHIFT_SCIENCE_KEY,
+			  '$user_id' => $userid,
+			  '$session_id' => session_id(),
+			  'facebook_id' => $facebook_id,
+			  '$time' => $time	 		  
+			);
+		
+		$url_send ="https://api.siftscience.com/v203/events"; 
+		$str_data = json_encode($data);	
+		$this->sendPostData($url_send, $str_data);
+		
+}
+
+
 function getNewBAccountSiftData($event_type,$userid,$uname=null,$namea=null,$nameb=null,$post=null,$city=null,$country=null,$bnationid=null,$email=null,$mobile=null,$bfamilycont1=null,$bfamilycont2=null,$bfamilycont3=null, $bneighcont1=null,$bneighcont2=null,$bneighcont3=null,$rec_form_offcr_name=null, $rec_form_offcr_num=null, $aboutMe=null,$aboutBusiness=null,$hearaAoutZidisha=null){
 	
 		$time=time();
