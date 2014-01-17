@@ -54,9 +54,9 @@ if(empty($t))
 	<div id="register_tabs" class="group">
 		<?php if($select==1) { ?>
 			<div class="register_eachtab register_activetab" ><?php echo $lang['register']['Borrower'];?></div>
-			<div class="register_eachtab" onclick="window.location='index.php?p=1&sel=2&redesign&lang=<?php echo $language ?>'" ><?php echo $lang['register']['Lender'];?></div>
+			<div class="register_eachtab" onclick="window.location='index.php?p=1&sel=2&lang=<?php echo $language ?>'" ><?php echo $lang['register']['Lender'];?></div>
 		<?php } else { ?>
-			<div class="register_eachtab" onclick="window.location='index.php?p=1&sel=1&redesign&lang=<?php echo $language ?>'" ><?php echo $lang['register']['Borrower'];?></div>
+			<div class="register_eachtab" onclick="window.location='index.php?p=1&sel=1&lang=<?php echo $language ?>'" ><?php echo $lang['register']['Borrower'];?></div>
 			<div class="register_eachtab register_activetab" ><?php echo $lang['register']['Lender'];?></div>
 		<?php } ?>
 	</div>
@@ -64,27 +64,13 @@ if(empty($t))
 }
 if($select==1)
 {
-	// If isset $_GET['redesign'] at the URL will see the new redesign of the page.
-	if(isset($_GET['redesign']))
-	{
-		include_once("b_register_redesign.php");
-	}
-	else
-	{
-		include_once("b_register.php");
-	}
+	include_once("b_register_redesign.php");
 	
 }
 else if($select==2 || $select==5)
 {
-	if(isset($_GET['redesign']))
-	{
-		include_once("l_register_redesign.php");
-	}
-	else
-	{
-		include_once("l_register.php");
-	}
+	include_once("l_register_redesign.php");
+	
 }
 else if($select==3)
 {
