@@ -87,6 +87,7 @@ define("EXPIRE_SOON", 2);
 define("HIGH_OFFER_INTEREST", 3);
 define("HIGH_NO_COMMENTS", 4);
 define("LOAN_RANDOM", 5);
+define("AUTO_LEND_AS_PREV_LOAN", 6);
 // duration in days before we send loan expire mails
 define("LOAN_EXPIRE_MAIL_DURATION", 7);
 //auto lend amount configuration

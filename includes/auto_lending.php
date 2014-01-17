@@ -291,6 +291,15 @@ date_default_timezone_set ('EST');
 								<?php echo $form->error('priority');?>
 						</td>
 					</tr>
+					
+					<tr>
+						<td>
+							<input id="priority6" type='radio' name='priority'  <?php if($preference ==AUTO_LEND_AS_PREV_LOAN )
+						echo "checked='true'"; ?>value="<?php echo AUTO_LEND_AS_PREV_LOAN ?>">Match bids made manually by other lenders<br/>
+								<?php echo $form->error('priority');?>
+						</td>
+					</tr>
+					
 					<tr height='25px'><td colspan='3'></td></tr>
 					<?php if($CreditAvailable < AUTO_LEND_AMT) {
 								$hideLastQust='display:none';
