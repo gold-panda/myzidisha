@@ -7568,13 +7568,13 @@ class genericClass
         $pass= $this->makePassword($pass1, $salt);
         $q="INSERT INTO ! (username, password, salt, userlevel, regdate, tnc, emailVerified ,sublevel) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $r=$db->query($q, array('users', $username,$pass, $salt, LENDER_LEVEL, $time,$tnc, 1, $sub_user_type));
-        if($r==DB_OK)
+	   if($r==DB_OK)
         {
             $q="SELECT userid FROM ! WHERE username=?";
             $userid=$db->getOne($q, array('users', $username));
             $q="INSERT INTO ! (userid, Email, FirstName, LastName, about, photopath, City, Country, Active, hide_Amount, emailcomment, loan_app_notify, email_loan_repayment, subscribe_newsletter, website) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $r=$db->query($q, array('lenders', $userid, $email, $fname, $lname, $about, $photo, $city, $country, 1, $hide_Amount, $loan_comment, $loan_app_notify, $loan_repayment_credited, $subscribe_newsletter, $lwebsite));
-            if($r===DB_OK){
+            $res=$db->query($q, array('lenders', $userid, $email, $fname, $lname, $about, $photo, $city, $country, 1, $hide_Amount, $loan_comment, $loan_app_notify, $loan_repayment_credited, $subscribe_newsletter, $lwebsite));
+			if($res===DB_OK){
                 return 0;//successful insert
             }
             else{

@@ -705,7 +705,7 @@ class Validation
 		}
 		$this->checkEmails($frnds_emails, "emailError");
 		$this->checkTnc($tnc, "tnc");
-		$this->checkCapcha($user_guess, "user_guess");
+		//$this->checkCapcha($user_guess, "user_guess");
 		$this->checkGiftCard($card_code, "card_code");
 		$this->checkRefferalCode($referral_code, "referral_code");
 	}
