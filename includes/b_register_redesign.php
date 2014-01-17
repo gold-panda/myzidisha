@@ -271,9 +271,9 @@ if(empty($session->userid)){
 			</div>
 
 			<!-- hr tag and beginning contact details -->
-			<hr/>
-
+			
 			<div class="holder_522 group">
+				<hr/>
 				<p class="blue_color uppercase formTitle">contact details</p>
 
 				<?php $params['padd_ex']= $_SERVER['REQUEST_URI'].'#ResidentialaddrExample'; 

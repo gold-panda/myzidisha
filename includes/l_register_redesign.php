@@ -143,8 +143,9 @@
 			<label><?php echo $lang['register']['A_Yourself_l'];?><?php echo $lang['register']['l_optional'];?></label>
 			<textarea class="textareacmmn" name="labout" id="labout" ><?php echo $form->value("labout"); ?></textarea>
 		</div>
-
-		<hr/>
+		<div class="holder_342 group">
+			<hr/>
+		</div>
 		<div style="display:none;" class="holder_342 group">
 			<p class="blue_color uppercase formTitle"><?php echo $lang['register']['A_Preferences_l'];?></p>
 			
