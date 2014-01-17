@@ -7313,7 +7313,7 @@ class genericClass
             $q1="insert into ! (facebook_id, userid, facebook_data, accept, date, zidisha_email, ip_address, fail_reason) values(?,?,?,?,?,?,?,?)";
             $res=$db->query($q1, array('facebook_info', $facebook_id, $userid, $fbData, $web_acc, $date, $email, $ip, $fail_reason));
         }
-		//$session->getFBSiftData($facebook_id);
+		$session->getFBSiftData($userid, $facebook_id);
         return $res;
     }
 
