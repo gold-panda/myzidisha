@@ -362,8 +362,9 @@ if($language==''){
 			{ 	?> 
 				<!--<div style='float:left;margin-top:20px;margin-left:200px;'><strong><a href="http://www.amazon.com/Venture-Collection-Microfinance-Stories-ebook/dp/B009JC6V12/ref=sr_1_13?s=digital-text&ie=UTF8&qid=1349104493&amp;sr=1-13&amp;keywords=microfinance" target="_blank"><?php echo $lang['loginform']['ebooklink']?></a></strong></div> -->
 				<div id="welcome">
-					<?php $prurl = getUserProfileUrl($session->userid);?>
-					<h4><a style="color:#000000" href="<?php echo $prurl?>">Hi, <?php echo $session->fullname; ?></a></h4>
+					<?php $prurl = getUserProfileUrl($session->userid);
+					$username=$database->getUserNameById($session->userid); ?>
+					<h4><a style="color:#000000" href="<?php echo $prurl?>"><?php echo $lang['loginform']['hi']; ?>, <?php echo $username; ?></a></h4>
 					<div style="clear:both"></div>
 					<div style="margin-top:10px">
 				<?php	if($session->userlevel==PARTNER_LEVEL)
