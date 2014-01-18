@@ -38,7 +38,7 @@ include_once("./editables/".$path);
 		window.location=url;
 	}
 </script>
-<div id="span12_full">
+<div id="span6_full">
 	<div class="span12">
 	<?php
 

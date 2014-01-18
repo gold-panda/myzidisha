@@ -4,6 +4,10 @@
 #span12_full .span12 {
 	width:100%;
 }
+#span6_full{
+	float:left;
+	margin:0 10px 0 0;
+}
 #register_tabs {
 	border-bottom: 1px solid #dddddd;
 	padding: 0 12px;
