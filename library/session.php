@@ -793,6 +793,8 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				$sms_message = $this->formMessage($lang['mailtext']['eligible_invite_sms'], $params);
 				$this->mailSending($From, $To, $b_email, $Subject, $message,$templet);
 				$this->SendSMS($sms_message, $to_number);
+				$this->getOnTimePaymentSiftData($borrowerid); //if borrower pays on time and has good repayment and invite record as measured by eligibility to invite, send good user label to Sift Science
+		
 			}
 
 			if($sendMail) //payment receipt notification for lenders who elect to receive these emails
@@ -8565,6 +8567,28 @@ function getBPaymentSiftData($event_type, $userid, $amount){
 	$this->sendPostData($url_send, $str_data);
 		
 }
+
+
+function getOnTimePaymentSiftData($userid){
+
+	$time=time();
+		
+	$data = array(
+		'$type' => 'ontime_payment',
+		'$api_key' => SHIFT_SCIENCE_KEY,
+		'$user_id' => $userid,
+		'$is_bad' => false,
+		'reasons' => 'High on-time repayment rate',
+		'$description' => 'Made payment and historic on-time repayment rate is high',
+		'$time' => $time
+		);
+		
+		$url_send ="https://api.siftscience.com/v203/users/".$userid."/labels"; 
+		$str_data = json_encode($data);	
+		$this->sendPostData($url_send, $str_data);
+		
+}
+
 
 function getBCommentSiftData($userid, $comment){
 
