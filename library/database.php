@@ -11542,6 +11542,18 @@ function getTotalInstalAllLoans($userid){
     return $total_installments;
 }
 
+//generates array of most recent specified number of comments posted on loan profile pages
+function getAllRecentComments($limit)
+    {
+        global $db;
+        $q="SELECT * FROM ! ORDER BY id DESC LIMIT ?";
+        $result=$db->getAll($q, array('zi_comment', $limit));
+        if(empty($result)){
+            return false;
+        }
+        return $result;
+    }
+
 
 };
 $database= new genericClass;

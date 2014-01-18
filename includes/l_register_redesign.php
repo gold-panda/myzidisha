@@ -9,25 +9,28 @@
 		</div>
 		<div class="holder_342 group">
 			<br/>
-			<p class="blue_color uppercase formTitle">personal details</p>
-
+			
 			<!-- username -->
-			<label><?php echo $lang['register']['username'];?><span class="red">*</span></label>
+			<br/>
+			<label><?php echo $lang['register']['username'];?></label>
 			<input type="text" id="busername" name="lusername" maxlength="20" class="inputcmmn-1" value="<?php echo $form->value("lusername"); ?>" />
 			<br/>
 			<div id="bunerror"><?php echo $form->error("lusername"); ?></div>
 
 			<!-- Create password -->
-			<label><?php echo$lang['register']['ppassword'];?><span class="red">*</span></label>
+			<br/>
+			<label><?php echo$lang['register']['ppassword'];?></label>
 			<input type="password" id="bpass1" name="lpass1" class="inputcmmn-1" value="<?php echo $form->value("lpass1"); ?>" />
 			<br/>
 			<div id="passerror"><?php echo $form->error("lpass1"); ?></div>
 
 			<!-- Confirm pssword -->
-			<label><?php echo$lang['register']['CPassword'];?><span class="red">*</span></label>
+			<br/>
+			<label><?php echo$lang['register']['CPassword'];?></label>
 			<input type="password" id="bpass2" name="lpass2" class="inputcmmn-1" />
 
-			<!-- First name -->
+			<!-- First name 
+			<br/>
 			<label>
 				<?php 
 					if($select==5) {
@@ -36,52 +39,44 @@
 						echo$lang['register']['fname'];
 					}
 				?>
-				<span class="red">*</span>
+				
 			</label>
 			<input type="text" name="lfname" id="lfname" maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("lfname"); ?>" />
 			<br/>
 			<?php echo $form->error("lfname"); ?>
 
-			<!-- Last name -->
+			
+			<br/>
 			<?php if($select==5) { ?>
 				<label><?php echo $lang['register']['lwebsite'];?></label>
 				<input type="text" id='lwebsite' name="lwebsite" maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("lwebsite"); ?>" />
 				<br/>
 				<?php echo $form->error("lwebsite"); ?>
 			<?php } else { ?>
-				<label><?php echo $lang['register']['lname'];?><span class="red">*</span></label>
+				<label><?php echo $lang['register']['lname'];?></label>
 				<input type="text" name="llname" id='llname' maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("llname"); ?>" />
 				<br/>
 				<?php echo $form->error("llname"); ?>
 			<?php }?>
 
+			-->
+
 			<!-- E-mail address -->
-			<label><?php echo $lang['register']['email'];?><span class="red">*</span></label>
+			<br/>
+			<label><?php echo $lang['register']['email'];?></label>
 			<input type="text" id="bemail" name="lemail" maxlength="50" class="inputcmmn-1"  value="<?php echo $form->value("lemail"); ?>" />
 			<br/>
 			<div id="emailerror"><?php echo $form->error("lemail"); ?></div>
 
-			<!-- City -->
-			<label>
-				<?php if($select==5) {
-					echo $lang['register']['lgcity'];
-				} else {
-					echo $lang['register']['City'];
-				} ?>
-				<span class="red">*</span>
-			</label>
-			<input type="text" name="lcity" id='lcity' maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("lcity"); ?>" />
-			<br/>
-			<?php echo $form->error("lcity"); ?>
-
 			<!-- Country -->
+			<br/>
 			<label>
 				<?php if($select==5) {
 					echo $lang['register']['lgcountry'];
 				} else {
 					echo $lang['register']['Country'];
 				} ?>
-				<span class="red">*</span>
+				
 			</label>
 			<div class="arrow_hider">
 				<select id="lcountry" class="custom_select" name="lcountry" >
@@ -104,7 +99,7 @@
 			</div>
 			<br/><?php echo $form->error("lcountry"); ?>
 
-			<!-- Photoes -->
+			<!-- Photo -->
 			<div style="display:none">
 				<?php 
 					if($select==5)
@@ -140,17 +135,17 @@
 
 		<div style="display:none;" class="holder_522 group">
 			<!-- About yourself -->
+			<br/>
 			<label><?php echo $lang['register']['A_Yourself_l'];?><?php echo $lang['register']['l_optional'];?></label>
 			<textarea class="textareacmmn" name="labout" id="labout" ><?php echo $form->value("labout"); ?></textarea>
 		</div>
 		<div class="holder_342 group">
-			<hr/>
 		</div>
 		<div style="display:none;" class="holder_342 group">
 			<p class="blue_color uppercase formTitle"><?php echo $lang['register']['A_Preferences_l'];?></p>
 			
 			<!-- radio 1 -->
-			<label><?php echo $lang['register']['d_total_amt'];?></label>
+			<br/><label><?php echo $lang['register']['d_total_amt'];?></label>
 			<div class="radio_s">
 				<INPUT TYPE="Radio" id="hide_Amount" class="left" name="hide_Amount" value="0" tabindex="3" checked />
 				<span class="left"><?php echo $lang['register']['yes'];?></span>
@@ -161,7 +156,7 @@
 			</div>	
 
 			<!-- radio 2 -->
-			<label><?php echo $lang['register']['d_mailinglist_preferences_onloanRepayment_credited']; ?></label>
+			<br/><label><?php echo $lang['register']['d_mailinglist_preferences_onloanRepayment_credited']; ?></label>
 			<div class="radio_s">
 				<INPUT TYPE="Radio" id="loan_repayment_credited" name="loan_repayment_credited" value="1" tabindex="3" checked />
 				<span class="left"><?php echo $lang['register']['yes'];?></span>
@@ -172,7 +167,7 @@
 			</div>	
 
 			<!-- radio 3 -->
-			<label><?php echo $lang['register']['d_mailinglist_preferences_onloanComment']; ?></label>
+			<br/><label><?php echo $lang['register']['d_mailinglist_preferences_onloanComment']; ?></label>
 			<div class="radio_s">
 				<INPUT TYPE="Radio" id="loan_comment" name="loan_comment" value="1" tabindex="3" checked />
 				<span class="left"><?php echo $lang['register']['yes'];?></span>
@@ -183,7 +178,7 @@
 			</div>	
 
 			<!-- radio 4 -->
-			<label><?php echo $lang['register']['wd_new_loan_app']; ?></label>
+			<br/><label><?php echo $lang['register']['wd_new_loan_app']; ?></label>
 			<div class="radio_s">
 				<INPUT TYPE="Radio" id="loan_app_notify" name="loan_app_notify" value="1" tabindex="3" checked />
 				<span class="left"><?php echo $lang['register']['yes'];?></span>
@@ -194,7 +189,7 @@
 			</div>
 
 			<!-- radio 5 -->
-			<label>
+			<br/><label>
 				<?php echo $lang['register']['mailinglist_preferences_subscribe_newsletter']; ?><br/>
 				<a href="http://us1.campaign-archive2.com/?u=c8b5366ff36890ecbc3bf00cc&id=f5b7c5b570" target='_blank'>View a sample</a>
 			</label>
@@ -210,7 +205,7 @@
 		<div style="display:none;" class="holder_522 group">
 
 			<!-- gift card -->
-			<label><?php echo $lang['register']['card_code']; ?></label>
+			<br/><label><?php echo $lang['register']['card_code']; ?></label>
 			<input type="text" name="card_code" id="card_code" maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("card_code"); ?>" />
 			<br/>
 			<?php echo $form->error("card_code"); ?>
@@ -228,7 +223,7 @@
 			else
 					$referral_code_value='';
 			?>
-			<label><?php echo $lang['register']['referral_code']; ?></label>
+			<br/><label><?php echo $lang['register']['referral_code']; ?></label>
 			<input type="text" id="referral_code" name="referral_code" maxlength="20" class="inputcmmn-1" value="<?php echo $referral_code_value; ?>" />
 			<br/>
 			<div id="referror"><?php echo $form->error("referral_code"); ?></div>
@@ -244,6 +239,7 @@
 		<div class="holder_645 group">
 
 			<!-- terms -->
+			<br/>
 			<p class="blue_color uppercase formTitle"><?php echo $lang['register']['t_c'];?></p>
 			<div align="left" style="border: 1px solid black; padding: 0px 10px 10px; overflow: auto; line-height: 1.5em; width: 90%; height: 130px; background-color: rgb(255, 255, 255);">
 				<?php
@@ -271,12 +267,13 @@
 				<INPUT TYPE="Radio" name="agree" id="agree" value="0" tabindex="4" checked />
 				<span class="left"><?php echo $lang['register']['no'];?></span>
 			</div>
+			<br/><br/>
 
 			<!-- Register button -->
 			<input type="hidden" name="reg-lender" />
 			<input type="hidden" name="tnc"  id="tnc" value=0 />
 			<input type="hidden" name="member_type"  id="member_type" value="<?php echo $select ?>"/>
-			<input class='btn' id="lender_submit_btn" type="submit" value="<?php echo $lang['register']['Register'];?>" onclick="return verifyTnC()"  />
+			<input style="align:center" class='btn' id="lender_submit_btn" type="submit" value="Join" onclick="return verifyTnC()"  />
 		</div>
 	</form>
 </div>
