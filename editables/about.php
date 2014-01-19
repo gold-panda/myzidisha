@@ -85,7 +85,7 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 							<br />
 
 
-<h4 style="display:inline">LINET OGOTI, Kenya Country Liaison Intern</h4>
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/logoti.html">LINET OGOTI</a>, Kenya Country Liaison Intern</h4>
 							
 							<p style="margin-top:10px;">Linet was born in Kenya and spent most of her life in Nairobi. She now lives in the United States. She is a recent graduate of Smith College with a bachelor\'s degree in economics. Her recent exposure to the abundant resources and opportunities available to all segments of society in the US has sparked her interest in the potential of finance as a tool of development in Africa. In her words: "I am captivated by Zidisha\'s work and its commitment to alleviating poverty in the developing world. The opportunities Zidisha provides offer hope to economically marginalized small business owners in countries like Kenya and throughout the world. I am enjoying my current work with Zidisha." In her free time Linet enjoys reading, listening to music, and learning about different cultures.
 </p>
@@ -132,19 +132,6 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 							
 							<br />
 
-
-
-
-<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/pentatonicscale.html">DENISE OWEN</a>, Translation Team Coordinator</h4>
-							
-							
-							<p style="margin-top:10px;">Denise Owen teaches elementary and middle school music at an international Christian school in Tokyo, Japan. She is a graduate of Oberlin College, where she lived in French House and German House, and Regent College, where she majored in Old Testament and Hebrew. Now she uses Japanese and English on a daily basis, but linguistics and translation continue to be her hobby. She is happy to be able to put her French to use to help alleviate poverty through Zidisha.</p>
-							
-							<br />
-
-
-
-
 							
 
 						<h4 style="display:inline">TIMOTHY TSAI, Communications Associate</h4>
@@ -160,6 +147,24 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 							<p style="margin-top:10px;">Kara is an individual dedicated to tackling the world\'s poverty barriers one project at a time through efficient, impact driven methods. She has spent her career analyzing the multifaceted aspects of development ranging from biodiversity at the Museum of Natural History, to religious environmentalism at the Earth Institute, to food insecurity at Seva Mandir. She is eager to use her knowledge of econometric methods and household survey analysis to help Zidisha learn more about its borrower base while uncovering the impact of Zidisha\'s innovative peer-to-peer methods.  She has a master of science degree in economics from Suffolk University and a bachelor\'s degree in political science  from Boston College. Kara is always looking for her next travel opportunity and spends her free time learning Hindi.</p>
 							
 							<br />
+
+
+
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/pentatonicscale.html">DENISE OWEN</a>, Translation Team Coordinator</h4>
+							
+							
+							<p style="margin-top:10px;">Denise Owen teaches elementary and middle school music at an international Christian school in Tokyo, Japan. She is a graduate of Oberlin College, where she lived in French House and German House, and Regent College, where she majored in Old Testament and Hebrew. Now she uses Japanese and English on a daily basis, but linguistics and translation continue to be her hobby. She is happy to be able to put her French to use to help alleviate poverty through Zidisha.</p>
+							
+							<br />
+
+
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/KirstenShute.html">KIRSTEN SHUTE</a>, Translation Team Coordinator</h4>
+							
+							
+							<p style="margin-top:10px;">Kirsten Shute works as a tutor and writer. Her interest in education and poverty reduction led her to volunteer with the literacy group Frontier College during her student years and to join Zidisha as a lender in 2012. She is happy to assist the volunteer translation team. She lives in Montreal, Canada, and speaks English, French, and just enough Italian to order gelato.</p>
+							
+							<br />
+
 
 
 
@@ -195,6 +200,26 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 <a href="https://www.zidisha.org/microfinance/profile/TWAGGA.html" target="_blank">Tricia Wagga</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/cornellia.html" target="_blank">Cornellia Widiastuti</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/Sidney.html" target="_blank">Sidney Gig-Jan Wong</a><br />
+
+</p>
+							
+							<br />	
+
+
+
+<h4 style="display:inline">TRANSLATION VOLUNTEER TEAM</h4>
+							
+							<p style="margin-top:10px;">Translation Volunteers translate borrower profiles and comments from local languages into English, and translate lender comments into local languages.  Their work makes communication between members of different linguistic backgrounds possible.<br /><br />
+
+
+<a href="https://www.zidisha.org/microfinance/profile/mcmahon3.html" target="_blank">Lauren Abuouf</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/jenn097.html" target="_blank">Jennifer B</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/Elleberns.html" target="_blank">Michelle Bernstein</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/cjforrester.html" target="_blank">Catriona Forrester</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/Kilmeny.html" target="_blank">Kilmeny</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/Koumar.html" target="_blank">Marius Koumolou</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/ERitchie.html" target="_blank">Elona Ritchie</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/twopassports.html" target="_blank">Anne Sheldon</a><br />
 
 </p>
 							

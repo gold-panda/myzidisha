@@ -689,15 +689,6 @@ class Validation
 		$this->error=$lang['error'];
 		$this->checkUsername($username, "lusername");
 		$this->checkPassword($pass1,$pass2, "lpass1");
-		if(!isset($member_type) || $member_type!=5){
-		$this->checkFirstName($fname, "lfname");
-		$this->checkLastName($lname, "llname");
-		$this->checkCity($city, "lcity");
-		$this->checkCountry($country, "lcountry");
-		}else{
-			if(!$fname || strlen($fname)<1)
-				$form->setError('lfname', $this->error['empty_lgname']);
-		}
 		$this->checkEmail($email, "lemail");
 		$Exist=$database->IsEmailExist($email);
 		if($Exist>0){
@@ -705,7 +696,6 @@ class Validation
 		}
 		$this->checkEmails($frnds_emails, "emailError");
 		$this->checkTnc($tnc, "tnc");
-		//$this->checkCapcha($user_guess, "user_guess");
 		$this->checkGiftCard($card_code, "card_code");
 		$this->checkRefferalCode($referral_code, "referral_code");
 	}
@@ -718,11 +708,6 @@ class Validation
 		$this->checkUsername($username, "lusername", true);
 		if(!empty($pass1))
 			$this->checkPassword($pass1,$pass2, "lpass1");
-		$this->checkFirstName($fname, "lfname");
-		if($session->usersublevel!=LENDER_GROUP_LEVEL){
-			$this->checkLastName($lname, "llname");
-			$this->checkCity($city, "lcity");
-			}
 		$this->checkEmail($email, "lemail");
 		$this->checkCountry($country, "lcountry");
 	}

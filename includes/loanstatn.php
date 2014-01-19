@@ -1427,7 +1427,7 @@ if($brw2['active']==LOAN_OPEN )
 					echo "<p align='left'>".$lang['loanstatn']['nobid']."</p>";
 				}
 
-/* second bid form removed 15-1-2013
+
 
 				if($session->userlevel  == LENDER_LEVEL || empty($session->userid))
 				{
@@ -1448,7 +1448,7 @@ if($brw2['active']==LOAN_OPEN )
 						<?php if(empty($val)){ ?>
 						<div id='editBidMsg' style='font-weight:bold'></div><br/>
 						<?php }else{ ?>
-						<div id='editBidMsg' style='font-weight:bold'>Please edit your original bid of USD <?php echo $form->value('editBidAmount') ?> below (Click <a onclick='setNewBid()' style='cursor:pointer'>here</a> to place a new bid)</div><br/>
+						<div id='editBidMsg' style='font-weight:bold'><?php echo $lang['loanstatn']['edit_bid1']; ?> <a onclick='setNewBid()' style='cursor:pointer'><?php echo $lang['loanstatn']['here'] ?></a> <?php echo $lang['loanstatn']['edit_bid2'] ?></div><br/>
 						<?php } ?>
 						<?php if($loginError = $form->error('bid_userid')){ echo "<div>".$loginError."</div><br/>";}?>
 						<div class="clearfix">
@@ -1456,25 +1456,52 @@ if($brw2['active']==LOAN_OPEN )
 							<div class="input inputex"><input class="medium" id="pamount" name="pamount" size="20" type="text" value="<?php echo $pamount; ?>"></div>
 							<div class="input inputex" id="pamounterr"><?php echo $form->error('pamount'); ?></div>
 						</div><!-- /clearfix -->
+
 						<div class="clearfix">
-							<label style="width:auto" for="pinterest"><?php echo $enter_intr ?> 
-							
-							<img src='library/tooltips/help.png' class="intr1-tooltip-target tooltip-target" id="intr1-target-1" style='border-style:none;display:inline' />
-							<div class="tooltip-content tooltip-content" id="intr1-content-1">
-								<span class="tooltip">
-									<span class="tooltipTop"></span>
-									<span class="tooltipMiddle" >
-										<?php echo $lang['loanstatn']['tooltip_bid_int'];?>
-										<p class="auditedreportlink">
-											<a href="includes/flatinterestrate.php" rel="facebox"><?php echo $lang['loanstatn']['flatintrest_diff']?></a>
-										</p>
-									</span>	
-									<span class="tooltipBottom"></span>
-								</span>
-							</div>
-							</label>
-							<div class="input inputex"><input class="medium" id="pinterest" name="pinterest" size="20" type="text" value="<?php echo $pinterest; ?>"></div>
-							<div class="input inputex" id="pintrerr"><?php echo $form->error('pinterest'); ?></div>
+
+						<label style="width:auto" for="pinterest1">
+						
+						<?php echo $lang['loanstatn']['prop_intr'];?> 
+						
+						<img src='library/tooltips/help.png' class="intr2-tooltip-target tooltip-target" id="intr2-target-1" style='border-style:none;display:inline' />
+						<div class="tooltip-content tooltip-content" id="intr2-content-1">
+							<span class="tooltip">
+								<span class="tooltipTop"></span>
+								<span class="tooltipMiddle" >
+									<?php echo $lang['loanstatn']['tooltip_bid_int'];?>
+									<p class="auditedreportlink">
+										<a href="includes/flatinterestrate.php" rel="facebox"><?php echo $lang['loanstatn']['flatintrest_diff']?></a>				
+									</p>
+								</span>	
+								<span class="tooltipBottom"></span>
+							</span>
+						</div>
+						</label>
+
+<!-- drop-down menu for lenders to select interest rate -->
+						<div class="input inputex">
+							<select class"medium" style="width:150px" id="pinterest" name="pinterest">
+
+								<?php
+
+								$int_range = range(0, $maxInterestRate);
+
+								$i=0;
+
+								foreach($int_range as $int_option) {  ?>
+
+									<option value='<?php echo $int_option; ?>' <?php if($form->value("$pinterest1")==$int_option) echo "Selected='true'" ?>><?php echo $int_option ?>%</option>
+
+									<?php		
+
+									$i++;
+
+								} ?>
+
+							</select>
+						</div>
+						
+						<div class="input inputex" id="pintrerr"><?php echo $form->error('pinterest'); ?></div>
 						</div><!-- /clearfix -->
 				<?php	if(isset($_SESSION['lender_bid_success2']))
 					{	 ?>
@@ -1508,7 +1535,7 @@ if($brw2['active']==LOAN_OPEN )
 			<?php	}
 				}	
 
-*/
+
 
 				?>
 			</div><!-- /bid-table -->

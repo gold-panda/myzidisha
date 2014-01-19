@@ -134,7 +134,7 @@ $lang['loanstatn']['b_business']  = "About My Business";
 $lang['loanstatn']['b_about_loan']  = "My Loan Proposal";
 $lang['loanstatn']['funding_bids']  = "Current Funding Bids";
 $lang['loanstatn']['bid_submit']  = "Submit Your Bid";
-$lang['loanstatn']['bid_save']  = "Save Your Bid";
+$lang['loanstatn']['bid_save']  = "Save Changes";
 $lang['loanstatn']['feedback']  = "Feedback";
 $lang['loanstatn']['update']  = "Update";
 $lang['loanstatn']['lend']  = "Lend";
@@ -217,4 +217,8 @@ $lang['loanstatn']['recommendation']='Community Leader Recommendation';
 $lang['loanstatn']['tooltip_recommendation']='Indicates whether this member has provided Zidisha with a Recommendation Form signed by the leader of a recognized organization, such as a school or religious institution, in the member\'s community.';
 $lang['loanstatn']['provided']='Provided';
 $lang['loanstatn']['not_provided']='Not Provided';
+$lang['loanstatn']['edit_bid1']='You may increase the amount or reduce the interest rate of your original bid below.<br/><br/>
+							Click';
+$lang['loanstatn']['here']= 'here';
+$lang['loanstatn']['edit_bid2']='to place a new bid.';
 ?>

@@ -1,6 +1,9 @@
 <?php
 $lang['news']['zidisha_in_news']='Zidisha in the News';
 
+$lang['news']['hp3']='The Huffington Post, January 18, 2014';
+$lang['news']['hp3_pdf']='About to send a donation? Think twice.';
+
 $lang['news']['p2p_banking3']='P2P-Banking, October 9, 2013';
 $lang['news']['p2p_banking3_pdf']='Interview: 4 Years Zidisha';
 

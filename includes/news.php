@@ -7,7 +7,14 @@ include_once("./editables/".$path);
 	<div id="static">
 		<h1><?php echo $lang['news']['zidisha_in_news'] ?></h1>
 				
-		<br />
+		<br /><br />
+
+<p><img src="editables/news_docs/HP_logo.png" width="588" height="70" /></p>
+		<p><?php echo $lang['news']['hp3'] ?></p>
+		<p><a href="http://www.huffingtonpost.com/julia-kurnia/about-to-send-a-donation_b_4623503.html" target="_blank"><?php echo $lang['news']['hp3_pdf'] ?></a></p>
+		
+		<br /><br />
+
 
 <p><img src="editables/news_docs/P2PBlogo.gif" width="376" height="90" /></p>
 		<p><?php echo $lang['news']['p2p_banking3'] ?></p>

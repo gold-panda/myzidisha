@@ -13,7 +13,7 @@ $(document).ready(function(){
 		 $("#bidid").get(0).value = $('#'+v3).val();
 		 $("#act").get(0).value = 'Save Your Bid';
 		 $("#editBidAmount").val($('#'+v1).val());
-		 $("#editBidMsg").html('Please edit your original bid of USD '+$('#'+v1).val()+' below (Click <a onclick="setNewBid()" style="cursor:pointer">here</a> to place a new bid)');
+		 $("#editBidMsg").html('You may increase the amount or reduce the interest rate of your original bid of USD '+$('#'+v1).val()+' below. Click <a onclick="setNewBid()" style="cursor:pointer">here</a> to place a new bid.');
 		 
 	});
 	/*$('#layer1').Draggable(
