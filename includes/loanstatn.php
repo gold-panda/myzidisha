@@ -1452,7 +1452,7 @@ if($brw2['active']==LOAN_OPEN )
 						<?php } ?>
 						<?php if($loginError = $form->error('bid_userid')){ echo "<div>".$loginError."</div><br/>";}?>
 						<div class="clearfix">
-							<label style="width:auto" for="pamount"><?php echo $lang['loanstatn']['loan_amount'] ?> (USD)</label>
+							<label style="width:auto" for="pamount"><?php echo $lang['loanstatn']['loan_amount'] ?> </label>
 							<div class="input inputex"><input class="medium" id="pamount" name="pamount" size="20" type="text" value="<?php echo $pamount; ?>"></div>
 							<div class="input inputex" id="pamounterr"><?php echo $form->error('pamount'); ?></div>
 						</div><!-- /clearfix -->

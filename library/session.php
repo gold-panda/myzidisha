@@ -2717,7 +2717,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$database->updateBorrowerDocument($id, 'legal_declaration2', $legal_declaration2);
 		}
 	}
-	function loanApplication($amount, $interest, $installments, $gperiod, $loanuse,$tnc, $installment_day,$installment_weekday)
+	function loanApplication($amount, $interest, $installments, $gperiod, $summary, $loanuse,$tnc, $installment_day,$installment_weekday)
 	{	
 		global $database, $form, $lang;
 		traceCalls(__METHOD__, __LINE__);
@@ -2819,9 +2819,13 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		}
 		if(empty($loanuse)){
 			$form->setError("loanuse", $lang['error']['empty_loanuse']);
-		}else if(strlen($loanuse) <300) {
+		
+		}
+		/*
+		else if(strlen($loanuse) <300) {
 			$form->setError('loanuse', $lang['error']['min_length_comment']);
 		}
+		*/
 		if(empty($tnc)){
 			$form->setError("agree", $lang['error']['empty_tnc']);
 		}
@@ -2901,9 +2905,12 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		}
 		if(empty($loanuse)){
 			$form->setError("loanuse", $lang['error']['empty_loanuse']);
-		}else if(strlen($loanuse) < 300) {
+		}
+		/*
+		else if(strlen($loanuse) < 300) {
 			$form->setError('loanuse', $lang['error']['min_length_comment']);
 		}
+		*/
 		if((empty($inst_day) || $inst_day>31 || $inst_day < 1) && (empty($inst_weekday))){
 			$form->setError("installment_day", $lang['error']['invalid_day']);
 		}
@@ -2938,7 +2945,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			return $ret;
 		}
 	}
-	function confirmLoanApp($amount, $interest, $period, $gperiod, $loanuse,$tnc,$loan_installmentDate, $loan_installmentDay)
+	function confirmLoanApp($amount, $interest, $period, $gperiod, $summary, $loanuse,$tnc,$loan_installmentDate, $loan_installmentDay)
 	{
 		global $database;
 		traceCalls(__METHOD__, __LINE__);
@@ -2947,7 +2954,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		} else {
 			$weekly_inst = 0;
 		} 
-		$loanid= $database->loanApplication($this->userid, $amount, $interest, $period, $gperiod, $loanuse,$tnc, $weekly_inst, $loan_installmentDate, $loan_installmentDay);
+		$loanid= $database->loanApplication($this->userid, $amount, $interest, $period, $gperiod, $summary, $loanuse,$tnc, $weekly_inst, $loan_installmentDate, $loan_installmentDay);
 		if($loanid)
 		{
 			unset($_SESSION['la']);

@@ -5058,15 +5058,15 @@ class genericClass
         return $result;
     }
 
-    function loanApplication($borrowerid, $amount, $interest, $period, $gperiod, $loanuse, $tnc, $weekly_inst, $loan_installmentDate, $loan_installmentDay)
+    function loanApplication($borrowerid, $amount, $interest, $period, $gperiod, $summary, $loanuse, $tnc, $weekly_inst, $loan_installmentDate, $loan_installmentDay)
     {
         global $db;
         $time=time();
         $webfee=$this->getAdminSetting('fee');//website fee rate
         traceCalls(__METHOD__, __LINE__);
         $damt = round($amount/$this->getCurrentRate($borrowerid));
-        $q="INSERT INTO loanapplic (borrowerid, Amount, interest, period, grace, loanuse, active, applydate, tnc, AmountGot, WebFee, reqdamt, weekly_inst, installment_day, installment_weekday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $result=$db->query($q,array($borrowerid, $amount, $interest, $period, $gperiod, $loanuse, LOAN_OPEN, $time, $tnc, $amount , $webfee, $damt, $weekly_inst, $loan_installmentDate, $loan_installmentDay) );
+        $q="INSERT INTO loanapplic (borrowerid, Amount, interest, period, grace, summary, loanuse, active, applydate, tnc, AmountGot, WebFee, reqdamt, weekly_inst, installment_day, installment_weekday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $result=$db->query($q,array($borrowerid, $amount, $interest, $period, $gperiod, $summary, $loanuse, LOAN_OPEN, $time, $tnc, $amount , $webfee, $damt, $weekly_inst, $loan_installmentDate, $loan_installmentDay) );
         $q="SELECT loanid from ! where borrowerid = ? and Amount = ? and interest =? and period =? and grace =?  and active= ? and applydate = ?";
         $loanid=$db->getOne($q, array('loanapplic', $borrowerid, $amount, $interest, $period, $gperiod,  LOAN_OPEN, $time ));
 

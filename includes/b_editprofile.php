@@ -1311,7 +1311,7 @@ end endorsement section -->
 				<br/><br/><br/>					
 
 				<tr>
-					<td colspan="2" style="text-align:center;">
+					<td colspan="2" style="text-align:left;">
 						<input type="hidden" name="uploadedDocs[]" value="<?php echo $docuploaded['fronNationalid']?>" />
 						<input type="hidden" name="uploadedDocs[]" value="<?php echo $docuploaded['backNationalId']?>" />
 						<input type="hidden" name="uploadedDocs[]" value="<?php echo $docuploaded['addresProof']	?>" />
@@ -1325,12 +1325,20 @@ end endorsement section -->
 						<input type="hidden" name="uploadfileanchor" id="uploadfileanchor" />
 						<input type="hidden" name="user_guess" value="<?php echo generateToken('editborrower'); ?>"/>
 						<input type="hidden" name="id" value="<?php echo $id ;?>"/>
-						<br/>
+						<br/><br/><br/>
 						<?php if($borrowerActive!=1) {?>	
 						
 						<input type="submit"   name='submitform' align='center' onclick="needToConfirm = false;" value="<?php echo $lang['register']['RegisterComplete'];?>"  class='btn'/>
-						<div align="left" style="margin-top: -32px;"><input  type="submit" name='submitform' id='borrowersubmitform' onclick="needToConfirm = false;" value="<?php echo $lang['register']['Registerlater'];?>"  class='btn'/></div>
+						
+
+						<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+						<a id="saveLaterLink" href="#"><?php echo $lang['register']['Registerlater'];?></a>
 					
+						<!-- 
+						<div align="left" style="margin-top: -32px;"><input  type="submit" name='submitform' id='borrowersubmitform' onclick="needToConfirm = false;" value="<?php echo $lang['register']['Registerlater'];?>"  class='btn'/></div>
+						-->
+
 					<?php } else {?>
 						<input type="submit"   name='submitform' id='borrowersubmitform' onclick="needToConfirm = false;" value="<?php 
 						echo $lang['register']['savechanges'];?>"  class='btn'/>
@@ -1726,6 +1734,19 @@ function get_volunteers(vm_city){
 	xmlhttp.setRequestHeader("Connection","close");
 	xmlhttp.send(a);
 }
+</script>
+<script type="text/javascript">
+
+	$( document ).ready(function() {
+
+  		$('#saveLaterLink').click(function(e){
+    		e.preventDefault();
+    		needToConfirm = false;
+   		 	$('#sub-borrower').submit();
+  		});
+
+	});
+
 </script>
 <div id='ResidentialaddrExample' style="display:none">
 <div class="instruction_space" style="margin-top:10px;height:160px">

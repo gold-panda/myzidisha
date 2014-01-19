@@ -34,15 +34,7 @@ include_once("./editables/".$path);
 						$usermessage=$commns['message'];
 						if(!empty($commns['tr_message']))
 							$usermessage=$commns['tr_message'];
-						if(strlen($usermessage) >350)
-						{
-							$usermessage=substr($usermessage,0,3000);
-							$pos1= strrpos ($usermessage , ' ');
-							if($pos1 !==false) {
-								$usermessage=substr($usermessage,0,$pos1)."...\" <a href='".$url."'>Read More</a>";
-							}
-						}
-
+	
 						$date = $commns['pub_date'];
 						$level =$database->getUserLevelbyid($userid);
 						if($level==BORROWER_LEVEL || $level==PARTNER_LEVEL)

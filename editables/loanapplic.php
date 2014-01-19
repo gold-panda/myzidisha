@@ -1,23 +1,9 @@
 <?php
-$lang['loanapplic']['welcome_g'] = 'Welcome guest.';
-$lang['loanapplic']['required_reg'] = 'Please log in to view this page.';
-$lang['loanapplic']['pls_login'] = 'Please log in or';
-$lang['loanapplic']['cont'] = 'to continue.';
-$lang['loanapplic']['allow'] = 'You are not allowed to view this page.';
-$lang['loanapplic']['Click'] = 'Click';
-$lang['loanapplic']['thank_note'] = 'Thank you for your Zidisha loan application. Your loan status has been set to';
-$lang['loanapplic']['open'] = 'OPEN';
-$lang['loanapplic']['best_wish'] = 'We wish you all the best in your endeavor.';
-$lang['loanapplic']['org'] = 'zidisha.org';
-$lang['loanapplic']['active_loan_not allow'] = 'You have an active loan. You will not be allowed to apply for another loan until your current loan is completed.';
+$lang['loanapplic']['welcome_g'] = 'Please log in to view this page.';
+$lang['loanapplic']['active_loan_not allow'] = 'You have an active loan. You must complete repayment of your current loan before applying for another.';
 $lang['loanapplic']['loan_applic'] = 'Loan Application';
-$lang['loanapplic']['accept_fee'] = 'To apply for a loan, you must accept the following credit conditions and service fees';
-$lang['loanapplic']['min_amt'] = 'Minimum loan amount';
-$lang['loanapplic']['max_amt'] = 'Maximum loan amount';
-$lang['loanapplic']['anu_tr_fee'] = 'Transaction Fee';
 $lang['loanapplic']['reg_fee_currency'] ='<i>Please Note: A new member registration fee of';
 $lang['loanapplic']['reg_fee_curr'] ='will be applied only to your first Zidisha loan. This amount will be deducted from your loan disbursement if your loan is funded.</i>';
-$lang['loanapplic']['accept_charges'] = 'By applying for this loan you will be accepting the above conditions.';
 $lang['loanapplic']['loan_amt'] = 'Requested Loan Amount';
 $lang['loanapplic']['anul_int_rate'] = 'Proposed Annual Interest Rate <br/>(Please note that the minimum interest rate is the transaction fee listed above, which is paid to Zidisha to cover money transfer costs. The amount of interest that will be offered to lenders is your proposed annual interest rate, minus the transaction fee.  For example, if your proposed interest rate is 12% and the transaction fee is 5%, then lenders will be offered an interest rate of 7%.)';
 $lang['loanapplic']['re_paymnet_per'] = 'Repayment Period <br/>(This is the number of months between loan disbursement and the date the final repayment installment is due.)';
@@ -29,7 +15,8 @@ $lang['loanapplic']['thursday'] = 'Thursday';
 $lang['loanapplic']['friday'] = 'Friday';
 $lang['loanapplic']['saturday'] = 'Saturday';
 $lang['loanapplic']['sunday'] = 'Sunday';
-$lang['loanapplic']['use_loan'] = 'Please describe in detail how the loan will be used.<br/><br/><i>This text will be displayed to prospective lenders on your public loan profile page.</i>';
+$lang['loanapplic']['summary'] = 'Please tell in a few words how you will use the loan.<br/><br/><i>This summary will be displayed to prospective lenders on the <a href="https://www.zidisha.org/microfinance/lend.html" target="blank">Lend</a> page, before they open your profile to read more.</i>';
+$lang['loanapplic']['use_loan'] = 'Please describe in more detail what you will buy with the loan, what benefit it will create, and why lenders should support you in making this purchase.<br/><br/><i>This text will be displayed to prospective lenders who have already read your summary, within your loan profile page.</i>';
 $lang['loanapplic']['t_cond'] = 'Terms of Use';
 $lang['loanapplic']['accept'] = 'Accept Agreement';
 $lang['loanapplic']['loan_applic_con'] = 'Loan Application (Continued)';
@@ -39,13 +26,12 @@ $lang['loanapplic']['amt_req'] ='Amount Requested';
 $lang['loanapplic']['registration_fee']='One-Time Registration Fee';
 $lang['loanapplic']['accp'] ='Accepted';
 $lang['loanapplic']['Back'] ='Go Back and Edit';
-$lang['loanapplic']['sucess_msg'] ='Your account is not yet activated.';
+$lang['loanapplic']['sucess_msg'] ='Your loan application is not yet published.';
 $lang['loanapplic']['acceptyes'] ='Yes';
 $lang['loanapplic']['not-accept'] ='No';
 $lang['loanapplic']['buttonnext'] ='Next: Review And Confirm';
 $lang['loanapplic']['shedule_assume'] ='<br/>The following payment schedule is generated to illustrate the payments you are committing to make should the requested loan amount be financed at your proposed interest rate. Please review it carefully to ensure that the repayment amounts and dates are what you intended to propose, and that you will be able to make the below scheduled repayments without difficulty.  <br/><br/>You may modify your loan application by clicking the "Go Back and Edit" button.  Once you click "Confirm and Publish", your application will be posted for funding by lenders.<br/><br/>';
 $lang['loanapplic']['confermbutton'] ='Confirm and Publish';
-$lang['loanapplic']['goback'] ='Please accept the Terms of Use';
 $lang['loanapplic']['edit_loan_applic'] = 'Edit Loan Application';
 $lang['loanapplic']['update'] = 'Update';
 $lang['loanapplic']['updateApp'] = 'Loan application is successfully updated.';
@@ -67,12 +53,7 @@ $lang['loanapplic']['weeks'] = 'weeks';
 $lang['loanapplic']['months'] = 'months';
 $lang['loanapplic']['month'] = 'month';
 $lang['loanapplic']['repay_date'] = 'Repayment Date';
-$lang['loanapplic']['loan_amt_1'] = 'The maximum loan amount you may raise for your first Zidisha loan is';
-$lang['loanapplic']['loan_amt_2'] = 'of the largest previous loan you have repaid. If your first Zidisha loan is repaid on time, the maximum amount will increase to';
-$lang['loanapplic']['loan_amt_3'] = 'of the largest previous loan. After that, the maximum amount will increase by';
-$lang['loanapplic']['loan_amt_4'] = 'each time a loan is repaid on time. For this loan application, the maximum amount you may raise is';
-$lang['loanapplic']['loanapplic_instrctns1']='
-Zidisha provides a platform whereby our members can raise loans by proposing mutually beneficial terms to lenders.  Lenders choose from many competing applications, and your loan will only be funded if it succeeds in appealing to lenders.  Loans that are not fully funded will expire in';
+$lang['loanapplic']['loanapplic_instrctns1']='Zidisha provides a platform whereby our members can raise loans by proposing mutually beneficial terms to lenders.  Lenders choose from many competing applications, and your loan will only be funded if it succeeds in appealing to lenders.  Loans that are not fully funded will expire in';
 $lang['loanapplic']['loanapplic_instrctns2'] = 'days and any bids raised will be returned to lenders.<br/><br/>  
 Here are some tips members have used to make their loan applications more attractive to lenders:<br/><br/>
 <ol>

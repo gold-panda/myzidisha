@@ -906,6 +906,7 @@ class Process
 		$_SESSION['la']['intr'] = $_POST['interest'];
 		$_SESSION['la']['iamt'] = $_POST['installment_amt'];
 		$_SESSION['la']['gp'] = $_POST['gperiod'];
+		$_SESSION['la']['su'] = $_POST['summary'];
 		$_SESSION['la']['lu'] = $_POST['loanuse'];
 		$_SESSION['la']['iday'] = $_POST['installment_day'];
 		$_SESSION['la']['iwkday'] = $_POST['installment_weekday'];
@@ -916,7 +917,7 @@ class Process
 			header("Location: index.php?p=50");
 			exit;
 		}else{
-		$result=$session->loanApplication($_POST['amount'], $interest, $_POST['installment_amt'], $_POST['gperiod'], $_POST['loanuse'],$_POST['agree'],$_POST['installment_day'],$_POST['installment_weekday']);
+		$result=$session->loanApplication($_POST['amount'], $interest, $_POST['installment_amt'], $_POST['gperiod'], $_POST['summary'], $_POST['loanuse'],$_POST['agree'],$_POST['installment_day'],$_POST['installment_weekday']);
 		if($result==0)
 		{
 			$_SESSION['value_array']=$_POST_ORG;
@@ -941,6 +942,7 @@ class Process
 			$total_months=$session->getTotalMonthByInstallments($_POST['amount'], $_POST['installment_amt'], $_POST['interest'],$_POST['gperiod'], $weekly_inst);
 			$loan['period']=$total_months;
 			$loan['grace']=$_POST['gperiod'];
+			$loan['summary']=$_POST['summary'];
 			$loan['loanuse']=$_POST['loanuse'];
 			$loan['tnc']=$_POST['agree'];
 			$loan['iday']=$_POST['installment_day'];
@@ -1010,11 +1012,12 @@ class Process
 			$interest = trim(str_replace("%","",$loan['interest']));
 			$period=$loan['period'];
 			$grace=$loan['grace'];
+			$summary=$loan['summary'];
 			$loanuse=$loan['loanuse'];
 			$tnc=$loan['tnc'];
 			$loan_installmentDate=$loan['iday'];
 			$loan_installmentDay=$loan['iwkday'];
-			$result=$session->confirmLoanApp($amount, $interest, $period, $grace, $loanuse,$tnc,$loan_installmentDate, $loan_installmentDay);
+			$result=$session->confirmLoanApp($amount, $interest, $period, $grace, $summary, $loanuse,$tnc,$loan_installmentDate, $loan_installmentDay);
 			if($result){
 				header("Location:index.php?p=9&s=4");
 			}

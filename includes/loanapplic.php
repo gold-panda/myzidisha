@@ -19,7 +19,7 @@ if(isset($_GET['inst'])) {
 }
 if(!$session->logged_in)
 {
-	echo $lang['loanapplic']['welcome_g']."<br /><br />".$lang['loanapplic']['required_reg']." ".$lang['loanapplic']['pls_login']." <a href='index.php?p=1'>register</a> ".$lang['loanapplic']['cont'];
+	echo $lang['loanapplic']['welcome_g'];
 }
 else
 {
@@ -210,6 +210,7 @@ else
 						}
 
 						$grace_p= $form->value('gperiod');
+						$summary= $form->value('summary');
 						$loanuse= $form->value('loanuse');
 						$installment_day= $form->value('installment_day');
 						$installment_weekday= $form->value('installment_weekday');
@@ -221,6 +222,7 @@ else
 						$anul_int_rate = $_SESSION['la']['intr'];
 						$re_paymnet_per= $_SESSION['la']['iamt'];
 						$grace_p= $_SESSION['la']['gp'];
+						$summary= $_SESSION['la']['su'];
 						$loanuse= $_SESSION['la']['lu'];
 						$installment_day= $_SESSION['la']['iday'];
 						$installment_weekday= $_SESSION['la']['iwkday'];
@@ -495,6 +497,19 @@ else
 										<td><?php echo $form->error("installment_day"); ?></td>
 									</tr>
 									<tr height='60px'><td colspan='3'></td></tr>
+
+									<!-- loan use summary -->
+									<tr>
+										<td colspan=3>
+											<?php echo $lang['loanapplic']['summary'] ?><br/><br/>
+											<textarea name="summary" id="summary" style="width:600px; height:50px" maxlength="200"><?php echo $summary;?></textarea><br/>
+											<div><?php echo $form->error('summary') ?></div>
+										</td>
+									</tr>
+									<tr height='60px'><td colspan='3'></td></tr>
+
+
+									<!-- loan use -->
 									<tr>
 										<td colspan=3>
 											<?php echo $lang['loanapplic']['use_loan'] ?><br/><br/>
@@ -721,9 +736,9 @@ else
 </div>
 <script language="JavaScript">
 	if ($weekly_inst !=1) {
-		var ids = new Array('loanAppAmount', 'loanAppInterest','loanAppGracePeriod','loanAppInstallment','installment_day','loanuse');
+		var ids = new Array('loanAppAmount', 'loanAppInterest','loanAppGracePeriod','loanAppInstallment','installment_day','summary','loanuse');
 	} else {
-		var ids = new Array('loanAppAmount', 'loanAppInterest','loanAppGracePeriod','loanAppInstallment','installment_weekday','loanuse');
+		var ids = new Array('loanAppAmount', 'loanAppInterest','loanAppGracePeriod','loanAppInstallment','installment_weekday','summary','loanuse');
 	} 
 	var values = new Array('','','','','','');
 	var needToConfirm = true;
