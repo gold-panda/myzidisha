@@ -586,9 +586,18 @@ if(empty($session->userid)){
 					<input type="hidden" name="uploadfileanchor" id="uploadfileanchor" />
 					<input type="hidden" name="before_fb_data" id="before_fb_data" />
 					<input type="hidden" name="fb_data" id="fb_data" value='<?php echo urlencode(addslashes(serialize($fbData))); ?>'/>	
+					
 					<input type="submit" name='submitform' id="submit_btn" class="btn" align="center" value="<?php echo $lang['register']['RegisterComplete'];?>" onclick="needToConfirm = false;"  />
 				
+					<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+					<a id="saveLaterLink" href="#"><?php echo $lang['register']['Registerlater'];?></a>
+					
+					<!-- save and complete later button removed and replaced with link
+
 					<input type="submit" name='submitform' id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" />
+					
+					-->
 
 				</div>
 
@@ -1052,7 +1061,23 @@ if(empty($session->userid)){
 		xmlhttp.send(a);
 	}
 	</script>
+
+	<script type="text/javascript">
+// A $( document ).ready() block.
+// http://learn.jquery.com/using-jquery-core/document-ready/
+//
+		$( document ).ready(function() {
+
+  			$('#saveLaterLink').click(function(e){
+    			e.preventDefault();
+    			needToConfirm = false;
+   		 		$('#sub-borrower').submit();
+  			});
+
+		});
+
+	</script>
 <?php 
 }else{
-		echo "You have already registered.";
+		echo "You have already created an account. You may access your account using the login form above.";
 	} ?>
