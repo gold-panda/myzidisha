@@ -29,6 +29,10 @@ include_once("editables/".$path);
 			$city=$openloan['City'];
 			$country=$database->mysetCountry($openloan['Country']);
 			$amount=$openloan['reqdamt'];
+			if($openloan['tr_summary']==null || $openloan['tr_summary']=="")
+				$summary=$openloan['summary'];
+			else
+				$summary=$openloan['tr_summary'];
 			if($openloan['tr_loanuse']==null || $openloan['tr_loanuse']=="")
 				$loanuse=$openloan['loanuse'];
 			else
@@ -61,12 +65,25 @@ include_once("editables/".$path);
 			<div style="float:left;max-width:130px">
 				<h4 style="margin-top:-6px;margin-bottom:0px;"><?php echo $name ?></h4>
 				<p style="margin-bottom:5px;"><?php echo $city.", ".$country ?></p>
-				<p>
-		<?php		if(strlen($loanuse) >100)
-						echo substr($loanuse,0,100)." <a href='$loanprurl'>Read More</a>";
-					else
-						echo $loanuse." <a href='$loanprurl'>Read More</a>";
-					?>
+				<p>	
+
+					<?php if(!empty($summary)){
+
+						echo $summary." <a href='$loanprurl'>Read More</a>";
+
+					}else{
+
+						if(strlen($loanuse) >200){
+
+							echo substr($loanuse,0,200)." <a href='$loanprurl'>Read More</a>";
+						  
+						}else{
+
+							echo $loanuse." <a href='$loanprurl'>Read More</a>";
+						}
+					
+					} ?>
+
 				</p>
 			</div>
 			<div style="clear:both"></div>

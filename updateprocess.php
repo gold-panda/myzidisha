@@ -876,7 +876,7 @@ class updateProcess
 		$up_id = $_POST["up_id"];
 		if($up_id==1)
 		{
-			$result=$session->getTranslate($_POST['bizdesc'], $_POST['about'], $_POST['loanuse'], 0, $id, $up_id, $loanid);
+			$result=$session->getTranslate($_POST['bizdesc'], $_POST['about'], $_POST['summary'], $_POST['loanuse'], 0, $id, $up_id, $loanid);
 		}
 		if($up_id==2)
 		{

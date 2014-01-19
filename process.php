@@ -966,7 +966,7 @@ class Process
 			$inst_weekday = $_POST['installment_weekday'];
 			$gperiod = $_POST['gperiod'];
 			$repay_period=$_POST['repay_period'];
-			$result=$session->editLoanApplication($_POST['loanid'], $_POST['amount'], $interest, $_POST['loanuse'], $inst_amount, $inst_day, $inst_weekday,$gperiod,0,$repay_period);
+			$result=$session->editLoanApplication($_POST['loanid'], $_POST['amount'], $interest, $_POST['summary'],$_POST['loanuse'], $inst_amount, $inst_day, $inst_weekday,$gperiod,0,$repay_period);
 
 			if($result==0)
 			{
@@ -981,10 +981,11 @@ class Process
                 exit;
 			}
 		} else {
-			$result=$session->editLoanApplication($_POST['loanid'], $_POST['amount'], $_POST['interest'], $_POST['loanuse'], $_POST['installment_amt'], $_POST['installment_day'], $_POST['installment_weekday'], $_POST['gperiod'],1);
+			$result=$session->editLoanApplication($_POST['loanid'], $_POST['amount'], $_POST['interest'], $_POST['summary'], $_POST['loanuse'], $_POST['installment_amt'], $_POST['installment_day'], $_POST['installment_weekday'], $_POST['gperiod'],1);
 			if($result == 1) {
 				$_SESSION['la']['editamt'] = $_POST['amount'];
 				$_SESSION['la']['editintr'] = $_POST['interest'];
+				$_SESSION['la']['editsummary'] = $_POST['summary'];
 				$_SESSION['la']['editloanuse'] = $_POST['loanuse'];
 				$_SESSION['la']['edit_inst_day'] = $_POST['installment_day'];
 				$_SESSION['la']['edit_inst_weekday'] = $_POST['installment_weekday'];

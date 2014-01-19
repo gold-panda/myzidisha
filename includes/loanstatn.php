@@ -363,6 +363,10 @@ else
 	$loanid=$brw2['loanid'];
 	$disburseDate=$database->getLoanDisburseDate($loanid);
 	$webfee=$brw2['WebFee'];//website fee rate
+	if($brw2['tr_summary']==null || $brw2['tr_summary']=="")
+		$summary=$brw2['summary'];
+	else
+		$summary=$brw2['tr_summary'];
 	if($brw2['tr_loanuse']==null || $brw2['tr_loanuse']=="")
 		$loanuse=$brw2['loanuse'];
 	else
@@ -1107,6 +1111,9 @@ else
 				<?php }	?>
 				<tr>
 					<td><strong><?php echo $lang['loanstatn']['purpose'] ?>:</strong></td>
+				</tr>
+				<tr>
+					<td colspan=2 style="text-align:justify;line-height:18px"><?php echo $summary ?></td>
 				</tr>
 				<tr>
 					<td colspan=2 style="text-align:justify;line-height:18px"><?php echo $loanuse ?></td>

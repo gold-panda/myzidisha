@@ -236,6 +236,10 @@ if(!empty($openloans))
 		//$interest=$row['interest'];
 		$period=$row['period'];
 		$grace=$row['grace'];
+		if($row['tr_summary']==null || $row['tr_summary']=="")
+			$summary=$row['summary'];
+		else
+			$summary=$row['tr_summary'];
 		if($row['tr_loanuse']==null || $row['tr_loanuse']=="")
 			$loanuse=$row['loanuse'];
 		else
@@ -295,11 +299,22 @@ if(!empty($openloans))
 				
 				<br /><br /><?php echo $city.", ".$country;?></p>
 				<p>
-					<?php if(strlen($loanuse) >200)
+					<?php if(!empty($summary)){
+
+						echo $summary." <a href='$loanprurl'>Read More</a>";
+
+					}else{
+
+						if(strlen($loanuse) >200){
+
 							echo substr($loanuse,0,200)." <a href='$loanprurl'>Read More</a>";
-						  else
+						  
+						}else{
+
 							echo $loanuse." <a href='$loanprurl'>Read More</a>";
-					?>
+						}
+					
+					} ?>
 				</p>
 				<p><strong><?php echo $lang['loaners']['amount_requested']?>:</strong> <?php echo $amount; ?> USD<br /><strong><?php echo $lang['loaners']['interest']; ?>:</strong> <?php echo number_format($interest, 2, '.', ','); ?>%</p>
 				<p><?php echo $statusbar ?></p>

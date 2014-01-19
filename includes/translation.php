@@ -9,28 +9,11 @@ if(isSet($_GET['ref']))
 }
 else
 	$ref=$_SESSION['trans_refer_page'];
-$flag=0;
-
-
-if($session->userlevel==ADMIN_LEVEL)
-	$flag=1;
-else if($session->userlevel==LENDER_LEVEL)
-{
-	$userid=$session->userid;
-	$res=$database->isTranslator($userid);
-	if($res==1)
-
-		$flag=1;
-} 
 
 	?>
 <div class='span12'>
 <?php
 
-/*
-if($flag==1)
-{
-*/
 	$v=0;
 	if(isSet($_GET['v']))
 		$v=$_GET['v'];
@@ -52,6 +35,7 @@ if($flag==1)
 		$res1=$database->getTranslate($id, $loanid, 0);
 		$About = $res1['About'];		
 		$BizDesc = $res1['BizDesc'];
+		$summary= $res1['summary'];
 		$loanuse= $res1['loanuse'];
 		if(isSet($_GET['v']))
 		{
@@ -59,6 +43,7 @@ if($flag==1)
 			{
 				$tr_About = $res1['tr_About'];
 				$tr_BizDesc = $res1['tr_BizDesc'];
+				$tr_summary= $res1['tr_summary'];
 				$tr_loanuse= $res1['tr_loanuse'];
 			}
 			else
@@ -66,6 +51,7 @@ if($flag==1)
 				
 				$tr_About = $form->value('about');
 				$tr_BizDesc =$form->value('bizdesc');
+				$tr_summary = $form->value('summary');
 				$tr_loanuse = $form->value('loanuse');
 			}
 		}
@@ -74,6 +60,7 @@ if($flag==1)
 			
 			$tr_About = $res1['tr_About'];
 			$tr_BizDesc = $res1['tr_BizDesc'];
+			$tr_summary= $res1['tr_summary'];
 			$tr_loanuse= $res1['tr_loanuse'];
 		}
 ?>
@@ -115,8 +102,15 @@ if($flag==1)
 			<strong><?php echo $lang['translation']['edit']; ?></strong><br><TEXTAREA NAME="bizdesc" Style="width:680px;height:200px" TABINDEX="8"><?php echo $tr_BizDesc; ?></TEXTAREA>
 		</div>
 
+		<br><br>
+		<h3 class="subhead">Loan Summary</h3>
+		<p style="text-align:justify"><?php echo nl2br($summary) ?></p>
+		<br>
+		<div>
+			<strong><?php echo $lang['translation']['edit']; ?></strong><br><TEXTAREA NAME="summary" Style="width:680px;height:50px" TABINDEX="8"><?php echo $tr_summary; ?></TEXTAREA>
+		</div>
 		<br><br>		
-<h3 class="subhead"><?php echo $lang['translation']['pur_loan'] ?></h3>
+		<h3 class="subhead"><?php echo $lang['translation']['pur_loan'] ?></h3>
 		<p style="text-align:justify"><?php echo nl2br($loanuse) ?></p>
 		<br>
 		<div>
@@ -219,15 +213,6 @@ if($flag==1)
 	{
 		echo "ERROR";
 	}
-/*  }
-else
-{
-	echo "<div>";
-	echo $lang['admin']['allow'];
-	echo "<br />";
-	echo $lang['admin']['Please'];
-	echo "<a href='index.php'>click here</a>".$lang['admin']['for_more']. "<br />";
-	echo "</div>";
-}	*/
+
 ?>
 </div>

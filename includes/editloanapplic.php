@@ -79,6 +79,9 @@ else
 					$interest=number_format($loandata['interest'],0,'.','')."%";
 					if($form->value('interest'))
 						$interest=$form->value('interest');
+					$summary=$loandata['summary'];
+					if($form->value('summary'))
+						$summary=$form->value('summary');
 					$loanuse=$loandata['loanuse'];
 					if($form->value('loanuse'))
 						$loanuse=$form->value('loanuse');
@@ -111,6 +114,7 @@ else
 						$installment_weekday = $_SESSION['la']['edit_inst_weekday'];
 						$amount = $_SESSION['la']['editamt'];
 						$interest = $_SESSION['la']['editintr'];
+						$summary = $_SESSION['su']['editsummary'];
 						$loanuse = $_SESSION['la']['editloanuse'];
 						$re_paymnet_per = $_SESSION['la']['installment_amt'];
 						$grace_p = $_SESSION['la']['gperiod'];
@@ -268,11 +272,24 @@ echo $lang['loanapplic']['note_amt_pr']; ?>
 
 										<td><?php echo $form->error("installment_day"); ?></td>
 									</tr>
+
+									<!-- summary -->
+									<tr height='60px'><td colspan='3'></td></tr>
+									<tr>
+										<td colspan="3">
+											<br /><?php echo $lang['loanapplic']['summary'];?><br /><br/>
+											<textarea name="summary" style="width:100%; height:50px" maxlength="200"><?php	echo $summary; ?></textarea>
+											<br />
+											<?php echo $form->error('summary') ?>
+										</td>
+									</tr>
+									
+									<!-- loan use -->
 									<tr height='60px'><td colspan='3'></td></tr>
 									<tr>
 										<td colspan="3">
 											<br /><?php echo $lang['loanapplic']['use_loan'];?><br /><br/>
-											<textarea name="loanuse" style="width:100%; height:100px"><?php	echo $loanuse; ?></textarea>
+											<textarea name="loanuse" style="width:100%; height:300px"><?php	echo $loanuse; ?></textarea>
 											<br />
 											<?php echo $form->error('loanuse') ?>
 										</td>
@@ -299,6 +316,7 @@ echo $lang['loanapplic']['note_amt_pr']; ?>
 				}else if($sp==2) { 
 					$editamount = $_SESSION['la']['editamt'];
 					$editintr = $_SESSION['la']['editintr'];
+					$editsummary = $_SESSION['la']['editsummary'];
 					$editloanuse = $_SESSION['la']['editloanuse'];
 					$ld = $_SESSION['la']['loanid'];
 					$gperiod = $_SESSION['la']['gperiod'];
@@ -384,6 +402,7 @@ echo $lang['loanapplic']['note_amt_pr']; ?>
 								<input type="hidden" name="amount" value="<?php echo $_SESSION['la']['editamt'];?>" />
 								<input type="hidden" name="interest" value="<?php echo $_SESSION['la']['editintr'];?>"/>
 								<input type="hidden" name="loanid" value="<?php echo $_SESSION['la']['loanid'];?>" />
+								<input type="hidden" name="summary" value="<?php echo $_SESSION['la']['editsummary'];?>"/>
 								<input type="hidden" name="loanuse" value="<?php echo $_SESSION['la']['editloanuse'];?>"/>
 								<input type="hidden" name="repay_period" value="<?php echo $newperiod;?>"/>
 								<input type="hidden" name="gperiod" value="<?php echo $_SESSION['la']['gperiod'];?>"/>

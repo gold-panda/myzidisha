@@ -2710,8 +2710,11 @@ class genericClass
             $p="SELECT About, tr_About, BizDesc, tr_BizDesc from ! where userid = ?";
             $result1=$db->getRow($p, array('borrowers',$id));
 
-            $q="SELECT loanuse, tr_loanuse from ! where borrowerid = ? AND loanid =  ?";
+            $q="SELECT summary, tr_summary, loanuse, tr_loanuse from ! where borrowerid = ? AND loanid =  ?";
             $result2=$db->getRow($q,  array('loanapplic', $id, $loanid));
+
+            $result1['summary'] = $result2['summary'];
+            $result1['tr_summary'] = $result2['tr_summary'];
 
             $result1['loanuse'] = $result2['loanuse'];
             $result1['tr_loanuse'] = $result2['tr_loanuse'];
@@ -2731,7 +2734,7 @@ class genericClass
             return $result;
         }
     }
-    function upadateTranslate($bizdesc, $about, $loanuse, $cmnt, $id, $up_id, $loanid, $lcid=0)
+    function upadateTranslate($bizdesc, $about, $summary, $loanuse, $cmnt, $id, $up_id, $loanid, $lcid=0)
     {
         global $db, $session;
         if($up_id==1)
@@ -2740,8 +2743,8 @@ class genericClass
             $res=$db->query($q, array('borrowers',$bizdesc, $about , $id));
             if($res===1)
             {
-                $q="UPDATE  ! set tr_loanuse = ?, tr_user=? where borrowerid = ? AND loanid = ?";
-                $res=$db->query($q, array('loanapplic',$loanuse, $session->userid, $id, $loanid));
+                $q="UPDATE  ! set tr_summary = ?, tr_loanuse = ?, tr_user=? where borrowerid = ? AND loanid = ?";
+                $res=$db->query($q, array('loanapplic', $summary, $loanuse, $session->userid, $id, $loanid));
                 include_once("indexer.php");
                 updateIndex1($id);
                 updateIndex2($loanid);
@@ -6317,15 +6320,15 @@ class genericClass
         }
         return $result;
     }
-    function updateLoanApp($userid, $loanid, $amount, $interest, $loanuse, $inst_day, $gperiod, $weekly_inst, $inst_weekday,$repay_period)
+    function updateLoanApp($userid, $loanid, $amount, $interest, $summary, $loanuse, $inst_day, $gperiod, $weekly_inst, $inst_weekday,$repay_period)
     {
         global $db;
         $p="SELECT applydate  from ! where loanid = ? AND borrowerid=? ";
         $applydate=$db->getOne($p,array('loanapplic',$loanid, $userid));
         $rate=$this->getExRateById($applydate, $userid);
         $damount=round($amount/$this->getCurrentRate($userid));
-        $r = "UPDATE ! set Amount =?, interest =?, loanuse =?, reqdamt =?,  installment_day=?, grace =?, weekly_inst=?, installment_weekday=?,period=? where loanid = ? AND borrowerid=?";
-        $res=$db->query($r, array('loanapplic', $amount, $interest,$loanuse, $damount,$inst_day, $gperiod, $weekly_inst, $inst_weekday,$repay_period, $loanid, $userid));
+        $r = "UPDATE ! set Amount =?, interest =?, summary =?, loanuse =?, reqdamt =?,  installment_day=?, grace =?, weekly_inst=?, installment_weekday=?,period=? where loanid = ? AND borrowerid=?";
+        $res=$db->query($r, array('loanapplic', $amount, $interest, $summary, $loanuse, $damount, $inst_day, $gperiod, $weekly_inst, $inst_weekday,$repay_period, $loanid, $userid));
         return $res;
     }
     function getMinMaxBidIntr($loanid)

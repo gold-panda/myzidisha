@@ -1455,7 +1455,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		}
 	}
 
-	function getTranslate($bizdesc, $about, $loanuse, $cmnt, $id, $up_id, $loanid,$lcid=0)
+	function getTranslate($bizdesc, $about, $summary, $loanuse, $cmnt, $id, $up_id, $loanid,$lcid=0)
 	{
 		global $database, $form;  //The database and form object
 		traceCalls(__METHOD__, __LINE__);
@@ -1467,7 +1467,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				$form->setError("loginerr", $lang['error']['loginerr']);
 				return 0;
 			}
-			$res = $database->upadateTranslate($bizdesc, $about, $loanuse, 0, $id, $up_id, $loanid);
+			$res = $database->upadateTranslate($bizdesc, $about, $summary, $loanuse, 0, $id, $up_id, $loanid);
 		}
 		if($up_id==2)
 		{  
@@ -2817,15 +2817,19 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				$form->setError("gperiod", $lang['error']['lower_gracetime']." ".trim($total_months));
 			}
 		}
+		if(empty($summary)){
+			$form->setError("summary", $lang['error']['empty_summary']);
+		
+		}
 		if(empty($loanuse)){
 			$form->setError("loanuse", $lang['error']['empty_loanuse']);
 		
 		}
-		/*
+		
 		else if(strlen($loanuse) <300) {
 			$form->setError('loanuse', $lang['error']['min_length_comment']);
 		}
-		*/
+		
 		if(empty($tnc)){
 			$form->setError("agree", $lang['error']['empty_tnc']);
 		}
@@ -2834,7 +2838,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		}
 		return 1;
 	}
-	function editLoanApplication($loanid, $amount, $interest, $loanuse, $inst_amount, $inst_day, $inst_weekday, $gperiod, $validate=0, $repay_period)
+	function editLoanApplication($loanid, $amount, $interest, $summary, $loanuse, $inst_amount, $inst_day, $inst_weekday, $gperiod, $validate=0, $repay_period)
 	{
 		global $database, $form;
 		$path=  getEditablePath('error.php');
@@ -2906,11 +2910,11 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		if(empty($loanuse)){
 			$form->setError("loanuse", $lang['error']['empty_loanuse']);
 		}
-		/*
+		
 		else if(strlen($loanuse) < 300) {
 			$form->setError('loanuse', $lang['error']['min_length_comment']);
 		}
-		*/
+		
 		if((empty($inst_day) || $inst_day>31 || $inst_day < 1) && (empty($inst_weekday))){
 			$form->setError("installment_day", $lang['error']['invalid_day']);
 		}
@@ -2941,7 +2945,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		else if($validate == 1) {
 			return 1;
 		}else {
-			$ret=$database->updateLoanApp($userid, $loanid, $amount, $interest, $loanuse, $inst_day, $gperiod, $weekly_inst, $inst_weekday, $repay_period);
+			$ret=$database->updateLoanApp($userid, $loanid, $amount, $interest, $summary, $loanuse, $inst_day, $gperiod, $weekly_inst, $inst_weekday, $repay_period);
 			return $ret;
 		}
 	}
