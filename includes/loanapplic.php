@@ -740,7 +740,7 @@ else
 	} else {
 		var ids = new Array('loanAppAmount', 'loanAppInterest','loanAppGracePeriod','loanAppInstallment','installment_weekday','summary','loanuse');
 	} 
-	var values = new Array('','','','','','');
+	var values = new Array('','','','','','','');
 	var needToConfirm = true;
 </script>
 <script type="text/JavaScript" src="includes/scripts/navigateaway.js"></script>
