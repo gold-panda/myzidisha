@@ -3998,8 +3998,14 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$repayRate=100;
 		}else{
 			$brwr_repayRate= ($onTimeInstall/$totalTodayinstallment)*100;
+			
+			if(empty($brwr_repayRate) || $brwr_repayRate < 0){
+				$brwr_repayRate=0;
+			}
+
 			$repayRate= number_format($brwr_repayRate,2, '.', ',');
 		}
+
 		return $repayRate;
 
 	}
