@@ -134,6 +134,10 @@
 #bphoto_file {
 	margin:12px 0;
 }
+.selectPhoto{
+	clear:both;
+	margin:10px 0 0 !important;
+}
 #sub-borrower hr,
 #sub-lender hr {
 	margin:19px 0;
@@ -216,3 +220,15 @@
 	clear: both;
 	margin-bottom: 0px;
 }
+/* START - Terms of use */
+	.terms_of_use{
+		width:100%;
+		height:400px;
+		overflow: auto;
+	}
+	.terms_of_use p{
+		font-size:16px;
+		line-height:22px;
+		font-weight:bold;
+	}
+/* END - Terms of use */
