@@ -53,7 +53,7 @@ function validate_form(thisform)
 	}
 	$paypalTranFee= $database->getAdminSetting('PaypalTransaction');
 	if($donated_amt>0){
-		$paypalTranAmount=(($donated_amt * $paypalTranFee)/100);
+		$paypalTranAmount=(($paypal_amount * $paypalTranFee)/100); /* $donated_amt replace by $paypal_amount on date 20-01-14 */
 	}elseif(isset($_POST['addPayment'])){
 		$paypalTranAmount=(($_POST['paypal_amount'] * $paypalTranFee)/100);
 	}else{
