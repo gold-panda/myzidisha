@@ -254,7 +254,7 @@ class Validation
 		//$this->checkIncome($income, "bincome");
 		$this->checkMyDesc($about, "babout");
 		$this->checkBusinessDesc($bizdesc, "bbizdesc");
-		$this->checkPhoto($photo, "bphoto");
+		//$this->checkPhoto($photo, "bphoto");
 		//$this->checkTnc($tnc, "tnc");
 		$this->checkNationId($bnationid, "bnationid", $country);
 		//$this->checkLoanHist($bloanhist, "bloanhist");
@@ -638,7 +638,7 @@ class Validation
 			}
 		}
 		// Anupam 13-12-2012 borrower must have photo uploaded check also in edit profile.
-		$this->checkPhoto($photo, "bphoto");
+		//$this->checkPhoto($photo, "bphoto");
 		//$this->checkLoanHist($bloanhist, "bloanhist");
 		//$this->checkCommunityNameAndNo($community_name_no, "community_name_no");
 	}

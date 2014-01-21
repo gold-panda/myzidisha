@@ -46,7 +46,9 @@ $lang['register']['Lender_dis']='The lender will bid to finance the borrower.';
 $lang['register']['Partner_dis']='The partner is a local financial institution or credit bureau that has signed a contract with Zidisha to verify the credit histories of applicants. Only borrowers whose credit histories have been verified by partners are able to post loan applications on the Zidisha website.'; 
 $lang['register']['select_type']='Please select the type of account you would like to open.'; 
 $lang['register']['t_c']='Terms of Use'; 
-$lang['register']['a_a']='Accept Terms of Use'; 
+$lang['register']['a_a']='Zidisha Loan Contract'; 
+$lang['register']['a_a1']='I have read and agree to the'; 
+$lang['register']['a_a2']='Zidisha Terms of Use'; 
 $lang['register']['t_u']='Thank You';  
 $lang['register']['member_of']='Thanks for joining us, and welcome!'; 
 $lang['register']['bid_on_openloan']='In order to bid on loan applications,';  
@@ -112,8 +114,8 @@ $lang['register']['lgcountry']='Country';
 $lang['register']['lgcity']='City or Village of Residence';
 $lang['register']['lguserName']='Create Username <font color="red">*</font>';
 $lang['register']['borrower_note']="<strong>Note from Zidisha:</strong> Due to the high volume of applications, we are temporarily pausing activation of new borrower accounts. You are still welcome to create an account, but please be aware that it may be some time before we are able to activate it so that you may post a loan application for funding with Zidisha.  We are reviewing and activating all eligible accounts for each country in the order they are received, and current wait time is estimated at up to two months.";
-$lang['register']['photo_note']='<br/>Please upload a clear, close, well lit photo of yourself.<br/><br/>
-<i>Your loan applications will attract lenders more easily if your photo is smiling and of good quality.</i>';
+$lang['register']['photo_note']='<br/>Please choose a photo of yourself to display in your public profile.<br/><br/>
+<i>You may choose to use the Facebook profile image displayed here, or you may change it to use another photo. Your loan application will be more attractive to lenders if your photo is well lit, up close, smiling and of good quality.</i>';
 $lang['register']['Registerlater']='Save and Complete Later'; 
 $lang['register']['RegisterComplete']='Submit Final Application'; 
 $lang['register']['savechanges']='Save Changes'; 

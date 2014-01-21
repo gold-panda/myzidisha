@@ -147,19 +147,20 @@ include_once("editables/".$path);
 				$url = $loanprurl;
 		?>
 			<p>
-	<?php	if(strlen($usermessage) >300)
+	<?php	if(strlen($usermessage) >500)
 			{
-				$shortMsg=substr($usermessage,0,300);
+				$shortMsg=substr($usermessage,0,500);
 				$pos1= strrpos ($shortMsg , ' ');
 				if($pos1 !==false)
 					$shortMsg=substr($shortMsg,0,$pos1);
 				echo "\"".$shortMsg."....\" <a href='".$url."'>Read More</a>";
 			}
 			else
-				echo "\"".$usermessage."\"";
+				echo "\"".$usermessage."\" <a href='".$url."'>Read More</a>";
 	?>		</p>
 			<p class="meta"><?php echo $lang['home']['posted_by'] ?> <strong><?php echo $name13;?></strong> <?php echo $lang['home']['in'] ?> <strong><?php echo $u_city.", ".$u_country;?></strong> <?php echo $lang['home']['on'] ?> <?php echo date("d M Y", $date);?></p>
 <?php	}	?>
+		
 		<p><span class="blue"><a href="microfinance/testimonials.html"><?php echo $lang['home']['more_testi'];?></a></span></p>
 	<?php
 	}

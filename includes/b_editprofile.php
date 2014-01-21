@@ -723,7 +723,13 @@ if($borrowerActive==1) {
 									$prevphoto = $id.".jpg";
 									?>
 										<img style="float:none" class ="user-account-img" src="library/getimagenew.php?id=<?php echo $id;?>&width=100&height=130" alt="" />
-							<?php } ?> 
+							
+							<?php } else if( ! empty($facebook_id)){
+							
+										echo "<img style='max-width:200px;' src='https://graph.facebook.com/".$facebook_id."/picture?width=9999&height=9999' />";
+										$photolabel = $lang['register']['upload_diffphoto'];
+									}
+							?> 
 						</div>
 						<!--[if lt IE 9]>
 							<div>

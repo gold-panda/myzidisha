@@ -258,7 +258,8 @@
 			</div>
 
 			<!-- Accept terms -->
-			<label class="terms_of_use_action"><?php echo $lang['register']['a_a']; ?><span class="red">*</span></label>
+			<label><?php echo $lang['register']['a_a1']; ?> <a class="terms_of_use_action" href="#"><?php echo $lang['register']['a_a2']; ?></a>.</label>
+			<br/>
 			<div class="radio_group">
 				<div class="radio_s">
 					<INPUT TYPE="Radio" name="agree" id="agree" value="1" tabindex="3" />

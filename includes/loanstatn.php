@@ -497,7 +497,13 @@ else
 	<?php if (file_exists(USER_IMAGE_DIR.$ud.".jpg")){ 
 	?>
 		<img class="loan-profile" src="library/getimagenew.php?id=<?php echo $ud ?>&width=330&height=380" alt="<?php echo $name ?>" style="position:absolute;right:0;"/>
-		<?php } ?>
+		<?php } 
+		
+		else if( ! empty($fb_data['user_profile']['id'])){ //case where borrower has not uploaded own photo but has linked FB account, use FB profile
+							
+			echo "<img class='loan-profile' img style='max-width:330px;' src='https://graph.facebook.com/".$fb_data['user_profile']['id']."/picture?width=9999&height=9999' style='position:absolute;right:0' />";
+		} ?>
+
 		<h3><?php echo $name ?></h3>
 		<table class="funding-status" style="border-top:none;margin-top:0px;padding-top:0px">
 			<tbody>
@@ -505,11 +511,6 @@ else
 					<td style="width:180px;"><strong><?php echo $lang['loanstatn']['located'] ?>:</strong></td>
 					<td><?php echo $location ?></td>
 				</tr>
-<!--				<tr>
-					<td><strong><?php echo $lang['loanstatn']['bsincedate'] ?>:</strong></td>
-					<td><?php echo date("M d, Y ", $ldate) ?></td>
-				</tr>  
--->
 
 
 	<tr>

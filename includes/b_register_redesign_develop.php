@@ -509,8 +509,10 @@ if(empty($session->userid)){
 							?>
 								<img style="float:none" class="user-account-img" src="<?php echo SITE_URL.'images/tmp/'.$isPhoto_select ?>" height="50" width="50" alt=""/>
 						<?php }else if( ! empty($fbData['user_profile']['id'])){
-							echo "<img style='max-width:200px;' src='https://graph.facebook.com/".$fbData['user_profile']['id']."/picture?width=9999&height=9999' />";
-						}
+							
+										echo "<img style='max-width:200px;' src='https://graph.facebook.com/".$fbData['user_profile']['id']."/picture?width=9999&height=9999' />";
+										$photolabel = $lang['register']['upload_diffphoto'];
+									}
 						
 						?>
 						
@@ -567,6 +569,7 @@ if(empty($session->userid)){
 			<hr/>
 			<div class="group">
 				<p class="terms_of_use blue_color uppercase formTitle"><?php echo $lang['register']['t_c'];?></p>
+				<br/>
 				<div id="basic-modal-content" align="left">
 					<p class="terms_of_use_modal blue_color uppercase"><?php echo $lang['register']['t_c'];?></p>
 					<?php
@@ -579,16 +582,10 @@ if(empty($session->userid)){
 			
 			<!-- Accept terms -->
 			<div class="group">
-			<label class="terms_of_use_action"><?php echo $lang['register']['a_a']; ?><span class="red">*</span></label>
-			<div class="radio_group">
-				<div class="radio_s">
-					<INPUT TYPE="Radio" name="agree" id="agree" value="1" tabindex="3" />
-					<span class="left"><?php echo $lang['register']['yes'];?></span>
-				</div>	
-				<div class="radio_s">
-					<INPUT TYPE="Radio" name="agree" id="agree" value="0" tabindex="4" checked />
-					<span class="left"><?php echo $lang['register']['no'];?></span>
-				</div>
+
+				<label><INPUT TYPE="checkbox" name="agree" id="agree" value="1" tabindex="3" />&nbsp&nbsp<?php echo $lang['register']['a_a1']; ?> <a class="terms_of_use_action" href="#"><?php echo $lang['register']['a_a']; ?></a>.</label>
+			
+			<br/>
 			</div>
 			<br/><br/>
 			</div>
@@ -613,12 +610,6 @@ if(empty($session->userid)){
 					<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 					<a id="saveLaterLink" href="#"><?php echo $lang['register']['Registerlater'];?></a>
-					
-					<!-- save and complete later button removed and replaced with link
-
-					<input type="submit" name='submitform' id='borrowersubmitform' value="<?php echo $lang['register']['Registerlater'];?>" onclick="needToConfirm = false;" />
-					
-					-->
 
 				</div>
 

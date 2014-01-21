@@ -457,14 +457,8 @@ if($language==''){
 			else if($page==1)
 			{
 				// Jordan: if we want to develop a new functionality, it will be better to use copy of original files.
-				if (isset($_GET['develop']))
-				{
-					include_once("includes/register_redesign_develop.php");
-				}
-				else
-				{
-					include_once("includes/register_redesign.php");
-				}
+				include_once("includes/register_redesign_develop.php");
+				
 			}
 			else if($page==2)
 			{
