@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="css/default/redesign.css" type="text/css" media="screen">
+<script type="text/javascript" src="includes/scripts/jquery.simplemodal.js"></script>
+<link rel="stylesheet" href="css/default/jquery.simplemodal.css" type="text/css" media="screen">
+<script type="text/javascript" src="includes/scripts/redesign.js"></script>
 <?php include_once("library/session.php");
 include_once("./editables/admin.php");
 require_once('library/recaptcha/recaptchalib.php');
@@ -62,6 +65,11 @@ if(empty($t))
 	</div>
 <?php
 }
+// get user country short code by ip
+$userCountry = file_get_contents("http://api.ipinfodb.com/v3/ip-country/?key=1e8244d75d3de3169c4688c2831c114aa0763bb212ccd01b83d08f165838eb72&format=json&ip=".$_SERVER['REMOTE_ADDR']);
+$userCountry = json_decode($userCountry,true);
+$userCountry = $userCountry['countryCode'];
+
 if($select==1)
 {
 	include_once("b_register_redesign_develop.php");

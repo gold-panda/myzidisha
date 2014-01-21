@@ -91,7 +91,7 @@
 								continue;
 							}	
 					?>
-						<option value='<?php echo $state['code'] ?>' <?php if($form->value("lcountry")==$state['code']) echo "selected" ?>><?php echo $state['name'] ?></option>
+						<option value='<?php echo $state['code'] ?>' <?php if( ($form->value("lcountry")==$state['code']) || ($state['code'] == $userCountry) ) echo "selected" ?>><?php echo $state['name'] ?></option>
 					<?php  $i++; 
 						} 
 					?>
@@ -240,8 +240,9 @@
 
 			<!-- terms -->
 			<br/>
-			<p class="blue_color uppercase formTitle"><?php echo $lang['register']['t_c'];?></p>
-			<div class="terms_of_use">
+			<p class="terms_of_use blue_color uppercase formTitle"><?php echo $lang['register']['t_c'];?></p>
+			<div id="basic-modal-content" align="left" class="terms_of_use">
+				<p class="terms_of_use_modal blue_color uppercase"><?php echo $lang['register']['t_c'];?></p>
 				<?php
 					include_once("./editables/lenderagreement.php");
 					$path1=	getEditablePath('lenderagreement.php');
@@ -255,17 +256,18 @@
 				<div style="margin-top:20px"><?php echo  recaptcha_get_html(RECAPCHA_PUBLIC_KEY, $form->error("user_guess")); ?></div>
 				<a id="recaptcha_response_fielderr"></a>
 			</div>
-			<br/><br/>
 
 			<!-- Accept terms -->
-			<label><?php echo $lang['register']['a_a']; ?><span class="red">*</span></label>
-			<div class="radio_s">
-				<INPUT TYPE="Radio" name="agree" id="agree" value="1" tabindex="3" />
-				<span class="left"><?php echo $lang['register']['yes'];?></span>
-			</div>	
-			<div class="radio_s">
-				<INPUT TYPE="Radio" name="agree" id="agree" value="0" tabindex="4" checked />
-				<span class="left"><?php echo $lang['register']['no'];?></span>
+			<label class="terms_of_use_action"><?php echo $lang['register']['a_a']; ?><span class="red">*</span></label>
+			<div class="radio_group">
+				<div class="radio_s">
+					<INPUT TYPE="Radio" name="agree" id="agree" value="1" tabindex="3" />
+					<span class="left"><?php echo $lang['register']['yes'];?></span>
+				</div>	
+				<div class="radio_s">
+					<INPUT TYPE="Radio" name="agree" id="agree" value="0" tabindex="4" checked />
+					<span class="left"><?php echo $lang['register']['no'];?></span>
+				</div>
 			</div>
 			<br/><br/>
 

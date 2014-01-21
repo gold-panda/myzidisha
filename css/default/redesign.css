@@ -222,13 +222,19 @@
 }
 /* START - Terms of use */
 	.terms_of_use{
-		width:100%;
-		height:400px;
-		overflow: auto;
+		margin-bottom:0;
 	}
-	.terms_of_use p{
-		font-size:16px;
-		line-height:22px;
-		font-weight:bold;
+	.terms_of_use_modal{
+		margin-bottom:20px;
+		font-size:20px;
+	}
+	.terms_of_use_action{
+		color:#0099FF;
+		text-decoration: underline;
+		cursor:pointer;
+		width:auto !important;
+	}
+	.radio_group{
+		clear:both;
 	}
 /* END - Terms of use */
