@@ -5233,7 +5233,7 @@ class genericClass
                         if($row['reqdamt'] > $totBid)
                             $stilneed=$row['reqdamt']-$totBid;
                         else
-                            $stilneed=0;
+                            $stilneed=100000; //set to high amount so the fully funded loans will appear at the end
                         $result[$i]['amtStilNeed']=$stilneed;
                         $still[$i]=$stilneed;
                         $i++;
