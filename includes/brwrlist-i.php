@@ -83,12 +83,12 @@ if(isset($_GET['did']))
 	$did=$_GET['did'];
 }
 $UserCurrency = $database->getUserCurrency($uid);
-if($database->getPartnerStatus($session->userid)==0 && $session->userlevel!=LENDER_LEVEL && $session->userlevel!=ADMIN_LEVEL )
+if($database->getPartnerStatus($session->userid)==0 && $session->userlevel!=ADMIN_LEVEL )
 {
 	echo "<font style='color:red'>".$lang['brwrlist-i']['inactive_status']."<br /><br />";
 	echo $lang['brwrlist-i']['contact_us'];
 }
-else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel==LENDER_LEVEL || $session->userlevel==ADMIN_LEVEL)
+else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel==ADMIN_LEVEL)
 {
 	if(!$uid || $uid==0)
 	{		

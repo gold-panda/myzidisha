@@ -169,8 +169,15 @@ if(!empty($Lendingcart) && $cont == 0 ) {
 						</td>
 					</tr>
 				<?php }
-				}
+				 }
 				?>
+				<tr style="height:55px">
+						<td style="width:60px"></td>
+						<td >Subtotal</td>
+						<td >USD <?php echo number_format($amtincart, 2, ".", ",");?></td>
+						<td> 
+						</td>
+				</tr> 
 			<tbody>
 		</table>
 		<?php 
@@ -196,12 +203,14 @@ if(!empty($Lendingcart) && $cont == 0 ) {
 				
 			}
 			$totAmt = $amtincart + $donation + $transfee;
+			$paypal_amt = $totAmt - $amountavail;
 		?>
 		<form action="process.php" method="post">
 
 
 			<table class="detail">
 
+				<tr height="20px"></tr>
 				 <tr style=" <?php if($transfee==0) echo 'display:none'; ?>">
 					<td><?php echo $lang['withdraw']['tran_fee'];?>: <a  style='margin-left:0px;cursor:pointer;' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['withdraw']['paypal_desc1_new2'];?></span><span class='bottom'></span></span></a></td>
 					
@@ -210,17 +219,6 @@ if(!empty($Lendingcart) && $cont == 0 ) {
 				</tr> 
 				<tr height="20px"></tr>
 			
-
-				<!-- hiding subtotal line for now 
-				<tr>
-					<td>Subtotal:</td>
-					
-					<td>USD <?php echo number_format($amtincart, 2, ".", ",");?></td>
-										
-				</tr>
-				<tr height="20px"></tr>
-				-->
-
 				<tr>
 					<td style="width:320px;">
 						<?php echo $lang['withdraw']['donation_amt'];?>: 
@@ -278,7 +276,7 @@ if(!empty($Lendingcart) && $cont == 0 ) {
 				<?php } ?>
 				<tr id='amtTochargedPaypalrow' style='<?php echo $displayrow?>'>
 					<td>PayPal or Credit Card:</td>
-					<td>USD <span id='amtTochargedPaypal'> <?php echo number_format(($totAmt - $amountavail), 2, ".", ",");?></span></td>
+					<td>USD <span id='amtTochargedPaypal'> <?php echo number_format(($paypal_amt), 2, ".", ",");?></span></td>
 					<td></td>
 				</tr>
 				<tr style='<?php echo $displayrow?>' height="20px"></tr>

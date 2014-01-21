@@ -132,7 +132,6 @@ if($session->logged_in)
                             <li><a href="https://sites.google.com/a/zidisha.org/zidisha-staff/home/country-liaison-intern-guide" target="_blank"><?php echo $lang['loginform']['volunteer_guide'];?></a></li>
                             <li><a href="http://zidisha.org/forum/categories/volunteer-conversations.26/" target="_blank"><?php echo $lang['loginform']['volunteer_forum'];?></a></li>                                   
                             <li><a href="index.php?p=102"><?php echo $lang['loginform']['find_brwr'] ?></a></li>
-                            <li><a href="index.php?p=7&type=3&ord=DESC"><?php echo $lang['loginform']['search_b'];?></a></li>
                             <li><a href="index.php?p=99"><?php echo $lang['loginform']['pending_disbursed'];?></a></li>
                             <li><a href="index.php?p=11&a=1&type=1&ord=ASC"><?php echo $lang['loginform']['view_b'];?></a></li>
                             <li><a href="index.php?p=84"><?php echo $lang['loginform']['community_organizer'] ?></a></li>

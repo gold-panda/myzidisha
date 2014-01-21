@@ -44,6 +44,8 @@ $lang['interns']['desc']='<h1>Volunteer or Intern With Zidisha Microfinance</h1>
 
 <p><b>Flexible Schedule, From Any Location</b></p>
 
+<p><a href="http://www.idealist.org/view/volop/Xsh3DtDs8h8d/" target="_blank">Communications Associate</a></p>
+
 <p><a href="http://www.idealist.org/view/volop/TZssmMFgHnH4/" target="_blank">Indonesia Country Liaison</a></p>
 
 <p><a href="http://www.idealist.org/view/volop/gnj3KdMzSkMD/" target="_blank">Kenya Country Liaison</a></p>
