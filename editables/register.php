@@ -7,8 +7,7 @@ $lang['register']['CPassword'] ='Confirm Password';
 $lang['register']['NewPassword'] ='Change Password'; 
 $lang['register']['CNewPassword'] ='Confirm New Password'; 
 $lang['register']['pname'] ='Organization / Company Name<font color="red"></font>'; 
-$lang['register']['paddress'] ="Please enter the name of the neighborhood and street on which your home is located, or enter detailed directions to your home.<br /><br />
-<strong><a href='%padd_ex%' rel='facebox'>View Example</strong></a>"; 
+$lang['register']['paddress'] ="Please enter the name of the neighborhood and street on which your home is located."; 
 $lang['register']['City'] ='City or Village of Residence'; 
 $lang['register']['Country'] ='Country'; 
 $lang['register']['email'] ='Email Address<font color="red"></font>'; 
@@ -153,7 +152,7 @@ $lang['register']['neigh_contact']='Please enter the name and telephone number o
 $lang['register']['neigh_contact1']='Neighbor / Business Associate 1';
 $lang['register']['neigh_contact2']='Neighbor / Business Associate 2';
 $lang['register']['neigh_contact3']='Neighbor / Business Associate 3';
-$lang['register']['home_no']='Please enter your house number or plot number.  If your home is not numbered, please describe how to locate it.';
+$lang['register']['home_no']="Please enter detailed instructions of how to find your home, including your house number or plot number.  If your home is not numbered, please describe how to locate it.<br/><br/><i>Please ensure you enter a detailed enough description that a person arriving for the first time in your neighborhood can use it to find your home. Insufficient address information is the most common reason applications to join Zidisha are declined.</i><br/><br/><strong><a href='%padd_ex%' rel='facebox'>View Example</strong></a>";
 $lang['register']['lending_institution']='Please enter the name of the lending institution that issued your most recent loan.';
 $lang['register']['lending_institution_add']='Please enter the address of the lending institution that issued your most recent loan.';
 $lang['register']['lending_institution_phone']='Please enter the telephone number of the lending institution that issued your most recent loan.';

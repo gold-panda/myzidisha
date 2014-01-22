@@ -759,9 +759,7 @@ if($borrowerActive==1) {
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
-					<td><?php $params['padd_ex']= $_SERVER['REQUEST_URI'].'#ResidentialaddrExample'; 
-						 $paddress= $session->formMessage($lang['register']['paddress'], $params); ?>
-						<?php echo $paddress; ?>
+					<td><?php echo $lang['register']['paddress'];?>
 						<a id="bpostadderr"></a>
 					</td>
 					<td><textarea name="bpostadd" id="bpostadd" class="textareacmmn" <?php echo $disabled?>><?php echo $padd ; ?></textarea><br/><?php echo $form->error("bpostadd"); ?></td>
@@ -769,7 +767,10 @@ if($borrowerActive==1) {
 				 <tr><td>&nbsp;</td></tr>
 				 <tr>
 					<td>
-						<?php echo $lang['register']['home_no'];?>
+						<?php $params['padd_ex']= $_SERVER['REQUEST_URI'].'#ResidentialaddrExample'; 
+						 $home_no= $session->formMessage($lang['register']['home_no'], $params); ?>
+						
+						<?php echo $home_no;?>
 						<a id="home_noerr"></a>
 					</td>
 					<td><textarea name="home_no" id='home_no' class="textareacmmn" <?php echo $disabled?>><?php echo $home_no; ?></textarea><br/><?php echo $form->error("home_no"); ?></td>

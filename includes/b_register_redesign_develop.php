@@ -257,19 +257,19 @@ if(empty($session->userid)){
 				<br/>
 				<?php echo $form->error("blname"); ?>
 
-				<?php $params['padd_ex']= $_SERVER['REQUEST_URI'].'#ResidentialaddrExample'; 
-				$paddress= $session->formMessage($lang['register']['paddress'], $params); ?>
-
 				<!-- Neighborhood -->
 				<br/>
-				<label><?php echo $paddress;?><a id="bpostadderr"></a></label>
-				<textarea name="bpostadd" id='bpostadd' class="textareacmmn" ><?php echo $form->value("bpostadd"); ?></textarea>
+				<label><?php echo $lang['register']['paddress'];?><a id="bpostadderr"></a></label>
+				<input type="text" name="bpostadd" id='bpostadd' class="inputcmmn-1" value="<?php echo $form->value("bpostadd"); ?>"/>
 				<br/>
 				<?php echo $form->error("bpostadd"); ?>
 
+				<?php $params['padd_ex']= $_SERVER['REQUEST_URI'].'#ResidentialaddrExample'; 
+				$home_no= $session->formMessage($lang['register']['home_no'], $params); ?>
+
 				<!-- House number -->
 				<br/>
-				<label><?php echo $lang['register']['home_no'];?><a id="home_noerr"></a></label>
+				<label><?php echo $home_no;?><a id="home_noerr"></a></label>
 				<textarea name="home_no" id='home_no' class="textareacmmn" ><?php echo $form->value("home_no"); ?></textarea>
 				<br/>
 				<?php echo $form->error("home_no"); ?>

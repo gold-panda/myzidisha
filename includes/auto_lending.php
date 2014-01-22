@@ -13,7 +13,6 @@ date_default_timezone_set ('EST');
 <?php	if($session->userlevel==LENDER_LEVEL) {
 			$userid=$session->userid; 
 			$availableAmt = number_format(truncate_num(round($session->amountToUseForBid($userid), 4), 2) , 2, '.', ',');
-			$availAmt = number_format($availableAmt, 1, ".", ",");
 			$Auto_lendSetting=$database->getAutoLendingsetting($userid);
 			$desired_interest=$Auto_lendSetting['desired_interest'];
 			$max_desired_interest=$Auto_lendSetting['max_desired_interest'];
@@ -308,7 +307,7 @@ date_default_timezone_set ('EST');
 							}?>
 					<tr style="<?php echo $hideLastQust?>" >
 						<td>
-							 Would you like your current lender balance of USD <?php echo $availAmt?>  to be automatically allocated to fundraising loans according to these criteria?
+							 Would you like your current lender balance of USD <?php echo $availableAmt?>  to be automatically allocated to fundraising loans according to these criteria?
 						</td>
 					</tr>
 					
