@@ -583,7 +583,7 @@ if(empty($session->userid)){
 			<!-- Accept terms -->
 			<div class="group">
 
-				<label><INPUT TYPE="checkbox" name="agree" id="agree" value="1" tabindex="3" />&nbsp&nbsp<?php echo $lang['register']['a_a1']; ?> <a class="terms_of_use_action" href="#"><?php echo $lang['register']['a_a']; ?></a>.</label>
+				<label><INPUT TYPE="checkbox" name="agree" id="agree" value="1" tabindex="3" /><?php echo $lang['register']['a_a1']; ?> <a class="terms_of_use_action" href="#"><?php echo $lang['register']['a_a']; ?></a>.</label>
 			
 			<br/>
 			</div>

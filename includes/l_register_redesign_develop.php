@@ -258,20 +258,11 @@
 			</div>
 
 			<!-- Accept terms -->
-			<label><?php echo $lang['register']['a_a1']; ?> <a class="terms_of_use_action" href="#"><?php echo $lang['register']['a_a2']; ?></a>.</label>
-			<br/>
-			<div class="radio_group">
-				<div class="radio_s">
-					<INPUT TYPE="Radio" name="agree" id="agree" value="1" tabindex="3" />
-					<span class="left"><?php echo $lang['register']['yes'];?></span>
-				</div>	
-				<div class="radio_s">
-					<INPUT TYPE="Radio" name="agree" id="agree" value="0" tabindex="4" checked />
-					<span class="left"><?php echo $lang['register']['no'];?></span>
-				</div>
+			<div class="group">
+				<label><INPUT TYPE="checkbox" name="agree" id="agree" value="1" tabindex="3" /><?php echo $lang['register']['a_a1']; ?> <a class="terms_of_use_action" href="#"><?php echo $lang['register']['a_a2']; ?></a>.</label>
+				<br/>
 			</div>
-			<br/><br/>
-
+			
 			<!-- Register button -->
 			<input type="hidden" name="reg-lender" />
 			<input type="hidden" name="tnc"  id="tnc" value=0 />

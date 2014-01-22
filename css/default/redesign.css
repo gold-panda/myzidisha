@@ -221,6 +221,11 @@
 	margin-bottom: 0px;
 }
 /* START - Terms of use */
+	#agree{
+		width:20px !important;
+		position:relative;
+		top:2px;
+	}
 	.terms_of_use{
 		margin-bottom:0;
 	}
