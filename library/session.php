@@ -2362,7 +2362,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 					$params['verify_link'] = $link;
 					$message = $this->formMessage($lang['mailtext']['email_verification_body'], $params);
 					$reply = $this->mailSending($From, $To, $email, $Subject, $message,$templet);
-					//$this->sendContactConfirmation($id);	// send SMS ommunity leader, family and neighborcontacts
+					$this->sendContactConfirmation($id);	// send SMS ommunity leader, family and neighborcontacts
 				if($reply)
 					Logger_Array("Email Verification mail sent to borrower ",'email, To', $email, $To);
 				$_SESSION['bEmailVerifiedPending']=true;
@@ -2559,7 +2559,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 						$params['verify_link'] = $link;
 						$message = $this->formMessage($lang['mailtext']['email_verification_body'], $params);
 						$reply = $this->mailSending($From, $To, $email, $Subject, $message,$templet);
-						//$this->sendContactConfirmation($id);	// send SMS community leader, family and neighborcontacts
+						$this->sendContactConfirmation($id);	// send SMS community leader, family and neighborcontacts
 					 }
 				if($reply)
 					Logger_Array("Email Verification mail sent to borrower ",'email, To', $email, $To);
@@ -4384,35 +4384,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$return1 = $this->setAcceptAmount($bids1, $damount);
 			$bids1 = $return1['bids'];
 		}
-		$database->startDbTxn();
-		
-		/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
-        if($auto_lend==true){       
-        $lastBidDetail=$database->lastBidDetail($loanid);
-        $autolendSetting=$database->getAutoLendingsetting($lenderid); // If Lenders bid is set as Auto
-        $status=$autolendSetting['Active'];   
-       
-                if($status==1){
-               
-                $lendMinInt=$autolendSetting['desired_interest'];
-                $lendMaxInt=$autolendSetting['max_desired_interest'];
-                $autoLenfPreference=$autolendSetting['preference'];
-                       
-                        if($autoLenfPreference==6){
-                        $lastBidAmnt=$lastBidDetail['bidamount'];
-                        $lastBidIntr=$lastBidDetail['bidint'];
-                            if($lastBidIntr>=$lendMinInt && $lastBidIntr<=$lendMaxInt){
-                                $interest=$lastBidIntr;
-                            }else{
-                                $interest=($lendMinInt+$lendMaxInt)/2;
-                            }
-                           
-                            $amount=$lastBidAmnt;   
-                        }   
-                  }   
-        }
-        /***** End here *****/
-		
+		$database->startDbTxn();		
 		$bidid=$database->lenderBid($loggedInid, $loanid, $brwid, $amount, $interest);
 		if($bidid) {
 			$bids=$database->getLoanBids($brwid, $loanid);
