@@ -7292,6 +7292,9 @@ class genericClass
                 $creditearned+=$binvitecredit['loanamt_limit'];
             }
         }
+        if ($creditearned>1000){
+            $creditearned=1000;
+        }
         return $creditearned;
     }
 
