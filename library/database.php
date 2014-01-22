@@ -1583,8 +1583,8 @@ class genericClass
 
         if($userlevel==LENDER_LEVEL || $userlevel==ADMIN_LEVEL)
         {
-            $q="SELECT b.*, u.regdate, concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as name, onb.name as postedby, bext.rec_form_offcr_name, bext.rec_form_offcr_num, bext.fb_data FROM ! as b join ! as u on b.userid= u.userid left join ! as onb on b.borrower_behalf_id= onb.id join ! as bext on b.userid = bext.userid WHERE (b.active=? || b.active=?) AND b.Assigned_status<>? AND u.emailVerified=? AND b.iscomplete_later=? order by $sort  $ord";
-            $result = $db->getAll($q, array('borrowers', 'users','on_borrower_behalf','borrowers_extn',0,-1, 2, 1,0));
+            $q="SELECT DISTINCT b.*, u.regdate, concat(REPLACE(b.`FirstName`,' ',''), REPLACE(b.`LastName`,' ','')) as name, onb.name as postedby, bext.rec_form_offcr_name, bext.rec_form_offcr_num, bext.fb_data FROM ! as b join ! as u on b.userid= u.userid left join ! as onb on b.borrower_behalf_id= onb.id join ! as bext on b.userid = bext.userid left join ! as fb on b.userid=fb.userid WHERE (b.active=? || b.active=?) AND b.Assigned_status<>? AND u.emailVerified=? AND (b.Country='BF' || fb.accept=1) AND length(b.About)>=500 AND length(b.BizDesc)>=500 order by $sort  $ord";
+            $result = $db->getAll($q, array('borrowers', 'users','on_borrower_behalf','borrowers_extn','facebook_info', 0,-1, 2, 1));
             return $result;
         }
         elseif($userlevel==PARTNER_LEVEL)
@@ -11557,6 +11557,16 @@ function getAllRecentComments($limit)
         return $result;
     }
 
+function lastBidDetail($userid){
+	global $db;
+	$q="SELECT max(id) FROM ! where loanid=?";
+	$lastBidId=$db->getOne($q,array('bid_payment', $userid));
+
+	$qry="SELECT * FROM ! where id=?";
+	$result=$db->getRow($qry,array('bid_payment', $lastBidId));
+	return $result;	
+	}
+		
 
 };
 $database= new genericClass;

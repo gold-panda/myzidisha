@@ -4318,7 +4318,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		return $totalAmtAvailable;
 	}
 	function placeBid($loanid, $brwid, $amount, $interest, $up=0, $auto_lend=false, $lenderid=0,$pcart = 0) // Anupam 21-09-2012 , last argument $pcart added if the function called by ProcessCart, if we process otherwise we added into cart.
-	{
+	{	
 		global $database, $form;
 		$loggedInid=$this->userid;
 		if($auto_lend) {
@@ -4384,8 +4384,10 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$return1 = $this->setAcceptAmount($bids1, $damount);
 			$bids1 = $return1['bids'];
 		}
-		$database->startDbTxn();		
+		
+		$database->startDbTxn();	
 		$bidid=$database->lenderBid($loggedInid, $loanid, $brwid, $amount, $interest);
+
 		if($bidid) {
 			$bids=$database->getLoanBids($brwid, $loanid);
 			if($bids) {
@@ -5739,9 +5741,9 @@ function forgiveReminder(){
 	global $database;
 		$GLOBALS['loanArray']=array();
 		$fullyFundedAll = array();
-		$lenders=$database->getAllLenderForAutoLend();
+		$lenders=$database->getAllLenderForAutoLend();	
 		$GLOBALS['loanArray']=$database->getAllLoansForAutoLend();
-		
+	
 		foreach($GLOBALS['loanArray'] as $key => $row) {
 			$status = $this->getStatusBar($row['borrowerid'],$row['loanid'],5);
 			if($status >=100) {
@@ -5758,7 +5760,6 @@ function forgiveReminder(){
 				$possibleLoans=0;
 				$loansToAutolend=array();
 				$availAmount=$this->amountToUseForBid($lender['lender_id']);
-				
 				if ($availAmount >= AUTO_LEND_AMT) {
 					if($lender['current_allocated']==0) {
 						$amounToAutoLend=bcsub($availAmount, $lender['lender_credit'],2);
@@ -5770,10 +5771,11 @@ function forgiveReminder(){
 					}
 					if($possibleLoans) {
 						$loansToAutolend = $database->getSortedLoanForAutoBid($lender['preference'] ,$GLOBALS['loanArray'], $lender['desired_interest'], $lender['max_desired_interest'], $fullyFundedAll);
-					
+						
 						if($possibleLoans < count($loansToAutolend)) {
 						$loansToAutolend=array_slice($loansToAutolend, 0, $possibleLoans);
 						}
+
 						if(!empty($loansToAutolend)) {
 						$fullyFundedAll = $this->placeAutobid($lender['preference'], $loansToAutolend, $possibleLoans, $lender['lender_id'], $lender['desired_interest'], $lender['max_desired_interest']);
 						}
@@ -5784,10 +5786,11 @@ function forgiveReminder(){
 		}
 	}
 	function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $desiredInt, $MaxdesiredInt)
-	{	
+	{		
 		global $database, $form;
 		$processed=array();
 		$loans = $this->getLoansForBid($preference, $loansToAutolend, $processed);
+
 		$fullyFunded=array();
 		if(!empty($loans)) {
 			while(1) {
@@ -5821,6 +5824,7 @@ function forgiveReminder(){
 					}
 				}
 				$loans = $this->getLoansForBid($preference, $loansToAutolend, $processed);
+
 				if(empty($loans)) {
 					break;
 				}
@@ -5830,7 +5834,9 @@ function forgiveReminder(){
 			
 				if(count($loans) > 1){	
 						foreach($loans as $key=>$loan) {
+						
 						if($possibleBids) {
+						
 							$status = $this->getStatusBar($loan['borrowerid'],$loan['loanid'],5);
 							if($status >=100) {
 								unset($loans[$key]);
@@ -5842,8 +5848,37 @@ function forgiveReminder(){
 									}else{
 										$intToPlaceBid = $loan['intOffer'];
 									}
+									
+									/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
+									if($preference==6){																												
+										$lastBidDetail=$database->lastBidDetail($loan['loanid']);
+										if(!empty($lastBidDetail)){																			   
+											  
+											   $lastBidAmnt=$lastBidDetail['bidamt'];
+											   $lastBidIntr=$lastBidDetail['bidint'];
 
-									$LoanbidId=$this->placebid($loan['loanid'], $loan['borrowerid'], AUTO_LEND_AMT, $intToPlaceBid, 1, true,$lenderId);
+												if($lastBidIntr<$desiredInt){
+													$intToPlaceBid=$desiredInt;
+												}elseif($lastBidIntr>$desiredInt){
+													$intToPlaceBid=$MaxdesiredInt;
+												}else{
+													$intToPlaceBid=$lastBidIntr;
+												}		
+												
+												$biddedAmnt=($loan['reqdamt']*$status)/100;
+												$reqAmnt=$loan['reqdamt']-$biddedAmnt;
+																	
+												if($lastBidAmnt<=$reqAmnt || $lastBidAmnt>=$reqAmnt){
+													$amntToLend=$lastBidAmnt;
+												}else{
+													$amntToLend=AUTO_LEND_AMT;
+												}
+										}else{
+											$amntToLend=AUTO_LEND_AMT;
+											}	 
+									} /***** End here *****/			
+									
+									$LoanbidId=$this->placebid($loan['loanid'], $loan['borrowerid'], $amntToLend, $intToPlaceBid, 1, true,$lenderId);
 								
 									if(is_array($LoanbidId)) {
 										$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loan['borrowerid'], $loan['loanid'], AUTO_LEND_AMT,$intToPlaceBid);
