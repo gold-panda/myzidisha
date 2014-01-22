@@ -8452,7 +8452,7 @@ function isEligibleToInvite($userid){
 
 				$eligible = 1;
 
-			} elseif (count($invitedmember>=100)){
+			} elseif (count($invitedmember)>=100){
 
 				$eligible = 0; //each person can recruit no more than 100 members with loans via invite function
 
