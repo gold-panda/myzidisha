@@ -225,12 +225,13 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 							<p style="margin-top:10px;">Translation Volunteers translate borrower profiles and comments from local languages into English, and translate lender comments into local languages.  Their work makes communication between members of different linguistic backgrounds possible.<br /><br />
 
 
-<a href="https://www.zidisha.org/microfinance/profile/mcmahon3.html" target="_blank">Lauren Abuouf</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/jenn097.html" target="_blank">Jennifer B</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/Elleberns.html" target="_blank">Michelle Bernstein</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/cjforrester.html" target="_blank">Catriona Forrester</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/Kilmeny.html" target="_blank">Kilmeny</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/Koumar.html" target="_blank">Marius Koumolou</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/alohof.html" target="_blank">Andy Lohof</a><br />
+<a href="https://www.zidisha.org/microfinance/profile/mcmahon3.html" target="_blank">Niall McMahon</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/ERitchie.html" target="_blank">Elona Ritchie</a><br />
 <a href="https://www.zidisha.org/microfinance/profile/twopassports.html" target="_blank">Anne Sheldon</a><br />
 

@@ -5085,6 +5085,7 @@ class genericClass
             $this->setLoanStage($loanid, $borrowerid, LOAN_OPEN, $time) ;
             include_once("indexer.php");
             updateIndex2($loanid);
+            $session->sendContactConfirmation($borrowerid);
             return $loanid;
         }
         return 0 ;

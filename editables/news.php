@@ -1,6 +1,9 @@
 <?php
 $lang['news']['zidisha_in_news']='Zidisha in the News';
 
+$lang['news']['tc']='TechCrunch, January 23, 2014';
+$lang['news']['tc_pdf']='Zidisha Launches A Kickstarter-Style Micro-Lending Platform For Low-Income Entrepreneurs In Developing Countries';
+
 $lang['news']['hp3']='The Huffington Post, January 18, 2014';
 $lang['news']['hp3_pdf']='About to send a donation? Think twice.';
 

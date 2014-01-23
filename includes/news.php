@@ -9,6 +9,13 @@ include_once("./editables/".$path);
 				
 		<br /><br />
 
+<p><img src="editables/news_docs/tc_logo.png" width="213" height="112" /></p>
+		<p><?php echo $lang['news']['tc'] ?></p>
+		<p><a href="http://techcrunch.com/2014/01/23/zidisha-launches-a-kickstarter-style-micro-lending-platform-for-low-income-entrepreneurs-in-developing-countries/" target="_blank"><?php echo $lang['news']['tc_pdf'] ?></a></p>
+		
+		<br /><br />
+
+
 <p><img src="editables/news_docs/HP_logo.png" width="588" height="70" /></p>
 		<p><?php echo $lang['news']['hp3'] ?></p>
 		<p><a href="http://www.huffingtonpost.com/julia-kurnia/about-to-send-a-donation_b_4623503.html" target="_blank"><?php echo $lang['news']['hp3_pdf'] ?></a></p>

@@ -317,6 +317,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 			$message = $this->formMessage($lang['mailtext']['ActivateBorrower-msg'], $params);
 			if($addmore == 0)
 				$reply=$this->mailSending($From, $To, $bdetail['email'], $Subject, $message,$templet, $replyTo);
+			$this->sendContactConfirmation($borrowerid);
 			return 0;
 		}
 	}

@@ -452,7 +452,7 @@ $sift_score = (number_format($sift_score_num*100));
 $sift_profile = "https://siftscience.com/console/users/".$userid;
 
 
-if (!empty($sift_score) && $sift_score >75 && $sift_score <90){
+if (!empty($sift_score) && $sift_score >50 && $sift_score <85){
 
 	?>
 	5. This applicant has a <strong>Sift Score</strong> of <strong><?php echo $sift_score; ?></strong>, indicating an unusually high level of risk. <br/><br/>
@@ -461,7 +461,7 @@ if (!empty($sift_score) && $sift_score >75 && $sift_score <90){
 
 	<?php echo "<a href='".$sift_profile."' target='_blank'>View Sift Science profile</a>"; 
 
-} elseif (!empty($sift_score) && $sift_score >=90){
+} elseif (!empty($sift_score) && $sift_score >=85){
 
 	?>
 	5. This applicant has a <strong>Sift Score</strong> of <strong><?php echo $sift_score; ?></strong>, indicating a very high level of risk. <br/><br/>

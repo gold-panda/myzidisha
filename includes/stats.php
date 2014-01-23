@@ -78,7 +78,7 @@ if(isset($_GET['p'])) {
 	<ul id="list-footer-connect">
 		<li><a id="footer-lending_group" target="_blank" href="index.php?p=80"><span class="icon-footer-lending_group"></span><?php echo $lang['menu']['join_lending_group'] ?></a></li>
 		<li><a id="footer-facebook" target="_blank" href="http://www.facebook.com/ZidishaInc?sk=wall"><span class="icon-footer-facebook"></span><?php echo $lang['menu']['join_fb'] ?></a></li>
-	<!--	<li><a id="footer-twitter" target="_blank" href="http://twitter.com/#!/zidishainc"><span class="icon-footer-twitter"></span><?php echo $lang['menu']['join_twt'] ?></a></li>-->
+	    <li><a id="footer-twitter" target="_blank" href="http://twitter.com/#!/zidishainc"><span class="icon-footer-twitter"></span><?php echo $lang['menu']['join_twt'] ?></a></li>
 		<li><a id="footer-team" target="_blank" href="http://p2p-microlending-blog.zidisha.org/"><span class="icon-footer-blog"></span><?php echo $lang['home']['check_blog'] ?></a></li>
 		<li><a id="footer-interns" href="microfinance/team.html"><span class="icon-footer-interns"></span><?php echo $lang['menu']['meet_the_team'] ?></a></li>
 	</ul>
