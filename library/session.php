@@ -793,7 +793,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				$sms_message = $this->formMessage($lang['mailtext']['eligible_invite_sms'], $params);
 				$this->mailSending($From, $To, $b_email, $Subject, $message,$templet);
 				$this->SendSMS($sms_message, $to_number);
-				$this->getOnTimePaymentSiftData($borrowerid); //if borrower pays on time and has good repayment and invite record as measured by eligibility to invite, send good user label to Sift Science
+				//$this->getOnTimePaymentSiftData($borrowerid); //if borrower pays on time and has good repayment and invite record as measured by eligibility to invite, send good user label to Sift Science
 		
 			}
 
