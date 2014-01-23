@@ -265,11 +265,11 @@ if(empty($session->userid)){
 				<?php echo $form->error("bpostadd"); ?>
 
 				<?php $params['padd_ex']= $_SERVER['REQUEST_URI'].'#ResidentialaddrExample'; 
-				$home_no= $session->formMessage($lang['register']['home_no'], $params); ?>
+				$home_no_label= $session->formMessage($lang['register']['home_no'], $params); ?>
 
 				<!-- House number -->
 				<br/>
-				<label><?php echo $home_no;?><a id="home_noerr"></a></label>
+				<label><?php echo $home_no_label;?><a id="home_noerr"></a></label>
 				<textarea name="home_no" id='home_no' class="textareacmmn" ><?php echo $form->value("home_no"); ?></textarea>
 				<br/>
 				<?php echo $form->error("home_no"); ?>

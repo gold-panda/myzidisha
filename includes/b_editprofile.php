@@ -768,9 +768,9 @@ if($borrowerActive==1) {
 				 <tr>
 					<td>
 						<?php $params['padd_ex']= $_SERVER['REQUEST_URI'].'#ResidentialaddrExample'; 
-						 $home_no= $session->formMessage($lang['register']['home_no'], $params); ?>
+						 $home_no_label= $session->formMessage($lang['register']['home_no'], $params); ?>
 						
-						<?php echo $home_no;?>
+						<?php echo $home_no_label;?>
 						<a id="home_noerr"></a>
 					</td>
 					<td><textarea name="home_no" id='home_no' class="textareacmmn" <?php echo $disabled?>><?php echo $home_no; ?></textarea><br/><?php echo $form->error("home_no"); ?></td>
