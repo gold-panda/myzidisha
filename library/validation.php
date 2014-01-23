@@ -94,6 +94,7 @@ class Validation
 			}
 			*/
 
+			/* Commented By Mohit on date 23-01-2014
 			if(empty($endorser_name) || empty($endorser_email)){ 
 				$form->setError('endorser', $empty_endorser);
 			}else{
@@ -120,7 +121,7 @@ class Validation
 						}
 					}
 				}
-			}
+			} */
 		}else{
 			if($cntct_type==''){ 
 				$form->setError('contact_type', $this->error['empty_contact']);
@@ -194,7 +195,7 @@ class Validation
 			}
 			*/
 					
-				
+				/* Commented By Mohit on date 23-01-2014
 					if(empty($endorser_name) || empty($endorser_email)){ 
 						$form->setError('endorser', $empty_endorser);
 					}else{
@@ -222,7 +223,7 @@ class Validation
 								}
 							}
 						}
-					}
+					} */
 				}
 			}
 		}
@@ -432,7 +433,8 @@ class Validation
 				}
 			}
 			*/
-
+			
+			/* Commented By Mohit on date 23-01-2014
 			if(empty($endorser_name) || empty($endorser_email)){ 
 				$form->setError('endorser', $empty_endorser);
 			}else{
@@ -459,7 +461,7 @@ class Validation
 						}
 					}
 				}
-			}
+			} */
 		  }else{
 			if($cntct_type==''){ 
 				$form->setError('contact_type', $this->error['empty_contact']);
@@ -531,7 +533,7 @@ class Validation
 					}
 				}
 				*/
-
+					/* Commented By Mohit on date 23-01-2014
 					if(empty($endorser_name) || empty($endorser_email)){ 
 						$form->setError('endorser', $empty_endorser);
 					}else{
@@ -560,7 +562,7 @@ class Validation
 								}
 							}
 						}
-					}
+					}	*/
 				}
 			}
 		  }

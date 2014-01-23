@@ -717,9 +717,9 @@ class Process
 						$errurl = $errurl."#bfnameerr";
 					}else if(!empty($_SESSION['error_array']['blname'])) {
 						$errurl = $errurl."#blnameerr";
-					}else if(!empty($_SESSION['error_array']['bphoto'])) {
+					}/*else if(!empty($_SESSION['error_array']['bphoto'])) {
 						$errurl = $errurl."#bphotoerr";
-					}else if(!empty($_SESSION['error_array']['bpostadd'])) {
+					}*/else if(!empty($_SESSION['error_array']['bpostadd'])) {
 						$errurl = $errurl."#bpostadderr";
 					}else if(!empty($_SESSION['error_array']['bcity'])) {
 						$errurl = $errurl."#bcityerr";

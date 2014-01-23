@@ -581,11 +581,16 @@ class genericClass
         $res= $db->getAll($q , array('language',1));
         return $res;
     }
-    function getAllLanguages()
+    function getAllLanguages($status=null)
     {
         global $db;
         traceCalls(__METHOD__, __LINE__);
-        $q="SELECT * FROM ! WHERE 1 order by active desc,id asc";
+		if($status!=null){
+			$qry='is_active_for_country=1';
+		}else{
+			$qry=1;
+		}
+        $q="SELECT * FROM ! WHERE $qry order by active desc,id asc";
         $res= $db->getAll($q , array('language'));
         return $res;
     }
