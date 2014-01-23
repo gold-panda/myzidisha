@@ -91,7 +91,7 @@ if(empty($session->userid)){
 								$i=0;
 								foreach($result1 as $state)
 								{	?>
-									<option value='<?php echo $state['code'] ?>' <?php if( ($form->value("bcountry")==$state['code']) || ($state['code'] == $userCountry) ) echo "selected" ?>><?php echo $state['name'] ?></option>
+									<option value='<?php echo $state['code'] ?>' <?php if($form->value("bcountry")==$state['code']) echo "selected" ?>><?php echo $state['name'] ?></option>
 						<?php	}	?>
 					</select>
 				</div>

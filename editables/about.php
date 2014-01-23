@@ -84,6 +84,13 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 							
 							<br />
 
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/Gayatri91.html" target="_blank">GAYATRI MEHTA</a>, Kenya Country Liaison Intern</h4>
+							
+							
+							<p style="margin-top:10px;">Gayatri was born in Singapore but grew up in San Francisco, California. She recently graduated from University of California, San Diego with a B.A. in Economics and minor in International Relations. Her academic experience and work with non-profit organizations in India has grounded her focus towards international economic development. Her passion to effectively alleviate global poverty through sustainable economics is what motivates her to work alongside organizations like Zidisha. She greatly enjoys traveling and learning about new cultures and people and her favorite passtimes include yoga, hiking, and eating Ethiopian food.</p>
+							
+							<br />
+
 
 <h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/logoti.html">LINET OGOTI</a>, Kenya Country Liaison Intern</h4>
 							
@@ -92,6 +99,12 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 							
 							<br />
 
+<h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/Smileycj1.html">CHLOE SMILEY</a>, Kenya Country Liaison Intern</h4>
+							
+							<p style="margin-top:10px;">Chloe Smiley is an undergraduate student at Grove City College in Pennsylvania, currently studying Entrepreneurship and Economics.  She first became invested in non-profit work through a partnership with Harvest Bridge, an organization engaging in micro-missions and relief work in Southeast Asia.  This has allowed her to travel to India to continue work on a poverty alleviation handbook that focused on sustainable practices and practical mindset changes.  Working to find long-term poverty solutions spurred on her interest in microfinance and she has been pursuing opportunities to learn and participate more in microfinance ever since.  One such opportunity has been co-founding Kin Threads, a clothing non-profit, that funnels profits to microloans and connects the end user with the benefitting entrepreneur.  Chloe became interested in Zidisha because of their dedication to using microfinance as an avenue to assist other entrepreneurs.  She enjoys mountain biking, running, reading, and baking.
+</p>
+							
+							<br />
 
 
 <h4 style="display:inline"><a href="https://www.zidisha.org/microfinance/profile/czeballos.html">CHRISTIAN OLEG ZEBALLOS</a>, Kenya Country Liaison Intern</h4>
