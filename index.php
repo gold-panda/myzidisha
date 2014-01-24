@@ -6,7 +6,6 @@
 		error_log("value of GET['p'] not set");
 	}
 */
-
 	include("library/session.php");
 
 	// error_log("FOOO");
@@ -293,7 +292,7 @@ if($language==''){
 
 <a href="microfinance/microfinance.html"><?php echo $lang['menu']['abt_microfinance'] ?></a> &nbsp;<span>|</span>&nbsp;
 
-<a href="https://www.zidisha.org/index.php?p=80">Lending Groups</a> &nbsp;<span>|</span>&nbsp;
+<a href="<?= SITE_URL ?>index.php?p=80">Lending Groups</a> &nbsp;<span>|</span>&nbsp;
 
 <!--
 					<a href="microfinance/gift-cards.html"><?php echo $lang['menu']['gift_cards'] ?></a> &nbsp;<span>|</span>&nbsp; 

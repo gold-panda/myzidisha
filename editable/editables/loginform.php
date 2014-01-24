@@ -162,11 +162,11 @@ $lang['loginform']['name']='Name:';
 $lang['loginform']['Telephone']='Telephone:';
 $lang['loginform']['do_more']='<strong>DO MORE</strong><br/><br/>
 Join us in overcoming barriers of location and circumstance.  Help us build the world\'s first online microlending community that connects people directly across previously impregnable barriers of country, language and culture. <br/><br/>Here is how you can help:<br/><br/>
-1. Do you know other trustworthy internet users who could benefit from a Zidisha loan? <a href="https://www.zidisha.org/index.php?p=96">Invite them to join.</a><br/><br/>
+1. Do you know other trustworthy internet users who could benefit from a Zidisha loan? <a href="' . SITE_URL . 'index.php?p=96">Invite them to join.</a><br/><br/>
 2. Post comments in your loan profile page to let lenders know in what ways the loan has made a difference.<br/><br/>
 3. Share a link to our website in Facebook.<br/><br/>
 4. If you are willing to volunteer your time to help other Zidisha members in your country interact with our website, email us at service@zidisha.org and ask about becoming a Volunteer Mentor.<br/><br/>
-5. Create an account in our <a href="https://www.zidisha.org/forum/">Member Forum</a> and join the conversations about how Zidisha works and your vision for Zidisha\'s future.
+5. Create an account in our <a href="' . SITE_URL . 'forum/">Member Forum</a> and join the conversations about how Zidisha works and your vision for Zidisha\'s future.
 ';
 $lang['loginform']['pending_disbursed']='Pending Disbursements';
 $lang['loginform']['brwr_emails']='Generate Borrower Emails';

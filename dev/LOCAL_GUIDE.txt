@@ -1,0 +1,71 @@
+Host file config
+	127.0.0.1 	zidisha.dev
+	127.0.0.1 	www.zidisha.dev
+
+Vhost config
+	Example virtual host:
+
+	<VirtualHost *:80>
+		ServerAdmin webmaster@localhost
+		DocumentRoot "C:/wamp/www/zidisha"
+		ServerName zidisha.dev
+		ServerAlias www.zidisha.dev *.zidisha.dev
+		ErrorLog "logs/zidisha-errors.log"
+		CustomLog "logs/zidisha-access.log" common
+		<directory "C:/wamp/www/zidisha">
+			Options Indexes FollowSymLinks SymLinksIfOwnerMatch
+			AllowOverride All
+			Order Allow,Deny
+			Allow from All
+		</directory>
+			SetEnv ENV_NAME production
+			SetEnv ENV_DB_USER root
+			SetEnv ENV_DB_PASS 
+			SetEnv ENV_SITE_URL /
+			SetEnv ENV_FULL_PATH C:/wamp/www/zidisha/
+			SetEnv ENV_ROOT_PATH C:/wamp/www/zidisha/
+			SetEnv ENV_COOKIE_SECURE true
+			SetEnv ENV_SITE_URL http://zidisha.dev/
+	</VirtualHost>
+
+	The ENV_FULL_PATH and ENV_ROOT_PATH must point to the web root of the project and have a trailing slash!
+	ENV_DB_USER and ENV_DB_PASS contain the database credentials
+
+	ENV_SITE_URL must contain the full web base url for the site
+
+
+
+.htaccess config
+	the .htaccess file has been gitignored. It is now in .htaccess-template, which must be copied over to .htaccess and set according to the server.
+	In most cases it would be best to comment out:
+	
+	#AuthName "Zidisha Site"
+	#AuthUserFile "/home4/semfundc/.htpasswds/public_html/zidisha/passwd"
+
+	AND
+
+	#RewriteCond %{SERVER_PORT} !^443$
+	#RewriteRule ^(.*)$ https://www.zidisha.dev/$1 [L,R] 
+	#RewriteCond %{HTTP_HOST}%{REQUEST_URI} ^https://www.zidisha.dev(\/?)$
+	#RewriteRule (.*) https://www.zidisha.dev/en/$1 [R=302,L]
+
+	AND change the website domain - zidisha.DOMAIN
+
+Database config
+	/dev/semfundc_zidisha.sql contains the structure for the database
+	/dev/semfundc_zidisha_dev.sql contains a database with meaningful data
+
+Local links
+	In order for the local links to work, when running the site on a different domain, everywhere the hardcoded https://www.zidisha.org/ must be replaced with the SITE_URL constant
+
+	This can be seen here:
+	/editables/about.php
+
+Constants file:
+	/lib/constant_local.php is the local version of /lib/constant.php
+	However IMO it is not needed to have two sepparate files.
+	Now the constant.php is .gitignored and its content is in constant-template.php
+	According to the environment the site is running in, every developer must cp constant-tempalte.php to constant.php and set their personal settings there.
+
+Logfiles:
+	The site logfile dir is zidisha_contents\logs, but it is .gitignored, so it should be created locally for every env
