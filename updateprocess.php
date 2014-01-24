@@ -881,11 +881,11 @@ class updateProcess
 		}
 		if($up_id==2)
 		{
-			$result=$session->getTranslate(0, 0, 0, $_POST['cmnt'], $cmntid, $up_id, 0);
+			$result=$session->getTranslate(0, 0, 0, 0, $_POST['cmnt'], $cmntid, $up_id, 0);
 		}
 		if($up_id==3)
 		{
-			$result=$session->getTranslate(0, 0, 0, $_POST['lncmnt'], 0, $up_id, 0, $lcid);
+			$result=$session->getTranslate(0, 0, 0, 0, $_POST['lncmnt'], 0, $up_id, 0, $lcid);
 		}
 		if($result==0)
 		{

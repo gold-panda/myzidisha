@@ -1473,7 +1473,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		if($up_id==2)
 		{  
 		
-			$res = $database->upadateTranslate(0, 0, 0, $cmnt, $id, $up_id, 0);
+			$res = $database->upadateTranslate(0, 0, 0, 0, $cmnt, $id, $up_id, 0);
 			if(trim($cmnt) !='')
 			{	
 				if($reschedule_id=$database->getRescheduleIdFromComment($id))
@@ -1493,7 +1493,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		}
 		if($up_id==3)
 		{
-			$res = $database->upadateTranslate(0, 0, 0, $cmnt, 0, $up_id, 0,$lcid);
+			$res = $database->upadateTranslate(0, 0, 0, 0, $cmnt, 0, $up_id, 0,$lcid);
 		}
 		if($res==1 || $res==3 || $res==5)
 				return $res;
