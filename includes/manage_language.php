@@ -24,7 +24,7 @@ else
 </div>
 		<?php
 		$languages=$database->getAllLanguages(1);
-		$countries = $database->getBorrowerCountries();
+		$countries = $database->countryList(true);
 
 		if(!empty($countries))
 		{	?>
