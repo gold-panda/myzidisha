@@ -29,7 +29,7 @@
 			<label><?php echo$lang['register']['CPassword'];?></label>
 			<input type="password" id="bpass2" name="lpass2" class="inputcmmn-1" />
 
-			<!-- First name 
+			<!-- First name -->
 			<br/>
 			<label>
 				<?php 
@@ -46,20 +46,13 @@
 			<?php echo $form->error("lfname"); ?>
 
 			
+			<!-- Last Name -->
 			<br/>
-			<?php if($select==5) { ?>
-				<label><?php echo $lang['register']['lwebsite'];?></label>
-				<input type="text" id='lwebsite' name="lwebsite" maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("lwebsite"); ?>" />
-				<br/>
-				<?php echo $form->error("lwebsite"); ?>
-			<?php } else { ?>
-				<label><?php echo $lang['register']['lname'];?></label>
-				<input type="text" name="llname" id='llname' maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("llname"); ?>" />
-				<br/>
-				<?php echo $form->error("llname"); ?>
-			<?php }?>
-
-			-->
+			<label><?php echo $lang['register']['lname'];?></label>
+			<input type="text" name="llname" id='llname' maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("llname"); ?>" />
+			<br/>
+			<?php echo $form->error("llname"); ?>
+			
 
 			<!-- E-mail address -->
 			<br/>
@@ -67,6 +60,15 @@
 			<input type="text" id="bemail" name="lemail" maxlength="50" class="inputcmmn-1"  value="<?php echo $form->value("lemail"); ?>" />
 			<br/>
 			<div id="emailerror"><?php echo $form->error("lemail"); ?></div>
+
+
+			<!-- City -->
+			<br/>
+			<label><?php echo $lang['register']['City'];?></label>
+			<input type="text" name="lcity" id='lcity' maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("lcity"); ?>" />
+			<br/>
+			<?php echo $form->error("lcity"); ?>
+				
 
 			<!-- Country -->
 			<br/>
