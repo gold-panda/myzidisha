@@ -8562,9 +8562,11 @@ function getNewBAccountSiftData($event_type,$userid,$uname=null,$namea=null,$nam
 			  'username' => $uname,  
 			  'first_name' => $namea,
 			  'last_name' => $nameb,
-			  'address' => $post,
-			  '$city' => $city,
-			  '$country' => $country,
+			  '$billing_address' =>array(
+				  'address' => $post,
+				  '$city'      => $city,
+				  '$country'   => $country
+			   ),
 			  'national_id' => $bnationid,
 			  '$user_email' => $email,
 			  '$phone' => $mobile,
