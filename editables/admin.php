@@ -120,4 +120,7 @@ $lang['admin']['repay_inst']='Below is a list of your assigned members who have 
 2. Allow the member to explain the reason for the missed repayment and how they expect to catch up.<br /><br />
 3. If the member cannot pay the full amount past due immediately, offer to help them reschedule, using the "Modify Repayment Schedule" page while logged into the member\'s account.<br /><br />
 Once a member has paid the amount past due or has rescheduled, then their name will no longer appear in this page.';
+$lang['admin']['manage_lang']='Manage Languages';
+$lang['admin']['language']='Language';
+$lang['admin']['update']='Update';
 ?>

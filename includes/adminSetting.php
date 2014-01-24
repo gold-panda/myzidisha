@@ -27,6 +27,7 @@ if($session->userlevel==ADMIN_LEVEL){
 			<li><a href="index.php?p=95"><?php echo $lang['loginform']['endorser'];?></a></li>
 			<li><a href="index.php?p=60"><?php /*if(PAYPAL_PERSONAL)*/ echo "Enter Lender Payments" ?></a></li>
 			<li><a href="index.php?p=54"><?php echo $lang['loginform']['referal_code'];?></a></li>
+			<li><a href="index.php?p=115"><?php echo $lang['loginform']['manage_lang'];?></a></li>
 
 		</ul>
 	</div>

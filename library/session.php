@@ -8708,6 +8708,11 @@ function sendInviteAlert($inviteeid){
 
 
 /***** end here ******/
+function languageSetting($lang_code,$country_code){
+		 global $database;
+		 $result=$database->languageSetting($lang_code,$country_code);
+		 return $result;
+	}
 
 }
 $session=new Session;

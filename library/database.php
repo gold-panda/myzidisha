@@ -11575,7 +11575,39 @@ function lastBidDetail($userid){
 	$result=$db->getRow($qry,array('bid_payment', $lastBidId));
 	return $result;	
 	}
+/* To Manage Language for country Basis By Mohit 24-01-2014 */  
+function languageSetting($lng_code,$country_code){
+		global $db;
 		
+		$p="SELECT id FROM ! where country_code=?";
+		$res=$db->getOne($p,array('country_lang', $country_code));
+
+		if($res==null){		
+			$q="INSERT INTO ! (lang_code,country_code) VALUES (?,?)";
+			$result=$db->query($q, array('country_lang', $lng_code, $country_code));
+			if($result==1){
+				return 1;
+			}else{
+				return 0;
+			}
+		}else{
+			$q="UPDATE ! SET lang_code=?,country_code=? WHERE country_code=?";
+			$result=$db->query($q, array('country_lang', $lng_code, $country_code,$country_code));
+			if($result==1){
+				return 1;
+			}else{
+				return 0;
+			}
+		}	
+	}	
+
+function getLanguage($count_code=null){	
+		global $db;
+		$p="SELECT lang_code FROM ! where country_code=?";
+		$res=$db->getOne($p,array('country_lang', $count_code));
+		return $res;
+}
+/* End here */	
 
 };
 $database= new genericClass;

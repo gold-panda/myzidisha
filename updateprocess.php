@@ -194,8 +194,9 @@ class updateProcess
 		else if(isset($_POST['loans_funded'])){
 			$this->loans_funded();
 		}
-		
-
+		else if(isset($_POST['manage_lang'])){
+			$this->languageSetting();
+		}
 	}
 	function subEditLender()
 	{
@@ -1675,13 +1676,11 @@ class updateProcess
 		}
 	}
 
-
-
-
-
-
-
-
+	function languageSetting(){
+		global $session, $form;
+		$result=$session->languageSetting($_POST["lang_code"], $_POST["country_code"]);
+		echo $result;
+	}
 
 };
 $updateprocess=new updateProcess;

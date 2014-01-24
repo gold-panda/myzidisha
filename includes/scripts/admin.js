@@ -1239,3 +1239,24 @@ $("#first_loan_size").click(
 		);
 });
 
+/* For language setting in Admin Section By Mohit 24-01-2014*/
+function managelanguage(event){
+var opt='lang_opt'+event;
+var sel_lang=$("#lang_opt"+event).val();
+var cont_opt='count_code'+event;
+var sel_country=$("#count_code"+event).val();
+var msg_opt='lang_update'+event;		
+ jQuery.ajax({
+                url: 'updateprocess.php',
+                type: 'POST',
+                data: 'manage_lang=lang_setting&lang_code='+sel_lang+'&country_code='+sel_country, 
+                success: function(data){
+					if(data==1){
+						$("#"+msg_opt).fadeIn(500);
+						$("#"+msg_opt).fadeOut(3000);
+					}
+                }
+            });
+
+}
+

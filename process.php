@@ -493,7 +493,7 @@ class Process
 	}
 	function subRegBorrower()
 	{ 
-		global $session, $form;
+		global $session,$database, $form;
 		$_POST_ORG=$_POST;
 		$_POST = sanitize_custom($_POST); 
 		$id = 0;
@@ -549,8 +549,8 @@ class Process
 			}else {
 				$share_update = $_POST['share_update'];
 			}
-			if(isset($_GET['language']) && !empty($_GET['language'])){
-				$language=$_GET['language'];
+			if(isset($_POST['bcountry']) && !empty($_POST['bcountry'])){
+				$language=$database->getLanguage($_POST['bcountry']);
 			}else{
 				$language='en';
 			}
@@ -558,8 +558,7 @@ class Process
 			if (!empty($_POST["uploadfileanchor"])) {
 				$result = 2;
 			}
-			else{ 
-
+			else{
 				$result = $session->register_b($_POST["busername"], $_POST["bfname"], $_POST["blname"], $_POST["bpass1"], $_POST["bpass2"], $_POST["bpostadd"], $_POST["bcity"], $_POST["bcountry"], $_POST["bemail"], $_POST["bmobile"],$_POST["reffered_by"],$_POST["bincome"], $_POST["babout"], $_POST["bbizdesc"], $photo, $share_update, $user_guess, $id, $_POST["bnationid"],  $language, $_POST["referrer"], $_POST["community_name_no"], $_FILES, $_POST['submitform'], $repaidPast, $debtFree, $_POST["borrower_behalf"], $_POST["behalf_name"], $_POST["behalf_number"], $_POST["behalf_email"], $_POST["behalf_town"], $_POST['bfamilycont1'],$_POST['bfamilycont2'], $_POST['bfamilycont3'],$_POST['bneighcont1'],$_POST['bneighcont2'], $_POST['bneighcont3'], $_POST['home_no'], $_POST['rec_form_offcr_name'], $_POST['rec_form_offcr_num'], $_POST['refer_member'], $_POST['volunteer_mentor'], $_POST['cntct_type'], $_POST['fb_data'], $endorser_name, $endorser_email);
 				
 			}
