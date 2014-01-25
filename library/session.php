@@ -4236,6 +4236,9 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				}
 			logger('lender registerd id '.$id);
 			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
+
+			$this->sendMixpanelEvent('lender signup');
+
 		}
 			return $retVal;
 		}
@@ -6012,7 +6015,9 @@ function forgiveReminder(){
 				}else {
 					$database->updateCartStatus($bid['id'], 'EXPIRED');
 				}
-			}	
+			}
+			
+			$this->sendMixpanelEvent('lend');	
 		}
 		$GiftcardsinCart = $database->getGiftcardsFromCart($userid);
 		$availamount=$this->amountToUseForBid($userid);
@@ -8706,15 +8711,30 @@ function sendInviteAlert($inviteeid){
 		if(!empty($telnumber)){
 			$this->SendSMS($content, $to_number);
 		}
-	}
+}
 
 
-/***** end here ******/
 function languageSetting($lang_code,$country_code){
 		 global $database;
 		 $result=$database->languageSetting($lang_code,$country_code);
 		 return $result;
-	}
+}
+
+
+function sendMixpanelEvent($event_label){
+
+	require 'extlibs/mixpanel-php-master/lib/Mixpanel.php';
+
+	// get the Mixpanel class instance, replace with your project token
+	$mp = Mixpanel::getInstance(MIXPANEL_PROJECT_TOKEN);
+
+	// track an event
+	$mp->track($event_label); // track an event
+
+}
+
+/***** end here ******/
+
 
 }
 $session=new Session;
