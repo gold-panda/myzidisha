@@ -1201,7 +1201,11 @@ class genericClass
             
             $res= $db->query($q1, array($userid, $email));
         
-        } elseif(isset($_COOKIE["invtduserjoins"])) {
+        } 
+
+        /* removing this for now because links were being used by other than the invited recipient
+
+        elseif(isset($_COOKIE["invtduserjoins"])) {
             $cookie_val = $_COOKIE["invtduserjoins"];
             $q="select id,userid from ! where cookie_value = ?";
             $result=$db->getRow($q, array('invites',$cookie_val));
@@ -1209,6 +1213,7 @@ class genericClass
             $res=$db->query($q1, array($userid, $cookie_val));
             setcookie ("invtduserjoins", "", time() - 3600);
         }
+        */
 
         if(!empty($res)){
 
