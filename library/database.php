@@ -5075,6 +5075,13 @@ class genericClass
     {
         global $db;
         $time=time();
+		
+		/*Pranjal 25 January 2014 - Change Start - Due to multiple inserts in Loan application table*/
+		$isLoanOpen=$this->loanIsAlreadyOpen($borrowerid);	// Check if there is already an open loan for this borrower. If it is then return error.
+		if($isLoanOpen > 0)
+			return 0 ;
+		/*Pranjal 25 January 2014 - Change End */	
+			
         $webfee=$this->getAdminSetting('fee');//website fee rate
         traceCalls(__METHOD__, __LINE__);
         $damt = round($amount/$this->getCurrentRate($borrowerid));
