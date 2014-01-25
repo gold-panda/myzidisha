@@ -869,9 +869,7 @@ function validateActivateBorrower($pcomment, $ofclName, $OfclNumber)
 		else if(strlen($pass1)<7){
 			$form->setError($field, $this->error['short_password']);
 		}
-		else if($pass1 != trim($pass2)){
-			$form->setError($field, $this->error['notmatch_password']);
-		}
+
 	}
 	function checkFirstName($namea, $field)
 	{

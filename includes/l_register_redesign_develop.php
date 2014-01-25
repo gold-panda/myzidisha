@@ -24,11 +24,6 @@
 			<br/>
 			<div id="passerror"><?php echo $form->error("lpass1"); ?></div>
 
-			<!-- Confirm pssword -->
-			<br/>
-			<label><?php echo$lang['register']['CPassword'];?></label>
-			<input type="password" id="bpass2" name="lpass2" class="inputcmmn-1" />
-
 			<!-- First name -->
 			<br/>
 			<label>

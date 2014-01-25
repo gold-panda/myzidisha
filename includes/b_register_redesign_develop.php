@@ -223,11 +223,6 @@ if(empty($session->userid)){
 				<br/>
 				<div id="passerror"><?php echo $form->error("bpass1"); ?></div>
 
-				<!-- Confirm password -->
-				<br/>
-				<label><?php echo $lang['register']['CPassword'];?></label>
-				<input type="password" id="bpass2" name="bpass2" class="inputcmmn-1" value="<?php echo $form->value("bpass2"); ?>"/>
-
 				<!-- E-mail address -->
 				<br/>
 				<label><?php echo $lang['register']['email'];?><a id="bemailerr"></a></label>
