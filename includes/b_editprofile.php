@@ -679,11 +679,7 @@ if($borrowerActive==1) {
 					<td><input type="password" id="bpass1" name="bpass1" class="inputcmmn-1" value="<?php echo $pass1; ?>" /><br/><div id="passerror"><?php echo $form->error("bpass1"); ?></div></td>
 				</tr>
 				 <tr><td>&nbsp;</td></tr>
-				<tr>
-					<td><?php echo $lang['register']['CPassword'];?></td>
-					<td><input type="password" id="bpass2" name="bpass2" class="inputcmmn-1" /></td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
+				
 				<tr>
 					<td>
 						<?php echo $lang['register']['b_fname'];?>

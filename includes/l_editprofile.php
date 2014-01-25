@@ -62,11 +62,7 @@ if(isset($temp) && $temp != '')
 					<td><input type="password" id="bpass1" name="lpass1" class="inputcmmn-1" value="<?php echo $lpass1; ?>" /><br/><div id="passerror"><?php echo $form->error("lpass1"); ?></div></td>
 				</tr>
 				 <tr><td>&nbsp;</td></tr>
-				<tr>
-					<td><?php echo$lang['register']['CNewPassword'];?></td>
-					<td><input type="password" id="bpass2" name="lpass2" class="inputcmmn-1" /></td>
-				</tr>
-				 <tr><td>&nbsp;</td></tr>
+				
 				<tr>
 
 					<td><?php 
