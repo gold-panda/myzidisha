@@ -31,6 +31,11 @@ function mySubmitform(frm){
 	frm.submit();
 }
 $(document).ready(function() {
+
+	$('#endSort').change(function(e) { $('#goSubmit').click(); } ); //submits drop-down sorting menu criteria on click
+	$('#fundSort').change(function(e) { $('#goSubmit').click(); } );
+	$('#activeSort').change(function(e) { $('#goSubmit').click(); } );
+
 	$('.search-input').each(function() {
 		var default_value = 'Search Loans';
 		$(this).focus(function() {
@@ -158,6 +163,8 @@ $setcolor=0;
 <?php	}	?>
 	</form>
 </h5>
+
+
 <div id="sortbar">
 	<form method="post" action="updateprocess.php">
 		<div class="sorttext">Viewing <?php echo $showingRes?> of <?php echo $totalRes?> Results.</div>
@@ -206,7 +213,7 @@ $setcolor=0;
 			<input type="hidden" name="searchSort">
 			<input type='hidden' name='get_loans'/>
 			<input type="hidden" name="user_guess" value="<?php echo generateToken('get_loans'); ?>"/>
-			<button type="submit" class="btn square">Go</button></form>
+			<button id="goSubmit" type="submit" class="btn square">Go</button></form>
 		</div><!-- /sortsearch -->
 	</form>
 </div><! -- /sortbar -->
