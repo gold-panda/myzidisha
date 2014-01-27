@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "Zidisha"
-AuthUserFile "/home4/semfundc/.htpasswds/public_html/zidisha/passwd"
-require valid-user
