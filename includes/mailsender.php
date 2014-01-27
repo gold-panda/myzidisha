@@ -1,5 +1,8 @@
 <?php
+
 require_once ("library/init.php");
+require_once 'extlibs/vendor/autoload.php';
+use Mailgun\Mailgun;
 
 function clearPost($post_val) // remove email headder injects
 {
@@ -304,10 +307,11 @@ This is a wrapper function for sending emails
 	}
 
 
-	include_once (PEAR_DIR.'Mail.php');////////////////
-	$mail_object =& Mail::factory( $mail_type, $params );
+	//include_once (PEAR_DIR.'Mail.php');////////////////
+	//$mail_object =& Mail::factory( $mail_type, $params );
 //	print_r($mail_object);
-	
+
+
 	if (ECHO_EMAILS === true)
 	{
 		echo $email . "<br/>";
@@ -315,12 +319,33 @@ This is a wrapper function for sending emails
 		echo "<br/>" . $body . "<br/>";
 		$rc = 1;
 	}
-	else
+	else 
 	{
 		if(defined('IS_LOCALHOST') && IS_LOCALHOST)
-			$rc = 1;
-		else
-			$rc = $mail_object->send($email, $hdrs, $body);
+		$rc = 1;
+		else {
+			//$rc = $mail_object->send($email, $hdrs, $body);
+			$mgClient = new Mailgun('key-8d4q5ajm6610qecy8o9-4x0pnt8b8l51');
+
+			//print($headers['From']); print("<br />");
+			//print($email); print("<br />");
+			//print($headers['Subject']); print("<br />");
+			//print($body); print("<br />");
+
+			$domain = "zidisha.org";
+
+			try { $result = $mgClient->sendMessage("$domain",
+                  array('from'    => $headers['From'],
+                        'to'      => $email,
+                        'subject' => $headers['Subject'],
+                        'html'	  => $body
+
+                        ));
+				if($result->http_response_code == 200) { $rc = 1; }
+
+			} catch (Exception $e) { }
+
+		}
 			
 	}
 

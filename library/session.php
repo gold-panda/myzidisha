@@ -62,7 +62,11 @@ class Session
 		{
 			$this->username = $_SESSION['username'] = GUEST_NAME;
 			$this->userlevel = GUEST_LEVEL;
+			
 		}
+
+		//$this->sendMixpanelUser();
+
 	}
 
 	function redirect($url)
@@ -115,6 +119,7 @@ class Session
 			$this->fullname  = $this->userinfo['name'];
 			$this->userlevel = $this->userinfo['userlevel'];
 			$this->usersublevel = $_SESSION['sublevel'] = $this->userinfo['sublevel'];	
+			
 			return true;
 		}
 		/* User not logged in */
@@ -4237,7 +4242,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			logger('lender registerd id '.$id);
 			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 
-			$this->sendMixpanelEvent('lender signup');
+			//$this->sendMixpanelEvent('lender signup');
 
 		}
 			return $retVal;
@@ -6017,7 +6022,7 @@ function forgiveReminder(){
 				}
 			}
 			
-			$this->sendMixpanelEvent('lend');	
+			//$this->sendMixpanelEvent('lend');	
 		}
 		$GiftcardsinCart = $database->getGiftcardsFromCart($userid);
 		$availamount=$this->amountToUseForBid($userid);
@@ -8721,12 +8726,53 @@ function languageSetting($lang_code,$country_code){
 }
 
 
-function sendMixpanelEvent($event_label){
+function sendMixpanelUser(){
 
-	require 'extlibs/mixpanel-php-master/lib/Mixpanel.php';
+	require_once 'extlibs/mixpanel-php-master/lib/Mixpanel.php';
 
 	// get the Mixpanel class instance, replace with your project token
 	$mp = Mixpanel::getInstance(MIXPANEL_PROJECT_TOKEN);
+
+	if(!$this->logged_in)
+		{
+			$userid = session_id();
+
+			$mp->createAlias($userid, array(
+    			'$first_name' => "Guest",
+    			'userlevel' => GUEST_LEVEL
+			));
+			
+		}else{
+
+			$userid = $this->userid;
+
+			if ($this->userlevel == 1){
+				$userlevel = "Borrower";
+			}elseif ($this->userlevel == 4){
+				$userlevel = "Lender";
+			}elseif ($this->userlevel == 9){
+				$userlevel = "Admin";
+			}else {
+				$userlevel = $this->userlevel;
+			}
+			
+			$mp->people->set($userid, array(
+    			'$first_name' => $this->fullname,
+    			'userlevel' => $userlevel
+			));
+		}
+
+}
+
+
+function sendMixpanelEvent($event_label){
+
+	require_once 'extlibs/mixpanel-php-master/lib/Mixpanel.php';
+
+	// get the Mixpanel class instance, replace with your project token
+	$mp = Mixpanel::getInstance(MIXPANEL_PROJECT_TOKEN);
+
+
 
 	// track an event
 	$mp->track($event_label); // track an event

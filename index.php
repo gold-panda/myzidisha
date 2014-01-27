@@ -973,6 +973,12 @@ mixpanel.init("8c840139721b8d829c91d1c7aff93c2e");</script>
 				</em><br/><br/>
 				<em>&copy; 2009 - 2014 Zidisha Inc.</em>
 			</p>
+
+			<!-- Mixpanel badge -->
+			<p>
+				<a href="https://mixpanel.com/f/partner"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
+			</p>
+			
 		</footer>
 
 		<div style="clear:both"></div>

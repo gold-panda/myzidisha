@@ -37,15 +37,18 @@ if($showOutImpact)
 	<p><strong><span><?php echo $lang['home']['member_worldwide'];?>:</span> <?php echo $AllLenderCount +$AllBorrowersCount; ?></strong></p>
 	<p><strong><span><a href="index.php?p=43"><?php echo $lang['home']['more_statistics'];?></a></span></strong></p>
 	<br/>
-	<!-- <span class="fb-widget">
-		<div class="fb-like" data-send="true" data-layout="button_count" data-width="150" data-show-faces="false"></div>
-	</span> -->
+	
+	<!-- Facebook widget -->
 	<div class="button-facebook">
 		<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.zidisha.org%2Findex.php&amp;layout=standard&amp;show_faces=false&amp;width=160&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:40px;"></iframe>
 	</div>
+
+	<!-- Twitter widget -->
 	<div class="button-twitter">
 		<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo SITE_URL?>" data-count="horizontal" data-via="ZidishaInc">Tweet</a><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
 	</div><br/>
+
+	<!-- removing other social share icons for now 25 Jan 2014
 	<div class="widget">
 		<script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
 		<script type="IN/Share" data-url="https%3A%2F%2Fwww.zidisha.org%2Findex.php%3Fp%3D0" data-counter="right"></script>
@@ -61,14 +64,17 @@ if($showOutImpact)
 		})();
 		</script>
 	</div>
-<?php if($session->userlevel==LENDER_LEVEL || empty($session->userid)){?>
+<?php if(!empty($session->userid)){?>
 	<div class="widget" style="margin-top:15px;">
 		<span class="email"><a href="index.php?p=30" style="text-decoration:none">Email</a></span>
 	</div>
 <?php
-	}
+	} ?>
 
-}?>
+-->
+
+
+<?php }?>
 <?php $page='';
 if(isset($_GET['p'])) {
 	$page = $_GET['p'];
