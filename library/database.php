@@ -11619,6 +11619,31 @@ function getLanguage($count_code=null){
 		$res=$db->getOne($p,array('country_lang', $count_code));
 		return $res;
 }
+
+
+function getProfileImage($userid){
+        global $db;
+        $brw=$this->getBorrowerDetails($userid);
+        $fb_data = unserialize(base64_decode($brw['fb_data']));
+        if (file_exists(USER_IMAGE_DIR.$userid.".jpg")){ 
+    
+            $imagesrc=SITE_URL."/library/getimagenew.php?id=".$userid."&width=330&height=380";
+       
+        }else if( ! empty($fb_data['user_profile']['id'])){ //case where borrower has not uploaded own photo but has linked FB account, use FB profile
+                            
+            $imagesrc="https://graph.facebook.com/".$fb_data['user_profile']['id']."/picture?width=9999&height=9999";
+        
+        }else{
+
+            $imagesrc="";
+
+        }
+
+        return $imagesrc;
+}
+
+
+
 /* End here */	
 
 };

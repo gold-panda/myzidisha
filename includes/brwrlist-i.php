@@ -347,18 +347,12 @@ else if($database->getPartnerStatus($session->userid)==1 || $session->userlevel=
 				}elseif($assignedStatus==0) {
 					$status = 'Pending Review';
 				}
+				$imagesrc=$database->getProfileImage($uid);
 
 				?>
 				<div id="b-profile">
 
-				<?php if (file_exists(USER_IMAGE_DIR.$uid.".jpg")){ ?>
-			
-					<a href='<?php echo $prurl?>'><img id="b-activation" src="library/getimagenew.php?id=<?php echo $uid ?>&width=235&height=310" alt="<?php echo $name ?>"/></a>
-				
-				<?php } else if( ! empty($fb_data)){ //case where borrower has not uploaded own photo but has linked FB account, use FB profile
-							
-					echo "<img class='user-account-img' img style='max-width:200px;' src='https://graph.facebook.com/".$fb_data['user_profile']['id']."/picture?width=9999&height=9999' style='position:absolute;right:0' />";
-				} ?>
+				<a href='<?php echo $prurl?>'><img id="b-activation" src="<?php echo $imagesrc ?>" alt="<?php echo $name ?>"/></a>
 
 					<table class='detail' style="width:430px">
 						<tbody>

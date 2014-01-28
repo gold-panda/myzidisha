@@ -1,6 +1,7 @@
 <?php 
 	$id=$getuid;
 	$data=$database->getBorrowerDetails($id);
+	$imagesrc=$database->getProfileImage($id);
 	$fname=$data['FirstName'];
 	$lname=$data['LastName'];
 	$name=$fname.' '.$lname;
@@ -105,17 +106,9 @@ if($isvolunteer==1 || $is_mentor==1|| $session->userlevel==ADMIN_LEVEL){ ?>
 
 		<h3 class="subhead top"><?php echo $lang['profile']['b_detail'] ?></h3>
 		<div id="user-account" style="position:relative;">
-			<?php if (file_exists(USER_IMAGE_DIR.$id.".jpg")){ ?>
-			<img class ="user-account-img" src="library/getimagenew.php?id=<?php echo $id;?>&width=293&height=380" alt="" style="position:absolute;right:0;"/>
-			<?php } 
 		
-			else if( ! empty($fb_data['user_profile']['id'])){ //case where borrower has not uploaded own photo but has linked FB account, use FB profile
-							
-				echo "<img class='user-account-img' img style='max-width:200px;' src='https://graph.facebook.com/".$fb_data['user_profile']['id']."/picture?width=9999&height=9999' style='position:absolute;right:0' />";
-			} 
+		<a href='<?php echo $prurl?>'><img id="b-activation" src="<?php echo $imagesrc ?>" alt="<?php echo $name ?>"/></a>
 
-
-			?>
 		
 <?php       $lastaloan=$database->getLastloan($id);
 			$tpm=2;

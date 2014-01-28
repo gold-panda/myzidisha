@@ -265,27 +265,11 @@ if(!empty($openloans))
                         $webfee=$brw2['WebFee'];
                         $interest=$brw2['interest'] - $webfee;
                 }
-                //$loanuse=$session->smart_trim($loanuse, 100);
+                
                 $report=$database->loanReport($userid);
                 $f=$report['feedback'];
                 $cf=$report['Totalfeedback'];
-                
-                if (file_exists(USER_IMAGE_DIR.$userid.".jpg")){
-                        if(!$photo || $photo==NULL)
-                        {
-                                $photo='library/getimage.php?id='.$userid.'&width=235&height=310';
-                        } 
-                }
-                else {
-
-                        $brw=$database->getBorrowerDetails($userid);
-                        $fb_data = unserialize(base64_decode($brw['fb_data']));
-        
-                        if( ! empty($fb_data)){ //case where borrower has not uploaded own photo but has linked FB account, use FB profile
-                                                        
-                                $photo="https://graph.facebook.com/".$fb_data['user_profile']['id']."/picture?width=9999&height=9999";
-                        }
-                }
+                $photo= $database->getProfileImage($userid);
                 $statusbar=$session->getStatusBar($userid,$loanid);
                 $amount=number_format($amount, 0, ".", ",");
                 $statusMsg=$lang['loaners']['lend'];
