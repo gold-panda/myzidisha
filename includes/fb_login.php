@@ -1,11 +1,9 @@
+<link rel="stylesheet" href="css/default/redesign.css" type="text/css" media="screen">
 <?php
-	include("../library/database.php");
-	include_once ('../facebook/facebook.php');
-
-	$facebook = new Facebook(array('appId'  => FB_APP_ID,'secret' => FB_APP_SECRET));
+	include_once ("library/database.php");
+	include_once ("facebook/facebook.php");
 	
-	// login url
-	echo '<a href="'.$facebook->getLoginUrl(array('redirect_uri' => SITE_URL.'includes/fb_login.php')).'">Login with facebook</a>';
+	$facebook = new Facebook(array('appId'  => FB_APP_ID,'secret' => FB_APP_SECRET));
 	
 	// get user id
 	$uid = $facebook->getUser();
@@ -13,16 +11,46 @@
 	// check whether user exist in database
 	$check_user = $database->IsFacebookIdExist($uid);
 	
-	// if user exist
-	if($check_user)
+	// if user tries to log in
+	if ($_GET['code'])
 	{
-		// todo
-		echo '<br />User exist';
+		// if user exist
+		if($check_user)
+		{
+			// todo
+			echo '<p style="width:100%;font-size:40px;clear:both;">User exist, so you should decide what is next</p>';
+		}
+		// if user doesn't exist
+		else
+		{
+			// todo
+			echo '<p style="width:100%;font-size:40px;clear:both;">User doesn\'t exist,  so you should decide what is next</p>';
+		}
 	}
-	// if user doesn't exist
-	else
-	{
-		// todo
-		echo '<br />User doesn\'t exist';
-	}
+	
 ?>
+<div class="title">Sign in</div>
+<div class="custom_login">
+	<div class="login_fb">
+		<p class="heading">Sign in using Facebook</p>
+		<p class="description">
+			Skip the forms by signing in with your Facebook account.
+		</p>
+		<a href="<?= $facebook->getLoginUrl(array('redirect_uri' => SITE_URL.'index.php?p=116')) ?>"><img src="images/login_with_facebook.png" width="280" height="55" /></a>
+	</div>
+	<div class="separator">
+		<div class="circle">OR</div>
+		<div class="line"></div>
+	</div>
+	<div class="default_login">
+		<p class="heading">Sign in using our form</p>
+		<form method="post" action="process.php">
+			<p><input type="text" name="username" placeholder="username or email" /></p>
+			<p><input type="password" name="password" placeholder="password" /></p>
+			<p><label class="checkbox">Remember me<input type="checkbox"/></label></p>
+			<p style="clear:both;"><button type="submit" class="btn square">Go</button></p>
+			<p><a style="color:gray" href="index.php?p=56">Forgot your password?</a></p>
+			<p>Not a member? <a style="color:#FF8B00;font-weight:bold;font-size:14px;" href="index.php?p=1&amp;sel=1">Join</a></p>
+		</form>
+	</div>
+</div>

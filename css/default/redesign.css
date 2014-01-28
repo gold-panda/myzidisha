@@ -243,3 +243,59 @@
 		clear:both;
 	}
 /* END - Terms of use */
+
+/* START - Facebook login page */
+	.title{
+		color:#007acb;
+		padding:20px;
+		margin:0 0 20px;
+		font-size:30px;
+		font-weight:bold;
+		border-bottom:1px solid #dfdcdc;
+	}
+	.custom_login div{
+		float:left;
+	}
+	.heading{
+		color:#0099FF;
+		font-size:20px;
+	}
+	.login_fb{
+		width:280px;
+		padding:0 20px;
+	}
+	.separator{
+		width:42px;
+	}
+	.separator .line{
+		width:1px;
+		background:#dfdcdc;
+		height:174px;
+		margin-left:20px;
+	}
+	.separator .circle{
+		border-radius:30px;
+		border:1px solid #dfdcdc;
+		width:40px;
+		height:40px;
+		text-align:center;
+		line-height:40px;
+	}
+	.default_login{
+		width:280px;
+		padding:0 20px;
+	}
+	.default_login .square{
+		width:219px;
+		border-radius:5px;
+	}
+	.checkbox{
+		font-size:12px;
+		font-family:inherit;
+		line-height:21px;
+		padding:0px;
+	}
+	.checkbox input{
+		float:left;
+	}
+/* END - Facebook login page */
