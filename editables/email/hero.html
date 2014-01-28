@@ -405,7 +405,6 @@ h6 a:visited {
 
 .panel {
   background: #f2f2f2;
-  border: 1px solid #d9d9d9;
   padding: 10px !important;
 }
 
@@ -730,7 +729,7 @@ body.outlook p {
     }
 
     .callout .panel {
-      background: #ECF8FF;
+      background: #ffffff;
       border-color: #b9e5ff;
     }
 
@@ -774,11 +773,12 @@ body.outlook p {
 </head>
 <body>
 	<table class="body">
+
 		<tr>
 			<td class="center" align="center" valign="top">
         <center>
 
-
+          <!-- removing top header row for now
           <table class="row header">
             <tr>
               <td class="center" align="center">
@@ -809,28 +809,30 @@ body.outlook p {
                 </center>
               </td>
             </tr>
-          </table>
+          </table> -->
           <br>
 
-          <table class="container">
+        <!-- #content# starts -->
+          <table class='container'>
             <tr>
               <td>
 
                 <!-- content start -->
-                <table class="row">
+                <table class='row'>
                   <tr>
-                    <td class="wrapper last">
+                    <td class='wrapper last'>
 
-                      <table class="twelve columns">
+                      <table class='twelve columns'>
                         <tr>
                           <td>
 
-                            <h1>Hi, Elijah Baily</h1>
-                						<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
-                						<img width="580" height="300" src="http://placehold.it/580x300">
+                            <h3>%header%</h3>
+                            <br/>
+                            
+                            <img src='%image_src%'>
 
                           </td>
-                          <td class="expander"></td>
+                          <td class='expander'></td>
                         </tr>
                       </table>
 
@@ -838,18 +840,18 @@ body.outlook p {
                   </tr>
                 </table>
 
-                <table class="row callout">
+                <table class='row callout'>
                   <tr>
-                    <td class="wrapper last">
+                    <td class='wrapper last'>
 
-                      <table class="twelve columns">
+                      <table class='twelve columns'>
                         <tr>
-                          <td class="panel">
+                          <td class='panel'>
 
-                            <p>Phasellus dictum sapien a neque luctus cursus. Pellentesque sem dolor, fringilla et pharetra vitae. <a href="#">Click it! »</a></p>
+                            <p>%content_mail%</p>
 
                           </td>
-                          <td class="expander"></td>
+                          <td class='expander'></td>
                         </tr>
                       </table>
 
@@ -857,127 +859,72 @@ body.outlook p {
                   </tr>
                 </table>
 
-                <table class="row">
+                <table class='row'>
                   <tr>
-                    <td class="wrapper last">
+                    <td class='wrapper last'>
 
-                      <table class="twelve columns">
+                      <table class='twelve columns'>
+                        <tr>
+                          <td>
+                            
+                            <h3 class="center" align="center">View our latest entrepreneurs here!</h3>
+                            
+                          </td>
+                          <td class='expander'></td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+                </table>
+
+
+                <table class='row'>
+                  <tr>
+                    <td class='wrapper last'>
+
+                    <table class='twelve columns'>
+
+                      <table class='three columns'>
                         <tr>
                           <td>
 
-                            <h3>Title Ipsum <small>This is a note.</small></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <table class='button'>
+                              <tr>
+                                <td align='center'>
+
+                                  <center>
+                                  <div style='text-align:center;'><a href='#'>View Loans</a></div>
+                                  </center>
+
+                                </td>
+                              </tr>
+                            </table>
 
                           </td>
-                          <td class="expander"></td>
+                          <td class='expander'></td>
                         </tr>
                       </table>
+                    </table>
 
                     </td>
                   </tr>
                 </table>
 
 
-                <table class="row">
+                <table class='row'>
                   <tr>
-                    <td class="wrapper last">
+                    <td class='wrapper last'>
 
-                      <table class="three columns">
+                      <table class='twelve columns'>
                         <tr>
-                          <td>
-
-                            <table class="button">
-                              <tr>
-                                <td>
-                                  <a href="#">Click Me!</a>
-                                </td>
-                              </tr>
-                            </table>
-
-                          </td>
-                          <td class="expander"></td>
-                        </tr>
-                      </table>
-
-                    </td>
-                  </tr>
-                </table>
-
-
-                <table class="row footer">
-                  <tr>
-                    <td class="wrapper">
-
-                      <table class="six columns">
-                        <tr>
-                          <td class="left-text-pad">
-
-                            <h5>Connect With Us:</h5>
-
-                            <table class="tiny-button facebook">
-                              <tr>
-                                <td>
-                                  <a href="#">Facebook</a>
-                                </td>
-                              </tr>
-                            </table>
-
-                            <br>
-
-                            <table class="tiny-button twitter">
-                              <tr>
-                                <td>
-                                  <a href="#">Twitter</a>
-                                </td>
-                              </tr>
-                            </table>
-
-                            <br>
-
-                            <table class="tiny-button google-plus">
-                              <tr>
-                                <td>
-                                  <a href="#">Google +</a>
-                                </td>
-                              </tr>
-                            </table>
-
-                          </td>
-                          <td class="expander"></td>
-                        </tr>
-                      </table>
-
-                    </td>
-                    <td class="wrapper last">
-
-                      <table class="six columns">
-                        <tr>
-                          <td class="last right-text-pad">
-                            <h5>Contact Info:</h5>
-                            <p>Phone: 408.341.0600</p>
-                            <p>Email: <a href="mailto:hseldon@trantor.com">hseldon@trantor.com</a></p>
-                          </td>
-                          <td class="expander"></td>
-                        </tr>
-                      </table>
-
-                    </td>
-                  </tr>
-                </table>
-
-
-                <table class="row">
-                  <tr>
-                    <td class="wrapper last">
-
-                      <table class="twelve columns">
-                        <tr>
-                          <td align="center">
+                          <td align='center'>
                             <center>
-                              <p style="text-align:center;"><a href="#">Terms</a> | <a href="#">Privacy</a> | <a href="#">Unsubscribe</a></p>
+                              <br/><br/>
+                              <p style='text-align:center;'><a href='#'>Unsubscribe from these updates</a></p>
                             </center>
                           </td>
-                          <td class="expander"></td>
+                          <td class='expander'></td>
                         </tr>
                       </table>
 
@@ -989,6 +936,8 @@ body.outlook p {
               </td>
             </tr>
           </table>
+
+          <!-- #content# ends -->
 
         </center>
 			</td>

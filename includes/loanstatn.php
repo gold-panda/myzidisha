@@ -489,20 +489,16 @@ else
 
 	$fb_data = unserialize(base64_decode($brw['fb_data']));
 	$activationdate=$database->getborrowerActivatedDate($ud);
+	$imagesrc=$database->getProfileImage($ud);
 
 
 ?>
 	<h2><?php echo $lang['loanstatn']['loan_profile'] ?></h2>
 	<div id="loan-profile">
-	<?php if (file_exists(USER_IMAGE_DIR.$ud.".jpg")){ 
-	?>
-		<img class="loan-profile" src="library/getimagenew.php?id=<?php echo $ud ?>&width=330&height=380" alt="<?php echo $name ?>" style="position:absolute;right:0;"/>
-		<?php } 
-		
-		else if( ! empty($fb_data['user_profile']['id'])){ //case where borrower has not uploaded own photo but has linked FB account, use FB profile
-							
-			echo "<img class='loan-profile' img style='max-width:330px;' src='https://graph.facebook.com/".$fb_data['user_profile']['id']."/picture?width=9999&height=9999' style='position:absolute;right:0' />";
-		} ?>
+
+		<!-- profile image -->
+		<img class="loan-profile" src="<?php echo $imagesrc ?>" alt="<?php echo $name ?>" style="position:absolute;right:0;"/>
+
 
 		<h3><?php echo $name ?></h3>
 		<table class="funding-status" style="border-top:none;margin-top:0px;padding-top:0px">

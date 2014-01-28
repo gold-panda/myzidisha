@@ -24,7 +24,7 @@ She obtained a law degree from Pontificia Universidad Catolica Madre y Maestra, 
 
 	
 	
-		<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/MienDeGraeve.html" target="_blank">MIEN DE GRAEVE</a>, Burkina Faso Client Relationship Manager  &nbsp; &nbsp; &nbsp; <a href="http://translate.google.com/translate?sl=nl&tl=en&js=n&prev=_t&hl=en&ie=UTF-8&layout=2&eotf=1&u=http%3A%2F%2Fwww.mo.be%2Fwereldblog%2Fmien-de-graeve%2F&act=url" target="_blank">View Weblog</a></h4>
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/MienDeGraeve.html" target="_blank">MIEN DE GRAEVE</a>, Burkina Faso Client Relationship Manager  &nbsp; &nbsp; &nbsp; <a href="http://translate.google.com/translate?sl=nl&tl=en&js=n&prev=_t&hl=en&ie=UTF-8&layout=2&eotf=1&u=http%3A%2F%2Fwww.mo.be%2Fwereldblog%2Fmien-de-graeve%2F&act=url" target="_blank">View Weblog</a></h4>
 							
 							<p style="margin-top:10px;">Mien was born in Durban, South Africa but she grew up in Belgium. She is no stranger to micro-enterprise, having spent four months in Burundi during 2011 helping a group of women launch a successful restaurant.  She has contributed in positions of public service for the City of Gent and in community and youth organizations in Belgium. She joined Zidisha as the first Burkina Faso Client Relationship Manager and she hopes to learn a lot about both microfinance and business strategies in Burkina Faso. In her free time she enjoys reading, writing, cooking and tasting cuisine from all over the world. Her bicycle is an inseparable friend: she cycled through several countries in Europe and Africa, including Burkina Faso.</p>
 							
@@ -92,6 +92,21 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 							<br />
 
 
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/czeballos.html">CHRISTIAN OLEG ZEBALLOS</a>, Kenya Country Liaison Intern</h4>
+							
+							
+							<p style="margin-top:10px;">Christian is a graduate from the University of Edinburgh, where he earned
+his bachelor\'s degree in International Business and Russian Language. As a
+student, Christian developed a strong interest in the role of the private
+sector in development and wrote a dissertation that focused on
+facilitating the implementation of business practices that create value
+for businesses and the communities in which they operate. He was drawn to
+Zidisha due to the organization\'s ability to alleviate poverty through
+business mechanisms and entrepreneurship. Christian grew up in Bolivia and
+currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
+							<br />
+
+
 <h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/logoti.html">LINET OGOTI</a>, Kenya Country Liaison Intern</h4>
 							
 							<p style="margin-top:10px;">Linet was born in Kenya and spent most of her life in Nairobi. She now lives in the United States. She is a recent graduate of Smith College with a bachelor\'s degree in economics. Her recent exposure to the abundant resources and opportunities available to all segments of society in the US has sparked her interest in the potential of finance as a tool of development in Africa. In her words: "I am captivated by Zidisha\'s work and its commitment to alleviating poverty in the developing world. The opportunities Zidisha provides offer hope to economically marginalized small business owners in countries like Kenya and throughout the world. I am enjoying my current work with Zidisha." In her free time Linet enjoys reading, listening to music, and learning about different cultures.
@@ -107,19 +122,12 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 							<br />
 
 
-<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/czeballos.html">CHRISTIAN OLEG ZEBALLOS</a>, Kenya Country Liaison Intern</h4>
-							
-							
-							<p style="margin-top:10px;">Christian is a graduate from the University of Edinburgh, where he earned
-his bachelor\'s degree in International Business and Russian Language. As a
-student, Christian developed a strong interest in the role of the private
-sector in development and wrote a dissertation that focused on
-facilitating the implementation of business practices that create value
-for businesses and the communities in which they operate. He was drawn to
-Zidisha due to the organization\'s ability to alleviate poverty through
-business mechanisms and entrepreneurship. Christian grew up in Bolivia and
-currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
-							<br />
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/hriday.html">HRIDAY (DAY) THAKKAR</a>, Kenya Country Liaison Intern</h4>
+
+<p style="margin-top:10px;">I was raised in the Silicon Valley of India, Bangalore, and moved to the United States two years ago to pursue
+my undergraduate studies in economics. Having seen the poverty and hunger in India, especially in the villages while 
+accompanying my father on his Biodiesel projects, and wanting to do my bit to uplift their lives, I have a grown a passion towards economic development. I first fell in love with the concept of microfinance after getting involved with the Microcredit Club at my college and my trip to Malawi, Africa the following summer (2012) allowed me to witness first hand the impact it is having on its borrowers. I am thrilled to be a part of Zidisha because it\'s an innovative model that challenges the conventional method of providing access to credit via Microfinance Institutions and it\'s an opportunity for me to continue making a difference in the lives of underprivileged families in developing countries. I recently graduated with an associates degree in economics from Foothill College, California and am currently taking a gap year to gain hands-on experience in international development and entrepreneurship. Subsequently, I want to transfer to Georgetown University to pursue a bachelor\'s degree in International Economics and a Master\'s degree in a related field. I aspire to be a social entrepreneur upon completing my studies and later on work in the government on economic policies.</p>
+<br/>
 
 
 <h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/kevinzeigler.html">KEVIN ZEIGLER</a>, Kenya Country Liaison Intern</h4>
@@ -145,9 +153,8 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 							
 							<br />
 
-							
 
-						<h4 style="display:inline">TIMOTHY TSAI, Communications Associate</h4>
+<h4 style="display:inline">TIMOTHY TSAI, Communications Associate</h4>
 							
 							
 							<p style="margin-top:10px;"> Tim is a senior at Georgetown University majoring in philosophy and economics and minoring in English. Originally from the California Bay Area, he first became interested in microfinance after spending a summer teaching English in a rural Chinese village. He was referred to Zidisha by his good friend and former intern Alex Villec and is excited to begin working with the team. In his free time, Tim enjoys reading literature, listening to and blogging about music, and continuing the eternal pursuit to find the perfect bowl of Taiwanese beef noodle soup. </p>
@@ -155,7 +162,7 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 							<br />		
 
 
-	<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/KaraM.html" target="_blank">KARA KAMINSKI</a>, Program Analyst</h4>
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/KaraM.html" target="_blank">KARA KAMINSKI</a>, Program Analyst</h4>
 							
 							<p style="margin-top:10px;">Kara is an individual dedicated to tackling the world\'s poverty barriers one project at a time through efficient, impact driven methods. She has spent her career analyzing the multifaceted aspects of development ranging from biodiversity at the Museum of Natural History, to religious environmentalism at the Earth Institute, to food insecurity at Seva Mandir. She is eager to use her knowledge of econometric methods and household survey analysis to help Zidisha learn more about its borrower base while uncovering the impact of Zidisha\'s innovative peer-to-peer methods.  She has a master of science degree in economics from Suffolk University and a bachelor\'s degree in political science  from Boston College. Kara is always looking for her next travel opportunity and spends her free time learning Hindi.</p>
 							
@@ -181,7 +188,7 @@ currently resides in Maryland. He speaks English, Spanish, and Russian.</p>
 
 
 
-			<h4>Volunteer Mentors</h4>	
+<h4>Volunteer Mentors</h4>	
 			</h4>
 			<p style="margin-bottom:0px;">
 				Volunteer Mentors are Zidisha borrowers or residents of borrowers\' communities, who volunteer their time to assist new members to interact with our website. If you reside in a country where Zidisha has a lending program and are interested in becoming a volunteer mentor, please contact us at <a href="mailto:service@zidisha.org" >service@zidisha.org.</a>
@@ -254,19 +261,22 @@ You can contact Ronnie at <a href="mailto:ronniezidisha@gmail.com">ronniezidisha
 							
 							<br />
  
-							<h4 style="display:inline">JOHN FAY, Trustee</h4>
+
+<h4 style="display:inline">JOHN FAY, Trustee</h4>
 							
 							<p style="margin-top:10px;">John has been involved with development and microfinance in Africa since 2004, when he began developing the predecessor organization which became <a href="www.sem-fund.org">The SEM Fund</a> in 2006, cofounded by Nan Guslander and Julia Kurnia. John serves as the SEM 501(c)(3) chairman of the board, and is the co-founder and Director of <a href="http://www.sharedvalueafrica.com/">Shared Value Africa Zambia</a>. John is based in Lusaka, Zambia. Previously John has worked for Cigna Healthcare, investment bank FBR and the Emerging Markets Group, and was a professional lacrosse player for six years. He graduated with a BA in History from Duke University, received an MBA from Cornell University\'s Johnson School and a PhD from the University of Cape Town Graduate School of Business. John can be contacted at <a href="mailto:john.fay@sharedvalueafrica.com">john.fay@sharedvalueafrica.com</a>.</p>
 							
 							<br />
 							
-							<h4 style="display:inline">DIANNE SCENT, Trustee</h4>
+
+<h4 style="display:inline">DIANNE SCENT, Trustee</h4>
 							
 							<p style="margin-top:10px;">Dianne is a freelance editor in Eastern Tennessee, where she loves the mountains of her new home. Her 20-year career in publishing includes work as a legal and academic editor for Wiley, Cambridge University Press, and Transaction Publishers, as well as for the Christian publisher Zondervan. She is a graduate of Hanover College with a BA in English. Dianne\'s involvement in microfinancing stems from the call of Micah 6:8 on her life: "And what does the Lord require of you but to do justice, to love kindness, and to walk humbly with your God?" Her inspirations include Mother Teresa and Shane Claiborne. You can reach Dianne at <a href="mailto:dscent@mindspring.com">dscent@mindspring.com</a>.</p>
 							
 							<br />
 							
-							<h4 style="display:inline">WHITNEY HOLMES, Attorney</h4>
+
+<h4 style="display:inline">WHITNEY HOLMES, Attorney</h4>
 							
 							<p style="margin-top:10px;">A partner with Morrison & Foerster, Whitney Holmes has extensive experience counseling clients, including boards of directors, special committees and audit committees, in corporate governance and compliance matters, compliance with the Sarbanes-Oxley Act of 2002, federal and state securities laws and stock exchange rules. Mr. Holmes was recently recognized as a top attorney for mergers and acquisitions in Colorado Super Lawyers and Super Lawyers Ð Corporate Counsel Edition. From 2002-2005, Mr. Holmes served as Chair of the Securities Law Subsection of the Colorado Bar Association\'s Business Law Counsel. He was selected by Colorado in-house counsel for inclusion in the 2008 Corporate Counsel Black Book in several areas, including Corporate Finance, Securities and Mergers and Acquisitions. Mr. Holmes was selected as one of the top 10 business newsmakers in Banking and Finance in the 2006 Power Book published by the Denver Business Journal.</p>';
 ?>

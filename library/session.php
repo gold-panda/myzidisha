@@ -65,7 +65,7 @@ class Session
 			
 		}
 
-		//$this->sendMixpanelUser();
+		$this->sendMixpanelUser();
 
 	}
 
@@ -754,11 +754,11 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 					$From=EMAIL_FROM_ADDR;
 					$templet="editables/email/simplemail.html";
 					require ("editables/mailtext.php");
-					$Subject=$lang['mailtext']['RepayFeedback-subject'];
 					$To=$params['name'] = $r['name'];
 					$loanprurl = getLoanprofileUrl($borrowerid, $loanid);
 					$params['link'] = SITE_URL.$loanprurl.'#e1' ;
 					$params['bname'] = $b_name;
+					$Subject== $this->formMessage($lang['mailtext']['RepayFeedback-subject'], $params);
 					$message = $this->formMessage($lang['mailtext']['RepayFeedback-msg'], $params);
 					$reply=$this->mailSending($From, $To, $r['email'], $Subject, $message,$templet);
 				}
@@ -1123,7 +1123,6 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				require ("editables/mailtext.php");
 				$From=EMAIL_FROM_ADDR;
 				$templet="editables/email/simplemail.html";
-				$Subject=$lang['mailtext']['ActiveBid-subject'];
 				for($i =0; $i < count($lendersArray); $i++)
 				{
 					$r=$database->getEmail($lendersArray[$i]['lenderid']);
@@ -1132,6 +1131,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 					$params['ddate'] = date('M d, Y',  time());
 					$params['amtlocal'] = number_format($a_amount, 0, ".", ",") .' ' . $database->getUserCurrencyName($pid);
 					$params['link'] = WEBSITE_ADDRESS.'?p=14&l='.$loanid ;
+					$Subject = $this->formMessage($lang['mailtext']['ActiveBid-subject'], $params);
 					$message = $this->formMessage($lang['mailtext']['ActiveBid-msg'], $params);
 					$this->mailSending($From, $To, $r['email'], $Subject, $message,$templet);
 				}
@@ -3229,17 +3229,18 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				{
 					$deat=$database->getEmailBybidid($row['bidid']);
 					$From=EMAIL_FROM_ADDR;
-					$templet="editables/email/simplemail.html";
+					$templet="editables/email/hero.html";
 					require ("editables/mailtext.php");
-					$Subject=$lang['mailtext']['AcceptBid-subject'];
 					$To=$params['name'] = $deat['name'];
-					$params['amount'] = number_format($deat['amount'],2,".",",");
-					$params['intr'] = number_format($row['bidrate'],2,".",",");
 					$params['bname'] = $database->getNameById($borrowerid);
 					$loanprurl = getLoanprofileUrl($borrowerid, $loanid);
 					$params['link'] = SITE_URL.$loanprurl ;
-					$message = $this->formMessage($lang['mailtext']['AcceptBid-msg'], $params);
-					$reply=$this->mailSending($From, $To, $deat['email'], $Subject, $message,$templet);
+					$params['lend_link'] = WEBSITE_ADDRESS.'?p=2';
+					$params['image_src'] = $database->getProfileImage($borrowerid);
+					$Subject = $this->formMessage($lang['mailtext']['AcceptBid-subject'], $params);
+					$header = $this->formMessage($lang['mailtext']['AcceptBid-msg1'], $params);
+					$message = $this->formMessage($lang['mailtext']['AcceptBid-msg2'], $params);
+					$reply=$this->mailSendingHtml($From, $To, $deat['email'], $Subject, $header, $message,0,$templet,3,$params);
 				}
 				return 1;
 			}
@@ -4242,7 +4243,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			logger('lender registerd id '.$id);
 			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 
-			//$this->sendMixpanelEvent('lender signup');
+			$this->sendMixpanelEvent('lender signup');
 
 		}
 			return $retVal;
@@ -6022,7 +6023,7 @@ function forgiveReminder(){
 				}
 			}
 			
-			//$this->sendMixpanelEvent('lend');	
+			$this->sendMixpanelEvent('lend');	
 		}
 		$GiftcardsinCart = $database->getGiftcardsFromCart($userid);
 		$availamount=$this->amountToUseForBid($userid);
@@ -6514,17 +6515,17 @@ function forgiveReminder(){
 	{
 		require_once ("includes/mailsender.php");
 		if($this->usersublevel !=READ_ONLY_LEVEL){
-			$r = mailSender($From, $To, $email, $Subject, $message,$templet, '' , '' , '' , $replyTo);
+			$r = mailSender($From, $To, $email, $Subject, '', $message,$templet, '' , '' , '' , $replyTo);
 		}
 		if(!empty($r))
 			return 1;
 		return 0;
 	}
-	function mailSendingHtml($From, $To, $email, $Subject, $message,$attachment,$templet,$html,$card_info)
+	function mailSendingHtml($From, $To, $email, $Subject, $header, $message,$attachment,$templet,$html,$card_info)
 	{
 		require_once ("includes/mailsender.php");
 		if($this->usersublevel !=READ_ONLY_LEVEL){
-			$r = mailSender($From, $To, $email, $Subject, $message,$attachment,$templet,$html,$card_info);
+			$r = mailSender($From, $To, $email, $Subject, $header, $message,$attachment,$templet,$html,$card_info);
 		}
 		if(!empty($r))
 			return 1;
@@ -6667,7 +6668,7 @@ function forgiveReminder(){
 
 			/*  0 for no attachment, 2 for HTML mail */
 
-			$reply=$this->mailSendingHtml($From, $To,$email_ids[$i], $emailsubject, $emailmssg,0,$templet,2,$promote_info);
+			$reply=$this->mailSendingHtml($From, $To,$email_ids[$i], $emailsubject, '', $emailmssg,0,$templet,2,$promote_info);
 		}
 		return $reply;
 	}
@@ -6805,7 +6806,7 @@ function forgiveReminder(){
 					$params['link_2'] = SITE_URL."index.php?p=17";
 					$emailmssg = $this->formMessage($lang['mailtext']['gift_card_msg_body'], $params);
 																								/*  0 for no attachment, 1 for HTML mail */
-					$reply=$this->mailSendingHtml($From, $To, $row['recipient_email'], $emailsubject, $emailmssg,0,$templet,1,$card_info);
+					$reply=$this->mailSendingHtml($From, $To, $row['recipient_email'], $emailsubject, '', $emailmssg,0,$templet,1,$card_info);
 					if($reply)
 						Logger_Array("Gift Card mail sent",'email, To', $row['recipient_email'], $To);
 				}
@@ -8737,10 +8738,10 @@ function sendMixpanelUser(){
 		{
 			$userid = session_id();
 
-			$mp->createAlias($userid, array(
-    			'$first_name' => "Guest",
-    			'userlevel' => GUEST_LEVEL
-			));
+			//$mp->createAlias($userid, array(
+    		//	'$first_name' => "Guest",
+    		//	'userlevel' => GUEST_LEVEL
+			//));
 			
 		}else{
 
