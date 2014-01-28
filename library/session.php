@@ -65,7 +65,7 @@ class Session
 			
 		}
 
-		$this->sendMixpanelUser();
+		//$this->sendMixpanelUser();
 
 	}
 
@@ -754,11 +754,11 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 					$From=EMAIL_FROM_ADDR;
 					$templet="editables/email/simplemail.html";
 					require ("editables/mailtext.php");
+					$Subject=$lang['mailtext']['RepayFeedback-subject'];
 					$To=$params['name'] = $r['name'];
 					$loanprurl = getLoanprofileUrl($borrowerid, $loanid);
 					$params['link'] = SITE_URL.$loanprurl.'#e1' ;
 					$params['bname'] = $b_name;
-					$Subject== $this->formMessage($lang['mailtext']['RepayFeedback-subject'], $params);
 					$message = $this->formMessage($lang['mailtext']['RepayFeedback-msg'], $params);
 					$reply=$this->mailSending($From, $To, $r['email'], $Subject, $message,$templet);
 				}
@@ -1123,6 +1123,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				require ("editables/mailtext.php");
 				$From=EMAIL_FROM_ADDR;
 				$templet="editables/email/simplemail.html";
+				$Subject=$lang['mailtext']['ActiveBid-subject'];
 				for($i =0; $i < count($lendersArray); $i++)
 				{
 					$r=$database->getEmail($lendersArray[$i]['lenderid']);
@@ -1131,7 +1132,6 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 					$params['ddate'] = date('M d, Y',  time());
 					$params['amtlocal'] = number_format($a_amount, 0, ".", ",") .' ' . $database->getUserCurrencyName($pid);
 					$params['link'] = WEBSITE_ADDRESS.'?p=14&l='.$loanid ;
-					$Subject = $this->formMessage($lang['mailtext']['ActiveBid-subject'], $params);
 					$message = $this->formMessage($lang['mailtext']['ActiveBid-msg'], $params);
 					$this->mailSending($From, $To, $r['email'], $Subject, $message,$templet);
 				}
@@ -3229,18 +3229,17 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				{
 					$deat=$database->getEmailBybidid($row['bidid']);
 					$From=EMAIL_FROM_ADDR;
-					$templet="editables/email/hero.html";
+					$templet="editables/email/simplemail.html";
 					require ("editables/mailtext.php");
+					$Subject=$lang['mailtext']['AcceptBid-subject'];
 					$To=$params['name'] = $deat['name'];
+					$params['amount'] = number_format($deat['amount'],2,".",",");
+					$params['intr'] = number_format($row['bidrate'],2,".",",");
 					$params['bname'] = $database->getNameById($borrowerid);
 					$loanprurl = getLoanprofileUrl($borrowerid, $loanid);
 					$params['link'] = SITE_URL.$loanprurl ;
-					$params['lend_link'] = WEBSITE_ADDRESS.'?p=2';
-					$params['image_src'] = $database->getProfileImage($borrowerid);
-					$Subject = $this->formMessage($lang['mailtext']['AcceptBid-subject'], $params);
-					$header = $this->formMessage($lang['mailtext']['AcceptBid-msg1'], $params);
-					$message = $this->formMessage($lang['mailtext']['AcceptBid-msg2'], $params);
-					$reply=$this->mailSendingHtml($From, $To, $deat['email'], $Subject, $header, $message,0,$templet,3,$params);
+					$message = $this->formMessage($lang['mailtext']['AcceptBid-msg'], $params);
+					$reply=$this->mailSending($From, $To, $deat['email'], $Subject, $message,$templet);
 				}
 				return 1;
 			}
@@ -4243,7 +4242,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			logger('lender registerd id '.$id);
 			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 
-			$this->sendMixpanelEvent('lender signup');
+			//$this->sendMixpanelEvent('lender signup');
 
 		}
 			return $retVal;
@@ -4376,6 +4375,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		
 		if($redirectPayment && $pcart==0 && !$auto_lend) {
 			$id = $database->addBidPayment($loanid, $loggedInid, $brwid, $amount, $interest, $up);
+			Logger_Array("Add Bid payment",'loanid','lender','borrowerid','amount','int','up',$loanid,$loggedInid, $brwid, $amount, $interest, $up);
 			if($id) {
 				$_SESSION['bidPaymentId']=$id;
 				$_SESSION['LendingCartBid'] = true;
@@ -4395,9 +4395,9 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$bids1 = $return1['bids'];
 		}
 		
-		$database->startDbTxn();	
+		$database->startDbTxn();
 		$bidid=$database->lenderBid($loggedInid, $loanid, $brwid, $amount, $interest);
-
+		Logger_Array("Entry in loanbids Table",'lenderID','loanid','borrowerid','amount','int',$loggedInid, $loanid, $brwid, $amount, $interest);
 		if($bidid) {
 			$bids=$database->getLoanBids($brwid, $loanid);
 			if($bids) {
@@ -4409,6 +4409,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 				$bids = $return2['bids'];
 				$txnAmt = $return2['bidAcceptAmt'][$bidid] * -1;
 				$ret=$database->setTransaction($loggedInid,$txnAmt,'Loan bid',$loanid, $CurrencyRate,LOAN_BID, 0, 0, PLACE_BID, $bidid);
+				Logger_Array("Entry in Trasaction Table",'lenderID','trsact amnt','loanid','bidid',$loggedInid,$txnAmt,$loanid,$bidid);
 				if($ret) {
 					$bidMailRes = $this->bidOutbidDownBidTransaction($brwid, $loanid, $bids, $bidAcceptAmt, $CurrencyRate);
 					if(!$bidMailRes) {
@@ -5752,6 +5753,9 @@ function forgiveReminder(){
 		$GLOBALS['loanArray']=array();
 		$fullyFundedAll = array();
 		$lenders=$database->getAllLenderForAutoLend();	
+		//Log number of ledners
+		Logger_Array("AutoBid---LOG",'No Of lender',count($lenders));
+		Logger_Array("AutoBid---LOG",'$lenders','id','lender_id','preference','desired_interest','max_desired_interest','current_allocated','lender_credit','created','bid_time','Active',$lenders);
 		$GLOBALS['loanArray']=$database->getAllLoansForAutoLend();
 	
 		foreach($GLOBALS['loanArray'] as $key => $row) {
@@ -5767,6 +5771,8 @@ function forgiveReminder(){
 		if(!empty($lenders)){
 			shuffle($lenders);
 			foreach($lenders as $lender) {
+			// Log lender id			
+			Logger_Array("AutoBid---LOG",'lender ID',$lender['lender_id']);
 				$possibleLoans=0;
 				$loansToAutolend=array();
 				$availAmount=$this->amountToUseForBid($lender['lender_id']);
@@ -5779,13 +5785,16 @@ function forgiveReminder(){
 					} else {
 					$possibleLoans=floor($availAmount/AUTO_LEND_AMT);
 					}
+					//Log $possibleLoans = $possibleLoans
+					Logger_Array("AutoBid---LOG",'$possibleLoans =',$possibleLoans);
 					if($possibleLoans) {
 						$loansToAutolend = $database->getSortedLoanForAutoBid($lender['preference'] ,$GLOBALS['loanArray'], $lender['desired_interest'], $lender['max_desired_interest'], $fullyFundedAll);
 						
 						if($possibleLoans < count($loansToAutolend)) {
 						$loansToAutolend=array_slice($loansToAutolend, 0, $possibleLoans);
 						}
-
+						//Log print_r(loansToAutolend)
+						Logger_Array("AutoBid---LOG",'$loansToAutolend','loanid','reqdamt','interest','interest','WebFee','applydate','borrowerid','intOffer',$loansToAutolend);
 						if(!empty($loansToAutolend)) {
 						$fullyFundedAll = $this->placeAutobid($lender['preference'], $loansToAutolend, $possibleLoans, $lender['lender_id'], $lender['desired_interest'], $lender['max_desired_interest']);
 						}
@@ -5799,12 +5808,17 @@ function forgiveReminder(){
 	{		
 		global $database, $form;
 		$processed=array();
+		
+		Logger_Array("AutoBid---LOG",'laon count line no 5813 ',count($loansToAutolend));
 		$loans = $this->getLoansForBid($preference, $loansToAutolend, $processed);
-
+		//Log number of loans - Pranjal
+		Logger_Array("AutoBid---LOG",'No of Loans line no 5816',count($loans));
 		$fullyFunded=array();
 		if(!empty($loans)) {
 			while(1) {
 				if(count($loans)==1){
+				//Log only one loan left
+					Logger_Array("AutoBid---LOG",'Log only one loan left Line No','5815');
 					if($possibleBids) {
 						$totBid=$database->getTotalBid($loans[0]['borrowerid'],$loans[0]['loanid']);
 						$reqdamt=$loans[0]['reqdamt'];
@@ -5836,9 +5850,13 @@ function forgiveReminder(){
 				$loans = $this->getLoansForBid($preference, $loansToAutolend, $processed);
 
 				if(empty($loans)) {
+					//Log no loans
+					Logger_Array("AutoBid---LOG",'No Loan Line No','5854');
 					break;
 				}
 				if(!$possibleBids) {
+					//Log no possible bids
+					Logger_Array("AutoBid---LOG",'No possible bids','5860');
 					break;
 				}
 			
@@ -5860,38 +5878,32 @@ function forgiveReminder(){
 									}
 									
 									/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
-									if($preference==6){																												
-										$lastBidDetail=$database->lastBidDetail($loan['loanid']);
-										if(!empty($lastBidDetail)){																			   
-											  
-											   $lastBidAmnt=$lastBidDetail['bidamt'];
-											   $lastBidIntr=$lastBidDetail['bidint'];
+									if($preference==6){										
+										$lastBidDetail=$database->lastBidDetail();
+										if(!empty($lastBidDetail)){
+											    $lastBidAmnt=$lastBidDetail['amnt'];
+											    $lastBidIntr=$lastBidDetail['intr'];
 
-												if($lastBidIntr<$desiredInt){
-													$intToPlaceBid=$desiredInt;
-												}elseif($lastBidIntr>$desiredInt){
-													$intToPlaceBid=$MaxdesiredInt;
-												}else{
+												if($desiredInt < $lastBidIntr && $lastBidIntr<$MaxdesiredInt){
 													$intToPlaceBid=$lastBidIntr;
+												}else{
+													$intToPlaceBid=$desiredInt;
 												}		
 												
 												$biddedAmnt=($loan['reqdamt']*$status)/100;
 												$reqAmnt=$loan['reqdamt']-$biddedAmnt;
-																	
-												if($lastBidAmnt<=$reqAmnt || $lastBidAmnt>=$reqAmnt){
-													$amntToLend=$lastBidAmnt;
-												}else{
-													$amntToLend=AUTO_LEND_AMT;
-												}
+												$amntToLend = min($lastBidAmnt, $reqAmnt, AUTO_LEND_AMT);
 										}else{
 											$amntToLend=AUTO_LEND_AMT;
-											}	 
-									} /***** End here *****/			
+											}
+									}else{
+										 $amntToLend=AUTO_LEND_AMT;
+									} /***** End here *****/		
 									
 									$LoanbidId=$this->placebid($loan['loanid'], $loan['borrowerid'], $amntToLend, $intToPlaceBid, 1, true,$lenderId);
-								
 									if(is_array($LoanbidId)) {
-										$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loan['borrowerid'], $loan['loanid'], AUTO_LEND_AMT,$intToPlaceBid);
+										$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loan['borrowerid'], $loan['loanid'], $amntToLend,$intToPlaceBid);	
+										Logger_Array("Entry in Autolend Table",'Loan BidID','LenderId','Loan id', 'BorrowerId','Amnt to lend','Intrest',$LoanbidId['loanbid_id'],$lenderId,$loan['loanid'],$loan['borrowerid'],$amntToLend,$intToPlaceBid);
 										$possibleBids--;
 									} else {
 										unset($loans[$key]);
@@ -5902,19 +5914,26 @@ function forgiveReminder(){
 					}
 				}
 				if(!$possibleBids) {
+					//Log possible bids 2
+					Logger_Array("AutoBid---LOG",'No possible bids2','5926');
 					break;
 				}
 				if(empty($loans)) {
 					$loans = $this->getLoansForBid($preference, $loansToAutolend, $processed);
 					if(empty($loans)) {
+						// Log ending here
+						Logger_Array("AutoBid---LOG",'Log Endign here Lien no','5933');
 						break;
 					}
 				}
 			}
 		}
+		//$fullyFunded
+		Logger_Array("AutoBid---LOG",'fully funded loan ID line 5940',$fullyFunded);
 		return $fullyFunded;
 	}
 	function getLoansForBid($preference, $loansToAutolend, $processed) {
+
 		$sortedOn='random';
 		if($preference==HIGH_OFFER_INTEREST) {
 			$sortedOn='intOffer';
@@ -6023,7 +6042,7 @@ function forgiveReminder(){
 				}
 			}
 			
-			$this->sendMixpanelEvent('lend');	
+			//$this->sendMixpanelEvent('lend');	
 		}
 		$GiftcardsinCart = $database->getGiftcardsFromCart($userid);
 		$availamount=$this->amountToUseForBid($userid);
@@ -6515,17 +6534,17 @@ function forgiveReminder(){
 	{
 		require_once ("includes/mailsender.php");
 		if($this->usersublevel !=READ_ONLY_LEVEL){
-			$r = mailSender($From, $To, $email, $Subject, '', $message,$templet, '' , '' , '' , $replyTo);
+			$r = mailSender($From, $To, $email, $Subject, $message,$templet, '' , '' , '' , $replyTo);
 		}
 		if(!empty($r))
 			return 1;
 		return 0;
 	}
-	function mailSendingHtml($From, $To, $email, $Subject, $header, $message,$attachment,$templet,$html,$card_info)
+	function mailSendingHtml($From, $To, $email, $Subject, $message,$attachment,$templet,$html,$card_info)
 	{
 		require_once ("includes/mailsender.php");
 		if($this->usersublevel !=READ_ONLY_LEVEL){
-			$r = mailSender($From, $To, $email, $Subject, $header, $message,$attachment,$templet,$html,$card_info);
+			$r = mailSender($From, $To, $email, $Subject, $message,$attachment,$templet,$html,$card_info);
 		}
 		if(!empty($r))
 			return 1;
@@ -6668,7 +6687,7 @@ function forgiveReminder(){
 
 			/*  0 for no attachment, 2 for HTML mail */
 
-			$reply=$this->mailSendingHtml($From, $To,$email_ids[$i], $emailsubject, '', $emailmssg,0,$templet,2,$promote_info);
+			$reply=$this->mailSendingHtml($From, $To,$email_ids[$i], $emailsubject, $emailmssg,0,$templet,2,$promote_info);
 		}
 		return $reply;
 	}
@@ -6806,7 +6825,7 @@ function forgiveReminder(){
 					$params['link_2'] = SITE_URL."index.php?p=17";
 					$emailmssg = $this->formMessage($lang['mailtext']['gift_card_msg_body'], $params);
 																								/*  0 for no attachment, 1 for HTML mail */
-					$reply=$this->mailSendingHtml($From, $To, $row['recipient_email'], $emailsubject, '', $emailmssg,0,$templet,1,$card_info);
+					$reply=$this->mailSendingHtml($From, $To, $row['recipient_email'], $emailsubject, $emailmssg,0,$templet,1,$card_info);
 					if($reply)
 						Logger_Array("Gift Card mail sent",'email, To', $row['recipient_email'], $To);
 				}
@@ -8738,10 +8757,10 @@ function sendMixpanelUser(){
 		{
 			$userid = session_id();
 
-			//$mp->createAlias($userid, array(
-    		//	'$first_name' => "Guest",
-    		//	'userlevel' => GUEST_LEVEL
-			//));
+			$mp->createAlias($userid, array(
+    			'$first_name' => "Guest",
+    			'userlevel' => GUEST_LEVEL
+			));
 			
 		}else{
 
