@@ -69,19 +69,15 @@ $lang['mailtext']['RepayFeedback-msg'] = 'Greetings %name%, <br/><br/>'.
 //bid acceptance confirmation email to lenders
 $lang['mailtext']['AcceptBid-subject'] = "%bname% is fully funded!";
 
-$lang['mailtext']['AcceptBid-msg'] = "Thanks to you, new opportunities are opening up for %bname%.<br/><br/>
+$lang['mailtext']['AcceptBid-msg1'] = "New opportunities are opening up for %bname%.";
 
-<a href=' %link% '>%bname%</a>'s loan application has been fully funded.<br/><br/>
+$lang['mailtext']['AcceptBid-msg2'] = "Thanks to you, <a href=' %link% '>%bname%</a>'s loan application has been fully funded.<br/><br/>
 
 100% of the funds you contributed will now be disbursed to %bname% in local currency.  You will receive another notification once the disbursement is complete.<br/><br/>
 
 Thanks for making %bname%'s dream of a better life possible.<br/><br/>
 
-The Zidisha Team<br/><br/>
-
-View our latest entrepreneurs here!<br/><br/>
-
-<a href="%lend_link%">View Entrepreneurs</a>";
+The Zidisha Team";
 
 
 //loan disbursement notification sent to lenders

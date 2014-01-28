@@ -11627,7 +11627,7 @@ function getProfileImage($userid){
         $fb_data = unserialize(base64_decode($brw['fb_data']));
         if (file_exists(USER_IMAGE_DIR.$userid.".jpg")){ 
     
-            $imagesrc=SITE_URL."/library/getimagenew.php?id=".$userid."&width=330&height=380";
+            $imagesrc=SITE_URL."/library/getimagenew.php?id=".$userid;
        
         }else if( ! empty($fb_data['user_profile']['id'])){ //case where borrower has not uploaded own photo but has linked FB account, use FB profile
                             

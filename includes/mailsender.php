@@ -72,7 +72,7 @@ return $contents ;
 }
 
 
-function mailSender ( $hdr_from, $hdr_to, $email, $subject, $body, $attachment='',$templet = 0,$html=0,$info=0 ,$replyTo=null) {
+function mailSender ( $hdr_from, $hdr_to, $email, $subject, $header, $body, $attachment='',$templet = 0,$html=0,$info=0 ,$replyTo=null) {
 	global $database,$session;
 	Logger("ZDISHAEMAILSENTTEST");
 	
@@ -140,6 +140,13 @@ This is a wrapper function for sending emails
 		$templet = str_replace('%statusbar%',$info['statusbar'],$templet);
 		$templet = str_replace('%content_mail%',$body,$templet);
 			/*   print_r($templet);exit;   */
+	}
+	else if($html==3)
+	{
+		$templet = str_replace('%header%',$header,$templet);
+		$templet = str_replace('%image_src%',$info['image_src'],$templet);
+		$templet = str_replace('%content_mail%',$body,$templet);
+
 	}
 	$hdr_from = stripslashes(clearPost($hdr_from));
 	$hdr_to = stripslashes(clearPost($hdr_to));
