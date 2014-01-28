@@ -341,16 +341,17 @@ This is a wrapper function for sending emails
 
 			$domain = "zidisha.org";
 
-			try { $result = $mgClient->sendMessage("$domain",
-                  array('from'    => $headers['From'],
+
+				try { $result = $mgClient->sendMessage("$domain",
+                  	array('from'    => $headers['From'],
                         'to'      => $email,
                         'subject' => $headers['Subject'],
                         'html'	  => $body
 
                         ));
-				if($result->http_response_code == 200) { $rc = 1; }
-
-			} catch (Exception $e) { }
+					if($result->http_response_code == 200) { $rc = 1; }
+				} catch (Exception $e) { Logger("Error sending email, {$e->getMessage()}"); }
+			
 
 		}
 			

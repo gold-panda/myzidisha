@@ -79,7 +79,7 @@ if(isset($_POST['feedback']))
 			$commentlength = strlen($comment);
 			$database->setcommentcredit($userid, $commentlength, $loanid, $commentid);
 			
-			//$session->sendCommentMails($loanid, $userid, $comment, $resParent); Comment by mohit 22-10-13
+			$session->sendCommentMails($loanid, $userid, $comment, $resParent); 
 
 			// added by mohit 22-10-13
 			$emailContAttr=array();
@@ -87,7 +87,7 @@ if(isset($_POST['feedback']))
 			$emailContAttr[]= $userid;
 			$emailContAttr[]=$comment;
 			$emailContAttr[]=$resParent;
-			$database->addEvent(COMMENT_POST_EVENT, $emailContAttr);
+			//$database->addEvent(COMMENT_POST_EVENT, $emailContAttr);
 			}
 	}
 	else if($_POST["MessType"]=="Update")
@@ -207,7 +207,7 @@ if(isset($_POST['feedback']))
 		$commentlength = strlen($message);
 		$database->setcommentcredit($userid, $commentlength, $loanid, $replyid);
 		
-		//$session->sendCommentMails($loanid, $receiverid, $message, $res); Comment by mohit 22-10-13
+		$session->sendCommentMails($loanid, $receiverid, $message, $res); 
 		
 		// added by mohit 22-10-13
 		$emailContAttr=array();
@@ -215,7 +215,7 @@ if(isset($_POST['feedback']))
 		$emailContAttr[]= $receiverid;
 		$emailContAttr[]=$message;
 		$emailContAttr[]=$res;
-		$database->addEvent(COMMENT_POST_EVENT, $emailContAttr);
+		//$database->addEvent(COMMENT_POST_EVENT, $emailContAttr);
 	}
 	else if($_POST["MessType"]=="Feedback")
 	{

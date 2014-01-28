@@ -65,7 +65,7 @@ class Session
 			
 		}
 
-		$this->sendMixpanelUser();
+		//$this->sendMixpanelUser();
 
 	}
 
@@ -4243,7 +4243,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			logger('lender registerd id '.$id);
 			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 
-			$this->sendMixpanelEvent('lender signup');
+			//$this->sendMixpanelEvent('lender signup');
 
 		}
 			return $retVal;
@@ -6045,7 +6045,7 @@ function forgiveReminder(){
 				}
 			}
 			
-			$this->sendMixpanelEvent('lend');	
+			//$this->sendMixpanelEvent('lend');	
 		}
 		$GiftcardsinCart = $database->getGiftcardsFromCart($userid);
 		$availamount=$this->amountToUseForBid($userid);
@@ -6537,6 +6537,7 @@ function forgiveReminder(){
 	{
 		require_once ("includes/mailsender.php");
 		if($this->usersublevel !=READ_ONLY_LEVEL){
+
 			$r = mailSender($From, $To, $email, $Subject, '', $message,$templet, '' , '' , '' , $replyTo);
 		}
 		if(!empty($r))
@@ -6971,17 +6972,6 @@ function forgiveReminder(){
 		$emailmssg=$this->formMessage($lang['mailtext']['comment-msg'], $params);
 
 		$reply=$this->mailSending($From,$To,$adminemail , $emailsubject, $emailmssg,$templet);
-
-		//MESSAGE TO PARTNER
-		/*if($p_email!='')
-		{
-			$To=$p_name;
-			$params['name'] = $To;
-			$params['link'] = WEBSITE_ADDRESS.'?p=14&l='.$loanid.'&u='.$userid;
-			$emailmssg=$this->formMessage($lang['mailtext']['comment-msg'], $params);
-			$partner_email=$p_email;
-			$reply=$this->mailSending($From,$To,$partner_email , $emailsubject, "hello partner message",$templet);
-		}*/
 
 		//MESSAGE TO BORROWER
 		if($b_email!='' && $cmts['senderid']!=$userid)
