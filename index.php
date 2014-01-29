@@ -285,6 +285,10 @@ typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var
 b._i.push([a,e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
 mixpanel.init("8c840139721b8d829c91d1c7aff93c2e");</script>
 
+<script type="text/javascript">
+  mixpanel.track ("Landing Page Loaded");
+</script>
+
 <!-- end Mixpanel -->
 
 </head>

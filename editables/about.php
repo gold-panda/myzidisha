@@ -52,6 +52,20 @@ I am very interested in the P2P lending mechanism at Zidisha. I want to learn mo
 
 
 
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/Mbembamicrofinance14.html">MBEMBA OUSMANE KAMARA</a>, Francophone Country Liaison Intern</h4>
+							
+							<p style="margin-top:10px;">I reside in UK and live in London with my wife and twin children aged five. I am originally from Guinea where I held Tourism and Hotel Management certificates. I worked as an intern in Novotel and Hotel de L’unite Conakry.
+
+I am currently an undergraduate student, studying International Business and French. I have 10 years\' experience in working with ethnic minority communities in the UK, especially working with young people in a football development project.
+
+Having been raised in Guinea in a hard-working local cloth-dyeing entrepreneur family and community, as a child, I helped my parents in doing this production before and after school. Some stages of the production process are physically demanding as there was not any technology involved. This experience made me aware of the greater economic and social challenges facing these hardworking entrepreneurs.
+
+My experience as an immigrant has provided me with an opportunity to explore a variety of business models from around the world. During my eleven years living in Europe, I have experienced the relatively well-governed and organized private and public sectors in Europe in stark contrast to the poor governance, hardship and poverty in Sub-Saharan Africa. Such realities have driven me to seek a knowledge and understanding of the dynamics behind international business and global economics. My keen interest in International Project Management and International Capital Market Law & Financial Services and also my great desire to help my community back home have pushed me to work as an intern at Zidisha. I would like to learn more about the microfinance business model which will probably help me to assist the entrepreneurs in Guinea in the near future and also apply my business skills and knowledge to help entrepreneurs in Guinea grow their businesses.</p>
+							
+							<br />
+
+
+
 <h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/klunpa01.html" target="_blank">PAIGE KLUNK</a>, Francophone Country Liaison Intern</h4>
 							
 							<p style="margin-top:10px;">Paige is from Hanover, Pennsylvania, and is a graduate of Gettysburg College with a double major in Music and Africana Studies. Paige first travelled to Senegal to 2010, where she first became acquainted with the local arts, culture, and languages. With an interest in West African music, Paige plays the balafon (West African xylophone) and follows the local hip-hop scene. Renewing her interest in development and humanitarian efforts, Paige will be pursuing a master\'s degree in International Development Studies at Ohio University. She is greatly excited to pursue work at Zidisha to compliment her studies as well as travel abroad to aid and recruit new clientele in Senegal.</p>

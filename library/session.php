@@ -65,7 +65,7 @@ class Session
 			
 		}
 
-		//$this->sendMixpanelUser();
+		$this->sendMixpanelUser();
 
 	}
 
@@ -4243,7 +4243,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			logger('lender registerd id '.$id);
 			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 
-			//$this->sendMixpanelEvent('lender signup');
+			$this->sendMixpanelEvent('lender signup');
 
 		}
 			return $retVal;
@@ -6045,7 +6045,7 @@ function forgiveReminder(){
 				}
 			}
 			
-			//$this->sendMixpanelEvent('lend');	
+			$this->sendMixpanelEvent('lend');	
 		}
 		$GiftcardsinCart = $database->getGiftcardsFromCart($userid);
 		$availamount=$this->amountToUseForBid($userid);
@@ -8746,34 +8746,23 @@ function sendMixpanelUser(){
 	// get the Mixpanel class instance, replace with your project token
 	$mp = Mixpanel::getInstance(MIXPANEL_PROJECT_TOKEN);
 
-	if(!$this->logged_in)
-		{
-			$userid = session_id();
+	$userid = $this->userid;
 
-			//$mp->createAlias($userid, array(
-    		//	'$first_name' => "Guest",
-    		//	'userlevel' => GUEST_LEVEL
-			//));
+	if ($this->userlevel == 1){
+		$userlevel = "Borrower";
+	}elseif ($this->userlevel == 4){
+		$userlevel = "Lender";
+	}elseif ($this->userlevel == 9){
+		$userlevel = "Admin";
+	}else {
+		$userlevel = $this->userlevel;
+	}
 			
-		}else{
-
-			$userid = $this->userid;
-
-			if ($this->userlevel == 1){
-				$userlevel = "Borrower";
-			}elseif ($this->userlevel == 4){
-				$userlevel = "Lender";
-			}elseif ($this->userlevel == 9){
-				$userlevel = "Admin";
-			}else {
-				$userlevel = $this->userlevel;
-			}
-			
-			$mp->people->set($userid, array(
-    			'$first_name' => $this->fullname,
-    			'userlevel' => $userlevel
-			));
-		}
+	$mp->people->set($userid, array(
+    	'$first_name' => $this->fullname,
+    	'userlevel' => $userlevel
+	));
+		
 
 }
 
@@ -8785,7 +8774,15 @@ function sendMixpanelEvent($event_label){
 	// get the Mixpanel class instance, replace with your project token
 	$mp = Mixpanel::getInstance(MIXPANEL_PROJECT_TOKEN);
 
+	if($event_label=='lender signup') {
 
+		$userid = $this->userid;
+
+		$mp->createAlias($userid, array(
+	    '$first_name' => "Guest",
+	    'userlevel' => GUEST_LEVEL
+		));
+	}
 
 	// track an event
 	$mp->track($event_label); // track an event
