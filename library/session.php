@@ -65,7 +65,7 @@ class Session
 			
 		}
 
-		$this->sendMixpanelUser();
+		//$this->sendMixpanelUser();
 
 	}
 
