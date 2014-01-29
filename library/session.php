@@ -1123,15 +1123,16 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				require ("editables/mailtext.php");
 				$From=EMAIL_FROM_ADDR;
 				$templet="editables/email/simplemail.html";
-				$Subject=$lang['mailtext']['ActiveBid-subject'];
+				$params['bname'] = $database->getNameById($pid);
+				$params['ddate'] = date('M d, Y',  time());
+				$params['amtlocal'] = number_format($a_amount, 0, ".", ",") .' ' . $database->getUserCurrencyName($pid);
+				$params['link'] = WEBSITE_ADDRESS.'?p=14&l='.$loanid ;
+				$Subject= $this->formMessage($lang['mailtext']['ActiveBid-subject'], $params);
+				
 				for($i =0; $i < count($lendersArray); $i++)
 				{
 					$r=$database->getEmail($lendersArray[$i]['lenderid']);
 					$To=$params['name'] = $r['name'];
-					$params['bname'] = $database->getNameById($pid);
-					$params['ddate'] = date('M d, Y',  time());
-					$params['amtlocal'] = number_format($a_amount, 0, ".", ",") .' ' . $database->getUserCurrencyName($pid);
-					$params['link'] = WEBSITE_ADDRESS.'?p=14&l='.$loanid ;
 					$message = $this->formMessage($lang['mailtext']['ActiveBid-msg'], $params);
 					$this->mailSending($From, $To, $r['email'], $Subject, $message,$templet);
 				}
