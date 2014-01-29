@@ -4243,7 +4243,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			logger('lender registerd id '.$id);
 			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 
-			$this->sendMixpanelEvent('lender signup');
+			//$this->sendMixpanelEvent('lender signup');
 
 		}
 			return $retVal;
@@ -6045,7 +6045,7 @@ function forgiveReminder(){
 				}
 			}
 			
-			$this->sendMixpanelEvent('lend');	
+			//$this->sendMixpanelEvent('lend');	
 		}
 		$GiftcardsinCart = $database->getGiftcardsFromCart($userid);
 		$availamount=$this->amountToUseForBid($userid);
