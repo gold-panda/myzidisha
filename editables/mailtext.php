@@ -3,16 +3,18 @@
 $lang['mailtext']['default-subject'] = 'Message from Zidisha';
 
 //password reset email
-$lang['mailtext']['ForgotPassowrd-subject'] = 'Message from Zidisha';
+$lang['mailtext']['ForgotPassowrd-subject'] = 'Please reset your password';
 
-$lang['mailtext']['ForgotPassowrd-msg'] = 'Dear %name%, <br/><br/>'.
-'Your password has been reset to %password%. You may use this to log in once, then change your password in the "Edit Profile" page.<br/><br/>'.
-'Best wishes,<br/><br/>'.
-'The Zidisha Team ';
+$lang['mailtext']['ForgotPassowrd-msg'] = 
+'Your temporary password has been set to<br/><br/>
+%password%<br/><br/>
+You may use this temporary password to log in once, then change your password in the "Edit Profile" page of your account.<br/><br/>
+Best wishes,<br/><br/>
+The Zidisha Team ';
 
 
 //borrower registration confirmation
-$lang['mailtext']['BorrowerReg-subject'] = 'Welcome to Zidisha';
+$lang['mailtext']['BorrowerReg-subject'] = 'Zidisha application submitted';
 
 $lang['mailtext']['BorrowerReg-msg'] = 'Dear %name%, <br/><br/>Thank you for your application to join Zidisha.<br/><br/>A Zidisha staff member will now review your account, a process that normally takes up to one week.  You will be notified by email when the review is complete.  You may also log in to Zidisha to check the status of your account at any time.<br/><br/>
 
@@ -21,49 +23,40 @@ Regards,<br/><br/>
 The Zidisha Team';
 
 
-//partner registration confirmation
-$lang['mailtext']['PartnerReg-subject'] = 'Welcome to Zidisha';
-
-$lang['mailtext']['PartnerReg-msg'] = 'Hi %name%, <br/><br/>'.
-'Congratulations! You have successfully created a Zidisha Partner account.<br/><br/>'.
-'Once the Zidisha Administrator activates your account, you will be notified by email of your eligibility to activate borrowers. You may also log in to your Zidisha account to check your activation status at any time.<br/><br/>'.
-'Thank you,<br/><br/>'.
-'Zidisha ';
-
-
 //lender registration confirmation
 $lang['mailtext']['LenderReg-subject'] = 'Welcome to Zidisha';
 
-$lang['mailtext']['LenderReg-msg'] = 'Dear %name%, <br/><br/>'.
-'Thank you for joining the global peer-to-peer microlending movement.<br /><br />We are pioneering the world\'s first online microfinance community to connect lenders to borrowers directly, overcoming previously insurmountable barriers of geography, wealth and circumstance. It\'s an incredibly worthwhile thing to be a part of.<br/><br/>'
-.'Go to <a href="%zidisha_link%" target="_blank">Zidisha.org</a> to start making a difference. You can find an entrepreneur to support, invite friends to join, and dialogue with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>'
-.'We look forward to seeing you there.<br/><br/>'
-.
-'The Zidisha Team ';
+$lang['mailtext']['LenderReg-msg'] = 
+'Thank you for joining the global peer-to-peer microlending movement.<br/><br/>
+We are pioneering the first online microfinance community to connect lenders and borrowers directly, overcoming previously insurmountable barriers of geography, wealth and circumstance. It\'s an incredibly worthwhile thing to be a part of.<br/><br/>
+Go to <a href="%zidisha_link%" target="_blank">Zidisha.org</a> to start making a difference. You can find an entrepreneur to support, invite friends to join, and dialogue with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>
+We look forward to seeing you there.<br/><br/>
+The Zidisha Team ';
 
 
 //repayment receipt to lenders
-$lang['mailtext']['RecivedPayment-subject'] = 'Zidisha Payment Received';
+$lang['mailtext']['RecivedPayment-subject'] = '%bname% has made a repayment';
 
-$lang['mailtext']['RecivedPayment-msg'] = 'Dear %name%, <br/><br/>'.
-'%bname% has made a repayment. The share of repaid principal and interest credited to your account is USD %amount%.<br/><br/>'
-.'Your lender credit balance is now USD %avail_amount%. '
-.'You may use this balance to make a new loan <a href="%lend_link%">here</a>.<br/><br/>'.
-'You may view %bname%\'s loan profile page <a href="%link%">here</a>.<br/><br/>'.
-'Thank you again for partnering with us,<br/><br/>'.
-'The Zidisha Team <br/><br/>'.
-'If you no longer wish to receive email notifications when a loan repayment is credited to your account, please log in to your lender account and change your email settings in the Edit Profile page.';
+$lang['mailtext']['RecivedPayment-msg'] = 
+'%bname% has made a repayment. The share of repaid principal and interest credited to your account is USD %amount%.<br/><br/>
+Your lender credit balance is now USD %avail_amount%. 
+You may use this balance to make a new loan <a href="%lend_link%">here</a>.<br/><br/>
+You may view %bname%\'s loan profile page <a href="%link%">here</a>.<br/><br/>
+Thank you again for partnering with us,<br/><br/>
+The Zidisha Team <br/><br/>';
 
 
 //fully repaid loan feedback request to lenders
 $lang['mailtext']['RepayFeedback-subject'] = 'Please leave feedback for %bname%';
 
-$lang['mailtext']['RepayFeedback-msg'] = 'Greetings %name%, <br/><br/>'.
-'Good news! %bname% has completely repaid the loan that you funded.
-<br/><br/>'.
-'Please take a moment to share an honest appraisal of your experience <a href=" %link% ">here</a>. Your feedback rating and comment will be recorded on %bname%\'s profile, creating a performance history to facilitate financing of future loans.<br/><br/>'.
-'Thanks,<br/><br/>'.
-'The Zidisha Team ';
+$lang['mailtext']['RepayFeedback-msg1'] = 
+'%bname% has completely repaid the loan that you funded.';
+
+$lang['mailtext']['RepayFeedback-msg2'] = 
+'Please take a moment to share an honest appraisal of your experience <a href=" %link% ">here</a>.<br/><br/>
+Your feedback rating and comment will be recorded on %bname%\'s profile, creating a performance history to facilitate financing of future loans.<br/><br/>
+Thanks,<br/><br/>
+The Zidisha Team ';
 
 
 //bid acceptance confirmation email to lenders
@@ -71,7 +64,7 @@ $lang['mailtext']['AcceptBid-subject'] = "%bname% is fully funded!";
 
 $lang['mailtext']['AcceptBid-msg1'] = "New opportunities are opening up for %bname%.";
 
-$lang['mailtext']['AcceptBid-msg2'] = "Thanks to you, <a href=' %link% '>%bname%</a>'s loan application has been fully funded.<br/><br/>
+$lang['mailtext']['AcceptBid-msg2'] = "Thanks to you, <a href=' %profile_link% '>%bname%</a>'s loan application has been fully funded.<br/><br/>
 
 100% of the funds you contributed will now be disbursed to %bname% in local currency.  You will receive another notification once the disbursement is complete.<br/><br/>
 
@@ -83,8 +76,11 @@ The Zidisha Team";
 //loan disbursement notification sent to lenders
 $lang['mailtext']['ActiveBid-subject'] = "%bname%'s loan is disbursed!";
 
-$lang['mailtext']['ActiveBid-msg'] = "Greetings %name%, <br/><br/>Good news! Your loan to %bname% was disbursed on %ddate% in the amount of %amtlocal%. This entrepreneur is now on the way to achieving a brighter financial future, thanks to your support. <br/><br/>
-Your loan disbursement is just the beginning. Keep abreast of progress and interact with %bname% via the loan <a href=' %link% '>profile page</a>. We encourage you to use the Comments Forum on this <a href=' %link% '>profile page</a> to post feedback and questions for the borrower throughout the lending period.<br/><br/>
+$lang['mailtext']['ActiveBid-msg1'] = "%bname% has received your loan.";
+
+$lang['mailtext']['ActiveBid-msg2'] = "
+Your loan to %bname% was disbursed on %ddate%. %bname% is now on the way to achieving a brighter future, thanks to your support. <br/><br/>
+Your loan disbursement is just the beginning. Keep abreast of progress and interact with %bname% via the <a href=' %link% '>loan profile page</a>. We encourage you to post feedback and questions for the borrower throughout the lending period.<br/><br/>
 Best wishes,<br/><br/>
 The Zidisha Team";
 
@@ -101,41 +97,16 @@ Best wishes,<br/><br/>
 Zidisha Team';
 
 
-//partner activation confirmation
-$lang['mailtext']['ActivatePartner-subject'] = 'Your Zidisha Account';
-
-$lang['mailtext']['ActivatePartner-msg'] = 'Hi %name%, <br/><br/>'.
-'Your Zidisha account is now %status%.<br/><br/>'.
-'Thank you,<br/><br/>'.
-'Zidisha Administrator ';
-
-
-//borrower deactivation
-$lang['mailtext']['DeactivateBorrower-msg'] = 'Hi %name%, <br/><br/>'.
-'Your Zidisha account is now %status%.<br/><br/>'.
-'Thank you,<br/><br/>'.
-'Zidisha Administrator ';
-
-
-//withdraw request notification to admin
-$lang['mailtext']['withdraw-subject'] = 'withdraw request';
-
-$lang['mailtext']['withdraw-msg'] = 'Hi Admin <br/><br/>'.
-' There is a withdraw requested of %Amount%<br/>'.
-'Thank you,<br/><br/>'.
-'Zidisha Administrator ';
-
-
 //comment posting notification to lender
 $lang['mailtext']['comment-subject'] = 'New Message: %bname%';
 
-$lang['mailtext']['comment-msg'] = '%mname% comments on %date%<br/><br/>'.
-'%message% <br/><br/>'.
-'We welcome your participation. Please click <a href=" %link% ">here</a> to view the comment and post a response.<br/><br/>'.
-'If this comment was posted in a local language, please stay tuned! We will send another email notification when a translation is available.<br/><br/>'.
-'Best wishes,<br/><br/>'.
-'The Zidisha Team <br/> <br/> %images% <br/> <br/>'.
-'If you no longer wish to receive email notifications when comments are posted on your loans, please log in to your lender account and change your email settings in the Edit Profile page.';
+$lang['mailtext']['comment-msg'] = '%mname% comments on %date%<br/><br/>
+%message% <br/><br/>
+%images% <br/><br/>
+We welcome your participation. Please click <a href=" %link% ">here</a> to view the comment and post a response.<br/><br/>
+If this comment was posted in a local language, please stay tuned! We will send another email notification when a translation is available.<br/><br/>
+Best wishes,<br/><br/>
+The Zidisha Team<br/> <br/>';
 
 
 //comment posting notification to borrower
@@ -144,10 +115,10 @@ $lang['mailtext']['comment-subject_b'] = 'You Received a Message at Zidisha';
 $lang['mailtext']['comment-msg_b'] = 'Dear %name%,<br/><br/>
 You have a new message on your Zidisha loan page.<br/><br/>
 %mname% posted on %date%<br/><br/>
-%message%<br/><br/>'.
+%message%<br/><br/> %images% <br/> <br/>'.
 'Please log in to your account at <a href="%zidisha_link%" target="_blank">www.zidisha.org</a> and click "Post a comment" to respond to this message.<br/><br/>'.
 'Thank you,<br/><br/>'.
-'Zidisha Team <br/> <br/> %images% <br/> <br/>';
+'Zidisha Team ';
 
 
 //gift card receipt
@@ -190,29 +161,19 @@ $lang['mailtext']['promote_body3'] ="Zidisha.org is a US-based nonprofit that le
 
 
 //lender invite email - general
-$lang['mailtext']['invite_subject'] = "%name% wants you to check out Zidisha!";
+$lang['mailtext']['invite_subject'] = "Invite from %name%";
 
-$lang['mailtext']['invite_body1'] = "Zidisha.org is a nonprofit that lets you make microloans for as little as $1 to a small business owner from around the world. What makes Zidisha really unique is that you can communicate directly with the individual you funded via each loan's discussion forum on the Zidisha.org website. 100% of your funds go to the borrower and you receive monthly repayments with interest as the loan is repaid. It's a great way to fight poverty while getting to know and talk to a real person in a developing country of your choice.
-";
+$lang['mailtext']['invite_body_l'] = "No intermediaries between you and the borrower = lower cost for the borrower + direct connection with the entrepreneur you are helping.";
 
-$lang['mailtext']['invite_body'] ="%user_msg%<br/><br/>".
-"Zidisha.org is a US-based nonprofit that lets you make microloans for as little as $1 to a small business owner from around the world. What makes Zidisha really unique is that you can communicate directly with the individual you funded via each loan's discussion forum on the Zidisha.org website. 100% of your funds go to the borrower and you receive monthly repayments with interest as the loan is repaid. It's a great way to fight poverty while getting to know and talk to a real person in a developing country of your choice.<br/><br/>".
-"Check out <a href='%zidisha_link%' target='_blank'>www.zidisha.org</a> to learn more.<br/><br/>".
-"The Zidisha Team";
-
-
-//lender invite reminder email
-$lang['mailtext']['reinvite_subject'] = "Reminder- %name% wants you to check out Zidisha!";
-
-$lang['mailtext']['reinvite_body'] ="Zidisha.org is a US-based nonprofit that lets you make microloans for as little as $1 to a small business owner from around the world. What makes Zidisha really unique is that you can communicate directly with the individual you funded via each loan's discussion forum on the Zidisha.org website. 100% of your funds go to the borrower and you receive monthly repayments with interest as the loan is repaid. It's a great way to fight poverty while getting to know and talk to a real person in a developing country of your choice.<br/><br/>".
-"Check out <a href='%zidisha_link%' target='_blank'>www.zidisha.org</a> to learn more.<br/><br/>".
-"The Zidisha Team";
+$lang['mailtext']['invite_body'] =
+"%user_msg%<br/><br/>
+<a href='%zidisha_link%'>www.zidisha.org</a>";
 
 
 //withdraw request confirmation
 $lang['mailtext']['withdraw_request_sub'] = "Withdrawal request confirmation";
 
-$lang['mailtext']['withdraw_request_body_us'] = "Dear %name%,<br/><br/>".
+$lang['mailtext']['withdraw_request_body_us'] = 
 "This is to confirm receipt of your request on %date% to withdraw USD %amount% from your Zidisha lender account. We will mail a check for the amount requested to your address:<br/><br/>".
 "%address1% %address2%<br/>".
 "%city%, %state% %zip% USA<br/><br/>".
@@ -220,7 +181,7 @@ $lang['mailtext']['withdraw_request_body_us'] = "Dear %name%,<br/><br/>".
 "Best wishes!<br/><br/>".
 "Zidisha Team";
 
-$lang['mailtext']['withdraw_request_body_out'] = "Dear %name%,<br/><br/>".
+$lang['mailtext']['withdraw_request_body_out'] = 
 "This is to confirm receipt of your request on %date% to withdraw USD %amount% from your Zidisha lender account. The amount requested will be transferred to your PayPal account at %paypal_email% shortly.<br/><br/>".
 "Should you have any questions concerning this transaction, please don't hesitate to contact us at service@zidisha.org.<br/><br/>".
 "Best wishes,<br/><br/>".
@@ -232,13 +193,13 @@ $lang['mailtext']['bid_out_sub'] = "Outbid Notification";
 
 $lang['mailtext']['bid_down_sub'] = "Outbid Notification";
 
-$lang['mailtext']['bid_out_body'] = "Dear %lname%,<br/><br/>".
+$lang['mailtext']['bid_out_body'] = 
 "This is a notification that your bid to fund USD %bid_amt% of the loan for <a href='%borrower_link%' target='_blank'>%bname%</a> at %bid_interest%% interest has been outbid by another lender who proposed a lower interest rate. The amount outbid of USD %out_bid_amt% has been returned to your lender account, and you may use it to fund another loan or to bid again on this one.<br/><br/>".
 "Loan bids may be partially or fully outbid when the total value of lender bids exceeds the amount needed for the loan. In these cases, only the amount originally requested by the borrower is accepted, and bids at the lowest interest rates are retained. You may bid again on <a href='%borrower_link%' target='_blank'>%bname%</a>'s loan by proposing a lower interest rate.<br/><br/>".
 "Best wishes,<br/><br/>".
 "The Zidisha Team";
 
-$lang['mailtext']['bid_down_body'] = "Dear %lname%,<br/><br/>".
+$lang['mailtext']['bid_down_body'] = 
 "This is a notification that USD %out_bid_amt% of your bid to fund USD %bid_amt% of the loan for <a href='%borrower_link%' target='_blank'>%bname%</a> at %bid_interest%% interest has been outbid by another lender who proposed a lower interest rate. The remaining value of your bid for this loan is USD %remain_bid_amt%. The amount outbid of USD %out_bid_amt% has been returned to your lender account, and you may use it to fund another loan or to bid again on this one.<br/><br/>".
 "Loan bids may be partially or fully outbid when the total value of lender bids exceeds the amount needed for the loan. In these cases, only the amount originally requested by the borrower is accepted, and bids at the lowest interest rates are retained. You may bid again on <a href='%borrower_link%' target='_blank'>%bname%</a>'s loan by proposing a lower interest rate.<br/><br/>".
 "Best wishes,<br/><br/>".
@@ -250,7 +211,7 @@ $lang['mailtext']['lender_donation_sub'] = "Zidisha Donation Receipt";
 $lang['mailtext']['lender_donation_body'] = "Zidisha Inc.<br/>".
 "21900 Muirfield Circle #302<br/>".
 "Sterling, Virginia 20164<br/><br/>".
-"Dear %lname%,<br/><br/>".
+
 "Thank you for your donation of $%donation_amt% to Zidisha Inc. on %date%<br/><br/>".
 
 "Zidisha Inc. is a 501(c)(3) charitable organization per the United States Internal Revenue Service, and did not provide any goods or services in exchange for your donation.  Our Employment Identification Number (EIN) is 80-049-4876.<br/><br/>".
@@ -269,92 +230,24 @@ $lang['mailtext']['lender_donation_body'] = "Zidisha Inc.<br/>".
 //lender funds upload confirmation
 $lang['mailtext']['lender_upload_amt_sub'] = "Lender credit confirmation";
 
-$lang['mailtext']['lender_upload_amt_body'] = "Dear %lname%,<br/><br/>".
-"Thank you for your lender funds upload! The amount received, USD %amount%, has been credited to your Zidisha account and is available for lending at any time.<br/><br/>".
+$lang['mailtext']['lender_upload_amt_body'] = "Thank you for your lender funds upload! The amount received, USD %amount%, has been credited to your Zidisha account and is available for lending at any time.<br/><br/>".
 "Should you have any questions concerning this transaction, please don't hesitate to contact us at service@zidisha.org.<br/><br/>".
 "Kind regards,<br/><br/>".
 "The Zidisha Team";
 
 
 //lender forgiveness confirmation
-$lang['mailtext']['forgive_lender_sub'] = "Confirmation from Zidisha";
+$lang['mailtext']['forgive_lender_sub'] = "Forgiveness confirmation";
 
-$lang['mailtext']['forgive_lender_body'] = "Dear %lname%,<br/><br/>Thank you for forgiving your share in remaining repayments by <a href='%borrower_link%' target='_blank'>%bname%</a>. The remaining amount owed by %bname% has been reduced by USD %amount%.<br/><br/>".
+$lang['mailtext']['forgive_lender_body'] = "Thank you for forgiving your share in remaining repayments by <a href='%borrower_link%' target='_blank'>%bname%</a>. The remaining amount owed by %bname% has been reduced by USD %amount%.<br/><br/>".
 "Best wishes,<br/><br/>".
 "The Zidisha Team";
-
-
-//verification request to partner
-$lang['mailtext']['borrower_verification_request_sub'] = "Verification request";
-
-$lang['mailtext']['borrower_verification_request__body'] = "Dear %pname%,<br/><br/>Zidisha Inc. has posted a new borrower account for verification at %activation_link%<br/><br/>".
-"Thank you,<br/><br/>".
-"Zidisha Team";
-
-
-//reschedule notification
-$lang['mailtext']['reschedule_lender_sub'] = "Message from Zidisha";
-
-$lang['mailtext']['reschedule_amtreduced'] = "Dear %lname%,<br/><br/>%bname% has reduced the current loan repayment installment amounts to USD %newinstallment% per month. The total interest due on %bname%'s loan has been increased, such that lenders will receive the same annual interest to which they had agreed when funding the loan over the longer period the loan is held.You may view the new repayment schedule <a href='%repayschdule_url%#repayschedule' target='_blank' >here</a><br/><br/>
-
-Zidisha borrowers may extend their original repayment periods if circumstances beyond their control prevent them from meeting the expected repayment schedule. %bname% has explained the need for rescheduling as follows:<br/><br/> 
-%comment%<br/><br/>
-If this was written in a local language, we will email you shortly with an English translation.<br/><br/>
-Should you have any questions or comments concerning the loan rescheduling, please do not hesitate to contact us at service@zidisha.org.<br/><br/>
-Best wishes,<br/><br/>
-The Zidisha Team";
-
-$lang['mailtext']['reschedule_amtincreased'] = 'Dear %lname%,<br/>%bname% has increased the current loan repayment installment amounts to USD %newinstallment% per month. The total interest due on %bname%\'s loan has been reduced, such that lenders will receive the same annual interest to which they had agreed when funding the loan over the shorter period the loan is held.
-<br/><br/>
-
-Zidisha borrowers may increase monthly repayment amounts if they find that they are able to repay their loans more quickly than originally anticipated.  %bname%  has explained the reason for this change as follows:<br/><br/>
-%comment%<br/><br/>
-If this was written in a local language, we will email you shortly with an English translation.<br/><br/>
-Should you have any questions or comments concerning the loan rescheduling, please do not hesitate to contact us at service@zidisha.org.<br/><br/>
-Best wishes,<br/><br/>
-The Zidisha Team';
-
-$lang['mailtext']['reschedule_graceperd'] = 'Dear %lname%,<br/>%bname% has been accorded a grace period of %grace_acorded%, during which no repayments will be due. The total interest due on %bname%\'s loan has been increased such that lenders will receive the same annual interest to which they had agreed when funding the loan, over the additional %grace_acorded% that the loan is held.<br/><br/>
-Zidisha borrowers may extend their original repayment periods if circumstances beyond their control prevent them from meeting the expected repayment schedule. %bname% has explained the need for rescheduling as follows:<br/><br/> 
-%comment%<br/><br/>
-If this was written in a local language, we will email you shortly with an English translation.<br/><br/>
-Should you have any questions or comments concerning the loan rescheduling, please do not hesitate to contact us at service@zidisha.org.<br/><br/>
-Best wishes,<br/><br/>
-The Zidisha Team
-';
-
-$lang['mailtext']['reschedule_lender_body'] = "Dear %lname%,<br/><br/>%bname% has agreed to extend repayment of the current loan to %new_repay_period% months. Interest will accrue to lenders over the extended period at the same annual rate as originally accepted by the borrower.<br/><br/>".
-"Zidisha borrowers may extend their original repayment periods if circumstances beyond their control prevent them from meeting the expected repayment schedule. %bname% has explained the need for rescheduling as follows:<br/><br/>".
-"%comment%<br/><br/>".
-"If this was written in a local language, we will email you shortly with an English translation.<br/><br/>".
-"Should you have any questions or comments concerning the loan rescheduling, please do not hesitate to contact us at service@zidisha.org.<br/><br/>".
-"Best wishes,<br/><br/>".
-"The Zidisha Team";
-
-$lang['mailtext']['reschedule_comment_lender_sub'] = "Translation notification";
-
-$lang['mailtext']['reschedule_comment_lender_body'] = "Dear %lname%,<br/><br/>Please find below a translation of %bname%'s explanation of the need to reschedule repayments.<br/><br/>".
-"%comment%<br/><br/>".
-"Zidisha borrowers may extend their original repayment periods if circumstances beyond their control prevent them from meeting the expected repayment schedule. On %date%, %bname% agreed to extend repayment of the current loan to %new_repay_period% months. Interest will accrue to lenders over the extended period at the same annual rate as originally accepted by the borrower.<br/><br/>".
-"Should you have any questions or comments concerning the loan rescheduling, please do not hesitate to contact us at service@zidisha.org.<br/><br/>".
-"Best wishes,<br/><br/>".
-"The Zidisha Team<br/><br/>
-If you no longer wish to receive email notifications when comments are posted on your loans, please log in to your lender account and change your email settings in the Edit Profile page.";
-
-$lang['mailtext']['translate_comment_lender_sub'] = "Translation of New Message: %bname%";
-
-$lang['mailtext']['translate_comment_lender_body'] = "Dear %lname%,<br/><br/>Please find below a translation of the message that was posted on %bname%'s loan page by %sender% on %date%. <br/><br/>".
-"%comment%<br/><br/>".
-"We welcome your participation. Please click <a href=' %link% '>here</a> to view the comment and post a response.<br/><br/>".
-"Best wishes,<br/><br/>".
-"The Zidisha Team<br/><br/><br/>
-If you no longer wish to receive email notifications when comments are posted on your loans, please log in to your lender account and change your email settings in the Edit Profile page.";
 
 
 //writeoff notification to lender
-$lang['mailtext']['default_loan_lender_sub'] = "Message from Zidisha";
+$lang['mailtext']['default_loan_lender_sub'] = "Writeoff notification";
 
-$lang['mailtext']['default_loan_lender_body'] = "Dear %lname%,<br/><br/>This is a notification that the amount remaining outstanding on %bname%'s loan has been written off. To date, %bname% has repaid %percent_repaid% of the USD %rqst_amt% funded.<br/><br/>".
+$lang['mailtext']['default_loan_lender_body'] = "This is a notification that the amount remaining outstanding on %bname%'s loan has been written off. To date, %bname% has repaid %percent_repaid% of the USD %rqst_amt% funded.<br/><br/>".
 "Zidisha's loan write-off policy allows for collection efforts to be pursued for six additional months after a loan's last scheduled repayment installment. If no repayments are received during this period, the loan is written off for accounting and reporting purposes. However, collection efforts may still be pursued, and any amounts recovered will be credited to lenders after a loan is written off.<br/><br/>".
 "Should you have any questions or comments concerning this loan, please do not hesitate to contact us at service@zidisha.org.<br/><br/>".
 "Best regards,<br/><br/>".
@@ -364,20 +257,10 @@ $lang['mailtext']['default_loan_lender_body'] = "Dear %lname%,<br/><br/>This is 
 //new loan application posting notification to lender
 $lang['mailtext']['new_loan_app_lender_sub'] = "%bname% has posted a new loan application!";
 
-$lang['mailtext']['new_loan_app_lender_body'] = "Dear %lname%,<br/><br/>%bname% has posted a new loan application! This borrower fully repaid the loan you funded on %repay_date%.<br/><br/>".
-"You may view and bid on %bname%'s current loan request at %link%<br/><br/>".
+$lang['mailtext']['new_loan_app_lender_body'] = "%bname% fully repaid the loan you funded on %repay_date%, and has just posted a new loan application!<br/><br/>".
+"You may view %bname%'s current loan request at %link%<br/><br/>".
 "Should you have any questions or comments concerning this loan, please do not hesitate to contact us at service@zidisha.org.<br/><br/>".
-"Thanks for your partnership, and best wishes.<br/><br/>".
-"The Zidisha Team";
-
-
-//feedback reminder to lender
-$lang['mailtext']['feedback_reminder_lender_sub'] = "Reminder: Please leave feedback for %bname%";
-
-$lang['mailtext']['feedback_reminder_lender_body'] = "Dear %lname%,<br/><br/>%bname% fully repaid the loan you funded on %repay_date%. Please take a moment to assign a feedback rating to this loan transaction at <a href=' %link% '>%link%</a>.<br/><br/>".
-"Your feedback rating will be recorded on %bname%'s Zidisha profile, creating a performance record that will facilitate the financing of future loans.<br/><br/>".
-"Should you have any questions, please do not hesitate to contact us at service@zidisha.org.<br/><br/>".
-"Thanks for your partnership, and best wishes.<br/><br/>".
+"Best wishes.<br/><br/>".
 "The Zidisha Team";
 
 
@@ -409,7 +292,7 @@ $lang['mailtext']['share_email_body'] = "%note%<a href='%zidisha_link%' target='
 //forgiveness invite to lender
 $lang['mailtext']['loan_forgiveness_subj']='Your loan to %bname%';
 
-$lang['mailtext']['loan_forgiveness_body']='Dear %name%,<br/><br/>
+$lang['mailtext']['loan_forgiveness_body']='
 We are writing to inform you of difficulties experienced by %bname%, whose loan you funded on %date%. You may choose to forgive %bname%\'s loan using the button below.<br/><br/>
 %msg%<br/><br/>
 In exceptional cases, Zidisha offers lenders the option to forgive loans to borrowers who have experienced an unexpected misfortune which affects their ability to repay the loan. In these cases, each lender has the option to forgive his or her share of the loan. Such decisions will remain anonymous and are completely at each lender\'s discretion.<br/><br/>

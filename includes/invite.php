@@ -48,9 +48,9 @@ if($session->userlevel==LENDER_LEVEL || empty($session->userid))
 		$name = $lender['name'];
 		$lemail = $lender['email'];
 		$subject = $lang['invite']['enter_subject']." ".$name;
-		$invite_body = $lang['mailtext']['invite_body1'];
+		$invite_body = $lang['mailtext']['invite_body_l'];
 		if($form->value('user_name')) {
-			$invite_body = $form->value('invite_body1');
+			$invite_body = $form->value('invite_body_l');
 		}
 		if($form->value('user_name')) {
 			$lemail = $form->value('user_email');
