@@ -5770,10 +5770,10 @@ function forgiveReminder(){
 							/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
 							if($preference==6){										
 								$status = $session->getStatusBar($loans[0]['borrowerid'],$loans[0]['loanid'],5);
-								$lastBidDetail=$database->lastBidDetail();
-								if(!empty($lastBidDetail)){
-										$lastBidAmnt=$lastBidDetail['amnt'];
-										$lastBidIntr=$lastBidDetail['intr'];
+								$lastBid=$database->lastBidDetail($loans[0]['loanid']);
+								if(!empty($lastBid)){
+										$lastBidAmnt=$lastBid['amnt'];
+										$lastBidIntr=$lastBid['intr'];
 
 										if($desiredInt < $lastBidIntr && $lastBidIntr<$MaxdesiredInt){
 											$intToPlaceBid=$lastBidIntr;
@@ -5833,10 +5833,10 @@ function forgiveReminder(){
 									
 									/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
 									if($preference==6){										
-										$lastBidDetail=$database->lastBidDetail();
+										$lastBid=$database->lastBidDetail($loan['loanid']);
 										if(!empty($lastBidDetail)){
-											    $lastBidAmnt=$lastBidDetail['amnt'];
-											    $lastBidIntr=$lastBidDetail['intr'];
+											    $lastBidAmnt=$lastBid['amnt'];
+											    $lastBidIntr=$lastBid['intr'];
 
 												if($desiredInt < $lastBidIntr && $lastBidIntr<$MaxdesiredInt){
 													$intToPlaceBid=$lastBidIntr;
