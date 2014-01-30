@@ -5769,7 +5769,7 @@ function forgiveReminder(){
 							}
 							/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
 							if($preference==6){										
-								$status = $session->getStatusBar($loan['borrowerid'],$loan['loanid'],5);
+								$status = $session->getStatusBar($loans[0]['borrowerid'],$loans[0]['loanid'],5);
 								$lastBidDetail=$database->lastBidDetail();
 								if(!empty($lastBidDetail)){
 										$lastBidAmnt=$lastBidDetail['amnt'];
