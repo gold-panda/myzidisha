@@ -23157,20 +23157,18 @@ function getAllRecentComments($limit)
     }
 
 function lastBidDetail(){
-	   global $db,$database;
-		$q="SELECT transactions.TrDate as transDate,transactions.amount,transactions.loanbid_id,transactions.userid,auto_lendbids.id,loanid FROM ! LEFT OUTER JOIN ! on  transactions.loanbid_id= auto_lendbids.loanbid_id WHERE transactions.txn_type=? AND auto_lendbids.id IS NULL ORDER BY TrDate desc";	
-        $result=$db->getAll($q,array('transactions','auto_lendbids' ,LOAN_BID));
+	   	$qry='SELECT transactions.TrDate as transDate,transactions.amount,transactions.loanbid_id,transactions.userid,auto_lendbids.id,loanid FROM transactions LEFT OUTER JOIN auto_lendbids on  transactions.loanbid_id= auto_lendbids.loanbid_id WHERE transactions.txn_type='.LOAN_BID.' AND auto_lendbids.id IS NULL ORDER BY TrDate desc limit 0,1';
+		$result= mysql_query($qry);
+		$data=mysql_fetch_object($result);		
 		$lastLoan=array();
-		foreach($result as $rows)
-		{				 
-			$lastLoan['lid']=$rows['loanid'];
-			$lastLoan['tdDate']=$rows['transDate'];
-			$lastLoan['amnt']=str_replace('-','',$rows['amount']);
-			$p="SELECT bidint FROM ! where lenderid=? AND loanid=?";
-			$int=$db->getOne($p,array('loanbids', $rows['userid'],$rows['loanid']));
-			$lastLoan['intr']=$int;
-			return $lastLoan;
-		}	
+		$lastLoan['tdDate']=$data->transDate;
+		$lastLoan['amnt']=str_replace('-','',$data->amount);
+		
+		$q='SELECT bidint FROM loanbids where lenderid='.$data->userid.' AND loanid='.$data->loanid.'';
+		$rs=mysql_query($q);
+		$ob=mysql_fetch_object($rs);
+		$lastLoan['intr']=$ob->bidint;
+		return $lastLoan;
 	}
 
 /* To Manage Language for country Basis By Mohit 24-01-2014 */  

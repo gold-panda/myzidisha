@@ -5767,6 +5767,28 @@ function forgiveReminder(){
 							}else {
 								$intToPlaceBid = $loans[0]['intOffer'];
 							}
+							/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
+							if($preference==6){										
+								$status = $session->getStatusBar($loan['borrowerid'],$loan['loanid'],5);
+								$lastBidDetail=$database->lastBidDetail();
+								if(!empty($lastBidDetail)){
+										$lastBidAmnt=$lastBidDetail['amnt'];
+										$lastBidIntr=$lastBidDetail['intr'];
+
+										if($desiredInt < $lastBidIntr && $lastBidIntr<$MaxdesiredInt){
+											$intToPlaceBid=$lastBidIntr;
+										}elseif ($desiredInt > $lastBidIntr){
+											$intToPlaceBid=$desiredInt;
+										}else{
+											$intToPlaceBid=$MaxdesiredInt;
+										}
+										
+										$biddedAmnt=($loan['reqdamt']*$status)/100;
+										$reqAmnt=$loan['reqdamt']-$biddedAmnt;
+										$amountTobid = min($lastBidAmnt, $reqAmnt, AUTO_LEND_AMT);
+										
+								}
+							}/***** End here *****/
 							$LoanbidId=$this->placebid($loans[0]['loanid'], $loans[0]['borrowerid'], $amountTobid, $intToPlaceBid, 1, true,$lenderId);
 							if(is_array($LoanbidId)) {
 									$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loans[0]['borrowerid'], $loans[0]['loanid'], $amountTobid,$intToPlaceBid);
