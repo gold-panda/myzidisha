@@ -278,19 +278,6 @@ if($language==''){
 <!-- end SiftScience code -->
 
 
-<!-- start Mixpanel -->
-
-<script type="text/javascript">(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
-typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);
-b._i.push([a,e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
-mixpanel.init("8c840139721b8d829c91d1c7aff93c2e");</script>
-
-<script type="text/javascript">
-  mixpanel.track ("Landing Page Loaded");
-</script>
-
-<!-- end Mixpanel -->
-
 </head>
 <body>
 
@@ -977,14 +964,9 @@ mixpanel.init("8c840139721b8d829c91d1c7aff93c2e");</script>
 
 			<p>
 				<em>
-					Zidisha Microfinance is the first peer-to-peer microlending service to offer direct interaction between lenders and borrowers across international borders. We are a United States 501(c)(3) nonprofit organization.
+					Zidisha is the first peer-to-peer microlending service to offer direct interaction between lenders and borrowers across international borders. We are a United States 501(c)(3) nonprofit organization.
 				</em><br/><br/>
 				<em>&copy; 2009 - 2014 Zidisha Inc.</em>
-			</p>
-
-			<!-- Mixpanel badge -->
-			<p>
-				<a href="https://mixpanel.com/f/partner"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
 			</p>
 			
 		</footer>
