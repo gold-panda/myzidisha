@@ -9,7 +9,7 @@
 	$uid = $facebook->getUser();
 	
 	// check whether user exist in database
-	$check_user = $database->IsFacebookIdExist($uid);
+	$check_user = $database->getExistFbUser($uid);
 	
 	// if user tries to log in
 	if ($_GET['code'])
@@ -17,14 +17,26 @@
 		// if user exist
 		if($check_user)
 		{
-			// todo
-			echo '<p style="width:100%;font-size:40px;clear:both;">User exist, so you should decide what is next</p>';
+			$session->userinfo  = $check_user;
+			$session->username  = $_SESSION['username'] = $session->userinfo['username'];
+			$session->fullname  = $session->userinfo['name'];
+			$session->userid    = $_SESSION['userid'] = $session->userinfo['userid'];
+			$session->userlevel = $session->userinfo['userlevel'];
+			$session->usersublevel = $_SESSION['sublevel'] = $session->userinfo['sublevel'];
+			
+		?>
+			<script>
+				window.location.assign('<?php echo SITE_URL ?>');
+			</script>
+		<?php
+			die();
+			
 		}
 		// if user doesn't exist
 		else
 		{
 			// todo
-			echo '<p style="width:100%;font-size:40px;clear:both;">User doesn\'t exist,  so you should decide what is next</p>';
+			echo '<p style="width:100%;font-size:20px;clear:both;">Email doesn\'t exist in our database, so you should register</p>';
 		}
 	}
 	
