@@ -17,6 +17,7 @@
 		header("Location: ".SITE_URL);
 	}
 	global $database,$session;
+
 	RedirectLoanprofileurl();
 	RedirectUserprofileurl();
 	$language = '';
