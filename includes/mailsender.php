@@ -144,8 +144,17 @@ This is a wrapper function for sending emails
 	else if($html==3)
 	{
 		$templet = str_replace('%header%',$header,$templet);
-		$templet = str_replace('%image_src%',$info['image_src'],$templet);
 		$templet = str_replace('%content_mail%',$body,$templet);
+
+		if (!empty($info['image_src'])){
+
+			$templet = str_replace('%image_src%', "<img src='".$info['image_src']."' class='center'>", $templet);
+		
+		}else{
+
+			$templet = str_replace('%image_src%','',$templet);
+		
+		}
 
 	}
 	$hdr_from = stripslashes(clearPost($hdr_from));

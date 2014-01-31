@@ -31,6 +31,29 @@ She obtained a law degree from Pontificia Universidad Catolica Madre y Maestra, 
 							<br />
 
 
+
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/roberta.zenere.html" target="_blank">ROBERTA ZENERE</a>, Ghana Country Expansion Coordinator</h4>
+							
+							<p style="margin-top:10px;">Roberta is from Padua, Italy. Her interest for microfinance has emerged when starting to collaborate in a microcredit project run by an Italian association. Last year, she also spent two months in Ghana researching models for linking indigenous financial intermediaries (Susu Collectors) with the formal banking system. She thinks that microfinance has initiated a cultural revolution that brings the person to the core of the development process and she is strongly interested in ventures that introduce innovation in the delivery of microfinance services, as Zidisha is doing. Roberta has recently obtained a master\'s degree in Economics and Management for Nonprofit Organizations from the University of Bologna (Italy) and she is willing to further her education in the field of Development Finance. Roberta is now living in Ghana and was very happy to assist Zidisha in expanding its lending service in that country for the benefit of Ghanaian entrepreneurs. </p>
+							
+							<br />
+
+							
+
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/eaganlender.html">ERIN EAGAN</a>, Senegal Client Relationship Manager</h4>
+							
+							<p style="margin-top:10px;">Erin is an undergraduate student at Kalamazoo College in Michigan. She studies Economics and French, and plans to work with micro-financing and educational development after graduation. Erin first found Zidisha in 2011 after searching for equitable economic interest groups. She is currently in Senegal, volunteering with Zidisha and volunteering teaching English. She will returning to Michigan for the spring quarter of studies. Erin plans to return to Senegal for research on her senior thesis, and looks forward to volunteering with Zidisha throughout her undergrad and after. Erin\'s favorite hobbies in Senegal include learning Wolof, doing yoga on her terrace, and making meals for her family.</p>
+							
+							<br />
+
+
+
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/mfrost3.html">MIRIAM FROST</a>, Senegal Client Relationship Manager</h4>
+							
+							<p style="margin-top:10px;">Miriam is a recent graduate of the University of Rochester where she studied International Relations and French. She studied abroad in Senegal in 2012 and serendipitously finds herself back in Dakar to work and try out life as an expat. She has international and cross-cultural experience from her travels throughout West Africa as well as her previous work with refugees. Miriam is excited to join the Zidisha team and contribute to sustainable local development. In her free time she tutors English, works to assist stray dogs and cats, and is attempting to try every beignet lady in Dakar.</p>
+							
+							<br />
+
 											
 
 <h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/VincentC.html">VINCENT CASANOVA</a>, Francophone Country Liaison Intern</h4>
@@ -78,6 +101,14 @@ My experience as an immigrant has provided me with an opportunity to explore a v
 <h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/claire.mcleland.html" target="_blank">CLAIRE MCLELAND</a>, Francophone Country Liaison Intern</h4>
 							
 							<p style="margin-top:10px;">Claire McLeland is from northern Virginia and recently graduated from Principia College in Illinois with a B.A. in Sociology and Anthropology and minors in French and music. While at university, Claire had the opportunity to have dinner, along with other students and faculty, with Muhammad Yunus who was visiting to give a talk. That evening, along with her experiences traveling to France, Brazil, and the island of St. Kitts in the Caribbean, sparked an interest in microfinance that led to Claire\'s involvement with Zidisha, where she is thrilled to be putting her language skills to good use as a Francophone Country Liaison Intern. In her free time, Claire loves to read, spend time outdoors, play guitar, piano, and sing!</p>
+							
+							<br />
+
+
+
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/rpd45.html">RIO DJIWANDANA</a>, Indonesia Country Liaison Intern</h4>
+							
+							<p style="margin-top:10px;">Rio Djiwandana is a sophomore at Georgetown University\'s School of Foreign Service majoring in International Political Economy, with minors in Entrepreneurship and International Development. Originally from Surabaya, Indonesia, Rio resides with his family in sunny Los Angeles, California, when he is not attending school in Washington, DC. Rio is very passionate about poverty alleviation, and he strongly believes in the power of microfinance to lift people out of poverty and ensure that everyone, especially struggling entrepreneurs and small businesses with limited resources, can receive access to high-quality financial services. In his free time, Rio enjoys exploring the outdoors, trying exotic new foods, and watching "American Horror Story." </p>
 							
 							<br />
 
@@ -151,13 +182,6 @@ accompanying my father on his Biodiesel projects, and wanting to do my bit to up
 
 							<br />
 
-
-
-<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/roberta.zenere.html" target="_blank">ROBERTA ZENERE</a>, Ghana Country Expansion Coordinator</h4>
-							
-							<p style="margin-top:10px;">Roberta is from Padua, Italy. Her interest for microfinance has emerged when starting to collaborate in a microcredit project run by an Italian association. Last year, she also spent two months in Ghana researching models for linking indigenous financial intermediaries (Susu Collectors) with the formal banking system. She thinks that microfinance has initiated a cultural revolution that brings the person to the core of the development process and she is strongly interested in ventures that introduce innovation in the delivery of microfinance services, as Zidisha is doing. Roberta has recently obtained a master\'s degree in Economics and Management for Nonprofit Organizations from the University of Bologna (Italy) and she is willing to further her education in the field of Development Finance. Roberta is now living in Ghana and was very happy to assist Zidisha in expanding its lending service in that country for the benefit of Ghanaian entrepreneurs. </p>
-							
-							<br />
 
 
 <h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/ashleeandjeanelle.html">ASHLEE BEAZLEY</a>, Communications Associate</h4>

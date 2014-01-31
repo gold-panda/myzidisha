@@ -6868,6 +6868,7 @@ function forgiveReminder(){
 		 }
 
 		//MESSAGE TO ADMIN
+		$templet="editables/email/hero.html";
 		$To=ADMIN_FROM_NAME;
 		$adminemail=ADMIN_EMAIL_ADDR;
 		$params['name'] = 'Admin';
