@@ -722,7 +722,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 					require ("editables/mailtext.php");
 					$loanprurl = getLoanprofileUrl($borrowerid, $loanid);
 					$params['link'] = SITE_URL.$loanprurl.'#e1' ;
-					$params['bname'] = $b_name;
+					$params['bname'] = ucwords(strtolower($b_name));
 					$params['image_src'] = $database->getProfileImage($borrowerid);
 					$Subject = $this->formMessage($lang['mailtext']['RepayFeedback-subject'], $params);
 					$header = $this->formMessage($lang['mailtext']['RepayFeedback-msg1'], $params);
@@ -1092,7 +1092,8 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				require ("editables/mailtext.php");
 				$From=EMAIL_FROM_ADDR;
 				$templet="editables/email/hero.html";
-				$params['bname'] = $database->getNameById($pid);
+				$bname_orig = $database->getNameById($pid);
+				$params['bname'] = ucwords(strtolower($bname_orig));
 				$params['ddate'] = date('M d, Y',  time());
 				$params['link'] = WEBSITE_ADDRESS.'?p=14&l='.$loanid ;
 				$Subject= $this->formMessage($lang['mailtext']['ActiveBid-subject'], $params);
@@ -1108,7 +1109,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				}
 				$r = $database->getEmailB($pid);
 				$Subject=$lang['mailtext']['loan_disburse_sub'];
-				$To=$params['bname'] = $r['name'];
+				$To= $params['bname'] = $r['name'];
 				$currency='';
 				$currency_amt=$database->getReg_CurrencyAmount($pid);
 				foreach($currency_amt as $row)
@@ -2353,7 +2354,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 						{
 							$params=array();
 							$params['applicant_name'] = $namea." ".$nameb;
-							$To=$params['bname'] = $userinfo['name'];
+							$To= $params['bname'] = $userinfo['name'];
 							$params['amount'] = $referDetail['ref_commission'];
 							$params['referral_link'] = SITE_URL."index.php?p=50";
 							$Subject = $this->formMessage($lang['mailtext']['borrower_referral_sub'], $params);
@@ -2614,7 +2615,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 								$e_email= $endorser_email[$i];
 								$Subject=$namea." ".$nameb." ".$lang['mailtext']['borrowerEndorser-subject'];
 								$To=$params['name'] = $endorser_name[$i] ;
-								$params['bname'] = $bdetail['FirstName']." ".$bdetail['LastName'];
+								$bname_orig = $bdetail['FirstName']." ".$bdetail['LastName'];
+								$params['bname'] = ucwords(strtolower($bname_orig));
 								$replyTo = SERVICE_EMAIL_ADDR;
 								$message = $this->formMessage($lang['mailtext']['BorrowerEndorser-msg'], $params);
 								$reply= $this->mailSendingHtml($From, $To, $e_email, $Subject, '', $message, 0, $templet, 3); 
@@ -3202,7 +3204,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 					$templet="editables/email/hero.html";
 					require ("editables/mailtext.php");
 					$To=$params['name'] = $deat['name'];
-					$params['bname'] = $database->getNameById($borrowerid);
+					$bname_orig = $database->getNameById($borrowerid);
+					$params['bname'] = ucwords(strtolower($bname_orig));
 					$loanprurl = getLoanprofileUrl($borrowerid, $loanid);
 					$params['profile_link'] = SITE_URL.$loanprurl;
 					$params['image_src'] = $database->getProfileImage($borrowerid);
@@ -3758,7 +3761,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 									$templet="editables/email/simplemail.html";
 									require("editables/mailtext.php");
 									$Subject=$lang['mailtext']['borrower_referral_admin_sub'];
-									$params['bname'] = $database->getNameById($commission['referrer_id']);
+									$bname_orig = $database->getNameById($commission['referrer_id']);
+									$params['bname'] = ucwords(strtolower($bname_orig));
 									$params['applicant_name'] = $database->getNameById($applicant_id);
 									$params['commission'] = $commission['ref_commission'];
 									$params['credit_amount'] = $balance;
@@ -3781,7 +3785,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 					$templet="editables/email/simplemail.html";
 					require("editables/mailtext.php");
 					$Subject=$lang['mailtext']['borrower_referral_admin_sub'];
-					$params['bname'] = $database->getNameById($commission['referrer_id']);
+					$bname_orig = $database->getNameById($commission['referrer_id']);
+					$params['bname'] = ucwords(strtolower($bname_orig));
 					$params['applicant_name'] = $database->getNameById($applicant_id);
 					$params['commission'] = $commission['ref_commission'];
 					$message = $this->formMessage($lang['mailtext']['borrower_referral_admin_body_1'], $params);
@@ -4444,7 +4449,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 							$params['out_bid_amt'] = number_format($bidamount, 2, ".", ",");
 							$params['bid_amt'] = number_format($bidamount, 2, ".", ",");
 							$params['borrower_link'] = SITE_URL.$loanprurl;
-							$params['bname'] = $bname;
+							$params['bname'] = ucwords(strtolower($bname));
 							$params['bid_interest'] = number_format($bidint, 2, ".", ",");
 
 							$Subject=$lang['mailtext']['bid_out_sub'];
@@ -4461,7 +4466,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 							$params['remain_bid_amt'] = number_format($acceptedAmt, 2, ".", ",");
 							$params['bid_amt'] = number_format($bidamount, 2, ".", ",");
 							$params['borrower_link'] = SITE_URL.$loanprurl;
-							$params['bname'] = $bname;
+							$params['bname'] = ucwords(strtolower($bname));
 							$params['bid_interest'] = number_format($bidint, 2, ".", ",");
 							$params['out_bid_amt'] = number_format(($bidamount-$acceptedAmt), 2, ".", ",");
 							$Subject=$lang['mailtext']['bid_down_sub'];
@@ -6822,7 +6827,7 @@ function forgiveReminder(){
 		$templet="editables/email/simplemail.html";
 		require("editables/mailtext.php");
 		$Subject=$lang['mailtext']['borrower_mobile_change_sub'];
-		$To=$params['bname'] = $Detail['name'];
+		$To= $params['bname'] = $Detail['name'];
 		$params['username'] = $this->username;
 		$CountryDetail=$database->getUserCityCountry($userid);
 		$params['country'] =$database->mysetCountry($CountryDetail['Country']);
@@ -6871,7 +6876,6 @@ function forgiveReminder(){
 		$templet="editables/email/hero.html";
 		$To=ADMIN_FROM_NAME;
 		$adminemail=ADMIN_EMAIL_ADDR;
-		$params['name'] = 'Admin';
 		$params['link'] = SITE_URL.$loanprurl ;
 		$params['message'] = $msg;
 		$params['images'] =  $imgtag;
@@ -6879,7 +6883,8 @@ function forgiveReminder(){
 		$params['mname'] = $database->getUserNameById($cmts['senderid']);
 		$ulevel=$database->getUserLevel($params['mname']);
 		if($ulevel==BORROWER_LEVEL)
-			$params['mname']=$database->getNameById($cmts['senderid']);
+			$borrower_name = $database->getNameById($cmts['senderid']);
+			$params['mname']=ucwords(strtolower($borrower_name));
 		$emailmssg=$this->formMessage($lang['mailtext']['comment-msg'], $params);
 
 		$reply=$this->mailSendingHtml($From,$To,$adminemail , $emailsubject, '', $emailmssg, 0, $templet, 3);
@@ -6906,7 +6911,6 @@ function forgiveReminder(){
 
 				$templet="editables/email/hero.html";
 				$lenderemail=$rows['Email'];
-				$params['name'] = $To;
 				$params['link'] = SITE_URL.$loanprurl ;
 				$emailmssg=$this->formMessage($lang['mailtext']['comment-msg'], $params);
 				if($lenderemail){
@@ -6936,7 +6940,8 @@ function forgiveReminder(){
 
 			$To=ADMIN_FROM_NAME;
 			$adminemail=ADMIN_EMAIL_ADDR;
-			$params['bname'] = $res_BEmail['name'];
+			$bname_orig = $res_BEmail['name'];
+			$params['bname'] = ucwords(strtolower($bname_orig));
 			$params['lname'] = 'Admin';
 			$loanprurl = getLoanprofileUrl($userid, $loanid);
 			$params['link'] = SITE_URL.$loanprurl ;
@@ -6976,7 +6981,8 @@ function forgiveReminder(){
 		$templet="editables/email/hero.html";
 		require("editables/mailtext.php");
 		$Subject=$lang['mailtext']['forgive_lender_sub'];
-		$params['bname'] = $database->getNameById($borrower_id);
+		$bname_orig = $database->getNameById($borrower_id);
+		$params['bname'] = ucwords(strtolower($bname_orig));
 		$loanprurl = getLoanprofileUrl($borrower_id, $loan_id);
 		$params['borrower_link'] = SITE_URL.$loanprurl;
 		$params['amount'] = number_format($damount, 2, ".", "");
@@ -7010,7 +7016,8 @@ function forgiveReminder(){
 		require("editables/mailtext.php");
 		$Detail=$database->getEmail($lenderid);
 		$Subject=$lang['mailtext']['default_loan_lender_sub'];
-		$params['bname'] = $borrower_name;
+		$bname_orig = $borrower_name;
+		$params['bname'] = ucwords(strtolower($bname_orig));
 		$params['percent_repaid'] = $percent_repaid;
 		$params['rqst_amt'] = number_format($rqst_amt, 0, '.', '');
 		$message = $this->formMessage($lang['mailtext']['default_loan_lender_body'], $params);
@@ -7024,7 +7031,8 @@ function forgiveReminder(){
 		$From=EMAIL_FROM_ADDR;
 		$templet="editables/email/hero.html";
 		require("editables/mailtext.php");
-		$params['bname'] = $borrower_name;
+		$bname_orig = $borrower_name;
+		$params['bname'] = ucwords(strtolower($bname_orig));
 		$params['repay_date'] = date('F j, Y',$repay_date);
 		$loanprurl = getLoanprofileUrl($borrower_id, $loan_id);
 		$params['link'] = SITE_URL.$loanprurl;
@@ -7042,7 +7050,8 @@ function forgiveReminder(){
 		require ("editables/mailtext.php");
 		$loanprurl = getLoanprofileUrl($borrowerid, $loanid);
 		$params['link'] = SITE_URL.$loanprurl.'#e1' ;
-		$params['bname'] = $b_name;
+		$bname_orig = $b_name;
+		$params['bname'] = ucwords(strtolower($bname_orig));
 		$params['image_src'] = $database->getProfileImage($borrowerid);
 		$Subject = $this->formMessage($lang['mailtext']['RepayFeedback-subject'], $params);
 		$header = $this->formMessage($lang['mailtext']['RepayFeedback-msg1'], $params);
@@ -7144,7 +7153,7 @@ function forgiveReminder(){
 			$bemail=$Detail['email'];
 			$To = "";
 			$params['expirydate']=date('F d, Y',  $expirydate);
-			$params['bname'] = $Detail['name'];
+			$params['bname'] = ucwords(strtolower($Detail['name']));
 			$loanprurl = getLoanprofileUrl($brwid, $loanid);
 			$params['link']= SITE_URL.$loanprurl;
 			$message = $this->formMessage($lang['mailtext']['LoanFunded-body'], $params);
@@ -7170,7 +7179,7 @@ function forgiveReminder(){
 			$bemail=$Detail['email'];
 			$To = "";
 			$params['deadline']=$database->getAdminSetting('deadline');
-			$params['bname'] = $Detail['name'];
+			$params['bname'] = ucwords(strtolower($Detail['name']));
 			$params['editlink']= SITE_URL.'index.php?p=44';
 			$params['loanappliclink']= SITE_URL.'index.php?p=44';
 			$loanprurl = getLoanprofileUrl($brwid, $loanid);
@@ -7210,7 +7219,7 @@ function forgiveReminder(){
 			$params['expirydate']=date('F d, Y',  $expirydate);
 			$params['editlink']=SITE_URL.'index.php?p=13';
 			$params['loanappliclink']= SITE_URL.'index.php?p=44';
-			$params['bname'] = $Detail['name'];
+			$params['bname'] = ucwords(strtolower($Detail['name']));
 			$message = $this->formMessage($lang['mailtext']['LoanExpiry-body'], $params);
 			$reply=$this->mailSendingHtml($From, $To, $bemail, $Subject, '', $message, 0, $templet, 3);
 			$database->setExpirymailSent($loanToexpire['loanid']);
@@ -7232,7 +7241,8 @@ function forgiveReminder(){
 			$To = "";
 			$params['expirydate']=date('F d, Y',  $expirydate);
 			$params['loanapplicLink']=SITE_URL.'index.php?p=9&inst=1';
-			$params['bname'] = $Detail['name'];
+			$bname_orig = $Detail['name'];
+			$params['bname'] = ucwords(strtolower($bname_orig));
 			$message = $this->formMessage($lang['mailtext']['LoanExpired-body'], $params);
 			$reply=$this->mailSendingHtml($From, $To, $bemail, $Subject, '', $message, 0, $templet, 3);
 	}
