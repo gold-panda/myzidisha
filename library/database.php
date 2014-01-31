@@ -14798,7 +14798,7 @@ class genericClass
 
         }
 
-     $q="select userid, username, userlevel, sublevel from ! where facebook_id='$facebook_id' $where order by userid limit 1";
+        $q="select userid, username, userlevel, sublevel from ! where facebook_id='$facebook_id' $where order by userid limit 1";
 
         $result=$db->getRow($q, array('users'));
 
