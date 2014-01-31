@@ -746,7 +746,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 			$telnumber= $database->getPrevMobile($borrowerid);
 			$to_number = $this->FormatNumber($telnumber, $country);
 			$bdetail=$database->getEmailB($borrowerid);
-			$params['bname']=$bdetail['name'];
+			$params['bname']=ucwords(strtolower($bdetail['name']));
 			$params['currency']= $currency;
 			$params['bpaidamt']= $amount;
 			$b_email=$bdetail['email'];
@@ -1109,7 +1109,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 				}
 				$r = $database->getEmailB($pid);
 				$Subject=$lang['mailtext']['loan_disburse_sub'];
-				$To= $params['bname'] = $r['name'];
+				$To= $params['bname'] = ucwords(strtolower($r['name']));
 				$currency='';
 				$currency_amt=$database->getReg_CurrencyAmount($pid);
 				foreach($currency_amt as $row)
@@ -2354,7 +2354,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 						{
 							$params=array();
 							$params['applicant_name'] = $namea." ".$nameb;
-							$To= $params['bname'] = $userinfo['name'];
+							$To= $params['bname'] = ucwords(strtolower($userinfo['name']));
 							$params['amount'] = $referDetail['ref_commission'];
 							$params['referral_link'] = SITE_URL."index.php?p=50";
 							$Subject = $this->formMessage($lang['mailtext']['borrower_referral_sub'], $params);
@@ -2386,7 +2386,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 							$e_email= $endorser_email[$i];
 							$Subject=$namea." ".$nameb." ".$lang['mailtext']['borrowerEndorser-subject'];
 							$To=$params['name'] = $endorser_name[$i] ;
-							$params['bname']= $namea." ".$nameb;
+							$bname_orig = $namea." ".$nameb;
+							$params['bname'] = ucwords(strtolower($bname_orig));
 							$replyTo = SERVICE_EMAIL_ADDR;
 							$message = $this->formMessage($lang['mailtext']['BorrowerEndorser-msg'], $params);
 							$reply= $this->mailSendingHtml($From, $To, $e_email, $Subject, '', $message, 0, $templet, 3); 
@@ -2557,7 +2558,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 								$e_email= $endorser_email[$i];
 								$Subject=$namea." ".$nameb." ".$lang['mailtext']['borrowerEndorser-subject'];
 								$To=$params['name'] = $endorser_name[$i] ;
-								$params['bname']= $namea." ".$nameb;
+								$bname_orig = $namea." ".$nameb;
+								$params['bname'] = ucwords(strtolower($bname_orig));
 								$replyTo = SERVICE_EMAIL_ADDR;
 								$message = $this->formMessage($lang['mailtext']['BorrowerEndorser-msg'], $params);
 								$reply= $this->mailSendingHtml($From, $To, $e_email, $Subject, '', $message, 0, $templet, 3); 
