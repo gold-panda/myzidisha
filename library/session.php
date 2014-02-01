@@ -4299,7 +4299,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$damount=$database->getOpenLoanAmount($brwid, $loanid, false);
 			$CurrencyRate = $database->getCurrentRate($brwid);
 			$BidAmt=$database->getTotalBid($brwid,$loanid);
-			if($availableAmt < $amount){
+			if($availableAmt < $amount || $amount == 0){
 				//$form->setError($field, $lang['error']['insuffi_amount']." USD ". number_format($availableAmt,2, '.', ','));
 				if($auto_lend) {
 					return 3;

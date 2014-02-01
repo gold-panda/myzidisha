@@ -57,12 +57,12 @@ if(empty($t))
 	<div id="register_tabs" class="group">
 
 		<?php if($select==1) { ?>
-			<div class="register_eachtab register_activetab" ><?php echo $lang['register']['Borrower'];?></div>
 			<div class="register_eachtab" onclick="window.location='index.php?p=1&sel=2&lang=<?php echo $language ?>'" ><?php echo $lang['register']['Lender'];?></div>
+			<div class="register_eachtab register_activetab" ><?php echo $lang['register']['Borrower'];?></div>
 		<?php } else { ?>
-			<div class="register_eachtab" onclick="window.location='index.php?p=1&sel=1&lang=<?php echo $language ?>'" ><?php echo $lang['register']['Borrower'];?></div>
 			<div class="register_eachtab register_activetab" ><?php echo $lang['register']['Lender'];?></div>
-
+			<div class="register_eachtab" onclick="window.location='index.php?p=1&sel=1&lang=<?php echo $language ?>'" ><?php echo $lang['register']['Borrower'];?></div>
+			
 		<?php } ?>
 	</div>
 <?php

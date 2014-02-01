@@ -1,12 +1,6 @@
 <div class="row">
 	<form enctype="multipart/form-data" method="post" id="sub-lender" name="sub-lender" action="process.php">
-		<div>
-			<?php if($select==6) {
-				echo "<strong>This page allows you to create a donation account.  Donation accounts differ from regular lender accounts in that lending credit uploaded to these accounts is a tax-deductible donation which cannot be withdrawn or refunded.  <br/><br/>You will be able to control the use of the lending credit uploaded to this account as long as it remains active.  Please see our Terms of Use for more details.</strong>";
-			?>
-			<div style="display: none"><INPUT TYPE="Radio" id="DonationAcct" name="DonationAcct" value="1" tabindex="3" checked/></div>
-			<?php } ?>
-		</div>
+		
 		<div class="holder_342 group">
 			<br/>
 			
@@ -17,6 +11,7 @@
 			<br/>
 			<div id="bunerror"><?php echo $form->error("lusername"); ?></div>
 
+
 			<!-- Create password -->
 			<br/>
 			<label><?php echo$lang['register']['ppassword'];?></label>
@@ -24,30 +19,6 @@
 			<br/>
 			<div id="passerror"><?php echo $form->error("lpass1"); ?></div>
 
-			<!-- First name -->
-			<br/>
-			<label>
-				<?php 
-					if($select==5) {
-						echo $lang['register']['lgname'];
-					} else {
-						echo$lang['register']['fname'];
-					}
-				?>
-				
-			</label>
-			<input type="text" name="lfname" id="lfname" maxlength="200" class="inputcmmn-1" value="<?php echo $form->value("lfname"); ?>" />
-			<br/>
-			<?php echo $form->error("lfname"); ?>
-
-			
-			<!-- Last Name -->
-			<br/>
-			<label><?php echo $lang['register']['lname'];?></label>
-			<input type="text" name="llname" id='llname' maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("llname"); ?>" />
-			<br/>
-			<?php echo $form->error("llname"); ?>
-			
 
 			<!-- E-mail address -->
 			<br/>
@@ -55,15 +26,7 @@
 			<input type="text" id="bemail" name="lemail" maxlength="50" class="inputcmmn-1"  value="<?php echo $form->value("lemail"); ?>" />
 			<br/>
 			<div id="emailerror"><?php echo $form->error("lemail"); ?></div>
-
-
-			<!-- City -->
-			<br/>
-			<label><?php echo $lang['register']['City'];?></label>
-			<input type="text" name="lcity" id='lcity' maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("lcity"); ?>" />
-			<br/>
-			<?php echo $form->error("lcity"); ?>
-				
+	
 
 			<!-- Country -->
 			<br/>
@@ -95,6 +58,7 @@
 				</select>
 			</div>
 			<br/><?php echo $form->error("lcountry"); ?>
+
 
 			<!-- Photo -->
 			<div style="display:none">
@@ -131,6 +95,8 @@
 		</div>
 
 		<div style="display:none;" class="holder_522 group">
+			
+
 			<!-- About yourself -->
 			<br/>
 			<label><?php echo $lang['register']['A_Yourself_l'];?><?php echo $lang['register']['l_optional'];?></label>

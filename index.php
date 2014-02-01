@@ -349,7 +349,7 @@ if($language==''){
 						?>
 						<a href='index.php?p=75'><img src='images/layout/icons/cart.gif'> Lending Cart</a>
 						<?php } ?>
-						<input type="checkbox" id="remember" name="remember" /><label for="remember"><?php echo $lang['loginform']['rme'];?></label> &nbsp;|&nbsp; <a style="color:gray" href="index.php?p=56"><?php echo $lang['loginform']['fypassword'];?></a> &nbsp;|&nbsp; <?php echo $lang['loginform']['not_a_member'];?>&nbsp;&nbsp;<a style='color:#FF8B00;font-weight:bold;font-size:14px;' href="index.php?p=1&amp;sel=1"><?php echo $lang['loginform']['join_today'];?></a></p>
+						<input type="checkbox" id="remember" name="remember" /><label for="remember"><?php echo $lang['loginform']['rme'];?></label> &nbsp;|&nbsp; <a style="color:gray" href="index.php?p=56"><?php echo $lang['loginform']['fypassword'];?></a> &nbsp;|&nbsp; <?php echo $lang['loginform']['not_a_member'];?>&nbsp;&nbsp;<a style='color:#FF8B00;font-weight:bold;font-size:14px;' href="index.php?p=1&amp;sel=2"><?php echo $lang['loginform']['join_today'];?></a></p>
 					</form>
 				</div>
 				<script type="text/javascript">
