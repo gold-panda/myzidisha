@@ -6482,7 +6482,7 @@ function forgiveReminder(){
 		}
 		return $msg;
 	}
-	public function sendBulkMails($emailadd, $selected_radio, $emailmssg, $emailsubject)
+	public function sendBulkMails($emailadd, $selected_radio, $emailmssg, $emailsubject, $emailheader, $image_src)
 	{
 		global $database, $form;
 		$path=  getEditablePath('error.php');
@@ -6502,7 +6502,11 @@ function forgiveReminder(){
 		if($form->num_errors > 0){
 			return 0;
 		}
-		$emailmssg=nl2br($emailmssg);
+
+		$emailmssg = nl2br($emailmssg);
+		$emailheader=nl2br($emailheader);
+		$params['image_src'] = $image_src;
+		
 		if($selected_radio == 'Others')
 		{
 			$emailids=explode(",",$emailadd);
@@ -6511,10 +6515,10 @@ function forgiveReminder(){
 				require ("editables/mailtext.php");
 				$otheremail = $rows;
 				$From       = EMAIL_FROM_ADDR;
-				$templet    = "editables/email/simplemail.html";
+				$templet    = "editables/email/hero.html";
 				$Subject    = $emailsubjct;
 				$To         = $otheremail;
-				$reply      = $this->mailSendingHtml($From, $To, $otheremail, $emailsubject, '', $emailmssg, 0, $templet, 3);
+				$reply      = $this->mailSendingHtml($From, $To, $otheremail, $emailsubject, $emailheader, $emailmssg, 0, $templet, 3, $params);
 			}
 			return 1;
 		}

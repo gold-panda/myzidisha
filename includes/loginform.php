@@ -298,7 +298,9 @@ if($session->logged_in)
                                                         <li><a href="index.php?p=63"><?php echo $lang['loginform']['nr'];?></a></li>
                                                         <li><a href="index.php?p=29"><?php echo $lang['loginform']['mng_exp_card'];?></a></li>
                                                         <li><a href="index.php?p=53"><?php echo $lang['loginform']['lender_credit'] ?></a></li>
-                                                                                        <li><a href="index.php?p=25">Activate Volunteers</a></li>
+                                                        <li><a href="index.php?p=25">Activate Volunteers</a></li>
+                                                        <li><a href="index.php?p=20">Send Emails</a></li>
+                                                        
                                                 </ul>
                                                 </div>
                          </div>

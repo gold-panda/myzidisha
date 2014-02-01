@@ -4,24 +4,6 @@ include_once("./editables/admin.php");
 ?>
 <script type="text/javascript" src="extlibs/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript">
-	// Default skin
-	/*tinyMCE.init({
-		// General options
-		mode : "exact",
-		elements : "emailmessage",
-		theme : "advanced",
-        skin : "o2k7",
-        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|forecolor,backcolor",
-        theme_advanced_buttons2 : "",
-        theme_advanced_buttons3 : "",
-		// Theme options
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
-		theme_advanced_resizing : true,
-
-
-	});*/
 
 </script>
 <div class='span12'>
@@ -29,13 +11,21 @@ include_once("./editables/admin.php");
 if($session->userlevel==ADMIN_LEVEL)
 {
 ?>
-	<div align='left' class='static'><h1><?php echo $lang['admin']['send_email_to'] ?></h1></div>
+	<div align='left' class='static'><h1>Send Emails</h1></div>
+	<br/><br/>
 	<form method="post" action="process.php">
 		<table class='detail' style="width:auto">
 			<tbody>
 				<tr>
 					<?php $field = $form->value("radio_useroption") ?>
-					<?php if ($form->value("radio_useroption") == "Borrower" || empty($field) ) {?>
+
+					<?php if ($form->value("radio_useroption") == "Others" || empty($field)) {?>
+						<td><input type="radio" name="radio_useroption" id="radio_other" value="Others" checked="checked" /></td>
+					<?php } else {?>
+						<td><input type="radio" name="radio_useroption" id="radio_other" value="Others" /></td>
+					<?php } ?>
+					<td>Custom</td>
+					<?php if ($form->value("radio_useroption") == "Borrower") {?>
 					<td><input type="radio" name="radio_useroption" id="radio_borrower" value="Borrower" checked="checked"  /></td>
 					<?php } else {?>
 						<td><input type="radio" name="radio_useroption" id="radio_borrower" value="Borrower" /></td>
@@ -59,18 +49,14 @@ if($session->userlevel==ADMIN_LEVEL)
 						<td><input type="radio" name="radio_useroption" id="radio_all"  value="All" /></td>
 					<?php } ?>
 					<td>All</td>
-					<?php if ($form->value("radio_useroption") == "Others") {?>
-						<td><input type="radio" name="radio_useroption" id="radio_other" value="Others" checked="checked" /></td>
-					<?php } else {?>
-						<td><input type="radio" name="radio_useroption" id="radio_other" value="Others" /></td>
-					<?php } ?>
-					<td>Others</td>
+					
 				</tr>
 			</tbody>
 		</table>
 		<table class='detail'>
 			<tbody>
-				<tr><td><?php echo $lang['admin']['email_address']; ?></td></tr>
+
+				<tr><td>Email Address (Separate with commas):</td></tr>
 				<tr>
 					<td>
 						<input type="text" name="emailaddress" style="width:350px;" value="<?php echo $form->value("emailaddress"); ?>"/><br/>
@@ -78,24 +64,50 @@ if($session->userlevel==ADMIN_LEVEL)
 					</td>
 				</tr>
 				<tr><td></td></tr>
-				<tr><td><?php echo $lang['admin']['email_subject']; ?></td></tr>
+
+				<tr><td>Subject:</td></tr>
 				<tr>
 					<td>
 						<input type="text" name="emailsubject" style="width:350px;" value="<?php echo $form->value("emailsubject"); ?>"/>
-						<input type="hidden" name="sendbulkmails" value='1' />
-						<input type="hidden" name="user_guess" value="<?php echo generateToken('sendbulkmails'); ?>"/><br/>
 						<?php echo $form->error("emailsubject"); ?>
 					</td>
 				</tr>
 				<tr><td></td></tr>
-				<tr><td><?php echo $lang['admin']['email_message']; ?></td></tr>
+
+				<tr><td>Header (Optional, will display in bold above image):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="emailheader" name="emailheader" style="width:350px;" value="<?php echo $form->value("emailheader"); ?>"/>
+						
+					</td>
+				</tr>
+				<tr><td></td></tr>
+
+
+				<tr><td>Image URL (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="image_src" name="image_src" style="width:350px;" value="<?php echo $form->value("image_src"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+						
+
+				<tr><td>Body:</td></tr>
 				<tr>
 					<td>
 						<textarea id="emailmessage" name="emailmessage" style="width:352px;height:170px"><?php echo $form->value("emailmessage"); ?></textarea><br/>
 						<?php echo $form->error("emailmessage"); ?>
 					</td>
 				</tr>
-				<tr><td><input class='btn' type="submit" name="Send" value="<?php echo $lang['admin']['send']; ?>"/></td></tr>
+				<tr>
+
+					<td><input type="hidden" name="sendbulkmails" value='1' /><br/>
+						<input type="hidden" name="user_guess" value="<?php echo generateToken('sendbulkmails'); ?>"/><br/>
+						<input class='btn' type="submit" name="Send" value="<?php echo $lang['admin']['send']; ?>"/>
+					</td>
+
+				</tr>
 			</tbody>
 		</table>
 	</form>

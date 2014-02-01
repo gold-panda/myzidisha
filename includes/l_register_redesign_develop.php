@@ -13,7 +13,7 @@
 			<!-- username -->
 			<br/>
 			<label><?php echo $lang['register']['username'];?></label>
-			<input type="text" id="busername" name="lusername" maxlength="20" class="inputcmmn-1" value="<?php echo $form->value("lusername"); ?>" />
+			<input type="text" id="busername" name="lusername" maxlength="200" class="inputcmmn-1" value="<?php echo $form->value("lusername"); ?>" />
 			<br/>
 			<div id="bunerror"><?php echo $form->error("lusername"); ?></div>
 
@@ -36,7 +36,7 @@
 				?>
 				
 			</label>
-			<input type="text" name="lfname" id="lfname" maxlength="25" class="inputcmmn-1" value="<?php echo $form->value("lfname"); ?>" />
+			<input type="text" name="lfname" id="lfname" maxlength="200" class="inputcmmn-1" value="<?php echo $form->value("lfname"); ?>" />
 			<br/>
 			<?php echo $form->error("lfname"); ?>
 

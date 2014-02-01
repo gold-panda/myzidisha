@@ -42,7 +42,7 @@ $lang['mailtext']['RecivedPayment-msg'] =
 Your lender credit balance is now USD %avail_amount%. 
 You may use this balance to make a new loan <a href="%lend_link%">here</a>.<br/><br/>
 You may view %bname%\'s loan profile page <a href="%link%">here</a>.<br/><br/>
-Thank you again for partnering with us,<br/><br/>
+Best wishes,<br/><br/>
 The Zidisha Team <br/><br/>';
 
 

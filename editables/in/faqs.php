@@ -104,7 +104,7 @@ Tidak. Kami tidak menyarankan untuk memperlakukan pinjaman sebagai sumbangan pen
 </ol>
 
 Memiliki pertanyaan yang tidak ada di sini? Silahkan kirim ke
-<a href=\'mailto:julia@zidisha.org\'>julia@zidisha.org</a> untuk mendapatkan jawaban secara langsung. <br><br>
+<a href=\'mailto:service@zidisha.org\'>service@zidisha.org</a> untuk mendapatkan jawaban secara langsung. <br><br>
 
 <p>Pemberitahuan Penting Sesuai dengan Undang-Undang:<br><br>
 Zidisha adalah sebuah organisasi nirlaba yang terlibat dalam menyediakan pinjaman microfinance kepada pengusaha-pengusaha berpendapatan rendah di negara-negara berkembang.  Tujuan utama Zidisha adalah untuk memberikan bantuan keuangan dalam bentuk pinjaman. Zidisha percaya bahwa model pinjamannya menumbuhkan rasa tanggung jawab dan sukses untuk peminjam yang membayar kembali pinjaman mereka. Tujuan utama pemberi pinjaman (pendana) Zidisha\'s dalam memberikan pinjaman adalah untuk membantu membiayai pengusaha-pengusaha tersebut, dan bukan untuk membuat penanaman modal yang menguntungkan.  Pinjaman kepada pengusaha-pengusaha melalui Zidisha melibatkan resiko yang tinggi akan kehilangan pinjaman yang diberikan.  Sebagai tambahan, anda tidak akan mendapatkan keuntungan pada pinjaman yang anda danai, meskipun apabila pinjaman tersebut dibayar kembali oleh peminjam, sebagai hasil dari perubahan kurs mata uang dan unsur lainnya yang mempengaruhi nilai dana pokok dan pembayaran bunga oleh peminjam. Maka dari itu, anda tidak seharusnya meminjamkan uang lebih dari yang anda mampu untuk kehilangan.</p>
