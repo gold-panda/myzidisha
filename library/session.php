@@ -7900,17 +7900,17 @@ function forgiveReminder(){
 			$to_number = substr($result, -8);
 			$to_number=str_pad($to_number, 12, '+224', STR_PAD_LEFT);
 		}
-		if($country=='ML'){
-			$to_number = substr($result, -9);
-			$to_number=str_pad($to_number, 13, '+223', STR_PAD_LEFT);
-		}
 		if($country=='BJ'){
 			$to_number = substr($result, -8);
 			$to_number=str_pad($to_number, 12, '+229', STR_PAD_LEFT);
 		}
 		if($country=='GH'){
-			$to_number = substr($result, -9);
-			$to_number=str_pad($to_number, 13, '+233', STR_PAD_LEFT);
+			$to_number = substr($result, -10);
+			$to_number=str_pad($to_number, 14, '+233', STR_PAD_LEFT);
+		}
+		if($country=='ZM'){
+			$to_number = substr($result, -10);
+			$to_number=str_pad($to_number, 14, '+260', STR_PAD_LEFT);
 		}
 		return $to_number;
 	}

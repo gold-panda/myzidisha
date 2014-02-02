@@ -125,7 +125,7 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 												}												
 												$biddedAmnt=($loans[0]['reqdamt']*$status)/100;
 												$reqAmnt=$loans[0]['reqdamt']-$biddedAmnt;
-												$amountTobid = min($lastBidAmnt, $reqAmnt, AUTO_LEND_AMT);
+												$amountTobid = min($lastBidAmnt, $reqAmnt);
 												
 										}
 									}/***** End here *****/
