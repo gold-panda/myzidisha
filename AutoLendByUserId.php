@@ -189,6 +189,8 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 									if(is_array($LoanbidId)) {
 										$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loan['borrowerid'], $loan['loanid'], $amntToLend,$intToPlaceBid);	
 										Logger_Array("Entry in Autolend Table",'Loan BidID','LenderId','Loan id', 'BorrowerId','Amnt to lend','Intrest',$LoanbidId['loanbid_id'],$lenderId,$loan['loanid'],$loan['borrowerid'],$amntToLend,$intToPlaceBid);
+										unset($loans[$key]);
+										$processed[]=$loan['loanid'];
 										$possibleBids--;
 									} else {
 										$form->num_errors = 0;									
