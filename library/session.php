@@ -4299,6 +4299,8 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$damount=$database->getOpenLoanAmount($brwid, $loanid, false);
 			$CurrencyRate = $database->getCurrentRate($brwid);
 			$BidAmt=$database->getTotalBid($brwid,$loanid);
+			$amount=number_format((float)$amount, 2, '.', '');
+			$availableAmt=number_format((float)$availableAmt, 2, '.', '');
 			if($availableAmt < $amount || $amount == 0){
 				//$form->setError($field, $lang['error']['insuffi_amount']." USD ". number_format($availableAmt,2, '.', ','));
 				if($auto_lend) {
@@ -5686,6 +5688,9 @@ function forgiveReminder(){
 		}
 		return 0;
 	}
+	
+/*  Commented By Mohit 03-02-2014 Autolending Bid code placed into AutoLendByUserId.php
+
 	function ProcessAutoBidding()
 	{	
 	global $database;
@@ -5774,7 +5779,7 @@ function forgiveReminder(){
 							}else {
 								$intToPlaceBid = $loans[0]['intOffer'];
 							}
-							/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
+							// Added By Mohit 20-01-14 To get Last manully Bid Detail
 							if($preference==6){										
 								$status = $session->getStatusBar($loans[0]['borrowerid'],$loans[0]['loanid'],5);
 								$lastBid=$database->lastBidDetail($loans[0]['loanid']);
@@ -5795,7 +5800,7 @@ function forgiveReminder(){
 										$amountTobid = min($lastBidAmnt, $reqAmnt, AUTO_LEND_AMT);
 										
 								}
-							}/***** End here *****/
+							}  // End here
 							$LoanbidId=$this->placebid($loans[0]['loanid'], $loans[0]['borrowerid'], $amountTobid, $intToPlaceBid, 1, true,$lenderId);
 							if(is_array($LoanbidId)) {
 									$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loans[0]['borrowerid'], $loans[0]['loanid'], $amountTobid,$intToPlaceBid);
@@ -5838,7 +5843,7 @@ function forgiveReminder(){
 										$intToPlaceBid = $loan['intOffer'];
 									}
 									
-									/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
+									// Added By Mohit 20-01-14 To get Last manully Bid Detail
 									if($preference==6){										
 										$lastBid=$database->lastBidDetail($loan['loanid']);
 										if(!empty($lastBidDetail)){
@@ -5861,7 +5866,7 @@ function forgiveReminder(){
 											}
 									}else{
 										 $amntToLend=AUTO_LEND_AMT;
-									} /***** End here *****/		
+									} // End here	
 									
 									$LoanbidId=$this->placebid($loan['loanid'], $loan['borrowerid'], $amntToLend, $intToPlaceBid, 1, true,$lenderId);
 									if(is_array($LoanbidId)) {
@@ -5895,6 +5900,8 @@ function forgiveReminder(){
 		Logger_Array("AutoBid---LOG",'fully funded loan ID line 5940',$fullyFunded);
 		return $fullyFunded;
 	}
+*/
+	
 	function getLoansForBid($preference, $loansToAutolend, $processed) {
 
 		$sortedOn='random';

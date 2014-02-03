@@ -6,14 +6,12 @@ global $database,$session;?>
 ProcessAutoBidding();
 
 function ProcessAutoBidding(){
-
-		$result=getLenderForAutoLend();
+		global $database;
+		$result=$database->getAllLenderForAutoLend();
 		if(!empty($result)){
 			foreach($result as $key=>$value) {				
-				updateAutoLend($value['lender_id']);
-				$success=AutoLendByUserId($value['lender_id']);
-				
-							
+				$database->updateAutoLend($value['lender_id']);
+				AutoLendByUserId($value['lender_id']);							
 			}
 		}else{
 			echo "No Lender is available for autolending.";
@@ -23,10 +21,9 @@ function ProcessAutoBidding(){
 	function AutoLendByUserId($userid)
 	{	
 		global $database,$session;
-		$success=0;
 		$GLOBALS['loanArray']=array();
 		$fullyFundedAll = array();
-		$lenders=getLenderForAutoLend($userid);
+		$lenders=$database->getAllLenderForAutoLend($userid);
 		$GLOBALS['loanArray']=$database->getAllLoansForAutoLend();
 		foreach($GLOBALS['loanArray'] as $key => $row) {
 			$status = $session->getStatusBar($row['borrowerid'],$row['loanid'],5);						
@@ -43,7 +40,8 @@ function ProcessAutoBidding(){
 			Logger_Array("AutoBid---LOG",'lender ID',$lender['lender_id']);
 				$possibleLoans=0;
 				$loansToAutolend=array();
-				$availAmount=$session->amountToUseForBid($lender['lender_id']);		
+				$availAmount=$session->amountToUseForBid($lender['lender_id']);
+
 				if ($availAmount >= AUTO_LEND_AMT) {
 					if($lender['current_allocated']==0) {
 						$amounToAutoLend=bcsub($availAmount, $lender['lender_credit'],2);
@@ -52,10 +50,9 @@ function ProcessAutoBidding(){
 						}
 					} else {
 						$possibleLoans=floor($availAmount/AUTO_LEND_AMT);
-					}
+					}	
 						Logger_Array("AutoBid---LOG",'$possibleLoans =',$possibleLoans);
-					if($possibleLoans) {
-						
+					if($possibleLoans) {						
 						$loansToAutolend = $database->getSortedLoanForAutoBid($lender['preference'] ,$GLOBALS['loanArray'], $lender['desired_interest'], $lender['max_desired_interest'], $fullyFundedAll);
 						
 						Logger_Array("AutoBid---LOG",'Possible loan','sorted Loan'.$possibleLoans,count($loansToAutolend));
@@ -63,19 +60,15 @@ function ProcessAutoBidding(){
 						if($possibleLoans < count($loansToAutolend)) {
 						$loansToAutolend=array_slice($loansToAutolend, 0, $possibleLoans);
 						}
-						
 						Logger_Array("AutoBid---LOG",'$loansToAutolend','loanid','reqdamt','interest','interest','WebFee','applydate','borrowerid','intOffer',$loansToAutolend);
 						
 						if(!empty($loansToAutolend)) {					
 						$fullyFundedAll = placeAutobid($lender['preference'], $loansToAutolend, $possibleLoans, $lender['lender_id'], $lender['desired_interest'], $lender['max_desired_interest']);
-						$success=1;
 						}
 					}
-				}
-				
+			   } 
 			}
 		}
-		return $success;
 	}
 	
 // Place Bid
@@ -83,6 +76,8 @@ function ProcessAutoBidding(){
 function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $desiredInt, $MaxdesiredInt)
 	{		
 		global $database,$session,$form;
+		$amntToLend=0;
+		$amountTobid=0;
 		$processed=array();				
 		Logger_Array("AutoBid---LOG",'laon count line no 74',count($loansToAutolend));
 		$loans = $session->getLoansForBid($preference, $loansToAutolend, $processed);
@@ -113,7 +108,7 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 									if($preference==6){										
 										$status = $session->getStatusBar($loans[0]['borrowerid'],$loans[0]['loanid'],5);
 										$lastBid=$database->lastBidDetail($loans[0]['loanid']);
-										if(!empty($lastBid)){
+										if(array_filter($lastBid)){
 											    $lastBidAmnt=$lastBid['amnt'];
 											    $lastBidIntr=$lastBid['intr'];
 												if($desiredInt < $lastBidIntr && $lastBidIntr<$MaxdesiredInt){
@@ -151,7 +146,6 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 					Logger_Array("AutoBid---LOG",'No possible bids','143');
 					break;
 				}
-			
 				if(count($loans) > 1){	
 						foreach($loans as $key=>$loan) {						
 						if($possibleBids) {						
@@ -168,8 +162,8 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 									}
 									/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
 									if($preference==6){
-										$lastBid=lastBidDetail($loan['loanid']);
-										if(!empty($lastBid)){
+										$lastBid=$database->lastBidDetail($loan['loanid']);
+										if(array_filter($lastBid)){
 											    $lastBidAmnt=$lastBid['amnt'];
 											    $lastBidIntr=$lastBid['intr'];
 
@@ -189,15 +183,16 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 											}
 									}else{
 										 $amntToLend=AUTO_LEND_AMT;
-									} /***** End here *****/
-									
+									} /***** End here *****/	
 									$LoanbidId=$session->placebid($loan['loanid'], $loan['borrowerid'], $amntToLend, $intToPlaceBid, 1, true,$lenderId);
+							
 									if(is_array($LoanbidId)) {
 										$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loan['borrowerid'], $loan['loanid'], $amntToLend,$intToPlaceBid);	
 										Logger_Array("Entry in Autolend Table",'Loan BidID','LenderId','Loan id', 'BorrowerId','Amnt to lend','Intrest',$LoanbidId['loanbid_id'],$lenderId,$loan['loanid'],$loan['borrowerid'],$amntToLend,$intToPlaceBid);
 										$possibleBids--;
 									} else {
-										unset($loans[$key]);
+										$form->num_errors = 0;									
+										unset($loans[$key]);										
 										$processed[]=$loan['loanid'];
 									}
 							}
@@ -219,38 +214,5 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 		}
 		Logger_Array("AutoBid---LOG",'fully funded loan ID line 5935',$fullyFunded);
 		return $fullyFunded;
-	}	
-	
-function getLenderForAutoLend($userid=null)
-    {	
-        global $db;		
-		if($userid==null){
-			$qry='ORDER BY last_processed limit 0,10';
-		}else{
-			$qry='AND lender_id='.$userid;
-		}
-        $q='SELECT *  FROM ! WHERE  active=?  '.$qry.'';
-        $r1= $db->getAll($q, array('auto_lending', 1));
-        return $r1;
-    }
-
-function lastBidDetail($loanid){
-		$qry='SELECT transactions.TrDate as transDate,transactions.amount,transactions.loanbid_id,transactions.userid,auto_lendbids.id,transactions.loanid FROM transactions LEFT OUTER JOIN auto_lendbids on  transactions.loanbid_id= auto_lendbids.loanbid_id WHERE transactions.txn_type='.LOAN_BID.' AND auto_lendbids.id IS NULL AND transactions.loanid='.$loanid.' ORDER BY TrDate desc limit 0,1';
-		$result= mysql_query($qry);
-		$data=mysql_fetch_object($result);		
-		$lastLoan=array();
-		$lastLoan['tdDate']=$data->transDate;
-		$lastLoan['amnt']=str_replace('-','',$data->amount);		
-			$q='SELECT bidint FROM loanbids where lenderid='.$data->userid.' AND loanid='.$data->loanid.' ORDER BY bidid desc limit 0,1';
-		$rs=mysql_query($q);
-		$ob=mysql_fetch_object($rs);
-		$lastLoan['intr']=$ob->bidint;
-		return $lastLoan;
-		}
-
-function updateAutoLend($lenderid){
-		$q='UPDATE auto_lending SET last_processed =now() WHERE lender_id='.$lenderid.' AND active=1';
-		mysql_query($q);
-}			
-		
+	}		
 ?>

@@ -17196,157 +17196,88 @@ class genericClass
 
     }
 
-    function getAllLenderForAutoLend()
-
-    {
-
-        global $db;
-
-        $q='SELECT *  FROM ! WHERE  active=? AND bid_time < now() - INTERVAL 15 MINUTE';
-
+  function getAllLenderForAutoLend($userid=null)
+		{	
+        global $db;		
+		if($userid==null){
+			$qry='ORDER BY last_processed limit 0,10';
+		}else{
+			$qry='AND lender_id='.$userid;
+		}
+        $q='SELECT *  FROM ! WHERE  active=?  '.$qry.'';
         $r1= $db->getAll($q, array('auto_lending', 1));
-
         return $r1;
-
     }
 
     function getSortedLoanForAutoBid($preference, $result, $desired_interest, $max_desired_interest,  $fullyFundedAll)
-
     {
-
         global $db;
-
         $loans=array();
-
         $intOffer=array();
-
         foreach($result as $key=>$row) {
-
             if(in_array($row['loanid'], $fullyFundedAll)) {
-
                 unset($result[$key]);
-
                 $GLOBALS['loanArray'] = $result;
-
                 continue;
-
             }
-
             $totBid=$this->getTotalBid($row['borrowerid'],$row['loanid']);
-
             $int = $row['interest'] - $row['WebFee'];
-
             if($totBid >= $row['reqdamt']) {
-
                 $int = $this->getAvgBidInterest($row['borrowerid'],$row['loanid']);
-
             }
-
             if($desired_interest <= $int) {
-
                 $row['intOffer'] = $int;
-
                 $loans[] = $row;
-
                 $intOffer[]=$int;
-
             }
-
         }
-
         if(!empty($loans)) {
-
             if($preference==HIGH_FEEDBCK_RATING) {
-
                 $feedback=array();
-
                 foreach($loans as $key=>$row) {
-
                     $report=$this->loanReport($row['borrowerid']);
-
                     $f=$report['feedback'];
-
                     $tf=$report['Totalfeedback'];
-
                     $loans[$key]['feedback']=$tf*$f;
-
                     $feedback[$key]=$f;
-
                     $totalfeedback[$key]=$tf;
-
                 }
-
                 array_multisort($feedback, SORT_DESC, $totalfeedback, SORT_DESC, $loans);
-
             } else if($preference==EXPIRE_SOON) {
-
                 $applydate=array();
-
                 foreach($loans as $key=>$row) {
-
                     $applydate[$key]=$row['applydate'];
-
                 }
-
                 array_multisort($applydate, SORT_ASC, $loans);
-
             } else if($preference==HIGH_OFFER_INTEREST) {
-
                 array_multisort($intOffer, SORT_DESC, $loans);
-
             } else if($preference==HIGH_NO_COMMENTS) {
-
                 $totComm=array();
-
                 foreach($loans as $key=>$row) {
-
                     $query = "select count(id) from ! where receiverid = ?";
-
                     $count=$db->getOne($query,array('zi_comment',$row['borrowerid']));
-
                     $loans[$key]['totComment']=$count;
-
                     $totComm[$key]=$count;
-
                 }
-
                 array_multisort($totComm, SORT_DESC, $loans);
-
             } else {
-
                 shuffle($loans);
-
             }
-
         }
-
         return $loans;
-
     }
 
     function addAutoLoanBid($LoanbidId, $lenderId, $brrowerid, $loanid, $Bidamount, $interestTobid)
-
     {
-
         global $db;
-
         $time=date('Y-m-d G:i:s',time());
-
         $q = "INSERT into ! (loanbid_id, lender_id, borrower_id, loan_id, amount, interest_rate, created) values (?, ?, ?, ?, ?, ?, ?)";
-
         $result = $db->query($q, array('auto_lendbids', $LoanbidId, $lenderId, $brrowerid, $loanid, $Bidamount, $interestTobid, $time));
-
         if($result===DB_OK) {
-
             return 1;
-
         }
-
         return 0;
-
     }
-
-
 
     /*
 
@@ -23104,56 +23035,28 @@ function wasFirstInstalOnTime($userid, $loanid){
 
 }
 
-
-
-
-
 function getTotalInstalAllLoans($userid){
-
     global $db;
-
-
-
     $loans=$this->getLoansForRepayRate($userid);
-
     foreach ($loans as $loan){
-
         $loanid= $loan['loanid'];
-
         $installments=$this->getTotalInstalToday($loanid, $userid);
-
         $total_installments += $installments;
-
     }
-
-
-
     return $total_installments;
-
 }
-
-
 
 //generates array of most recent specified number of comments posted on loan profile pages
 
 function getAllRecentComments($limit)
-
     {
-
         global $db;
-
         $q="SELECT * FROM ! ORDER BY id DESC LIMIT ?";
-
         $result=$db->getAll($q, array('zi_comment', $limit));
-
         if(empty($result)){
-
             return false;
-
         }
-
         return $result;
-
     }
 
 function lastBidDetail($loanid){
@@ -23161,8 +23064,7 @@ function lastBidDetail($loanid){
 		$result= mysql_query($qry);
 		$data=mysql_fetch_object($result);		
 		$lastLoan=array();
-		$lastLoan['tdDate']=$data->transDate;
-		$lastLoan['amnt']=str_replace('-','',$data->amount);		
+		$lastLoan['amnt']=str_replace('-','',$data->amount);
 			$q='SELECT bidint FROM loanbids where lenderid='.$data->userid.' AND loanid='.$data->loanid.' ORDER BY bidid desc limit 0,1';
 		$rs=mysql_query($q);
 		$ob=mysql_fetch_object($rs);
@@ -23170,68 +23072,41 @@ function lastBidDetail($loanid){
 		return $lastLoan;
 		}
 
+function updateAutoLend($lenderid){
+		$q='UPDATE auto_lending SET last_processed =now() WHERE lender_id='.$lenderid.' AND active=1';
+		mysql_query($q);
+}		
+		
 /* To Manage Language for country Basis By Mohit 24-01-2014 */  
 
 function languageSetting($lng_code,$country_code){
-
 		global $db;
-
-		
-
 		$p="SELECT id FROM ! where country_code=?";
-
 		$res=$db->getOne($p,array('country_lang', $country_code));
-
-
-
 		if($res==null){		
-
 			$q="INSERT INTO ! (lang_code,country_code) VALUES (?,?)";
-
 			$result=$db->query($q, array('country_lang', $lng_code, $country_code));
-
 			if($result==1){
-
 				return 1;
-
 			}else{
-
 				return 0;
-
 			}
-
 		}else{
-
 			$q="UPDATE ! SET lang_code=?,country_code=? WHERE country_code=?";
-
 			$result=$db->query($q, array('country_lang', $lng_code, $country_code,$country_code));
-
 			if($result==1){
-
 				return 1;
-
 			}else{
-
 				return 0;
-
 			}
-
 		}	
-
 	}	
 
-
-
 function getLanguage($count_code=null){	
-
 		global $db;
-
 		$p="SELECT lang_code FROM ! where country_code=?";
-
 		$res=$db->getOne($p,array('country_lang', $count_code));
-
 		return $res;
-
 }
 
 
@@ -23239,24 +23114,15 @@ function getProfileImage($userid){
          global $db;
          $brw=$this->getBorrowerDetails($userid);
          $fb_data = unserialize(base64_decode($brw['fb_data']));
-         if (file_exists(USER_IMAGE_DIR.$userid.".jpg")){ 
-     
-             $imagesrc=SITE_URL."library/getimagenew.php?id=".$userid;
-        
-         }else if( ! empty($fb_data['user_profile']['id'])){ //case where borrower has not uploaded own photo but has linked FB account, use FB profile
-                             
-             $imagesrc="https://graph.facebook.com/".$fb_data['user_profile']['id']."/picture?width=9999&height=9999";
-         
+         if (file_exists(USER_IMAGE_DIR.$userid.".jpg")){  
+             $imagesrc=SITE_URL."library/getimagenew.php?id=".$userid;  
+         }else if( ! empty($fb_data['user_profile']['id'])){ //case where borrower has not uploaded own photo but has linked FB account, use FB profile                   
+             $imagesrc="https://graph.facebook.com/".$fb_data['user_profile']['id']."/picture?width=9999&height=9999"; 
          }else{
- 
              $imagesrc="";
- 
          }
- 
          return $imagesrc;
  }
-
-
 
 /* End here */	
 };
