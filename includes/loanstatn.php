@@ -922,7 +922,24 @@ else
 		<label style="width:auto" for="pinterest"><?php echo $behalftext.", ".$database->mysetCountry($brw['Country'])."."; ?> <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['onbehalfNote'];?></span><span class='bottom'></span></span></a></label>
 	<?php } ?>
 
+<!-- promote bar -->
 <div id="promote">
+
+	<h4><?php echo $lang['loanstatn']['promote_loan'] ?></h4>
+
+	<div class="widget" style="padding-left:25px;">
+		<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.zidisha.org%2Findex.php%3Fp%3D14%26u%3D<?php echo $ud?>%26l%3D<?php echo $ld?>&amp;send=false&amp;layout=standard&amp;show_faces=false&amp;width=160&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:35px;"></iframe>
+	</div>
+	<div class="widget">
+		<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="ZidishaInc">Tweet</a>
+		<script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+	</div>
+
+	<?php if($session->userlevel==LENDER_LEVEL || empty($session->userid)){?>
+	<div class="widget">
+		<span class="email"><a href="index.php?p=30&l=<?php echo $ld?>" style="text-decoration:none">Email</a></span>
+	</div>
+	<?php } ?>
 
 </div>
  
