@@ -77,7 +77,7 @@
 		<p class="description">
 			Skip the forms by signing in with your Facebook account.
 		</p>
-		<a href="<?= $facebook->getLoginUrl(array('redirect_uri' => SITE_URL.'index.php?p=116')) ?>"><img src="images/login_with_facebook.png" width="280" height="55" /></a>
+		<a class="facebook_button" href="<?= $facebook->getLoginUrl(array('redirect_uri' => SITE_URL.'index.php?p=116')) ?>"><img src="images/login_with_facebook.png" width="280" height="55" /></a>
 	</div>
 	<!-- Separator -->
 	<div class="separator">
@@ -102,9 +102,9 @@
 			<p><input type="text" name="username" placeholder="username or email" /></p>
 			<p><input type="password" name="password" placeholder="password" /></p>
 			<p><label class="checkbox">Remember me<input type="checkbox"/></label></p>
-			<p style="clear:both;"><button type="submit" class="btn square">Go</button></p>
-			<p><a style="color:gray" href="index.php?p=56">Forgot your password?</a></p>
-			<p>Not a member? <a style="color:#FF8B00;font-weight:bold;font-size:14px;" href="index.php?p=1&amp;sel=1">Join</a></p>
+			<p class="custom_margin" style="clear:both;"><button type="submit" class="btn square">Go</button></p>
+			<p class="custom_margin"><a style="color:gray" href="index.php?p=56">Forgot your password?</a></p>
+			<p class="custom_margin">Not a member? <a style="color:#FF8B00;font-weight:bold;font-size:14px;" href="index.php?p=1&amp;sel=1">Join</a></p>
 		</form>
 	</div>
 </div>
