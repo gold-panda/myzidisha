@@ -324,10 +324,6 @@ class Process
 				}
 				
 			}
-			if($session->userlevel==BORROWER_LEVEL)
-			{
-				$ref= SITE_URL."index.php?p=50";
-			}
 			if($session->userlevel==ADMIN_LEVEL){ 
 				$page=array('0','3','4','47','48');
 				$url=parse_url($ref);
@@ -372,6 +368,17 @@ class Process
 					$ref2= substr($ref1, 2, $len3-2);
 					$ref= SITE_URL.$language.$ref2;
 				}
+			}
+			if($session->userlevel==BORROWER_LEVEL)
+			{
+				if(isset($_GET["language"]))
+					{
+						$language = $_GET["language"];
+						$ref=SITE_URL.$language.'/index.php?p=50';
+					}
+					else {
+						$ref=SITE_URL.'index.php?p=50';
+					} 
 			}
 			header("Location: $ref");
             exit;
