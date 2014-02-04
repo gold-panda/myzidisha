@@ -8606,6 +8606,19 @@ class genericClass
 
     }
 
+    function facebookConnect($facebook_id, $user_id)
+    {
+        global $db;
+        
+        $query = 'UPDATE ! set facebook_id = ? WHERE userid=?';
+        $result = $db->query($query, array('users', $facebook_id, $user_id));
+
+        if($result===DB_OK)
+            return true;
+        else
+            return false;
+    }
+
 
 
 //added by Julia 22-11-2013

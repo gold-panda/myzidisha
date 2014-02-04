@@ -317,6 +317,12 @@ class Process
 						$ref=SITE_URL.'index.php?p=19';
 					}
 				}
+
+				// if user tries to connect with facebook
+				if(isset($_POST["fb_connect"])){
+					$database->facebookConnect($_POST['facebook_id'], $session->userid);
+				}
+				
 			}
 			if($session->userlevel==BORROWER_LEVEL)
 			{
