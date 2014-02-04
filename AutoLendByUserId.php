@@ -137,7 +137,7 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 						}
 					}
 				}
-				$loans = $session->getLoansForBid($preference, $loansToAutolend, $processed);
+				//$loans = $session->getLoansForBid($preference, $loansToAutolend, $processed);
 				if(empty($loans)) {
 					Logger_Array("AutoBid---LOG",'No Loan Line No','141');
 					break;
@@ -187,10 +187,9 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 									$LoanbidId=$session->placebid($loan['loanid'], $loan['borrowerid'], $amntToLend, $intToPlaceBid, 1, true,$lenderId);
 							
 									if(is_array($LoanbidId)) {
-										$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loan['borrowerid'], $loan['loanid'], $amntToLend,$intToPlaceBid);	
-										Logger_Array("Entry in Autolend Table",'Loan BidID','LenderId','Loan id', 'BorrowerId','Amnt to lend','Intrest',$LoanbidId['loanbid_id'],$lenderId,$loan['loanid'],$loan['borrowerid'],$amntToLend,$intToPlaceBid);
+										$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loan['borrowerid'], $loan['loanid'], $amntToLend,$intToPlaceBid);											
 										unset($loans[$key]);
-										$processed[]=$loan['loanid'];
+										$processed[]=$loan['loanid'];										
 										$possibleBids--;
 									} else {
 										$form->num_errors = 0;									
@@ -206,7 +205,7 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 					break;
 				}
 				if(empty($loans)) {
-					$loans = $session->getLoansForBid($preference, $loansToAutolend, $processed);
+					//$loans = $session->getLoansForBid($preference, $loansToAutolend, $processed);
 					if(empty($loans)) {
 						Logger_Array("AutoBid---LOG",'Log Endign here Lien no','5928');
 						break;
