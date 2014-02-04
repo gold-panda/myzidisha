@@ -301,7 +301,7 @@ class Process
 						else
 							$ref=SITE_URL.'index.php?p=19';
 					}else{
-						$ref=SITE_URL.'index.php?p=1&sel=4&t=2';	
+						$ref=SITE_URL.'index.php?p=19';	
 					}
 				}
 				else
@@ -417,6 +417,7 @@ class Process
 			$_POST["username"]=$_POST["lusername"];
 			$_POST["password"]=$_POST["lpass1"];
 			$this->subLogin();
+			header('Location: index.php?p=1&sel=4&t=2');
 			exit;
 		}
 		else
