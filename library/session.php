@@ -602,7 +602,9 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		$path=  getEditablePath('error.php');
 		include(FULL_PATH."editables/".$path);
 		$now = time();
-		if($now < strtotime($date)) {
+		$max_date = strtotime("+3 days",$now); //allow forward dating up to 3 days
+		$min_date = 1262304000; // 1 Jan 2010 to prevent erroneous entries before we were receiving payments
+		if(strtotime($date) > $max_date || strtotime($min_date) > strtotime($date)) { 
 			$form->setError('paiddate', $lang['error']['invalid_date']);
 		}
 
