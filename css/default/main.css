@@ -2274,7 +2274,7 @@ footer a:hover, footer a:active {
 }
 
 .progress {
-	width: 230px;
+	width: 180px;
 	height: 15px;
 	margin: 2px 5px 20px 0;
 	background: #e0dfde;
@@ -2396,10 +2396,9 @@ footer a:hover, footer a:active {
  
 
 .loan-profile{
-	float: right;
-	padding: 5px;
-	width: auto;
-	max-width:330px;
+	float: left;
+	padding: 15px;
+	width: 100%;
 	border: 1px solid #dfdcdc;
 	margin: 0 0 10px 0px;
 }
@@ -2468,7 +2467,8 @@ footer a:hover, footer a:active {
 }
 
 #loan-profile table.funding-status {
-  width: 350px;
+  float: right;
+  width: 100%;
   margin: 10px 0;
   padding: 5px 0;
   border-collapse: separate;
@@ -2484,7 +2484,14 @@ footer a:hover, footer a:active {
 }
 
 #loan-profile h4 {
-	font-size: 22px;
+  font-size: 24px;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: gray;
+  display: inline;
+  margin: 0 70px 0 0;
+  float: left;
+  clear: none;
 }
 
 
@@ -2536,17 +2543,6 @@ footer a:hover, footer a:active {
   width: 940px;
   margin-top: 20px;
   margin-bottom: 20px;
-}
-
-#promote h4 {
-  font-size: 24px;
-  font-weight: normal;
-  text-transform: uppercase;
-  color: gray;
-  display: inline;
-  margin: 0 70px 0 0;
-  float: left;
-  clear: none;
 }
 
 #promote .widget {
