@@ -313,8 +313,8 @@ class Validation
 		$this->error=$lang['error'];
 
 		$this->checkUsername($uname, "busername", true);
-		if(!empty($pass1))
-			$this->checkPassword($pass1,$pass2, "bpass1");
+		//if(!empty($pass1))
+			//$this->checkPassword($pass1,$pass2, "bpass1");
 		if(!$bactive) {
 			$this->checkAddress($post, "bpostadd");
 			$this->checkMobile($mobile, "bmobile");

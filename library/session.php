@@ -2461,8 +2461,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			$fb_data= '';
 			unset($_SESSION['FB_Error']);
 		}
-		
-		if($submit_type != $lang['register']['Registerlater']) {
+		if($submit_type == $lang['register']['RegisterComplete']) {
 //			Logger_Array("FB LOG - on session 3",'fb_data', serialize($fb_data).$uname);
 			$validation->validateBorrowerEdit($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $country, $email, $mobile,$reffered_by, $income, $about, $bizdesc, $photo, $bnationid, $community_name_no, $documents, $repaidPast, $debtFree, $share_update,$onbehalf, $behalf_name, $behalf_number, $behalf_email, $behalf_town, $submit_type, $uploadedDocs, $bfamilycont1,$bfamilycont2,$bfamilycont3, $bneighcont1, $bneighcont2, $bneighcont3,$home_no, $rec_form_offcr_name, $rec_form_offcr_num, $cntct_type, $fb_data, $endorser_name, $endorser_email,$id);
 		} else {
