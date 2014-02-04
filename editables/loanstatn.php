@@ -107,7 +107,7 @@ All interest rates displayed on the Zidisha website are expressed as flat percen
 The expression of interest rates as flat percentages of loan principal amounts is intended to make calculation of interest amounts more intuitive for borrowers and for lenders, and to facilitate comparison with other microfinance loans in borrowers' communities, the majority of which also use the flat rate methodology to express interest rates.";
 
 $lang['loanstatn']['tooltip_crncy_risk']='Under Zidisha\'s lending model, loan values are fixed in local currency upon disbursement, and the lenders assume currency risk. Exchange rates fluctuate and this can cause the US Dollar value of the loans to either increase or decrease during the course of the repayment period, leading to monetary gains or losses for lenders. Since exchange rate fluctuations often go both ways for multiple currencies during the same time period, spreading lending activity across multiple countries may help lenders hedge against currency risk.';
-$lang['loanstatn']['webfee']  ="Borrower Transaction Fee"; 
+$lang['loanstatn']['webfee']  ="Service Fee"; 
 $lang['loanstatn']['wcomments']='Post A Comment';
 $lang['loanstatn']['chars_remain']='characters remaining';
 $lang['loanstatn']['forgive_my_share']='I would like to forgive my share of this loan.';
@@ -221,4 +221,6 @@ $lang['loanstatn']['edit_bid1']='You may increase the amount or reduce the inter
 							Click';
 $lang['loanstatn']['here']= 'here';
 $lang['loanstatn']['edit_bid2']='to place a new bid.';
+$lang['loanstatn']['about']='About';
+$lang['loanstatn']['about_loan']='About This Loan';
 ?>

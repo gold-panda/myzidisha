@@ -173,8 +173,8 @@ function showBox(box)
 	});
 </script>
 <body onload="submit_form(document.bidform1)">
-<div class="span12" style="position:relative;">
 
+<div class="span16" style="position:relative;">
 
 <?php
 //social share modal box that displays upon completion of a loan bid
@@ -401,7 +401,8 @@ else
 	$disburseDate=$database->getLoanDisburseDate($loanid);
 	$webfee=$brw2['WebFee'];//service fee rate
 	if($brw2['tr_summary']==null || $brw2['tr_summary']=="")
-		$summary=$brw2['summary'];
+		//$summary=$brw2['summary'];
+		$summary="As soon as I come into possession of my loan, I will order new supplies of different jewelry in new models for my clients."; //for testing
 	else
 		$summary=$brw2['tr_summary'];
 	if($brw2['tr_loanuse']==null || $brw2['tr_loanuse']=="")
@@ -528,447 +529,35 @@ else
 
 	?>
 
-
-	<!-- <h2><?php echo $lang['loanstatn']['loan_profile'] ?></h2> -->
-	<div id="loan-profile">
-
-
+	
+	<div class="span10">
 		<!-- profile image -->
-		<img class="loan-profile" src="<?php echo $imagesrc ?>" alt="<?php echo $name ?>" style="position:absolute;left:0;"/>
+		<img class="loan-profile" style="border:none" src="<?php echo $imagesrc ?>" alt="<?php echo $name ?>" />
+	
 
-
-
-		<!-- start lender bid form -->
-		<div style="align:right">
-
-		<?php if($brw2['active']==LOAN_OPEN)
-		{
-			if($session->userlevel  == LENDER_LEVEL || empty($session->userid))
-			{
-				if($brw2['active'] == LOAN_OPEN)
-				{ ?>
-
-					<!-- lender bid amount -->
-					<script type="text/javascript">
-                        function fillAmount1()
-                        {
-                            document.bidform1.pamount1.value="<?php echo number_format($stilneed, 2, '.', ''); ?>";
-                        }
-                    </script>
-                    
-                    <form id='bidform1' name="bidform1" action="process.php" method="post" style='margin-top: 20px;'>
-                    <p>&nbsp;</p>
-                        
-                    <?php if($loginError = $form->error('bid_userid1')){ echo "<div>".$loginError."</div><br/>";}?>
-                    	<div class="clearfix">
-                     		<label style="width:auto" for="pamount1"><?php echo $lang['loanstatn']['loan_amount'] ?></label>
-                     		<div class="input inputex"><input class="medium" id="pamount1" name="pamount1" size="20" type="text"  value="<?php echo $pamount1; ?>"></div>
-                     		<div class="input inputex" id="pamounterr1"><?php echo $form->error('pamount1'); ?></div>
-                    	</div>
-
-						<div class="clearfix">
-							<label style="width:auto" for="pinterest1">
-								<?php echo $lang['loanstatn']['prop_intr'];?> 
-								<img src='library/tooltips/help.png' class="intr2-tooltip-target tooltip-target" id="intr2-target-1" style='border-style:none;display:inline' />
-								<div class="tooltip-content tooltip-content" id="intr2-content-1">
-								<span class="tooltip">
-									<span class="tooltipTop"></span>
-									<span class="tooltipMiddle" >
-										<?php echo $lang['loanstatn']['tooltip_bid_int'];?>
-										<p class="auditedreportlink">
-											<a href="includes/flatinterestrate.php" rel="facebox"><?php echo $lang['loanstatn']['flatintrest_diff']?></a>				
-										</p>
-									</span>	
-									<span class="tooltipBottom"></span>
-								</span>
-								</div>
-							</label>
-
-
-							<!-- drop-down menu for lenders to select interest rate -->
-							<div class="input inputex">
-								<select class"medium" style="width:150px" id="pinterest1" name="pinterest1">
-									<?php
-									$int_range = range(0, $maxInterestRate);
-									$i=0;
-									foreach($int_range as $int_option) {  ?>
-										<option value='<?php echo $int_option; ?>' <?php if($form->value("$pinterest1")==$int_option) echo "Selected='true'" ?>><?php echo $int_option; ?>%</option>
-										<?php		
-										$i++;
-									} ?>
-								</select>
-							</div>
-						</div>
-
-						<?php	
-						if(isset($_SESSION['lender_bid_success1']))
-						{ ?>
-							<div class="clearfix" style="color:green">
-								<?php if($stilneed > 0) {
-									echo $lang['loanstatn']['bid_success']; 
-								} else { 
-									echo $lang['loanstatn']['bid_success_funded'];
-								}?>
-							</div>
-						<?php } 
-
-						if($stilneed > 0){ ?>
-                			<div class="clearfix">
-                				<a href="javascript:void(0)" onClick='fillAmount1();'><strong>Complete <?php echo $brw['FirstName'] ?>'s Loan (USD <?php echo number_format($stilneed, 2, '.', '') ?>)</strong></a>
-                			</div>
-            			<?php } ?>
-
-						<input type="hidden" id="lenderbidUp" name="lenderbidUp" value="" />
-						<input type="hidden" name="user_guess" value="<?php echo generateToken('lenderbidUp'); ?>"/>
-						<input type="hidden" id="borrowerid1" name="bid" value="<?php echo $ud ?>" />
-						<input type="hidden" name="lid" value="<?php echo $loanid ?>" />
-						<input  class="btn" type="submit" onclick="needToConfirm = false;" value="<?php echo $lang['loanstatn']['lend'];?>"  />
-						<?php if($showShareBox==1) { ?>
-							<p  style="padding-left:130px"><a  href="<?php echo $RequestUrl?>#shareForm" rel="facebox"><strong>Share This</strong></a></p>
-						<?php } ?>
-					<div style="clear:both"></div>
-				</form>
-
-		<?php }
-			}	
-		}?>
-
-		</div>
-
-<!-- end lender bid form -->
-
-		<table class="funding-status" style="border-top:none;margin-top:0px;padding-top:0px;position:absolute;right:0;">
-			<tbody>
-				<!-- borrower name heading -->
-				<tr>
-					<td><h3><?php echo $name ?></h3></td>
-				</tr>
-				<tr>
-					<td style="width:180px;"><strong><?php echo $lang['loanstatn']['located'] ?>:</strong></td>
-					<td><?php echo $location ?></td>
-				</tr>
-
-
-				<!-- on-time repayment score -->
-				<tr>
-					<td style="width:180px;"><strong>On-Time Repayments: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_RepayRate'] ?></span><span class='bottom'></span></span></a></strong></td>
-					<td>
-
-					<?php if($bfrstloan){ 
-						echo number_format($RepayRate); ?>% (<?php echo number_format($totalTodayinstallment)?>)
-					<?php }else	echo 'None (New Member)'; ?>
-					</td>
-				</tr>
-
-
-				<!-- display links to any previous loans -->
-				<?php if($viewprevloan!=''){ ?>
-				<tr>
-					<td></td>
-					<td><div id="viewprevloan" style="cursor:pointer;" ><a><?php echo $viewprevloan; ?></a></div></td>
-				</tr>
-				<tr><td>
-						<div id="viewprevloan_desc" style="display:none;" class="span16">
-						<table class="detail" style="width:350px;">
-							<tbody>
-							<?php foreach($allloans as $allloan){
-								if($allloan['loanid']!=$ld){ 
-								$loanDisburseDate=date('M Y',$database->getLoanDisburseDate($allloan['loanid']));
-								$loanRepaidDate= date('M Y',$database->getLoanRepaidDate($allloan['loanid'], $ud));
-								$amountGot=number_format(convertToDollar($allloan['AmountGot'],($CurrencyRate)), 2, ".", "");
-								$loanprofileurl = getLoanprofileUrl($ud,$allloan['loanid']);
-							?>
-								<tr><td>USD&nbsp;<?php echo $amountGot?></td><td><?php echo $loanDisburseDate; ?> - <?php echo $loanRepaidDate; ?></td><td><a href="<?php echo $loanprofileurl; ?>">View Loan Profile</a></td>
-								</tr>
-								<tr></tr>
-							<?php }
-							}
-							?>
-							</tbody>
-						</table>
-						</div>
-					</td>
-				</tr>
-				<?php } ?>
-
-
-				<!-- display lender feedback rating -->
-				<tr>
-					<td>
-						<strong><?php echo $lang['loanstatn']['fbrating'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_feed_rating'] ?></span><span class='bottom'></span></span></a></strong>
-					</td>
-					<td>
-						<?php $prurl = getUserProfileUrl($ud);
-						if(!empty($feedback)){
-							echo number_format($f); ?>% Positive&nbsp;(<?php echo $cf-1; ?>)<br/><br/><a href="<?php echo $prurl?>?fdb=2">View Lender Feedback</a><?php 
-						} elseif(!$bfrstloan){ 
-							echo 'No Feedback (New Member)'; 
-						} else {
-							echo 'No Feedback'; 
-						} ?>
-					</td>
-				</tr>
-
-
-				<!-- display Facebook profile if linked -->
-				<?php 
-				if(!empty($fb_data)){ ?>
-				<tr>
-					<td> 
-						<strong><?php echo $lang['loanstatn']['online_identity'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_online'] ?></span><span class='bottom'></span></span></a></strong>
-					</td>
-					<td>
-						<a href="<?php echo 'http://www.facebook.com/'.$fb_data['user_profile']['id']; ?>" target="_blank"><?php echo $lang['loanstatn']['view_fb']?></a>
-					</td>
-				</tr>
-				<?php } ?>
-
-
-				<!-- displays whether or not borrower has provided copy of national ID -->
-
-				<tr>
-					<td> 
-						<strong> <?php echo $lang['loanstatn']['nationalid'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_nationalid'] ?></span><span class='bottom'></span></span></a></strong>
-					</td>
-					<td>
-						<?php if(empty($brw['frontNationalId'])){
-							echo $lang['loanstatn']['not_provided'];
-						} else {
-							echo $lang['loanstatn']['provided'];
-						} ?>
-					</td>
-				</tr> 
-		
-				<tr><td></td></tr>
-
-
-				<!-- displays whether or not borrower has provided Recommendation Form -->
-				<tr>
-					<td> <strong> <?php echo $lang['loanstatn']['recommendation'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_recommendation'] ?></span><span class='bottom'></span></span></a></strong>
-					</td>
-
-					<td>
-						<?php if(empty($brw['addressProof'])){
-							echo $lang['loanstatn']['not_provided'];
-						} else {
-							echo $lang['loanstatn']['provided'];
-						} ?>
-					</td>
-				</tr> 
-
-				<!-- displays member who invited this borrower -->
-				<?php if (!empty($invitedby)) { ?>
-				<tr>
-					<td>
-						<strong><?php echo $lang['loanstatn']['invited_by'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_invited'] ?></span><span class='bottom'></span></span></a></strong>
-					</td>
-					<td>
-						<?php echo $invitedby; ?>
-					</td>
-				</tr>
-				<?php } 
-
-
-				//displays volunteer mentor if any
-				if (empty($mentor)) { ?>
-				<tr>
-					<td> 
-						<strong> <?php echo $lang['loanstatn']['volunteer_mentor'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_mentor'] ?></span><span class='bottom'></span></span></a></strong>
-					</td>
-
-					<td>
-						<?php echo $mentor; ?>
-					 </td>
-				</tr>
-				<?php } ?>
-
-
-				<!-- display endorsements if any -->
-				<tr>
-					<td> 
-						<strong><?php echo $lang['loanstatn']['public_endorse'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_endorse'] ?></span><span class='bottom'></span></span></a></strong>
-					</td>
-					<td>
-						<?php if (!empty($endorsements)){
-							echo $endorsements;
-						}else{
-							echo "None";
-						} ?>
-					</td>
-				</tr>
-
-			</tbody>
-		</table>
-		
-
-		<!-- if this borrower is a Volunteer Mentor, display VM information -->
-		<?php if($is_volunteer){ 
-			$vm_member_details= $database->getMentorAssignedmember($ud);
-			$params['vm_member']= count($vm_member_details);
-			$vm_member_text= $session->formMessage($lang['loanstatn']['self_vm'], $params);
+		<!-- My Story -->
+		<div class="row">
+			<div class="span10">
+				<h3 class="subhead"><?php echo $lang['loanstatn']['b_story']; ?></h3>
+				<p style="text-align:justify;"><?php echo nl2br($about) ?></p>
+		<?php	if(!empty($session->userid))
+				{
+					if(!empty($brw['tr_About'])){
+						$translation='Edit translation';
+					}else{
+						$translation='Add translation';
+					}
+					echo "<p align='right'><a href='index.php?p=24&id=".$ud."&l_id=".$ld."&ref=1'>".$translation."</a></p>";
+				}
+				if($about == $brw['tr_About'])
+				{
+					echo "<p align='right'><a id='about_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
+					echo "<p id='about_org_desc' style='display:none;text-align:justify;'>".nl2br($brw['About'])."</p>";
+				}
+				
 		?>
-				<div id="viewassignedmember" style="cursor:pointer;" >
-						<img style='float:left' class='starimg' src="images/star.png" />&nbsp;&nbsp;&nbsp;<?php echo $vm_member_text; ?>
 
-						<a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_mentor'] ?></span><span class='bottom'></span></span></a><br/>
-				</div><br/>
-				<div id="viewassignedmember_desc" style="display:none;" class="span16">
-					<table class="detail" style="width:350px;">
-						<tbody>
-						<?php foreach($vm_member_details as $vm_member_detail){
-							$member_loanid=$database->getCurrentLoanid($vm_member_detail['userid']);
-							if(empty($member_loanid)){
-								$member_url= getUserProfileUrl($vm_member_detail['userid']);
-							}else{
-								$member_url = getLoanprofileUrl($vm_member_detail['userid'],$member_loanid);
-							}
-						?>
-							<tr><td width="200px;"></td><td><a href="<?php echo $member_url ?>" target="_blank"><?php echo $vm_member_detail['FirstName']." ".$vm_member_detail['LastName']; ?></a></td>
-							</tr>
-							<tr></tr>
-						<?php 
-						}
-						?>
-						</tbody>
-					</table>
-				</div>
-		<?php }   ?>
-
-
-		<!-- current loan summary data -->
-		<!--<h4><?php echo $lang['loanstatn']['funding_status'] ?></h4>-->
-		<a name="e5" ></a>
-		<table class="funding-status">
-			<tbody>
-				<tr>
-					<td style="width:180px;"><strong><?php echo $lang['loanstatn']['requested'] ?>:</strong></td>
-					<td>USD <?php echo number_format($brw2['reqdamt'], 2, ".", ",") ?></td>
-				</tr>
-				<tr>
-					<td>
-					<?php if ($brw2['active']==LOAN_ACTIVE || $brw2['active']==LOAN_REPAID || $brw2['active']==LOAN_DEFAULTED) {?>
-					<strong><?php echo $lang['loanstatn']['lender_interest'] ?>: 
-					<img src='library/tooltips/help.png' class="stay-tooltip-target tooltip-target" id="stay-target-1" style='border-style:none;display:inline'/>
-						<div class="stay-tooltip-content tooltip-content" id="stay-content-1">
-							<span class="tooltip">
-								<span class="tooltipTop"></span>
-								<span class="tooltipMiddle" >
-								<?php echo $lang['loanstatn']['tooltip_rli'];?>
-									<p class="auditedreportlink">
-										<a href="includes/flatinterestrate.php" rel="facebox"><?php echo $lang['loanstatn']['flatintrest_diff']?></a>
-									</p>
-								</span>	
-								<span class="tooltipBottom"></span>
-							</span>
-						</div>
-						</strong>
-					</td>
-					<td>USD <?php echo number_format($interestrate, 2, '.', ',') ?>%</td>
-					<?php } else { ?>
-					<strong><?php echo $lang['loanstatn']['max_intr_rate'] ?>: 
-					<img src='library/tooltips/help.png' class="stay-tooltip-target tooltip-target" id="stay-target-1" style='border-style:none;display:inline'/>
-						<div class="stay-tooltip-content tooltip-content" id="stay-content-1">
-							<span class="tooltip">
-								<span class="tooltipTop"></span>
-								<span class="tooltipMiddle" >
-								<?php echo $lang['loanstatn']['tooltip_rli'];?>
-									<p class="auditedreportlink">
-										<a href="includes/flatinterestrate.php" rel="facebox"><?php echo $lang['loanstatn']['flatintrest_diff']?></a>
-									</p>
-								</span>	
-								<span class="tooltipBottom"></span>
-							</span>
-						</div>
-						</strong>
-					</td>
-					<td>USD <?php echo number_format($maxInterestRate, 2, '.', ',') ?>%</td>
-
-					<?php } ?>
-
-					
-				</tr>
-				<?php if($brw2['active']==LOAN_OPEN) {?>
-					
-					<tr>
-						<td><strong><?php echo $lang['loanstatn']['total_bids'] ?>:</strong></td>
-						<td>USD <?php echo number_format($totBid, 2, '.', ',') ?></td>
-					</tr>
-					<tr>
-						<td><strong><?php echo $lang['loanstatn']['stil_need'] ?>:</strong></td>
-						<td>USD <?php echo number_format($stilneed, 2, '.', ',') ?></td>
-					</tr>
-					<tr>
-						<td><strong><?php echo $lang['loanstatn']['bid_close'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['biding_close'] ?></span><span class='bottom'></span></span></a></strong></td>
-						<td><?php echo $bot ?></td>
-					</tr>
-				<?php	} ?>
-			</tbody>
-		</table>
-		
-		<?php echo $session->getStatusBar($ud,$ld); ?>
-
-	</div>
-</div>
-
-<!-- posted by line -->
-<?php if($brw2['borrower_behalf_id'] > 0 && $brw2['iscomplete_later']==0) {
-	$behalf_detail = $database->getBorrowerbehalfdetail($brw2['borrower_behalf_id']);
-	$params['bname']= $brw2['FirstName']." ".$brw2['LastName'];
-	$params['behalfname']= $behalf_detail['name'];
-	$params['behalftown']= $behalf_detail['town'];
-	$behalftext = $session->formMessage($lang['loanstatn']['onbehalftext'], $params);
-	?><br/><br/>
-
-		<label style="width:auto" for="pinterest"><?php echo $behalftext.", ".$database->mysetCountry($brw['Country'])."."; ?> <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['onbehalfNote'];?></span><span class='bottom'></span></span></a></label>
-	<?php } ?>
-
-
-<!-- promote bar -->
-<div id="promote">
-
-	<h4><?php echo $lang['loanstatn']['promote_loan'] ?></h4>
-
-	<div class="widget" style="padding-left:25px;">
-		<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.zidisha.org%2Findex.php%3Fp%3D14%26u%3D<?php echo $ud?>%26l%3D<?php echo $ld?>&amp;send=false&amp;layout=standard&amp;show_faces=false&amp;width=160&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:35px;"></iframe>
-	</div>
-	<div class="widget">
-		<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="ZidishaInc">Tweet</a>
-		<script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
-	</div>
-
-	<?php if($session->userlevel==LENDER_LEVEL || empty($session->userid)){?>
-	<div class="widget">
-		<span class="email"><a href="index.php?p=30&l=<?php echo $ld?>" style="text-decoration:none">Email</a></span>
-	</div>
-	<?php } ?>
-
-</div>
- 
-
-<div style="clear:both"></div>
-<div class="row">
-	<div class="span8">
-		<h3 class="subhead"><?php echo $lang['loanstatn']['b_story']; ?></h3>
-		<p style="text-align:justify;"><?php echo nl2br($about) ?></p>
-<?php	if(!empty($session->userid))
-		{
-			if(!empty($brw['tr_About'])){
-				$translation='Edit translation';
-			}else{
-				$translation='Add translation';
-			}
-			echo "<p align='right'><a href='index.php?p=24&id=".$ud."&l_id=".$ld."&ref=1'>".$translation."</a></p>";
-		}
-		if($about == $brw['tr_About'])
-		{
-			if(empty($translate_user_name)){
-				echo "<p align='right'><a id='about_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
-			}else{
-				echo "<p align='right'><i>".$lang['loanstatn']['translate_by']." <a href='$translator_url' style='font-style: italic;'>".$translate_user_name."</a></i>&nbsp&nbsp&nbsp&nbsp&nbsp<a id='about_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
-			}
-			echo "<p id='about_org_desc' style='display:none;text-align:justify;'>".nl2br($brw['About'])."</p>";
-		}
-?>
+		<!-- About My Business -->
 		<h3 class="subhead"><?php echo $lang['loanstatn']['b_business'] ?></h3>
 		<p style="text-align:justify;"><?php echo nl2br($biz) ?></p>
 <?php	if(!empty($session->userid)){
@@ -981,162 +570,52 @@ else
 		}
 		if($biz == $brw['tr_BizDesc'])
 		{
-			if(empty($translate_user_name)){
-				echo "<p align='right'><a id='busi_desc_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
-			}else{
-				echo "<p align='right'><i>".$lang['loanstatn']['translate_by']." <a href='$translator_url' style='font-style: italic;'>".$translate_user_name."</a></i>&nbsp&nbsp&nbsp&nbsp&nbsp<a id='busi_desc_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
-			}
+			echo "<p align='right'><a id='busi_desc_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
 			echo "<p id='busi_desc_org_desc' style='display:none;text-align:justify;'>".nl2br($brw['BizDesc'])."</p>";
 		}
 ?>
-	</div><!-- /span8 -->
-	<div class="span8">
+		
+		<!-- use of loan -->
 		<h3 class="subhead"><?php echo $lang['loanstatn']['b_about_loan'] ?></h3>
-		<table class="detail_new" cellspacing="0" cellpadding="8" >
-			<tbody>
-				<?php if($showLoanDetail==1){ ?>
-				<tr>
-					<td style="width:250px"><strong><?php echo $lang['loanstatn']['requested'] ?>:</strong></td>
-					<td style="width:205px">USD <?php echo $damountX ?></td>
-				</tr>
-				<?php }if($showLoanDetail==2){ ?>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['loan_pri_disb'] ?>:</strong></td>
-					<td>
-				<?php	if($show_localcurrency)
-							echo $tmpcurr." ".number_format(round_local($brw2['AmountGot']),0,'.',',');
-						else
-							echo $tmpcurr." ".number_format(convertToDollar($brw2['AmountGot'], $disburseRate),2,'.',',');
-				?>
-					</td>
-				</tr>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['date_disb'] ?>:</strong></td>
-					<td><?php echo date('M d, Y',$disburseDate); ?></td>
-				</tr>
-				<?php } ?>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['pd'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_pd'] ?></span><span class='bottom'></span></span></a></strong></td>
-					<td><?php echo $period ?> <?php echo $periodText ?></td>
-				</tr>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['gpd'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_gpd']?></span><span class='bottom'></span></span></a></strong></td>
-					<td><?php echo $gperiod ?> <?php echo $gperiodText ?></td>
-				</tr>
-				<?php if($showLoanDetail==1){ ?>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['max_intr_rate'] ?>: 
-					<img src='library/tooltips/help.png' class="intr-tooltip-target tooltip-target" id="intr-target-1" style='border-style:none;display:inline' />
-					<div class="tooltip-content tooltip-content" id="intr-content-1">
-					<span class="tooltip">
-						<span class="tooltipTop"></span>
-						<span class="tooltipMiddle" >
-						<?php echo $lang['loanstatn']['tooltip_rli'];?>
-							<p class="auditedreportlink">
-								<a href="includes/flatinterestrate.php" rel="facebox"><?php echo $lang['loanstatn']['flatintrest_diff']?></a>
-							</p>
-						</span>	
-						<span class="tooltipBottom"></span>
-					</span>
-					</div>
-					</strong></td>
-					<td><?php echo number_format($maxInterestRate, 2, '.', ',') ?>%</td>
-				</tr>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['webfee'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_atf']?></span><span class='bottom'></span></span></a></strong></td>
-					<td><?php echo number_format($webfee, 2, '.', ','); ?>%</td>
-				</tr>
-				<?php } ?>
-				<?php if(!$bfrstloan){	?>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['b_reg_fee'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_webfee']?></span><span class='bottom'></span></span></a></strong></td>
-					<td>
-				<?php	if($show_localcurrency && $showLoanDetail==2)
-							echo $b_reg_fee_native;
-						else
-							echo "USD ". $b_reg_fee;
-				?>
-					</td>
-				</tr>
-				<?php }	?>
-				<?php if($showLoanDetail==1){ ?>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['tba'] ?>:</strong></td>
-					<td>USD <?php echo number_format($totToPayBackinUSD, 2)." (". number_format( $totFee , 2, '.', ',') ?>%)</td>
-				</tr>
-				<?php }	?>
-				<?php if($showLoanDetail==2){ ?>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['tot_int_due_lend'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_tot_int_due_lend']?></span><span class='bottom'></span></span></a></strong></td>
-					<td>
-				<?php	if($show_localcurrency)
-							echo $tmpcurr." ".number_format(round_local($feelender),0, '.', ',')." (".number_format($interestrate,2, '.', ',')."%)";
-						else
-							echo $tmpcurr." ".number_format(convertToDollar($feelender ,($disburseRate)),2, '.', ','). " (".number_format($interestrate,2, '.', ',')."%)";
-				?>
-					</td>
-				</tr>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['br_trn_fee'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_br_trn_fee']?></span><span class='bottom'></span></span></a></strong></td>
-					<td>
-				<?php	if($show_localcurrency)
-							echo $tmpcurr." ".number_format(round_local($feeamount), 0, '.', ',')." (".number_format($webfee, 2,'.',',')."%)";
-						else
-							echo $tmpcurr." ".number_format(convertToDollar($feeamount ,($disburseRate)), 2, '.', ',')." (".number_format($webfee, 2,'.',',')."%)";
-				?>
-					</td>
-				</tr>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['tba'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_tba']?></span><span class='bottom'></span></span></a></strong></td>
-					<td>
-				<?php	if($show_localcurrency)
-							echo $tmpcurr." ".number_format(round_local($totToPayBack), 0)." (". number_format( $totFee , 2, '.', ',')."%)";
-						else
-							echo $tmpcurr." ".number_format(convertToDollar($totToPayBack ,($disburseRate)), 2)." (". number_format( $totFee , 2, '.', ',')."%)";
-				?>
-					</td>
-				</tr>
-				<?php }	?>
-				<tr>
-					<td><strong><?php echo $lang['loanstatn']['purpose'] ?>:</strong></td>
-				</tr>
-				<tr>
-					<td colspan=2 style="text-align:justify;line-height:18px"><?php echo $summary ?></td>
-				</tr>
-				<tr>
-					<td colspan=2 style="text-align:justify;line-height:18px"><?php echo $loanuse ?></td>
-				</tr>
-				<tr>
-					<td colspan=2>
-				<?php	if(!empty($session->userid)){
-							if(!empty($brw2['tr_loanuse'])){
-								$translation='Edit translation';
-							}else{
-								$translation='Add translation';
-							}
-							echo "<p align='right'><a href='index.php?p=24&id=".$ud."&l_id=".$ld."&ref=1'>".$translation."</a></p>";
-						}
-						if($loanuse == $brw2['tr_loanuse'])
-						{
-							if(empty($translate_user_name)){
-								echo "<p align='right'><a id='loan_use_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
-							}else{
-								echo "<p align='right'><i>".$lang['loanstatn']['translate_by']." <a href='$translator_url' style='font-style: italic;'>".$translate_user_name."</a></i>&nbsp&nbsp&nbsp&nbsp&nbsp<a id='loan_use_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
-							}
-							echo "<p id='loan_use_org_desc' style='display:none;text-align:justify;'>".$brw2['loanuse']."</p>";
-						}
-				?>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div><!-- /span8 -->
-</div><!-- /row -->
+	
+		<tr>
+			<td colspan=2 style="text-align:justify;line-height:18px">
+				<?php echo $loanuse ?>
+			</td>
+		</tr>
+			<tr>
+				<td colspan=2>
+						<?php	if(!empty($session->userid)){
+									if(!empty($brw2['tr_loanuse'])){
+										$translation='Edit translation';
+									}else{
+										$translation='Add translation';
+									}
+									echo "<p align='right'><a href='index.php?p=24&id=".$ud."&l_id=".$ld."&ref=1'>".$translation."</a></p>";
+								}
+								
+								//credits member who translated this profile
+								if($about == $brw['tr_About'] || $biz == $brw['tr_BizDesc']|| $loanuse == $brw2['tr_loanuse'])
+								{
+									if(empty($translate_user_name)){
+										echo "<p align='right'><a id='loan_use_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
+									}else{
+										echo "<p align='right'><i>".$lang['loanstatn']['translate_by']." <a href='$translator_url' style='font-style: italic;'>".$translate_user_name."</a></i>&nbsp&nbsp&nbsp&nbsp&nbsp<a id='loan_use_org' href='javascript:void(0)'>".$lang['loanstatn']['disp_text']."</a></p>";
+									}
+									echo "<p id='loan_use_org_desc' style='display:none;text-align:justify;'>".$brw2['loanuse']."</p>";
+								}
+						?>
+				</td>
+			</tr>
+
+			</div>
+		</div><!-- /row -->
+
 <?php
 if($brw2['active']==LOAN_OPEN )
 {	?>
 	<div class="row">
-		<div class="span16">
+		
 			<div class="bid-table" id="retval">
 				<h3 class="subhead"><?php echo $lang['loanstatn']['funding_bids'] ?><p id="funding_bids" class="view-more-less">View Less</p></h3>
 				<div id="funding_bids_desc">
@@ -1534,7 +1013,7 @@ if($brw2['active']==LOAN_OPEN )
 
 				?>
 			</div><!-- /bid-table -->
-		</div><!-- /span16 -->
+		
 	</div><!-- /row -->
 <?php
 }
@@ -1545,7 +1024,7 @@ if($brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['a
 	{
 	?>
 	<div class="row">
-		<div class="span16">
+		
 			<div>
 				<a name='repayschedule' id='repayschedule'></a>
 				<h3 class="subhead"><?php echo $lang['loanstatn']['repament_schedule'] ?><p id="repay_sched" class="view-more-less view-less">View More</p></h3>
@@ -1608,7 +1087,7 @@ if($brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['a
 					<?php echo $schedule['schedule']; ?>
 				</div>
 			</div><!-- /bid-table -->
-		</div><!-- /span16 -->
+		
 	</div><!-- /row -->
 <?php
 	}
@@ -1619,27 +1098,22 @@ else if($brw2['active']==LOAN_FUNDED && $show_localcurrency)
 	$sched=$session->getSchedule($lamount, $interestrate + $webfee, $period, $gperiod,$loneAcceptDate,$webfee, $weekly_inst);
 	?>
 	<div class="row">
-		<div class="span16">
+		
 			<div>
 				<h3 class="subhead"><?php echo $lang['loanstatn']['repament_schedule'] ?></h3>
 				<?php echo $sched; ?>
 			</div><!-- /bid-table -->
-		</div><!-- /span16 -->
+		
 	</div><!-- /row -->
 <?php
 }
 if($brw2['active']==LOAN_FUNDED || $brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['active']==LOAN_REPAID)
 {	
 	$lendamount=$database->getLoanAmount($ud, $ld);
-	if(empty($lendamount))
-	{
-		//echo "Not Accepted your bids Till date<br/>";
-	}
-	else
-	{
-	?>
+	if(!empty($lendamount))
+	{?>
 	<div class="row">
-		<div class="span16">
+		
 			<div class="bid-table">
 				<h3 class="subhead"><?php echo $lang['loanstatn']['funding'] ?><p id="lend_funding" class="view-more-less view-less">View More</p></h3>
 				<div id="lend_funding_desc" style="display:none">
@@ -1681,7 +1155,7 @@ if($brw2['active']==LOAN_FUNDED || $brw2['active'] == LOAN_ACTIVE || $brw2['acti
 					</table>
 				</div>
 			</div><!-- /bid-table -->
-		</div><!-- /span16 -->
+		
 	</div><!-- /row -->
 <?php
 	}
@@ -1706,7 +1180,7 @@ if($brw2['active'] == LOAN_REPAID)
 		$cid=$_REQUEST['cid'];
 ?>
 	<div class="row">
-		<div class="span16">
+		
 			<div class="bid-table">
 
 		<?php	if(!empty($results))
@@ -1842,27 +1316,535 @@ if($brw2['active'] == LOAN_REPAID)
 			<?php	}
 				}	?>
 			</div><!-- /bid-table -->
-		</div><!-- /span16 -->
+		
 	</div><!-- /row -->
 <?php
 }	?>
-<div class="row">
-	<div class="span16" id="comment-section">
-		<?php
-			$fb=0;
-				include_once("./editables/profile.php");
-				$path=	getEditablePath('profile.php');
-				include_once("editables/".$path);
-				include_once("includes/b_comments.php");
-		?>
-	</div><!-- /span16 -->
-</div><!-- /row -->
-<div style="clear: both;">
-	<div align="right" style="margin-right: 40px;">
-		<?php $prurl = getUserProfileUrl($ud);?>
-		<a href="<?php echo $prurl?>?fdb=1">View All</a>
+
+	</div><!-- /span10 -->
+
+	<div class="span5">
+
+		<br/>
+
+		<div id="loan-profile" class="loan-profile">
+
+			<h3><?php echo $name ?></h3>
+			
+			<p>
+				<strong><?php echo $location ?></strong>
+			</p>
+			<p>
+			<?php echo $summary ?>
+			</p>
+
+			<?php echo $session->getStatusBar($ud,$ld); ?>
+			
+				<!-- start lender bid form -->
+				<?php if($brw2['active']==LOAN_OPEN && ($session->userlevel  == LENDER_LEVEL || empty($session->userid)))
+					{ ?>
+				
+							<!-- lender bid amount -->
+							<script type="text/javascript">
+				            function fillAmount1()
+				                {
+				                    document.bidform1.pamount1.value="<?php echo number_format($stilneed, 2, '.', ''); ?>";
+				                }
+				            </script>
+				                    
+				            <form id='bidform1' name="bidform1" action="process.php" method="post" style='margin-top: 20px;'>
+				            <?php if($loginError = $form->error('bid_userid1')){ echo "<div>".$loginError."</div><br/>";}?>
+				            
+				            <label style="width:auto" for="pamount1">
+				            	<?php echo $lang['loanstatn']['loan_amount'] ?>
+				            </label>
+				        	
+		                    <input class="medium" id="pamount1" name="pamount1" size="20" type="text"  value="<?php echo $pamount1; ?>">
+		                    <div id="pamounterr1"><?php echo $form->error('pamount1'); ?></div>
+		           		
+		        
+							<!-- lender bid interest -->
+							<br/>
+							<label style="width:auto" for="pinterest1">
+								<?php echo $lang['loanstatn']['prop_intr'];?> 
+								<img src='library/tooltips/help.png' class="intr2-tooltip-target tooltip-target" id="intr2-target-1" style='border-style:none;display:inline' />
+								<div class="tooltip-content tooltip-content" id="intr2-content-1">
+									<span class="tooltip">
+										<span class="tooltipTop"></span>
+										<span class="tooltipMiddle" >
+											<?php echo $lang['loanstatn']['tooltip_bid_int'];?>
+											<p class="auditedreportlink">
+												<a href="includes/flatinterestrate.php" rel="facebox"><?php echo $lang['loanstatn']['flatintrest_diff']?></a>				
+											</p>
+										</span>	
+										<span class="tooltipBottom"></span>
+									</span>
+								</div>
+							</label>
+						
+							<select class"medium" style="width:150px" id="pinterest1" name="pinterest1">
+								<?php
+								$int_range = range(0, $maxInterestRate);
+								$i=0;
+								foreach($int_range as $int_option) {  ?>
+									<option value='<?php echo $int_option; ?>' <?php if($form->value("$pinterest1")==$int_option) echo "Selected='true'" ?>><?php echo $int_option ?>%</option>
+									<?php		
+									$i++;
+								} ?>
+							</select>
+
+							<?php	if(isset($_SESSION['lender_bid_success1']))
+									{	?>
+										<div class="clearfix" style="color:green">
+											<?php if($stilneed > 0) {
+												echo $lang['loanstatn']['bid_success']; 
+											} else { 
+												echo $lang['loanstatn']['bid_success_funded'];
+											}?>
+
+										</div>
+							<?php	} 
+
+							if($stilneed > 0){ ?>
+				                <div class="clearfix">
+				                	<a href="javascript:void(0)" onClick='fillAmount1();'><strong><br/>Complete <?php echo $brw['FirstName'] ?>'s Loan (USD <?php echo number_format($stilneed, 2, '.', '') ?>)</strong></a>
+				                </div>
+				            <?php } ?>
+
+					<input type="hidden" id="lenderbidUp" name="lenderbidUp" value="" />
+					<input type="hidden" name="user_guess" value="<?php echo generateToken('lenderbidUp'); ?>"/>
+					<input type="hidden" id="borrowerid1" name="bid" value="<?php echo $ud ?>" />
+					<input type="hidden" name="lid" value="<?php echo $loanid ?>" />
+					<input  class="btn" type="submit" onclick="needToConfirm = false;" value="<?php echo $lang['loanstatn']['lend'];?>"  />
+					<?php if($showShareBox==1) { ?>
+						
+						<p  style="padding-left:130px"><a  href="<?php echo $RequestUrl?>#shareForm" rel="facebox"><strong>Share This</strong></a></p>
+
+					<?php } ?>
+					<div style="clear:both"></div>
+				</form>
+
+		<?php	} ?>
+	
+		</div> <!-- /loan-profile -->
+
+		<!-- about this borrower -->
+		<div id="loan-profile" class="loan-profile">
+
+			<h4><?php echo $lang['loanstatn']['about']." ".$name; ?></h4>
+			<table>
+				<tbody>
+
+					<tr>
+						<td>
+							<strong><br/>On-Time Repayments: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_RepayRate'] ?></span><span class='bottom'></span></span></a></strong>
+						</td>
+						<td>
+							<?php if($bfrstloan){ echo "<br/>".number_format($RepayRate); ?>% (<?php echo number_format($totalTodayinstallment)?>)
+
+							<?php }else	echo "<br/>None (New Member)"; ?>
+						</td>
+					</tr>
+
+				<?php if($viewprevloan!=''){ ?>
+					<tr>
+						<td></td><td><div id="viewprevloan" style="cursor:pointer;" ><a><?php echo $viewprevloan; ?></a></div></td>
+					</tr>
+
+					<tr>
+						<td>
+							<div id="viewprevloan_desc" style="display:none;" class="span16">
+							<table class="detail" style="width:350px;">
+								<tbody>
+								<?php foreach($allloans as $allloan){
+									if($allloan['loanid']!=$ld){ 
+									$loanDisburseDate=date('M Y',$database->getLoanDisburseDate($allloan['loanid']));
+									$loanRepaidDate= date('M Y',$database->getLoanRepaidDate($allloan['loanid'], $ud));
+									$amountGot=number_format(convertToDollar($allloan['AmountGot'],($CurrencyRate)), 2, ".", "");
+									$loanprofileurl = getLoanprofileUrl($ud,$allloan['loanid']);
+									} ?>
+									<tr>
+										<td>
+											USD&nbsp;<?php echo $amountGot?>
+										</td>
+										<td>
+											<?php echo $loanDisburseDate; ?> - <?php echo $loanRepaidDate; ?>
+										</td>
+										<td>
+											<a href="<?php echo $loanprofileurl; ?>">View Loan Profile</a>
+										</td>
+									</tr>
+								<?php } ?>
+								</tbody>
+							</table>
+							</div>
+
+						</td>
+					</tr>
+				<?php } ?>
+
+					<tr>
+						<td>
+							<strong><?php echo $lang['loanstatn']['fbrating'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_feed_rating'] ?></span><span class='bottom'></span></span></a></strong>
+						</td>
+						<td>
+							<?php 
+							if(!empty($feedback)){
+								$prurl = getUserProfileUrl($ud);
+								echo number_format($f); ?>% Positive&nbsp;(<?php echo $cf-1; ?>)<br/><br/><a href="<?php echo $prurl?>?fdb=2">View Lender Feedback</a>
+							<?php } elseif(!$bfrstloan){ 
+								echo 'No Feedback (New Member)'; 
+							} else {
+								echo 'No Feedback'; 
+							} ?>
+						</td>
+					</tr>
+					<tr>
+						<td> 
+							<strong> 
+							<?php if(!empty($fb_data)){
+								echo $lang['loanstatn']['online_identity'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_online'] ?></span><span class='bottom'></span></span></a></strong>
+							</td>
+							<td>
+								<a href="<?php echo 'http://www.facebook.com/'.$fb_data['user_profile']['id']; ?>" target="_blank"><?php echo $lang['loanstatn']['view_fb']?></a>
+							<?php } ?>
+						</td>
+					</tr> 
+
+					
+					<!-- displays whether or not borrower has provided copy of national ID -->
+					<tr>
+						<td> 
+							<strong> <?php echo $lang['loanstatn']['nationalid'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_nationalid'] ?></span><span class='bottom'></span></span></a></strong>
+						</td>
+						<td>
+							<?php if(empty($brw['frontNationalId'])){
+								echo $lang['loanstatn']['not_provided'];
+							} else {
+								echo $lang['loanstatn']['provided'];
+							} ?>
+						</td>
+					</tr> 
+					<tr><td></td></tr>
+
+
+					<!-- displays whether or not borrower has provided Recommendation Form -->
+					<tr>
+						<td> 
+							<strong> <?php echo $lang['loanstatn']['recommendation'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_recommendation'] ?></span><span class='bottom'></span></span></a></strong>
+						</td>
+						<td>
+							<?php if(empty($brw['addressProof'])){
+								echo $lang['loanstatn']['not_provided'];
+							} else {
+								echo $lang['loanstatn']['provided'];
+							} ?>
+						</td>
+					</tr> 
+
+
+					<!-- displays the member who invited this borrower -->
+					<tr>
+		
+					<?php $invitor= $database->getInvitee($ud);
+						$invcurrentloanid= $database->getCurrentLoanid($invitor);
+						if(!empty($invcurrentloanid)){
+							$invitorname= $database->getNameById($invitor);
+							$invitorurl= getLoanprofileUrl($invitor);
+							$invitedby= "<a href='$invitorurl'>".$invitorname."</a>";
+						?>
+						<td>
+							<strong><?php echo $lang['loanstatn']['invited_by'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_invited'] ?></span><span class='bottom'></span></span></a></strong></td>
+							</strong>
+						</td>
+						<td>
+							<?php echo $invitedby; ?>
+						</td>
+						<?php } ?>
+					</tr>
+
+					<!-- Volunteer Mentor -->
+					<tr>
+						<td> 
+							<strong> <?php
+							if (empty($invcurrentloanid) && !empty($mentor_id)) {
+								echo $lang['loanstatn']['volunteer_mentor'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_mentor'] ?></span><span class='bottom'></span></span></a></strong></td>
+							<?php }
+							$vm_level= $database->getUserLevelbyid($brw['mentor_id']);
+							$vmcurrentloanid= $database->getCurrentLoanid($brw['mentor_id']);
+							if($vm_level==BORROWER_LEVEL && !empty($vmcurrentloanid)){
+								$vm_url= getLoanprofileUrl($brw['mentor_id'],$vmcurrentloanid);
+							}else{
+								$vm_url = "";
+							}
+							$vm_name= $database->getNameById($brw['mentor_id']);
+							?>
+						<td><?php if(empty($invcurrentloanid) && !empty($brw['mentor_id'])){?><a href="<?php echo $vm_url?>"><?php echo $vm_name; ?></a><?php }else	echo ' ';
+						 ?></td>
+					</tr>
+
+				<!-- endorsements -->
+				<tr>
+					<td> <strong>
+
+					<?php 
+					$candisplay= $database->canDisplayEndorser($ud);
+					if(!empty($candisplay)){
+						echo $lang['loanstatn']['public_endorse'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_endorse'] ?></span><span class='bottom'></span></span></a></strong></td>
+						<td><a href="<?php echo $prurl?>?fdb=3"><?php echo $lang['loanstatn']['view_endorse']?></a>
+					<?php } else {
+						echo "";
+						}
+					?>
+
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+		
+		<?php if($is_volunteer){ 
+			$vm_member_details= $database->getMentorAssignedmember($ud);
+			$params['vm_member']= count($vm_member_details);
+			$vm_member_text= $session->formMessage($lang['loanstatn']['self_vm'], $params);
+			?>
+				<div id="viewassignedmember" style="cursor:pointer;" >
+						<img style='float:left' class='starimg' src="images/star.png" />&nbsp;&nbsp;&nbsp;<?php echo $vm_member_text; ?>
+
+						<a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_mentor'] ?></span><span class='bottom'></span></span></a><br/>
+				</div><br/>
+				<div id="viewassignedmember_desc" style="display:none;" class="span16">
+					<table class="detail" style="width:350px;">
+						<tbody>
+						<?php foreach($vm_member_details as $vm_member_detail){
+							$member_loanid=$database->getCurrentLoanid($vm_member_detail['userid']);
+							if(empty($member_loanid)){
+								$member_url= getUserProfileUrl($vm_member_detail['userid']);
+							}else{
+								$member_url = getLoanprofileUrl($vm_member_detail['userid'],$member_loanid);
+							}
+						?>
+							<tr><td width="200px;"></td><td><a href="<?php echo $member_url ?>" target="_blank"><?php echo $vm_member_detail['FirstName']." ".$vm_member_detail['LastName']; ?></a></td>
+							</tr>
+							<tr></tr>
+						<?php 
+						}
+						?>
+						</tbody>
+					</table>
+				</div>
+		<?php }   ?>
+
+				</tbody>
+			</table>
+		</div> <!-- /loan-profile -->
+
+		<div id="loan-profile" class="loan-profile">
+
+			<h4><?php echo $lang['loanstatn']['about_loan']; ?></h4>
+			
+				<table>
+					<tbody>
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+						<?php if($showLoanDetail==1){ ?>
+						<tr>
+							<td style="width:250px"><strong><?php echo $lang['loanstatn']['requested'] ?>:</strong></td>
+							<td style="width:205px">USD <?php echo $damountX ?></td>
+						</tr>
+						<?php }if($showLoanDetail==2){ ?>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['loan_pri_disb'] ?>:</strong></td>
+							<td>
+						<?php	if($show_localcurrency)
+									echo $tmpcurr." ".number_format(round_local($brw2['AmountGot']),0,'.',',');
+								else
+									echo $tmpcurr." ".number_format(convertToDollar($brw2['AmountGot'], $disburseRate),2,'.',',');
+						?>
+							</td>
+						</tr>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['date_disb'] ?>:</strong></td>
+							<td><?php echo date('M d, Y',$disburseDate); ?></td>
+						</tr>
+						<?php } ?>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['pd'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_pd'] ?></span><span class='bottom'></span></span></a></strong></td>
+							<td><?php echo $period ?> <?php echo $periodText ?></td>
+						</tr>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['gpd'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_gpd']?></span><span class='bottom'></span></span></a></strong></td>
+							<td><?php echo $gperiod ?> <?php echo $gperiodText ?></td>
+						</tr>
+						<?php if($showLoanDetail==1){ ?>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['max_intr_rate'] ?>: 
+							<img src='library/tooltips/help.png' class="intr-tooltip-target tooltip-target" id="intr-target-1" style='border-style:none;display:inline' />
+							<div class="tooltip-content tooltip-content" id="intr-content-1">
+							<span class="tooltip">
+								<span class="tooltipTop"></span>
+								<span class="tooltipMiddle" >
+								<?php echo $lang['loanstatn']['tooltip_rli'];?>
+									<p class="auditedreportlink">
+										<a href="includes/flatinterestrate.php" rel="facebox"><?php echo $lang['loanstatn']['flatintrest_diff']?></a>
+									</p>
+								</span>	
+								<span class="tooltipBottom"></span>
+							</span>
+							</div>
+							</strong></td>
+							<td><?php echo number_format($maxInterestRate, 2, '.', ',') ?>%</td>
+						</tr>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['webfee'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_atf']?></span><span class='bottom'></span></span></a></strong></td>
+							<td><?php echo number_format($webfee, 2, '.', ','); ?>%</td>
+						</tr>
+						<?php } ?>
+						<?php if(!$bfrstloan){	?>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['b_reg_fee'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_webfee']?></span><span class='bottom'></span></span></a></strong></td>
+							<td>
+						<?php	if($show_localcurrency && $showLoanDetail==2)
+									echo $b_reg_fee_native;
+								else
+									echo "USD ". $b_reg_fee;
+						?>
+							</td>
+						</tr>
+						<?php }	?>
+						<?php if($showLoanDetail==1){ ?>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['tba'] ?>:</strong></td>
+							<td>USD <?php echo number_format($totToPayBackinUSD, 2)." (". number_format( $totFee , 2, '.', ',') ?>%)</td>
+						</tr>
+						<?php }	?>
+						<?php if($showLoanDetail==2){ ?>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['tot_int_due_lend'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_tot_int_due_lend']?></span><span class='bottom'></span></span></a></strong></td>
+							<td>
+						<?php	if($show_localcurrency)
+									echo $tmpcurr." ".number_format(round_local($feelender),0, '.', ',')." (".number_format($interestrate,2, '.', ',')."%)";
+								else
+									echo $tmpcurr." ".number_format(convertToDollar($feelender ,($disburseRate)),2, '.', ','). " (".number_format($interestrate,2, '.', ',')."%)";
+						?>
+							</td>
+						</tr>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['br_trn_fee'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_br_trn_fee']?></span><span class='bottom'></span></span></a></strong></td>
+							<td>
+						<?php	if($show_localcurrency)
+									echo $tmpcurr." ".number_format(round_local($feeamount), 0, '.', ',')." (".number_format($webfee, 2,'.',',')."%)";
+								else
+									echo $tmpcurr." ".number_format(convertToDollar($feeamount ,($disburseRate)), 2, '.', ',')." (".number_format($webfee, 2,'.',',')."%)";
+						?>
+							</td>
+						</tr>
+
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
+						
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['tba'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_tba']?></span><span class='bottom'></span></span></a></strong></td>
+							<td>
+						<?php	if($show_localcurrency)
+									echo $tmpcurr." ".number_format(round_local($totToPayBack), 0)." (". number_format( $totFee , 2, '.', ',')."%)";
+								else
+									echo $tmpcurr." ".number_format(convertToDollar($totToPayBack ,($disburseRate)), 2)." (". number_format( $totFee , 2, '.', ',')."%)";
+						?>
+							</td>
+						</tr>
+						<?php }	?>
+						
+					</tbody>
+				</table>
+
+		</div> <!-- /loan-profile -->
+	</div> <!-- /span5 -->
+	
+	<!-- comment section -->
+	<div class="row">
+		<div class="span16" id="comment-section">
+			<?php
+				$fb=0;
+					include_once("./editables/profile.php");
+					$path=	getEditablePath('profile.php');
+					include_once("editables/".$path);
+					include_once("includes/b_comments.php");
+			?>
+		</div><!-- /span16 -->
+	</div><!-- /row -->
+	<div style="clear: both;">
+		<div align="right" style="margin-right: 40px;">
+			<?php $prurl = getUserProfileUrl($ud);?>
+			<a href="<?php echo $prurl?>?fdb=1">View All</a>
+		</div>
 	</div>
-</div>
+
+<!-- share box script -->
 <?php
 }
 ?>
@@ -1971,8 +1953,6 @@ if($brw2['active'] == LOAN_REPAID)
 											<a href="javascript:void(0)" onclick="$.facebox.close();" class=''>
 											No Thanks</a>
 
-<!-- update by Mohit on date 3-1-14 (Julia 26-11-2013) ---->
-
 <br/><br/>
 <a href='javascript:void(0)' onclick='sharebox_off_submit(<?php echo $userid;?>,<?php echo $ud;?>,<?php echo $ld;?>,1)'>Do Not Display Share Invite Again</a>
 
@@ -2069,6 +2049,9 @@ if($brw2['active'] == LOAN_REPAID)
 <?php
 	}
 ?>
+<!-- end share box -->
+
+
 <script type="text/javascript">
 <!--
 	function submit_form(form)
