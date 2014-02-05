@@ -1142,12 +1142,6 @@ if($brw2['active'] == LOAN_REPAID)
 				
 			</div>
 		</div><!-- /row -->
-	
-
-	</div><!-- /span10 -->
-
-
-
 
 
 	<div class="span5 right_column">
@@ -1878,11 +1872,10 @@ if($brw2['active'] == LOAN_REPAID)
 		</div> <!-- /loan-profile -->
 
 	</div> <!-- /span5 -->
-</div>
-</div>
 
+	</div><!-- /span10 -->
 
-	<!-- comment section -->
+	<!-- 
 	<div class="row" style="align:left">
 		<div class="span16" id="comment-section">
 			<?php
@@ -1893,14 +1886,15 @@ if($brw2['active'] == LOAN_REPAID)
 					include_once("editables/".$path);
 					include_once("includes/b_comments.php");
 			?>
-		</div><!-- /span16 -->
-	</div><!-- /row -->
-	<div style="clear: both;">
+		</div>
+	</div>
+		<div style="clear: both;">
 		<div align="right" style="margin-right: 40px;">
 			<?php $prurl = getUserProfileUrl($ud);?>
 			<a href="<?php echo $prurl?>?fdb=1">View All</a>
 		</div>
 	</div>
+-->
 
 
 <!-- share box script -->
