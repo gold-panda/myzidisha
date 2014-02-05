@@ -256,3 +256,18 @@ define("SHIFT_SCIENCE_KEY","e33ffd8ca8b19175"); // Shift Science API KEY
 //Mailgun variables
 define("MAILGUN_API_KEY","key-8d4q5ajm6610qecy8o9-4x0pnt8b8l51");
 define("BORROWER_ACCOUNT_STATUS_TAG","Borrower account status notifications");
+define("BORROWER_REPAYMENT_REMINDER_TAG","Borrower payment reminder notifications");
+define("BORROWER_REPAYMENT_RECEIVED_TAG","Borrower payment received notifications");
+define("BORROWER_ELIGIBLE_INVITE_TAG","Borrower is eligible to invite notifications");
+define("LENDER_FULLY_FUNDED_TAG","Lender fully funded notifications");
+define("LENDER_DISBURSEMENT_NOTIFICATION_TAG","Lender disbursement notifications");
+define("LENDER_REPAYMENT_RECEIVED_TAG","Lender payment received notifications");
+define("LENDER_FEEDBACK_REQUEST_TAG","Lender feedback requests for repaid loans");
+define("LENDER_FORGIVENESS_EMAIL_TAG","Lender forgiveness invites");
+define("LENDER_OUTBID_NOTIFICATION_TAG","Lender outbid notifications");
+define("LENDER_WITHDRAW_CONFIRMATION_TAG","Lender withdrawal confirmations");
+define("LENDER_UPLOAD_CONFIRMATION_TAG","Lender funds upload confirmations");
+define("LENDER_COMMENT_NOTIFICATION_TAG","Lender comment notifications");
+define("LENDER_NEW_APP_NOTIFICATION_TAG","New app by previous borrower notifications");
+define("BULK_ANNOUNCEMENTS_TAG","Bulk announcements to users");
+define("INVITE_TO_JOIN_TAG","Invites to join Zidisha");
