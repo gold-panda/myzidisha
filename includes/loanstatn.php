@@ -1255,8 +1255,9 @@ if($brw2['active'] == LOAN_REPAID)
 
 		<!-- about this borrower -->
 		<div id="loan-profile" class="loan-profile">
-
-			<h4><?php echo $lang['loanstatn']['about']." ".$name; ?></h4>
+			
+			<h4 colspan="2"><?php echo $lang['loanstatn']['about']." ".$name; ?></h4>
+			
 			<table>
 				<tbody>
 
