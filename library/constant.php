@@ -255,7 +255,7 @@ define("SHIFT_SCIENCE_KEY","e33ffd8ca8b19175"); // Shift Science API KEY
 
 //Mailgun variables
 define("MAILGUN_API_KEY","key-8d4q5ajm6610qecy8o9-4x0pnt8b8l51");
-define("BORROWER_ACCOUNT_STATUS_TAG","Borrower account status notifications");
+define("MISC_ACCOUNT_STATUS_TAG","Miscellaneous account status notifications");
 define("BORROWER_REPAYMENT_REMINDER_TAG","Borrower payment reminder notifications");
 define("BORROWER_REPAYMENT_RECEIVED_TAG","Borrower payment received notifications");
 define("BORROWER_ELIGIBLE_INVITE_TAG","Borrower is eligible to invite notifications");

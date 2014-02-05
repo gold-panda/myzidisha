@@ -349,8 +349,12 @@ This is a wrapper function for sending emails
 			//print($body); print("<br />");
 
 			$domain = "zidisha.org";
-			$tagForMailgun = null;
-			if($tag != 0) { $tagForMailgun = array($tag); }
+			
+			if($tag != 0) { 
+				$tagForMailgun = array($tag); 
+			}else{
+				$tagForMailgun = array(MISC_ACCOUNT_STATUS_TAG);
+			}
 
 
 				try { $result = $mgClient->sendMessage("$domain",
@@ -358,11 +362,11 @@ This is a wrapper function for sending emails
                         'to'      => $email,
                         'subject' => $headers['Subject'],
                         'html'	  => $body,
-                        'o:tag'  => $tag
+                        'o:tag'  => $tagForMailgun
 
                         ));
 					if($result->http_response_code == 200) { $rc = 1; }
-				} catch (Exception $e) { echo $e->getMessage(); Logger("Error sending email, {$e->getMessage()}"); }
+				} catch (Exception $e) { Logger("Error sending email, {$e->getMessage()}"); }
 			
 
 		}

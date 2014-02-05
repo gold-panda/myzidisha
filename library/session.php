@@ -321,7 +321,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 			$params['zidisha_link']= SITE_URL."index.php";
 			$message = $this->formMessage($lang['mailtext']['ActivateBorrower-msg'], $params);
 			if($addmore == 0)
-				$reply=$this->mailSendingHtml($From, $To, $bdetail['email'], $Subject, '', $message, 0, $templet, 3, BORROWER_ACCOUNT_STATUS_TAG);
+				$reply=$this->mailSendingHtml($From, $To, $bdetail['email'], $Subject, '', $message, 0, $templet, 3, MISC_ACCOUNT_STATUS_TAG);
 			$this->sendContactConfirmation($borrowerid);
 			return 0;
 		}
@@ -372,7 +372,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		$prurl = getUserProfileUrl($pid);
 		$params['link'] = SITE_URL.$prurl ;
 		$message = $this->formMessage($lang['mailtext']['ActivatePartner-msg'], $params);
-		$reply=$this->mailSendingHtml($From, $To, $deat['email'], $Subject, '', $message, 0, $templet, 3, BORROWER_ACCOUNT_STATUS_TAG);
+		$reply=$this->mailSendingHtml($From, $To, $deat['email'], $Subject, '', $message, 0, $templet, 3);
 		return $return;
 	}
 	function setExchangeRate($amount,$currency)
@@ -588,7 +588,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 			$Subject=$lang['mailtext']['ForgotPassowrd-subject'];
 			$params['password'] = $result['pass'];
 			$message = $this->formMessage($lang['mailtext']['ForgotPassowrd-msg'], $params);
-			$reply=$this->mailSendingHtml($From, '', $result['email'], $Subject, '', $message, 0, $templet, 3, BORROWER_ACCOUNT_STATUS_TAG);
+			$reply=$this->mailSendingHtml($From, '', $result['email'], $Subject, '', $message, 0, $templet, 3);
 			return 1;
 		}
 	}
@@ -1880,7 +1880,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 							$this->mailSendingHtml($From, $CCemail, $CCemail, $Subject, '', $message, 0, $templet, 3);
 						}
 					}
-				$reply=$this->mailSendingHtml($From, $To, $email, $Subject, '', $message, 0, $templet, 3);
+				$reply=$this->mailSendingHtml($From, $To, $email, $Subject, '', $message, 0, $templet, 3, MISC_ACCOUNT_STATUS_TAG);
 				if($reply)
 					Logger_Array("Email to borrower  sent  by admin",'email, To', $email, $To);
 					return true;
