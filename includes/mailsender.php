@@ -350,19 +350,18 @@ This is a wrapper function for sending emails
 
 			$domain = "zidisha.org";
 			
+			$tagForMailgun = null;
 			if($tag != 0) { 
-				$tagForMailgun = array($tag); 
-			}else{
-				$tagForMailgun = array(MISC_ACCOUNT_STATUS_TAG);
+			$tagForMailgun = array($tag); 
 			}
 
 
-				try { $result = $mgClient->sendMessage("$domain",
-                  	array('from'    => $headers['From'],
+			try { $result = $mgClient->sendMessage("$domain",
+                  array('from'    => $headers['From'],
                         'to'      => $email,
                         'subject' => $headers['Subject'],
-                        'html'	  => $body,
-                        'o:tag'  => $tagForMailgun
+                        'html'   => $body,
+                        'o:tag'  => $tag
 
                         ));
 					if($result->http_response_code == 200) { $rc = 1; }

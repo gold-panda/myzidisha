@@ -222,8 +222,9 @@
 
 			<!-- Accept terms -->
 			<div class="group">
-				<label><INPUT TYPE="checkbox" name="agree" id="agree" value="1" tabindex="3" /><?php echo $lang['register']['a_a1']; ?> <a class="terms_of_use_action" href="#"><?php echo $lang['register']['a_a2']; ?></a>.</label>
-				<br/>
+				<label><INPUT TYPE="checkbox" name="agree" id="agree" value="1" tabindex="3" /><?php echo $lang['register']['a_a1']; ?> <a class="terms_of_use_action" href="#"><?php echo $lang['register']['a_a2']; ?></a>.
+				<br/><br/>
+				</label>
 			</div>
 			
 			<!-- Register button -->
