@@ -72,7 +72,7 @@ return $contents ;
 }
 
 
-function mailSender ( $hdr_from, $hdr_to, $email, $subject, $header, $body, $attachment='',$templet = 0,$html=0,$info=0 ,$replyTo=null) {
+function mailSender ( $hdr_from, $hdr_to, $email, $subject, $header, $body, $attachment='',$templet = 0,$html=0, $tag=0, $info=0 ,$replyTo=null) {
 	global $database,$session;
 	Logger("ZDISHAEMAILSENTTEST");
 	
@@ -148,7 +148,7 @@ This is a wrapper function for sending emails
 
 		if (!empty($info['image_src'])){
 
-			$templet = str_replace('%image_src%', "<img src='".$info['image_src']."' class='center'>", $templet);
+			$templet = str_replace('%image_src%', "<img src='".$info['image_src']."' style='max-width: 600px;' class='center'>", $templet);
 		
 		}else{
 
@@ -341,7 +341,7 @@ This is a wrapper function for sending emails
 		$rc = 1;
 		else {
 			//$rc = $mail_object->send($email, $hdrs, $body);
-			$mgClient = new Mailgun('key-8d4q5ajm6610qecy8o9-4x0pnt8b8l51');
+			$mgClient = new Mailgun(MAILGUN_API_KEY);
 
 			//print($headers['From']); print("<br />");
 			//print($email); print("<br />");
@@ -349,17 +349,20 @@ This is a wrapper function for sending emails
 			//print($body); print("<br />");
 
 			$domain = "zidisha.org";
+			$tagForMailgun = null;
+			if($tag != 0) { $tagForMailgun = array($tag); }
 
 
 				try { $result = $mgClient->sendMessage("$domain",
                   	array('from'    => $headers['From'],
                         'to'      => $email,
                         'subject' => $headers['Subject'],
-                        'html'	  => $body
+                        'html'	  => $body,
+                        'o:tag'  => $tag
 
                         ));
 					if($result->http_response_code == 200) { $rc = 1; }
-				} catch (Exception $e) { Logger("Error sending email, {$e->getMessage()}"); }
+				} catch (Exception $e) { echo $e->getMessage(); Logger("Error sending email, {$e->getMessage()}"); }
 			
 
 		}

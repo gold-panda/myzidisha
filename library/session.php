@@ -321,7 +321,7 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 			$params['zidisha_link']= SITE_URL."index.php";
 			$message = $this->formMessage($lang['mailtext']['ActivateBorrower-msg'], $params);
 			if($addmore == 0)
-				$reply=$this->mailSendingHtml($From, $To, $bdetail['email'], $Subject, '', $message, 0, $templet, 3);
+				$reply=$this->mailSendingHtml($From, $To, $bdetail['email'], $Subject, '', $message, 0, $templet, 3, BORROWER_ACCOUNT_STATUS_TAG);
 			$this->sendContactConfirmation($borrowerid);
 			return 0;
 		}
@@ -600,13 +600,13 @@ function activateBorrower($borrowerid, $pcomment, $addmore, $cid, $ofclName = nu
 		$validation->checkAmount($amount, "paidamt");
 		$validation->checkDated($date, "paiddate");
 		$path=  getEditablePath('error.php');
-		include(FULL_PATH."editables/".$path);
 		$now = time();
 		$max_date = strtotime("+3 days",$now); //allow forward dating up to 3 days
 		$min_date = 1262304000; // 1 Jan 2010 to prevent erroneous entries before we were receiving payments
 		if(strtotime($date) > $max_date || strtotime($min_date) > strtotime($date)) { 
 			$form->setError('paiddate', $lang['error']['invalid_date']);
-		}
+		}		include(FULL_PATH."editables/".$path);
+
 
 		if($form->num_errors > 0)
 		{
@@ -6472,11 +6472,11 @@ function forgiveReminder(){
 	/* -------------------Mail section Start----------------------- */
 
 	
-	function mailSendingHtml($From, $To, $email, $Subject, $header, $message,$attachment,$templet,$html,$card_info)
+	function mailSendingHtml($From, $To, $email, $Subject, $header, $message,$attachment,$templet,$html,$tag,$card_info)
 	{
 		require_once ("includes/mailsender.php");
 		if($this->usersublevel !=READ_ONLY_LEVEL){
-			$r = mailSender($From, $To, $email, $Subject, $header, $message,$attachment,$templet,$html,$card_info);
+			$r = mailSender($From, $To, $email, $Subject, $header, $message,$attachment,$templet,$html,$tag,$card_info);
 		}
 		if(!empty($r))
 			return 1;
