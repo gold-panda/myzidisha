@@ -5,7 +5,7 @@
 <?php
 	include_once ("library/database.php");
 	include_once ("facebook/facebook.php");
-	
+
 	// checking if user has been tried to connect his facebook account with already existing Zidisha account and if there are any errors
 	if($session->facebook_connect_modal = 1 && $form->error("username") && $form->error("password") )
 	{
@@ -18,20 +18,20 @@
 			</script>
 			
 		<?php
-		
+
 		unset($session->facebook_connect_modal);
-		
-		
+
+
 	}
-	
+
 	$facebook = new Facebook(array('appId'  => FB_APP_ID,'secret' => FB_APP_SECRET));
-	
+
 	// get user id
 	$uid = $facebook->getUser();
-	
+
 	// check whether user exist in database
 	$check_user = $database->getExistFbUser($uid);
-	
+
 	// if user tries to log in
 	if ($_GET['code'])
 	{
@@ -44,14 +44,14 @@
 			$session->userid    = $_SESSION['userid'] = $session->userinfo['userid'];
 			$session->userlevel = $session->userinfo['userlevel'];
 			$session->usersublevel = $_SESSION['sublevel'] = $session->userinfo['sublevel'];
-			
+
 		?>
 			<script>
 				window.location.assign('<?php echo SITE_URL ?>');
 			</script>
 		<?php
-			
-			
+
+
 		}
 		// if user doesn't exist
 		else
@@ -66,7 +66,7 @@
 		<?php
 		}
 	}
-	
+
 ?>
 <!-- Sign in -->
 <div class="title">Sign in</div>
@@ -86,7 +86,7 @@
 	</div>
 	<!-- Default login -->
 	<div class="default_login">
-		<p class="heading">Sign in using our form</p>
+		<p class="heading default">Sign in using our form</p>
 		<!-- if there are any errors -->
 		<p>
 			<?php
@@ -104,13 +104,13 @@
 			<p><label class="checkbox">Remember me<input type="checkbox"/></label></p>
 			<p class="custom_margin" style="clear:both;"><button type="submit" class="btn square">Go</button></p>
 			<p class="custom_margin"><a style="color:gray" href="index.php?p=56">Forgot your password?</a></p>
-			<p class="custom_margin">Not a member? <a style="color:#FF8B00;font-weight:bold;font-size:14px;" href="index.php?p=1&amp;sel=1">Join</a></p>
+			<p class="custom_margin">Not a member? <a style="color:#FF8B00;font-weight:bold;font-size:14px;" href="index.php?p=1&amp;sel=2">Join</a></p>
 		</form>
 	</div>
 </div>
 
 <!-- ***POP UP*** Facebook connect to existing account -->
 <div id="basic-modal-content" class="facebook_connect" align="left">
-	<p class="terms_of_use_modal blue_color uppercase">Facebook connect to an existing Zidisha.org account</p>
+	<p class="heading">Please sign in once to connect your Facebook account with your Zidisha account.</p>
 	<p><?php echo $form->error("username"); ?> <?php echo $form->error("password"); ?></p>
 </div>

@@ -15,7 +15,7 @@ $lang['loanapplic']['thursday'] = 'Thursday';
 $lang['loanapplic']['friday'] = 'Friday';
 $lang['loanapplic']['saturday'] = 'Saturday';
 $lang['loanapplic']['sunday'] = 'Sunday';
-$lang['loanapplic']['summary'] = 'Please tell in a few words how you will use the loan.<br/><br/><i>This summary will be displayed to prospective lenders on the <a href="https://www.zidisha.org/microfinance/lend.html" target="blank">Lend</a> page, before they open your profile to read more.</i>';
+$lang['loanapplic']['summary'] = 'Please choose a title for your loan project.<br/><br/><i>Please choose words that indicate how you will use the loan. This title will be displayed to prospective lenders on the <a href="https://www.zidisha.org/microfinance/lend.html" target="blank">Lend</a> page, before they open your profile to read more.</i>';
 $lang['loanapplic']['use_loan'] = 'Please describe in more detail what you will buy with the loan, what benefit it will create, and why lenders should support you in making this purchase.<br/><br/><i>This text will be displayed to prospective lenders who have already read your summary, within your loan profile page.</i>';
 $lang['loanapplic']['t_cond'] = 'Terms of Use';
 $lang['loanapplic']['accept'] = 'Accept Agreement';

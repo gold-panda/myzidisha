@@ -502,7 +502,7 @@ else
 									<tr>
 										<td colspan=3>
 											<?php echo $lang['loanapplic']['summary'] ?><br/><br/>
-											<textarea name="summary" id="summary" style="width:600px; height:50px" maxlength="200"><?php echo $summary;?></textarea><br/>
+											<textarea name="summary" id="summary" style="width:600px; height:50px" maxlength="70"><?php echo $summary;?></textarea><br/>
 											<div><?php echo $form->error('summary') ?></div>
 										</td>
 									</tr>

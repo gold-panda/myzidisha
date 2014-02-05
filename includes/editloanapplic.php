@@ -278,7 +278,7 @@ echo $lang['loanapplic']['note_amt_pr']; ?>
 									<tr>
 										<td colspan="3">
 											<br /><?php echo $lang['loanapplic']['summary'];?><br /><br/>
-											<textarea name="summary" style="width:100%; height:50px" maxlength="200"><?php	echo $summary; ?></textarea>
+											<textarea name="summary" style="width:100%; height:50px" maxlength="70"><?php	echo $summary; ?></textarea>
 											<br />
 											<?php echo $form->error('summary') ?>
 										</td>

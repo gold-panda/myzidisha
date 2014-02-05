@@ -2,6 +2,7 @@ function show_facebook_modal(){
 	var facebook_flag = '<input type="hidden" name="fb_connect" />';
 	$('#basic-modal-content').append($('.default_login').html());
 	$('#basic-modal-content .default_login_form').append(facebook_flag);
+	$('#basic-modal-content .heading.default').remove();
 	$('#basic-modal-content').modal({
 		containerCss:{
 			width:250

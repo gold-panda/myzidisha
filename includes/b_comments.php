@@ -74,8 +74,7 @@ $(document).ready(function() {
 			}
 		}
 		echo $vm_comments; ?>
-		<br/><br/>
-		<p>If you believe this application violates our Terms of Use, or have any other concerns, please <a href="mailto:service@zidisha.org?subject=Possible Terms of Use Violation: <?php echo $name; ?>">contact us</a>.</p>
+		
 	</div>
 	<div style="clear:both;border-top:1px solid #DFDCDC">&nbsp;</div>
 	<div>
