@@ -103,11 +103,13 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 							}else {
 								$intToPlaceBid = $loans[0]['intOffer'];
 							}
-							
+							$LoanbidId = 0;
 							/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
 									if($preference==6){										
 										$status = $session->getStatusBar($loans[0]['borrowerid'],$loans[0]['loanid'],5);
-										$lastBid=$database->lastBidDetail($loans[0]['loanid']);
+										$lastBid=$database->lastBidDetail($loans[0]['loanid'],$lenderId);
+										if(!is_array($lastBid))
+											continue;
 										if(array_filter($lastBid)){
 											    $lastBidAmnt=$lastBid['amnt'];
 											    $lastBidIntr=$lastBid['intr'];
@@ -121,10 +123,13 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 												$biddedAmnt=($loans[0]['reqdamt']*$status)/100;
 												$reqAmnt=$loans[0]['reqdamt']-$biddedAmnt;
 												$amountTobid = min($lastBidAmnt, $reqAmnt);
+												$LoanbidId=$session->placebid($loans[0]['loanid'], $loans[0]['borrowerid'], $amountTobid, $intToPlaceBid, 1, true,$lenderId);
 												
 										}
 									}/***** End here *****/
-									$LoanbidId=$session->placebid($loans[0]['loanid'], $loans[0]['borrowerid'], $amountTobid, $intToPlaceBid, 1, true,$lenderId);
+									else{
+										$LoanbidId=$session->placebid($loans[0]['loanid'], $loans[0]['borrowerid'], $amountTobid, $intToPlaceBid, 1, true,$lenderId);
+									}
 							if(is_array($LoanbidId)) {
 									$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loans[0]['borrowerid'], $loans[0]['loanid'], $amountTobid,$intToPlaceBid);
 									Logger_Array("Entry in Autolend Table IF loan==1",'Loan BidID','LenderId','Loan id', 'BorrowerId','Amnt to lend','Intrest',$LoanbidId['loanbid_id'],$lenderId,$loans[0]['loanid'],$loans[0]['borrowerid'],$amountTobid,$intToPlaceBid);
@@ -161,8 +166,11 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 										$intToPlaceBid = $loan['intOffer'];
 									}
 									/* Added By Mohit 20-01-14 To get Last manully Bid Detail*/
+									$LoanbidId = 0;
 									if($preference==6){
-										$lastBid=$database->lastBidDetail($loan['loanid']);
+										$lastBid=$database->lastBidDetail($loan['loanid'],$lenderId);
+										if(!is_array($lastBid))
+											continue;
 										if(array_filter($lastBid)){
 											    $lastBidAmnt=$lastBid['amnt'];
 											    $lastBidIntr=$lastBid['intr'];
@@ -178,18 +186,18 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 												$biddedAmnt=($loan['reqdamt']*$status)/100;
 												$reqAmnt=$loan['reqdamt']-$biddedAmnt;
 												$amntToLend = min($lastBidAmnt, $reqAmnt, AUTO_LEND_AMT);
-										}else{
-											$amntToLend=AUTO_LEND_AMT;
-											}
-									}else{
+												$LoanbidId=$session->placebid($loan['loanid'], $loan['borrowerid'], $amntToLend, $intToPlaceBid, 1, true,$lenderId);
+										}											
+									}
+									else{
 										 $amntToLend=AUTO_LEND_AMT;
-									} /***** End here *****/	
-									$LoanbidId=$session->placebid($loan['loanid'], $loan['borrowerid'], $amntToLend, $intToPlaceBid, 1, true,$lenderId);
-							
+										 $LoanbidId=$session->placebid($loan['loanid'], $loan['borrowerid'], $amntToLend, $intToPlaceBid, 1, true,$lenderId);
+										}
+
 									if(is_array($LoanbidId)) {
-										$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loan['borrowerid'], $loan['loanid'], $amntToLend,$intToPlaceBid);											
+										$database->addAutoLoanBid($LoanbidId['loanbid_id'], $lenderId, $loan['borrowerid'], $loan['loanid'], $amntToLend,$intToPlaceBid);
 										unset($loans[$key]);
-										$processed[]=$loan['loanid'];										
+										$processed[]=$loan['loanid'];
 										$possibleBids--;
 									} else {
 										$form->num_errors = 0;									
@@ -215,5 +223,5 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 		}
 		Logger_Array("AutoBid---LOG",'fully funded loan ID line 5935',$fullyFunded);
 		return $fullyFunded;
-	}		
+	}
 ?>

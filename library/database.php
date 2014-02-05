@@ -23072,18 +23072,32 @@ function getAllRecentComments($limit)
         return $result;
     }
 
-function lastBidDetail($loanid){
-		$qry='SELECT transactions.TrDate as transDate,transactions.amount,transactions.loanbid_id,transactions.userid,auto_lendbids.id,transactions.loanid FROM transactions LEFT OUTER JOIN auto_lendbids on  transactions.loanbid_id= auto_lendbids.loanbid_id WHERE transactions.txn_type='.LOAN_BID.' AND auto_lendbids.id IS NULL AND transactions.loanid='.$loanid.' ORDER BY TrDate desc limit 0,1';
+function lastBidDetail($loanid, $lenderId){
+		global $db;
+		$q="SELECT * FROM ! WHERE lender_id=? AND loan_id=? ";
+
+		$result1=$db->getAll($q,array('auto_lendbids' ,$lenderId, $loanid ));	  
+		$count=count($result1);
+		
+		$limit='limit '.$count.',1';
+			
+		$qry='SELECT transactions.TrDate as transDate,transactions.amount,transactions.loanbid_id,transactions.userid,auto_lendbids.id,transactions.loanid FROM transactions LEFT OUTER JOIN auto_lendbids on  transactions.loanbid_id= auto_lendbids.loanbid_id WHERE transactions.txn_type='.LOAN_BID.' AND auto_lendbids.id IS NULL AND transactions.loanid='.$loanid.' ORDER BY TrDate '.$limit.'';
 		$result= mysql_query($qry);
-		$data=mysql_fetch_object($result);		
+		
+		$data=mysql_fetch_object($result);	
+		if(empty($data))
+		{
+			return 0;
+		}
+			
 		$lastLoan=array();
 		$lastLoan['amnt']=str_replace('-','',$data->amount);
-			$q='SELECT bidint FROM loanbids where lenderid='.$data->userid.' AND loanid='.$data->loanid.' ORDER BY bidid desc limit 0,1';
+			$q='SELECT bidint FROM loanbids where lenderid='.$data->userid.' AND loanid='.$data->loanid.' ORDER BY bidid limit 0,1';
 		$rs=mysql_query($q);
 		$ob=mysql_fetch_object($rs);
 		$lastLoan['intr']=$ob->bidint;
 		return $lastLoan;
-		}
+	}
 
 function updateAutoLend($lenderid){
 		$q='UPDATE auto_lending SET last_processed =now() WHERE lender_id='.$lenderid.' AND active=1';
@@ -23136,8 +23150,8 @@ function getProfileImage($userid){
          }
          return $imagesrc;
  }
+/* End here */
 
-/* End here */	
 };
 
 $database= new genericClass;
