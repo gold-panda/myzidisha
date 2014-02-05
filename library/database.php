@@ -23081,7 +23081,7 @@ function lastBidDetail($loanid, $lenderId){
 		
 		$limit='limit '.$count.',1';
 			
-		$qry='SELECT transactions.TrDate as transDate,transactions.amount,transactions.loanbid_id,transactions.userid,auto_lendbids.id,transactions.loanid FROM transactions LEFT OUTER JOIN auto_lendbids on  transactions.loanbid_id= auto_lendbids.loanbid_id WHERE transactions.txn_type='.LOAN_BID.' AND auto_lendbids.id IS NULL AND transactions.loanid='.$loanid.' ORDER BY TrDate '.$limit.'';
+		$qry='SELECT transactions.TrDate as transDate,transactions.amount,transactions.loanbid_id,transactions.userid,auto_lendbids.id,transactions.loanid FROM transactions LEFT OUTER JOIN auto_lendbids on  transactions.loanbid_id= auto_lendbids.loanbid_id WHERE transactions.txn_type='.LOAN_BID.' AND auto_lendbids.id IS NULL AND transactions.loanid='.$loanid.' ORDER BY TrDate DESC '.$limit.'';
 		$result= mysql_query($qry);
 		
 		$data=mysql_fetch_object($result);	
@@ -23092,7 +23092,7 @@ function lastBidDetail($loanid, $lenderId){
 			
 		$lastLoan=array();
 		$lastLoan['amnt']=str_replace('-','',$data->amount);
-			$q='SELECT bidint FROM loanbids where lenderid='.$data->userid.' AND loanid='.$data->loanid.' ORDER BY bidid limit 0,1';
+			$q='SELECT bidint FROM loanbids where lenderid='.$data->userid.' AND loanid='.$data->loanid.' ORDER BY bidid DESC limit 0,1';
 		$rs=mysql_query($q);
 		$ob=mysql_fetch_object($rs);
 		$lastLoan['intr']=$ob->bidint;
