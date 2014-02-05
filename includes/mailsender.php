@@ -156,6 +156,16 @@ This is a wrapper function for sending emails
 		
 		}
 
+		if (!empty($info['link']) && !empty($info['anchor'])){
+
+			$templet = str_replace('%linked_text%', "<a href='".$info['link']."'>".$info['anchor']."</a>", $templet);
+		
+		}else{
+
+			$templet = str_replace('%linked_text%','',$templet);
+		
+		}
+
 	}
 	$hdr_from = stripslashes(clearPost($hdr_from));
 	$hdr_to = stripslashes(clearPost($hdr_to));

@@ -225,7 +225,7 @@ class Process
 		$_POST_ORG=$_POST;
 		$_POST = sanitize_custom($_POST);
 
-		$reply = $session->sendBulkMails($_POST['emailaddress'], $_POST['radio_useroption'], $_POST['emailmessage'], $_POST['emailsubject'],  $_POST['emailheader'],  $_POST['image_src']);
+		$reply = $session->sendBulkMails($_POST['emailaddress'], $_POST['radio_useroption'], $_POST['emailmessage'], $_POST['emailsubject'],  $_POST['emailheader'],  $_POST['image_src'],  $_POST['link'],  $_POST['anchor']);
 		if(!$reply){
 			$_SESSION['value_array'] = $_POST_ORG;
 			$_SESSION['error_array'] = $form->getErrorArray();

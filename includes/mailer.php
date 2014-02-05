@@ -101,6 +101,23 @@ if($session->userlevel==ADMIN_LEVEL)
 					</td>
 				</tr>
 				<tr>
+				<tr><td></td></tr>
+
+				<tr><td>Link (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="link" name="link" style="width:350px;" value="<?php echo $form->value("link"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+
+				<tr><td>Anchor (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="anchor" name="anchor" style="width:350px;" value="<?php echo $form->value("anchor"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
 
 					<td><input type="hidden" name="sendbulkmails" value='1' /><br/>
 						<input type="hidden" name="user_guess" value="<?php echo generateToken('sendbulkmails'); ?>"/><br/>
