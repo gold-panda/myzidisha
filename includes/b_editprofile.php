@@ -478,6 +478,7 @@ if($borrowerActive==1) {
 <?php unset($_SESSION['bedited']);
 	} ?>
 	<form enctype="multipart/form-data" id="sub-borrower" name="sub-borrower" method="post" action="updateprocess.php">
+		<input type="hidden" id="labellang" name="labellang" value="<?php echo $language; ?>" />
 		<table class='detail'>
 			<tbody>
 				<!-- <tr>
