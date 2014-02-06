@@ -639,7 +639,7 @@ else
 <?php
 if($brw2['active']==LOAN_OPEN )
 {	?>
-	<div class="row">
+	<div style="float:left;" class="row">
 		
 			<div class="bid-table" id="retval">
 				
