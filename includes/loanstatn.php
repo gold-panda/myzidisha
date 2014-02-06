@@ -129,9 +129,9 @@ else
 	$('#viewassignedmember').click(function() {
 		$('#viewassignedmember_desc').slideToggle("slow");
 	});
-	if(<?php echo $showShareBox ?>) {
+	<?php if($showShareBox) { ?>
 		jQuery.facebox({ div: '#shareForm' });
-	}
+	<?php } ?>
 });
 
 function showBox(box)
@@ -194,7 +194,6 @@ if((isset($_SESSION['lender_bid_success1']) || isset($_SESSION['lender_bid_succe
 	else
 		$showShareBox=$formbidpos;
 } 
-
 
 //lender loan forgiveness opt-in or opt-out 
 $loanid=$_GET['l'];
