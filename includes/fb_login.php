@@ -5,6 +5,19 @@
 <?php
 	include_once ("library/database.php");
 	include_once ("facebook/facebook.php");
+
+	if(!isset($_SESSION['CodeByIp'])) {
+		$country = getCountryCodeByIP();
+	}
+	if(isset($country['code']) && $country['code']!='') {
+		$_SESSION['CodeByIp'] = $country['code'];
+		if($country['code']=='SN' || $country['code']=='ID' || $country['code']=='BF' || $country['code']=='BJ' || $country['code']=='GN' || $country['code']=='HT' || $country['code']=='NE' || $country['code'] == 'FR' ) {
+			$joinlink ='index.php?p=1&sel=1';
+		}else{
+			$joinlink='index.php?p=1&sel=2';
+		}
+	}
+				
 	
 	// checking if user has been tried to connect his facebook account with already existing Zidisha account and if there are any errors
 	if($session->facebook_connect_modal = 1 && $form->error("username") && $form->error("password") )
@@ -103,7 +116,7 @@
 			<p class='remove_bottom_margin'><input type="password" name="password" placeholder="password" /></p>
 			<p class="custom_margin"><label class="checkbox">Remember me<input type="checkbox"/></label><a style="color:gray; font-size:12px; top:1px; position: relative;" href="index.php?p=56">Forgot your password?</a></p>
 			<p class="custom_margin" style="clear:both;"><button type="submit" class="btn square">Go</button></p>
-			<p class="custom_margin">Not a member? <a style="color:#FF8B00;font-weight:bold;font-size:14px;" href="index.php?p=1&amp;sel=2">Join</a></p>
+			<p class="custom_margin">Not a member? <a style="color:#FF8B00;font-weight:bold;font-size:14px;" href='<?php echo $joinlink; ?>'>Join</a></p>
 		</form>
 	</div>
 </div>
