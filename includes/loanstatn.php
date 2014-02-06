@@ -1444,25 +1444,19 @@ if($brw2['active'] == LOAN_REPAID)
 						<td></td><td><div id="viewprevloan" style="cursor:pointer;" ><a><?php echo $viewprevloan; ?></a></div></td>
 					</tr>
 					<tr>
-						<td>
+						<td colspan="2">
 							<div id="viewprevloan_desc" style="display:none;">
-								<table class="detail">
-									<tbody>
-										<?php foreach($allloans as $allloan){
-											if($allloan['loanid']!=$ld){ 
-											$loanDisburseDate=date('M Y',$database->getLoanDisburseDate($allloan['loanid']));
-											$loanRepaidDate= date('M Y',$database->getLoanRepaidDate($allloan['loanid'], $ud));
-											$amountGot=number_format(convertToDollar($allloan['AmountGot'],($CurrencyRate)), 2, ".", "");
-											$loanprofileurl = getLoanprofileUrl($ud,$allloan['loanid']);
-										?>
-											<tr><td>USD&nbsp;<?php echo $amountGot?></td><td><?php echo $loanDisburseDate; ?> - <?php echo $loanRepaidDate; ?></td><td><a href="<?php echo $loanprofileurl; ?>">View Loan Profile</a></td>
-											</tr>
-											<tr></tr>
-										<?php }
-										}
-										?>
-									</tbody>
-								</table>
+								<?php foreach($allloans as $allloan){
+									if($allloan['loanid']!=$ld){ 
+										$loanDisburseDate=date('M Y',$database->getLoanDisburseDate($allloan['loanid']));
+										$loanRepaidDate= date('M Y',$database->getLoanRepaidDate($allloan['loanid'], $ud));
+										$amountGot=number_format(convertToDollar($allloan['AmountGot'],($CurrencyRate)), 2, ".", "");
+										$loanprofileurl = getLoanprofileUrl($ud,$allloan['loanid']);
+									
+										echo "<a href='".$loanprofileurl."'> USD ".$amountGot."&nbsp&nbsp&nbsp".$loanDisburseDate." - ".$loanRepaidDate."</a><br/><br/>"; 
+									}
+								}
+								?>
 							</div>
 						</td>
 					</tr>
@@ -1600,7 +1594,7 @@ if($brw2['active'] == LOAN_REPAID)
 						<a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_mentor'] ?></span><span class='bottom'></span></span></a><br/>
 				</div><br/>
 				<div id="viewassignedmember_desc" style="display:none;" class="span16">
-					<table class="detail" style="width:350px;">
+					<table class="detail">
 						<tbody>
 						<?php foreach($vm_member_details as $vm_member_detail){
 							$member_loanid=$database->getCurrentLoanid($vm_member_detail['userid']);
@@ -1610,7 +1604,7 @@ if($brw2['active'] == LOAN_REPAID)
 								$member_url = getLoanprofileUrl($vm_member_detail['userid'],$member_loanid);
 							}
 						?>
-							<tr><td width="200px;"></td><td><a href="<?php echo $member_url ?>" target="_blank"><?php echo $vm_member_detail['FirstName']." ".$vm_member_detail['LastName']; ?></a></td>
+							<tr><td></td><td><a href="<?php echo $member_url ?>" target="_blank"><?php echo $vm_member_detail['FirstName']." ".$vm_member_detail['LastName']; ?></a></td>
 							</tr>
 							<tr></tr>
 						<?php 
