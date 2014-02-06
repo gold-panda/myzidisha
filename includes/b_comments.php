@@ -44,17 +44,15 @@ $(document).ready(function() {
 	</div><br/>
 	<?php 
 			
-	if(!empty($invcurrentloanid)){?>
-		<div style="float:left;padding-bottom: 15px;">
-		<?php 
+	if(!empty($invcurrentloanid)){
+
 			$params['brwr_name']= $name;
 			$params['invitedby']= $invitedby;
 			$params['invited_tooltip']=$lang['profile']['tooltip_invited'];
 			$vm_comments= $session->formMessage($lang['profile']['invited_text'], $params);
 
-	} elseif(!empty($mentor_id)){?>
-	<div style="float:left;padding-bottom: 15px;">
-		<?php 
+	} elseif(!empty($mentor_id)){
+		
 			$params['brwr_name']= $name;
 			$params['vm_name']= $vm_name;
 			$params['vm_url']=$vm_url; 
@@ -72,8 +70,9 @@ $(document).ready(function() {
 				$vm_comments= "";
 
 			}
-		}
-		echo $vm_comments; ?>
+	}?>
+	<div style="float:left;padding-bottom: 15px;">
+		<?php echo $vm_comments; ?>
 	</div>
 	<div style="clear:both;border-top:1px solid #DFDCDC">&nbsp;</div>
 	<div>
