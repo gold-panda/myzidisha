@@ -922,6 +922,7 @@ if($language==''){
 			{
 				require_once("includes/fb_login.php");
 			}
+
 		?>
 		</div>
 		<!-- Example row of columns -->

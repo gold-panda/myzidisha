@@ -308,8 +308,8 @@ else
 	$prurl = getUserProfileUrl($ud);
 	$name=$brw['FirstName'].' '.$brw['LastName'];
 	$location=$brw['City'].', '.$database->mysetCountry($brw['Country']);
-	//$imagesrc=$database->getProfileImage($ud);
-	$imagesrc = "https://www.zidisha.org/library/getimagenew.php?id=9209"; //for testing only
+	$imagesrc=$database->getProfileImage($ud);
+	//$imagesrc = "https://www.zidisha.org/library/getimagenew.php?id=9209"; //for testing only
 	$fb_data = unserialize(base64_decode($brw['fb_data'])); //Facebook data of this borrower
 	$is_volunteer= $database->isBorrowerAlreadyAccess($ud); //checks if this borrower is a Volunteer Mentor
 
@@ -356,7 +356,7 @@ else
 	$cf=$report['Totalfeedback'];
 
 
-	//code for link to view previous loans if any
+	//code for showing label to view previous loans if any
 	$viewprevloan='';
 	$allloans= $database->getBorrowerRepaidLoans($ud);
 	if(isset($allloans[0]['loancount'])){
@@ -401,21 +401,24 @@ else
 	$disburseDate=$database->getLoanDisburseDate($loanid);
 	$webfee=$brw2['WebFee'];//service fee rate
 
-
-	if($brw2['tr_summary']==null || $brw2['tr_summary']=="")
-		//$summary=$brw2['summary'];
-		$summary="As soon as I come into possession of my loan, I will order new supplies of different jewelry in new models for my clients."; //for testing
-	else
-		$summary=$brw2['tr_summary'];
-
-	if(strlen($summary) >70){
-		$summary=substr($summary, 0, strpos($summary, ' ', 70))."...";
-    }
-
 	if($brw2['tr_loanuse']==null || $brw2['tr_loanuse']=="")
 		$loanuse=$brw2['loanuse'];
 	else
 		$loanuse=$brw2['tr_loanuse'];
+
+	if(!empty($brw2['summary'])){
+		if($brw2['tr_summary']==null || $brw2['tr_summary']=="")
+			$summary=$brw2['summary'];
+		else
+			$summary=$brw2['tr_summary'];
+	
+		if(strlen($summary) >70){
+			$summary=substr($summary, 0, strpos($summary, ' ', 70))."...";
+	    }
+	}else{
+		$summary=substr($loanuse, 0, strpos($loanuse, ' ', 70))."...";
+	}
+
 	$weekly_inst=$brw2['weekly_inst']; //if set to 1, installments are due weekly, otherwise monthly
 	$interest=$brw2['interest'] - $webfee;
 	$interest1=number_format($interest, 2, ".", ",");
@@ -540,13 +543,14 @@ else
 <div class="span16">
 	<div id="static">
 		<h1><?php echo $summary; ?></h1>
+		<?php echo "<br/>" ?>
 	</div>
 </div>
 	
 
 	<div class="span10 left column">
 		<!-- profile image -->
-		<img class="loan-profile" style="border:none" src="<?php echo $imagesrc ?>" alt="<?php echo $name ?>" />
+		<img class="span10" style="border:none;" src="<?php echo $imagesrc ?>" alt="<?php echo $name ?>" />
 	
 
 		<!-- My Story -->
@@ -822,149 +826,8 @@ if($brw2['active']==LOAN_OPEN )
 	</div><!-- /row -->
 <?php
 }
-if($brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['active']==LOAN_REPAID)
-{
-	$schedule = $session->generateScheduleTable($ud, $ld, $show_localcurrency, $disburseRate);
-	if(!empty($schedule['schedule']))
-	{
-	?>
-	<div class="row">
-		
-			<div>
-				<a name='repayschedule' id='repayschedule'></a>
-				<h3 class="subhead"><?php echo $lang['loanstatn']['repament_schedule'] ?><p id="repay_sched" class="view-more-less view-less">View More</p></h3>
-				<div id="repay_sched_desc" style="display:none">
-					<table class="detail">
-						<tbody>
-							<tr>
-								<td width="270px"><strong><?php echo $lang['loanstatn']['repay_due']." ".date("M d, Y",time())?>:</strong></td>
-								<td><?php echo $tmpcurr." ".number_format($schedule['due'], 0, '', ','); ?></td>
-							</tr>
-							<tr>
-								<td><strong><?php echo $lang['loanstatn']['totrepay_due']." ".date("M d, Y",time()) ?>:</strong></td>
-								<td><?php
-									if($show_localcurrency)
-										echo $tmpcurr." ".number_format(round_local($schedule['amtPaidTillShow']), 0, '.', ',');
-									else
-										echo $tmpcurr." ".number_format($schedule['amtPaidTillShow'], 0, '', ',');
-									?>
-								</td>
-							</tr>
-						<?php	if($brw2['active'] == LOAN_ACTIVE && $session->userlevel==LENDER_LEVEL && $database->isLenderInThisLoan($ld,$session->userid))
-								{
-									$totalForgivenLenders=$database->totalForgivenLendersThisLoan($ld);
-									if($totalForgivenLenders >0)
-									{
-										if($totalForgivenLenders ==1)
-											$strText1=convertNumber2word($totalForgivenLenders)." lender has forgiven this loan.";
-										else
-											$strText1=convertNumber2word($totalForgivenLenders)." lenders have forgiven this loan.";
-										echo "<tr><td colspan=2><br/>".$strText1."</td></tr>";
-									}
-						?>
-					<?php	if(!$database->isLenderForgivenThisLoan($ld,$session->userid) && $database->isInForgiveLoan($ld))
-									{
-										?>
-										<tr><td colspan=2><br/><strong><a href="includes/forgive.php?loanid=<?php echo "$ld&ud=$ud"?>" rel='facebox'><?php echo $lang['loanstatn']['forgive_my_share'] ?></a></strong> <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_forgive'] ?></span><span class='bottom'></span></span></a></td></tr>
-					<?php
-									}
-								}
-								$rescheduleResult=$database->getRescheduleDataByLoanId($ld);
-								if(!empty($rescheduleResult))
-								{
-									echo "<tr><td colspan=2><br/>This loan was rescheduled on ".date('M j, Y',$rescheduleResult['date'])."</td></tr>";
-								}
-								else if($brw2['active'] == LOAN_REPAID && $session->userlevel==LENDER_LEVEL && $database->isLenderInThisLoan($ld,$session->userid))
-								{
-									$totalForgivenLenders=$database->totalForgivenLendersThisLoan($ld);
-									if($totalForgivenLenders >0)
-									{
-										if($totalForgivenLenders ==1)
-											$strText1=convertNumber2word($totalForgivenLenders)." lender has forgiven this loan.";
-										else
-											$strText1=convertNumber2word($totalForgivenLenders)." lenders have forgiven this loan.";
-										echo "<tr><td colspan=2><br/>".$strText1."</td></tr>";
-									}
-								}
-							?>
-						</tbody>
-					</table>
-					<?php echo $schedule['schedule']; ?>
-				</div>
-			</div><!-- /bid-table -->
-		
-	</div><!-- /row -->
-<?php
-	}
-}
-else if($brw2['active']==LOAN_FUNDED && $show_localcurrency)
-{
-	$loneAcceptDate=time();
-	$sched=$session->getSchedule($lamount, $interestrate + $webfee, $period, $gperiod,$loneAcceptDate,$webfee, $weekly_inst);
-	?>
-	<div class="row">
-		
-			<div>
-				<h3 class="subhead"><?php echo $lang['loanstatn']['repament_schedule'] ?></h3>
-				<?php echo $sched; ?>
-			</div><!-- /bid-table -->
-		
-	</div><!-- /row -->
-<?php
-}
-if($brw2['active']==LOAN_FUNDED || $brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['active']==LOAN_REPAID)
-{	
-	$lendamount=$database->getLoanAmount($ud, $ld);
-	if(!empty($lendamount))
-	{?>
-	<div class="row">
-		
-			<div class="bid-table">
-				<h3 class="subhead"><?php echo $lang['loanstatn']['funding'] ?><p id="lend_funding" class="view-more-less view-less">View More</p></h3>
-				<div id="lend_funding_desc" style="display:none">
-					<table class="zebra-striped tablesorter_funding">
-						<thead>
-							<tr>
-								<th><strong><?php echo $lang['loanstatn']['lender_name'] ?></strong></th>
-								<th><strong><?php echo $lang['loanstatn']['bid_amount'] ?> (USD)</strong></th>
-								<th><strong><?php echo $lang['loanstatn']['lender_int'] ?></strong></th>
-								<th><strong><?php echo $lang['loanstatn']['amt_accept'] ?> (USD)</strong></th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-								foreach($lendamount as $rows)
-								{
-									$leid=$rows["lenderid"];
-									$lname=$rows["Firstname"].' '.$rows['LastName'];
-									$lusername=$rows['username'];
-									$bidamount=$rows['givenamount'];
-									$sublevel=$database->getUserSublevelById($leid);
-									if($sublevel==LENDER_GROUP_LEVEL)
-										$lusername=$lname;
-									$kamount=$rows['bidamount'];
-									$bidint=$rows['bidint'];
-									$leprurl = getUserProfileUrl($leid);
-									$lamt = convertToDollar($brw2['AmountGot'] ,($CurrencyRate));
-									$percentFinanced = ($bidamount* 100)/$lamt ;
-									echo "<tr>";
-										echo "<td><a href='$leprurl'>$lusername</a></td>";
-										echo "<td>".number_format($kamount, 2, ".",",")."</td>";
-										echo "<td>".number_format($bidint, 2, ".",",")." %</td>";
-										echo "<td>".number_format($bidamount, 2, ".",",")."</td>";
-										//echo "<td style='text-align:center'>".number_format($percentFinanced, 2, ".",",")." %</td>";
-									echo "</tr>";
-								}
-							?>
-						</tbody>
-					</table>
-				</div>
-			</div><!-- /bid-table -->
-		
-	</div><!-- /row -->
-<?php
-	}
-}
+
+//feedback for ended loans
 if($brw2['active'] == LOAN_REPAID)
 {
 	//loan feedback system as loan is fully paid, display only to lenders or partners of this borrower
@@ -1142,11 +1005,9 @@ if($brw2['active'] == LOAN_REPAID)
 				
 			</div>
 		</div><!-- /row -->
-
+	</div>	
 
 	<div class="span5 right_column">
-
-		<br/>
 
 		<div id="loan-profile" class="loan-profile">
 
@@ -1276,37 +1137,30 @@ if($brw2['active'] == LOAN_REPAID)
 					<tr>
 						<td></td><td><div id="viewprevloan" style="cursor:pointer;" ><a><?php echo $viewprevloan; ?></a></div></td>
 					</tr>
-
 					<tr>
 						<td>
-							<div id="viewprevloan_desc" style="display:none;" class="span16">
-							<table class="detail" style="width:350px;">
-								<tbody>
-								<?php foreach($allloans as $allloan){
-									if($allloan['loanid']!=$ld){ 
-									$loanDisburseDate=date('M Y',$database->getLoanDisburseDate($allloan['loanid']));
-									$loanRepaidDate= date('M Y',$database->getLoanRepaidDate($allloan['loanid'], $ud));
-									$amountGot=number_format(convertToDollar($allloan['AmountGot'],($CurrencyRate)), 2, ".", "");
-									$loanprofileurl = getLoanprofileUrl($ud,$allloan['loanid']);
-									} ?>
-									<tr>
-										<td>
-											USD&nbsp;<?php echo $amountGot?>
-										</td>
-										<td>
-											<?php echo $loanDisburseDate; ?> - <?php echo $loanRepaidDate; ?>
-										</td>
-										<td>
-											<a href="<?php echo $loanprofileurl; ?>">View Loan Profile</a>
-										</td>
-									</tr>
-								<?php } ?>
-								</tbody>
-							</table>
+							<div id="viewprevloan_desc" style="display:none;">
+								<table class="detail">
+									<tbody>
+										<?php foreach($allloans as $allloan){
+											if($allloan['loanid']!=$ld){ 
+											$loanDisburseDate=date('M Y',$database->getLoanDisburseDate($allloan['loanid']));
+											$loanRepaidDate= date('M Y',$database->getLoanRepaidDate($allloan['loanid'], $ud));
+											$amountGot=number_format(convertToDollar($allloan['AmountGot'],($CurrencyRate)), 2, ".", "");
+											$loanprofileurl = getLoanprofileUrl($ud,$allloan['loanid']);
+										?>
+											<tr><td>USD&nbsp;<?php echo $amountGot?></td><td><?php echo $loanDisburseDate; ?> - <?php echo $loanRepaidDate; ?></td><td><a href="<?php echo $loanprofileurl; ?>">View Loan Profile</a></td>
+											</tr>
+											<tr></tr>
+										<?php }
+										}
+										?>
+									</tbody>
+								</table>
 							</div>
-
 						</td>
 					</tr>
+
 				<?php } ?>
 
 					<tr>
@@ -1867,35 +1721,148 @@ if($brw2['active'] == LOAN_REPAID)
 						<?php } ?>
 					</form>
 			
-				<?php } ?>
+		<?php } elseif($brw2['active']==LOAN_FUNDED || $brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['active']==LOAN_REPAID)
+		{	
+			$lendamount=$database->getLoanAmount($ud, $ld);
+			if(!empty($lendamount))
+			{?>
+			<div class="row">
+				
+					<div class="bid-table">
+						<h4 class="subhead"><?php echo $lang['loanstatn']['funding'] ?></h4>
+						<div id="lend_funding_desc">
+							<table class="zebra-striped tablesorter_funding">
+								<thead>
+									<tr>
+										<th><strong><?php echo $lang['loanstatn']['lender_name'] ?></strong></th>
+										<th><strong><?php echo $lang['loanstatn']['amt_accept'] ?> (USD)</strong></th>
+										<th><strong><?php echo $lang['loanstatn']['lender_int'] ?></strong></th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+										foreach($lendamount as $rows)
+										{
+											$leid=$rows["lenderid"];
+											$lname=$rows["Firstname"].' '.$rows['LastName'];
+											$lusername=$rows['username'];
+											$bidamount=$rows['givenamount'];
+											$sublevel=$database->getUserSublevelById($leid);
+											if($sublevel==LENDER_GROUP_LEVEL)
+												$lusername=$lname;
+											$kamount=$rows['bidamount'];
+											$bidint=$rows['bidint'];
+											$leprurl = getUserProfileUrl($leid);
+											$lamt = convertToDollar($brw2['AmountGot'] ,($CurrencyRate));
+											$percentFinanced = ($bidamount* 100)/$lamt ;
+											echo "<tr>";
+												echo "<td><a href='$leprurl'>$lusername</a></td>";
+												echo "<td>".number_format($bidamount, 2, ".",",")."</td>";
+												echo "<td>".number_format($bidint, 2, ".",",")." %</td>";
+											echo "</tr>";
+										}
+									?>
+								</tbody>
+							</table>
+						</div>
+					</div><!-- /bid-table -->
+				
+		<?php
+			} 
+		} ?>
 
-
+		</div> <!-- /row -->
 		</div> <!-- /loan-profile -->
+
+		<!-- repayment schedule -->
+		<?php
+		if($brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['active']==LOAN_REPAID)
+		{ ?>
+			<div id="loan-profile" class="loan-profile">
+				<?php
+					$schedule = $session->generateScheduleTable($ud, $ld, $show_localcurrency, $disburseRate);
+					if(!empty($schedule['schedule']))
+					{
+					?>
+					<div class="row">
+						
+							<div>
+								<a name='repayschedule' id='repayschedule'></a>
+								<h4 class="subhead"><?php echo $lang['loanstatn']['repament_schedule'] ?></h4>
+								<div id="repay_sched_desc">
+									<table class="detail">
+										<tbody>
+											<tr>
+												<td colspan="2"><br/><strong><?php echo $lang['loanstatn']['repay_due']." ".date("M d, Y",time())?>:</strong>&nbsp&nbsp<?php echo $tmpcurr." ".number_format($schedule['due'], 0, '', ','); ?></td>
+											</tr>
+											<tr>
+												<td colspan="2"><strong><?php echo $lang['loanstatn']['totrepay_due']." ".date("M d, Y",time()) ?>:</strong>&nbsp&nbsp<?php
+													if($show_localcurrency)
+														echo $tmpcurr." ".number_format(round_local($schedule['amtPaidTillShow']), 0, '.', ',');
+													else
+														echo $tmpcurr." ".number_format($schedule['amtPaidTillShow'], 0, '', ',');
+													?>
+												</td>
+											</tr>
+										<?php	if($brw2['active'] == LOAN_ACTIVE && $session->userlevel==LENDER_LEVEL && $database->isLenderInThisLoan($ld,$session->userid))
+												{
+													$totalForgivenLenders=$database->totalForgivenLendersThisLoan($ld);
+													if($totalForgivenLenders >0)
+													{
+														if($totalForgivenLenders ==1)
+															$strText1=convertNumber2word($totalForgivenLenders)." lender has forgiven this loan.";
+														else
+															$strText1=convertNumber2word($totalForgivenLenders)." lenders have forgiven this loan.";
+														echo "<tr><td colspan=2><br/>".$strText1."</td></tr>";
+													}
+										?>
+									<?php	if(!$database->isLenderForgivenThisLoan($ld,$session->userid) && $database->isInForgiveLoan($ld))
+													{
+														?>
+														<tr><td colspan=2><br/><strong><a href="includes/forgive.php?loanid=<?php echo "$ld&ud=$ud"?>" rel='facebox'><?php echo $lang['loanstatn']['forgive_my_share'] ?></a></strong> <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['tooltip_forgive'] ?></span><span class='bottom'></span></span></a></td></tr>
+									<?php
+													}
+												}
+												$rescheduleResult=$database->getRescheduleDataByLoanId($ld);
+												if(!empty($rescheduleResult))
+												{
+													echo "<tr><td colspan=2><br/>This loan was rescheduled on ".date('M j, Y',$rescheduleResult['date'])."</td></tr>";
+												}
+												else if($brw2['active'] == LOAN_REPAID && $session->userlevel==LENDER_LEVEL && $database->isLenderInThisLoan($ld,$session->userid))
+												{
+													$totalForgivenLenders=$database->totalForgivenLendersThisLoan($ld);
+													if($totalForgivenLenders >0)
+													{
+														if($totalForgivenLenders ==1)
+															$strText1=convertNumber2word($totalForgivenLenders)." lender has forgiven this loan.";
+														else
+															$strText1=convertNumber2word($totalForgivenLenders)." lenders have forgiven this loan.";
+														echo "<tr><td colspan=2><br/>".$strText1."</td></tr>";
+													}
+												}
+											?>
+										</tbody>
+									</table>
+									
+									<?php echo $schedule['schedule']; ?>
+									
+								</div>
+							</div><!-- /bid-table -->
+						
+					</div><!-- /row -->
+				<?php
+					
+				}
+				?>
+					
+			</div>
+		</div>
+	<?php
+		} ?>
 
 	</div> <!-- /span5 -->
 
 	</div><!-- /span10 -->
-
-	<!-- 
-	<div class="row" style="align:left">
-		<div class="span16" id="comment-section">
-			<?php
-				echo "<br/><br/>";
-				$fb=0;
-					include_once("./editables/profile.php");
-					$path=	getEditablePath('profile.php');
-					include_once("editables/".$path);
-					include_once("includes/b_comments.php");
-			?>
-		</div>
-	</div>
-		<div style="clear: both;">
-		<div align="right" style="margin-right: 40px;">
-			<?php $prurl = getUserProfileUrl($ud);?>
-			<a href="<?php echo $prurl?>?fdb=1">View All</a>
-		</div>
-	</div>
--->
 
 
 <!-- share box script -->
@@ -2105,6 +2072,7 @@ if($brw2['active'] == LOAN_REPAID)
 ?>
 <!-- end share box -->
 
+</div> <!-- span16 -->
 
 <script type="text/javascript">
 <!--

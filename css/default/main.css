@@ -187,7 +187,10 @@ src: url("HATTEN.TTF") /* TTF file for CSS3 browsers */
 .row .span5 {
   float: left;
   width: 280px;
-  margin-left: 20px;
+  margin-top: 0;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
 .row .span5:first-child {
   margin-left: 0;
@@ -227,7 +230,9 @@ src: url("HATTEN.TTF") /* TTF file for CSS3 browsers */
 .row .span10 {
   float: left;
   width: 580px;
-  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 25px;
+  margin-left: 0px;
 }
 .row .span10:first-child {
   margin-left: 0;
@@ -2399,8 +2404,9 @@ footer a:hover, footer a:active {
 	float: left;
 	padding: 15px;
 	width: 100%;
-	border: 1px solid #dfdcdc;
+  border:1px solid #DFDCDC;
 	margin: 0 0 10px 0px;
+  background-color: #f9f9f9;
 }
 #b-activation {
 	float: right;
@@ -2469,7 +2475,9 @@ footer a:hover, footer a:active {
 #loan-profile table.funding-status {
   float: right;
   width: 100%;
-  margin: 10px 0;
+  margin-right: 10px;
+  margin-bottom: 25px;
+  margin-left: 0px;
   padding: 5px 0;
   border-collapse: separate;
   font-size: 14px;
@@ -2523,7 +2531,7 @@ footer a:hover, footer a:active {
 
 .bid-table {
 	padding: 20px 0;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 
 .bid-table table th, .bid-table table td {
