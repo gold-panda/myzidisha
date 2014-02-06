@@ -604,7 +604,9 @@ else
 	
 <div class="span16">
 	<div id="static">
+		<!-- removing summary title for now
 		<h1><?php echo $summary; ?></h1>
+		-->
 		<?php echo "<br/>" ?>
 	</div>
 </div>
