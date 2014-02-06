@@ -3035,7 +3035,7 @@ float:left;
 margin-left:370px;
 margin-top:10px;
  }
-#static h1 {
+#static h1, .title {
   font-family: 'Trade Gothic W01 Light',"Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   color: #00aeef;

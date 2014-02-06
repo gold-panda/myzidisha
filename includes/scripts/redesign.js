@@ -1,11 +1,14 @@
 function show_facebook_modal(){
 	var facebook_flag = '<input type="hidden" name="fb_connect" />';
-	$('#basic-modal-content').append($('.default_login').html());
-	$('#basic-modal-content .default_login_form').append(facebook_flag);
-	$('#basic-modal-content .heading.default').remove();
+	if ($('#basic-modal-content .default_login_form').length == 0) {
+		$('#basic-modal-content').append($('.default_login').html());
+		$('#basic-modal-content .default_login_form').append(facebook_flag);
+		$('#basic-modal-content .heading.default').remove();
+	}
 	$('#basic-modal-content').modal({
 		containerCss:{
-			width:250
+			width:300,
+			height:285,
 		},
 		onClose : function(){
 			window.location.assign(window.location.origin+"/index.php?p=116");

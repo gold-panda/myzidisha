@@ -294,9 +294,27 @@
 	.default_login_form p.custom_margin{
 		margin:10px 0;
 	}
-	.default_login .square{
-		width:219px;
+	.remove_bottom_margin{
+		margin:0 !important;
+	}
+	.default_login_form .square{
+		width:246px;
 		border-radius:5px;
+	}
+	.default_login_form input[type=text], .default_login_form input[type=password]{
+		width:239px;
+	}
+	#basic-modal-content .default_login_form{
+		width:249px;
+		margin:0 auto;
+	}
+	#basic-modal-content .heading{
+		width:249px;
+		margin:0 auto;
+	}
+	#basic-modal-content .errors{
+		width:249px;
+		margin:12px auto;
 	}
 	.checkbox{
 		font-size:12px;
