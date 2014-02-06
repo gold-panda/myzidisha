@@ -225,7 +225,70 @@ if(isset($_GET['v'])){
 			}
 	
 		}
+} ?>
+
+<script type="text/javascript">
+<!--
+	function submit_form(form)
+	{	
+	<?php 
+		if(isset($_SESSION['bidPaymentSuccess']))
+		{
+			 if(!empty($pamount1)) {?>
+				document.bidform1.submit();
+			<?php 
+			 }else 
+			{ ?>
+				document.bidform.submit();
+		<?php 
+			} 
+	}
+?>
 }
+//-->
+
+</script>
+<?php unset($_SESSION['bidPaymentSuccess']);?>
+<script type="text/javascript">
+<!--
+	function forgive_popup(lid, ud) {
+	var newWin= window.open('includes/forgive.php?loanid='+lid+'&ud='+ud+'','forgivewindow','width=400,height=200,left=200,top=200,screenX=100,screenY=100,scrollbars=yes');
+		if(newWin == null || typeof(newWin)=="undefined" || !newWin) {
+			$.facebox({ div: '#pop-upblocked' });
+		} else {
+			newWin.onload = function() {
+				setTimeout(function() {
+					if (newWin.screenX === 0)
+						$.facebox({ div: '#pop-upblocked' });
+				}, 0);
+			};
+		}
+	}
+//-->
+
+</script>
+<div class="" id="pop-upblocked" style="background-color:#E3E5EA;display:none">
+	<div class='autolend_space'>
+	<div></div>
+		<div class='auto_lend_text'>
+			<?php echo $lang['loanstatn']['pop-upblocked_text'];?>
+		</div><br/>
+		<div align="right" style="padding-right:40px">
+		</div>
+	</div>
+</div>
+<script language="JavaScript">
+  var ids = new Array('feedback', 'pcomment', 'txtcomment');
+  var values = new Array('','', '');
+  var needToConfirm = true;
+
+</script>
+<script type="text/JavaScript" src="includes/scripts/navigateaway.js"></script>
+<script language="JavaScript">
+  populateArrays();
+</script>
+
+<?php
 
 if(isset($_GET['fg']) && $_GET['fg']=='yes' && !empty($session->userid)){
 	$session->forgiveShare($loanid, $ud, $session->userid);
@@ -638,7 +701,7 @@ else
 <?php
 if($brw2['active']==LOAN_OPEN )
 {	?>
-	<div style="float:left;" class="row">
+	<div class="row">
 		
 			<div class="bid-table" id="retval">
 				
@@ -984,7 +1047,7 @@ if($brw2['active'] == LOAN_REPAID)
 				}	?>
 			</div><!-- /bid-table -->
 
-		</div><!-- /row -->
+		
 
 <?php
 }	?>
@@ -1004,7 +1067,249 @@ if($brw2['active'] == LOAN_REPAID)
 				
 			</div>
 		
-		
+		</div>
+
+
+
+
+<!-- share box script -->
+<?php
+}
+?>
+<?php
+	if($showShareBox)
+	{	
+		if($stilneed > 0) {
+			$bidmsg ='The applicant will have the opportunity to accept all bids and receive<br /> his or her disbursement once this loan is fully funded.';
+		}else {
+			$bidmsg ='Your bid has been successfully submitted. The loan will be disbursed to the applicant after he or she accepts the bids.';
+		}
+		$bidMessage= "Your bid to fund USD ".number_format($_SESSION['lender_bid_success_amt'], 2, ".", ",")." of this loan at ".number_format($_SESSION['lender_bid_success_int'], 2, ".", ",")."% interest has been placed. <br />".$bidmsg."";
+		$tweetmadeLoan= "I just made a loan to ".$name." in ".$location."."." @zidishainc";
+		$madeLoan= "I just made a loan to ".$name." in ".$location.".";
+		$short_url = "https%3A%2F%2Fwww.zidisha.org%2Findex.php%3Fp%3D14%26u%3D".$ud."%26l%3D".$ld;
+		$sharephoto= SITE_URL."images/client/".$ud.".jpg";
+		$loan_use= substr($loanuse, 0, 90);
+		$loanprurl = getLoanprofileUrl($ud,$ld);
+		$twtUrl = SITE_URL.$loanprurl;
+	?>
+	<script type="text/javascript">
+		var twtUrl= "<?php echo $twtUrl; ?>";
+		function fbshare()
+		{
+			var fburl="http://www.facebook.com/sharer.php?s=100&p[title]=<?php echo urlencode($madeLoan);?>&p[url]=<?php echo $short_url; ?>&p[images][0]=<?php echo urlencode($sharephoto); ?>&p[summary]=<?php echo urlencode(strip_tags($loanuse));?>";
+			window.open(fburl,'','width=600,height=450,left=200,top=200');
+		}
+		function twtshare()
+		{
+			$('.twtTextShare').each(function(){
+			   twttext = $(this).val();
+			});
+			var twitterParams = { 
+				url: twtUrl, 
+				text: twttext 
+			}; 
+			var twturl="http://twitter.com/share?" + $.param(twitterParams);
+			window.open(twturl,'','width=600,height=450,left=200,top=200');
+		}
+	</script>
+	<div id="shareForm" style="display:none">
+		<div style="width:100%"  align="center">
+			<div align="center" id="container">
+				<div id="top_strip"></div><!--top_strip closed -->
+				<div id="mid_strip">
+					<div id="containt">
+						<div id="upper" class="padding_prop" style="padding-top:5px;">
+							<div class="left">
+								<div class="thankyou_text left">Thank you!</div>
+								<div class="upper_text right"><?php echo $bidMessage; ?></div>
+								<div class="clear"></div>
+							</div><!--left closed -->
+							<!--right closed -->
+							<div class="clear"></div>
+						</div><!--upper closed -->
+						<div id="lower" class="padding_prop">
+							<div>
+								<div class="left news_text">Now Share The News</div>
+								<div class="left" style="padding-top:5px;">
+									<div class="block2 shareTab1 <?php if(!isset($_SESSION['shareEmailValidate'])) { echo 'tab2'; } ?>" onClick="showBox(1);" style="cursor:pointer">
+										<div  class="tab_space2" align="center">
+											<img src="images/layout/popup/fb.png" border="0" />
+									   </div>
+									</div>
+									<div class="block shareTab2" onClick="showBox(2);"  style="cursor:pointer">
+										<div  class="tab_space" align="center">
+											<img src="images/layout/popup/twitter.png"  border="0"/>
+										</div>
+									</div>
+									<div  class="block shareTab3 <?php if(isset($_SESSION['shareEmailValidate'])) { echo 'tab'; } ?>" onClick="showBox(3);"  style="cursor:pointer">
+										<div  class="tab_space" align="center">
+											<img src="images/layout/popup/mail.png" />
+										</div>
+									</div>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div id="slant">&nbsp;</div><!--slant closed -->
+							<div id="data">
+								<div class="left testi">
+									<div class="black_small_text"><?php echo $madeLoan; ?></div>
+									<div class="link_text"><a href="<?php echo SITE_URL;?>">www.zidisha.org</a></div>
+									<div align="left" id="bubble">
+										<div class="space">
+											<div class="left">
+												<?php if (file_exists(USER_IMAGE_DIR.$ud.".jpg")){ ?>
+													<img class="loan-profile" src="library/getimagenew.php?id=<?php echo $ud ?>&width=120&height=87" alt="<?php echo $name ?>"/>
+												<?php } ?>
+											</div>
+											<div class="left testi_text">
+												<span><?php echo $loan_use; ?></span>
+												&nbsp;<span class="link_text" style="font-style:normal;"><a target="_blank" class="link_text" href='<?php echo $loanprurl?>'>More</a></span>
+											</div>
+											<div class="clear"></div>
+										</div><!--space closed -->
+									</div><!--bubble closed -->
+								</div><!--testi closed -->
+								<div class="right form">
+									<div class="shareTab1Detail" style="<?php if(isset($_SESSION['shareEmailValidate'])) { echo 'display:none'; } ?>">
+										<div style="padding-top:20px">
+											<a href="javascript:void(0)" onClick="fbshare();"><img src="images/layout/popup/fb_button.png" /></a>
+										</div>
+										<div style="padding-top:63px;width:200px;text-align:left">
+
+<strong>
+											<a href="javascript:void(0)" onclick="$.facebox.close();" class=''>
+											No Thanks</a>
+
+<br/><br/>
+<a href='javascript:void(0)' onclick='sharebox_off_submit(<?php echo $userid;?>,<?php echo $ud;?>,<?php echo $ld;?>,1)'>Do Not Display Share Invite Again</a>
+
+										</div>
+									</div>
+									<div class="shareTab2Detail" style="display:none">
+										<table class="form_text" align="center" cellpadding="0" cellspacing="0" width="100%">
+											<tr>
+												<td valign="top" class="paddign_right_prop">NOW SHARE THE NEWS</td>
+											</tr>
+											<tr>
+												<td style="padding-top:5px;"> 
+													<textarea id="twtTextShare" name="twtTextShare" class="textarea_box2  textarea_text twtTextShare"><?php echo $tweetmadeLoan; ?></textarea>
+												</td>
+											</tr>
+											<tr>
+												<td align="center" style="padding-top:10px;">
+													<a href="javascript:void(0)" onClick="twtshare();"><img src="images/layout/popup/tweet_button.png" /></a>
+												</td>
+											</tr>
+										</table>
+									</div>
+
+									<div class="shareTab3Detail" style="<?php if(!isset($_SESSION['shareEmailValidate']) || isset($_SESSION['ShareEmailSent'])) {echo 'display:none';} ?>">
+										<form name="bidform1" action="process.php" method="post">
+											<table class="form_text" align="center" cellpadding="0" cellspacing="0" width="100%">
+												<tr>
+													<td valign="top" class="paddign_right_prop">TO</td>
+													<td>
+														<input name="to_email" type="text" class="input_box" value="<?php echo $form->value('to_email'); ?>"/>
+														<div><?php echo $form->error('to_email'); ?></div>
+													</td>
+												</tr>
+												<tr><td class="top_padding_prop">&nbsp;</td></tr>
+												<tr>
+													<td valign="top" class="paddign_right_prop">NOTE</td>
+													<td>
+														<textarea name="note" class="textarea_box"><?php echo $form->value('note'); ?></textarea>
+														<div><?php echo $form->error('note'); ?></div>
+													</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td style="padding-top:10px;">
+														<div>
+															<div class="left">
+																<div class="left"><input name="sendme" type="checkbox" /></div>
+																<div class="right" style="font-family:Arial;margin-top:3px;">Send me a copy</div>
+																<div class="clear"></div>
+															</div>
+															<div class="right" style="margin-right:5px;">
+																<input type="hidden" id="sendShareEmail" name="sendShareEmail" />
+																<input type="hidden" name="user_guess" value="<?php echo generateToken('sendShareEmail'); ?>"/>
+																<input type="hidden" name="uid" value="<?php echo $ud ?>" />
+																<input type="hidden" name="lid" value="<?php echo $loanid ?>" />
+																<?php 
+																	unset($_SESSION['lender_bid_success1']);
+																	unset($_SESSION['lender_bid_success2']);
+																	?>
+																<input type="hidden" name="formbidpos" value="<?php echo $showShareBox ?>" />
+																<input type="hidden" name="email_sub" value="<?php echo $madeLoan ?>" />
+																<input type="hidden" name="loan_use" value="<?php echo $loan_use ?>" />
+																<?php unset($_SESSION['shareEmailValidate']);?>
+																<input type="image" src="images/layout/popup/send_button.png" name="Send"/>
+															</div>
+															<div class="clear"></div>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div class='mail_sent_section' >
+											<?php 
+													if(isset($_SESSION['ShareEmailSent'])){ 
+													echo"<div class='black_text_emailSent'>";
+														echo"Your email has been sent.";
+														unset($_SESSION['ShareEmailSent']);
+													echo"</div>";
+													echo"<div style='margin-top:30px'><input type='image' src='images/layout/popup/send_another_button.png' name='Send Again' onClick='showBox(3)' value=' '></div>";
+												}?>
+									</div>
+								</div><!--form closed -->
+								<div class="clear"></div><!--clear closed -->
+							</div><!--data closed -->
+						</div><!--lower closed -->
+					</div><!--containt closed -->
+				</div><!--mid_strip closed -->
+				<div id="bottom_strip"></div><!--bottom_strip closed -->
+			</div><!--container closed -->
+		</div>		
+	</div>
+ </body>
+<?php
+	}
+?>
+<!-- end share box -->
+
+
+<!-- loan forgiveness confirmation -->
+<div id='donotforgive' style='display:none;' >
+	<table  class='detail' style="padding:15px;width:470px">
+		<tbody>
+			<tr height='10px'>
+			</tr>
+			<tr style="font-size:16px;">
+				<td colspan=2><div id='forgiveText' style="text-align:justify"><?php echo $lang['loanstatn']['donotforgive_confirmation']?></div></td>
+			</tr>
+			<tr height='10px'>
+			</tr>
+				<?php 
+					$originUrl = parse_url($RequestUrl);
+					$originUrlpath = $originUrl['path'];
+					$qStr = $originUrl['query']; //$_SERVER['QUERY_STRING']
+					$key="dntfrg";
+					parse_str($qStr,$originUrl);
+					$redir_url = $originUrlpath.'?'.http_build_query(array_diff_key($originUrl,array($key=>"1")));
+					unset($originUrl['v']);
+					unset($originUrl['lid']);
+					unset($originUrl['dntfrg']);
+					$cancel = $originUrlpath;
+				?>	
+				<td><a href="<?php echo $redir_url?>" class='btn'>Confirm that I do not wish to forgive this loan</a></td>
+				<td><a href="<?php echo $cancel?>" class='btn' onclick="$.facebox.close();">Cancel</a></td>
+			<tr>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
 </div><!-- /span10 -->
 
@@ -1507,11 +1812,11 @@ if($brw2['active'] == LOAN_REPAID)
 
 		<div id="loan-profile" class="loan-profile">
 
-		<?php if($brw2['active']==LOAN_OPEN )
-		{	?>
-		<div class="row">
+			<div class="row">
 			
 				<div class="bid-table" id="retval">
+				<?php if($brw2['active']==LOAN_OPEN )
+				{	?>
 					<h4><?php echo $lang['loanstatn']['funding_bids'] ?></h4>
 					<div id="funding_bids_desc">
 		
@@ -1525,7 +1830,7 @@ if($brw2['active'] == LOAN_REPAID)
 								</tr>
 							</thead>
 							<tbody>
-				<?php
+							<?php
 							if(!empty($bids))
 							{
 								$i=0;
@@ -1610,7 +1915,7 @@ if($brw2['active'] == LOAN_REPAID)
 									echo "</tr>";
 								}
 							}
-					?>
+							?>
 							</tbody>
 						</table>
 					</div>
@@ -1721,16 +2026,13 @@ if($brw2['active'] == LOAN_REPAID)
 							<input class="btn" type="submit" id="act" value="<?php echo $lang['loanstatn']['bid_save'];?>" />
 						<?php } ?>
 					</form>
-			
-		<?php } elseif($brw2['active']==LOAN_FUNDED || $brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['active']==LOAN_REPAID)
-		{	
-			$lendamount=$database->getLoanAmount($ud, $ld);
-			if(!empty($lendamount))
-			{?>
-			<div class="row">
 				
-					<div class="bid-table">
-						<h4 class="subhead"><?php echo $lang['loanstatn']['funding'] ?></h4>
+				<?php } elseif($brw2['active']==LOAN_FUNDED || $brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['active']==LOAN_REPAID)
+				{	
+				$lendamount=$database->getLoanAmount($ud, $ld);
+				if(!empty($lendamount))
+				{?>
+					<h4 class="subhead"><?php echo $lang['loanstatn']['funding'] ?></h4>
 						<div id="lend_funding_desc">
 							<table class="zebra-striped tablesorter_funding">
 								<thead>
@@ -1766,26 +2068,24 @@ if($brw2['active'] == LOAN_REPAID)
 								</tbody>
 							</table>
 						</div>
-					</div><!-- /bid-table -->
-				
-		<?php
-			} 
-		} ?>
-
-		</div> <!-- /row -->
+					
+				<?php
+					} 
+				} ?>
+				</div><!-- /bid-table -->
+			</div> <!-- /row -->
 		</div> <!-- /loan-profile -->
+
 
 		<!-- repayment schedule -->
 		<?php
 		if($brw2['active'] == LOAN_ACTIVE || $brw2['active']==LOAN_DEFAULTED || $brw2['active']==LOAN_REPAID)
-		{ ?>
-			<div id="loan-profile" class="loan-profile">
-				<?php
-					$schedule = $session->generateScheduleTable($ud, $ld, $show_localcurrency, $disburseRate);
-					if(!empty($schedule['schedule']))
-					{
-					?>
-					<div class="row">
+		{ 
+			$schedule = $session->generateScheduleTable($ud, $ld, $show_localcurrency, $disburseRate);
+			if(!empty($schedule['schedule']))
+			{ ?>
+					<div id="loan-profile" class="loan-profile">
+						<div class="row">
 						
 							<div>
 								<a name='repayschedule' id='repayschedule'></a>
@@ -1847,18 +2147,15 @@ if($brw2['active'] == LOAN_REPAID)
 									
 									<?php echo $schedule['schedule']; ?>
 									
-								</div>
-							</div><!-- /bid-table -->
+							</div> <!-- /repay_sched_desc -->
+						
+						</div><!-- /bid-table -->
 						
 					</div><!-- /row -->
-				<?php
-					
-				}
-				?>
-					
-			</div>
-		</div>
+				
+			</div> <!-- loan-profile -->
 	<?php
+			}
 		} ?>
 
 	</div> <!-- /span5 -->
@@ -1866,301 +2163,6 @@ if($brw2['active'] == LOAN_REPAID)
 </div><!-- /row -->
 
 
-<!-- share box script -->
-<?php
-}
-?>
-<?php
-	if($showShareBox)
-	{	
-		if($stilneed > 0) {
-			$bidmsg ='The applicant will have the opportunity to accept all bids and receive<br /> his or her disbursement once this loan is fully funded.';
-		}else {
-			$bidmsg ='Your bid has been successfully submitted. The loan will be disbursed to the applicant after he or she accepts the bids.';
-		}
-		$bidMessage= "Your bid to fund USD ".number_format($_SESSION['lender_bid_success_amt'], 2, ".", ",")." of this loan at ".number_format($_SESSION['lender_bid_success_int'], 2, ".", ",")."% interest has been placed. <br />".$bidmsg."";
-		$tweetmadeLoan= "I just made a loan to ".$name." in ".$location."."." @zidishainc";
-		$madeLoan= "I just made a loan to ".$name." in ".$location.".";
-		$short_url = "https%3A%2F%2Fwww.zidisha.org%2Findex.php%3Fp%3D14%26u%3D".$ud."%26l%3D".$ld;
-		$sharephoto= SITE_URL."images/client/".$ud.".jpg";
-		$loan_use= substr($loanuse, 0, 90);
-		$loanprurl = getLoanprofileUrl($ud,$ld);
-		$twtUrl = SITE_URL.$loanprurl;
-	?>
-	<script type="text/javascript">
-		var twtUrl= "<?php echo $twtUrl; ?>";
-		function fbshare()
-		{
-			var fburl="http://www.facebook.com/sharer.php?s=100&p[title]=<?php echo urlencode($madeLoan);?>&p[url]=<?php echo $short_url; ?>&p[images][0]=<?php echo urlencode($sharephoto); ?>&p[summary]=<?php echo urlencode(strip_tags($loanuse));?>";
-			window.open(fburl,'','width=600,height=450,left=200,top=200');
-		}
-		function twtshare()
-		{
-			$('.twtTextShare').each(function(){
-			   twttext = $(this).val();
-			});
-			var twitterParams = { 
-				url: twtUrl, 
-				text: twttext 
-			}; 
-			var twturl="http://twitter.com/share?" + $.param(twitterParams);
-			window.open(twturl,'','width=600,height=450,left=200,top=200');
-		}
-	</script>
-	<div id="shareForm" style="display:none">
-		<div style="width:100%"  align="center">
-			<div align="center" id="container">
-				<div id="top_strip"></div><!--top_strip closed -->
-				<div id="mid_strip">
-					<div id="containt">
-						<div id="upper" class="padding_prop" style="padding-top:5px;">
-							<div class="left">
-								<div class="thankyou_text left">Thank you!</div>
-								<div class="upper_text right"><?php echo $bidMessage; ?></div>
-								<div class="clear"></div>
-							</div><!--left closed -->
-							<!--right closed -->
-							<div class="clear"></div>
-						</div><!--upper closed -->
-						<div id="lower" class="padding_prop">
-							<div>
-								<div class="left news_text">Now Share The News</div>
-								<div class="left" style="padding-top:5px;">
-									<div class="block2 shareTab1 <?php if(!isset($_SESSION['shareEmailValidate'])) { echo 'tab2'; } ?>" onClick="showBox(1);" style="cursor:pointer">
-										<div  class="tab_space2" align="center">
-											<img src="images/layout/popup/fb.png" border="0" />
-									   </div>
-									</div>
-									<div class="block shareTab2" onClick="showBox(2);"  style="cursor:pointer">
-										<div  class="tab_space" align="center">
-											<img src="images/layout/popup/twitter.png"  border="0"/>
-										</div>
-									</div>
-									<div  class="block shareTab3 <?php if(isset($_SESSION['shareEmailValidate'])) { echo 'tab'; } ?>" onClick="showBox(3);"  style="cursor:pointer">
-										<div  class="tab_space" align="center">
-											<img src="images/layout/popup/mail.png" />
-										</div>
-									</div>
-								</div>
-								<div class="clear"></div>
-							</div>
-							<div id="slant">&nbsp;</div><!--slant closed -->
-							<div id="data">
-								<div class="left testi">
-									<div class="black_small_text"><?php echo $madeLoan; ?></div>
-									<div class="link_text"><a href="<?php echo SITE_URL;?>">www.zidisha.org</a></div>
-									<div align="left" id="bubble">
-										<div class="space">
-											<div class="left">
-												<?php if (file_exists(USER_IMAGE_DIR.$ud.".jpg")){ ?>
-													<img class="loan-profile" src="library/getimagenew.php?id=<?php echo $ud ?>&width=120&height=87" alt="<?php echo $name ?>"/>
-												<?php } ?>
-											</div>
-											<div class="left testi_text">
-												<span><?php echo $loan_use; ?></span>
-												&nbsp;<span class="link_text" style="font-style:normal;"><a target="_blank" class="link_text" href='<?php echo $loanprurl?>'>More</a></span>
-											</div>
-											<div class="clear"></div>
-										</div><!--space closed -->
-									</div><!--bubble closed -->
-								</div><!--testi closed -->
-								<div class="right form">
-									<div class="shareTab1Detail" style="<?php if(isset($_SESSION['shareEmailValidate'])) { echo 'display:none'; } ?>">
-										<div style="padding-top:20px">
-											<a href="javascript:void(0)" onClick="fbshare();"><img src="images/layout/popup/fb_button.png" /></a>
-										</div>
-										<div style="padding-top:63px;width:200px;text-align:left">
 
-<strong>
-											<a href="javascript:void(0)" onclick="$.facebox.close();" class=''>
-											No Thanks</a>
-
-<br/><br/>
-<a href='javascript:void(0)' onclick='sharebox_off_submit(<?php echo $userid;?>,<?php echo $ud;?>,<?php echo $ld;?>,1)'>Do Not Display Share Invite Again</a>
-
-										</div>
-									</div>
-									<div class="shareTab2Detail" style="display:none">
-										<table class="form_text" align="center" cellpadding="0" cellspacing="0" width="100%">
-											<tr>
-												<td valign="top" class="paddign_right_prop">NOW SHARE THE NEWS</td>
-											</tr>
-											<tr>
-												<td style="padding-top:5px;"> 
-													<textarea id="twtTextShare" name="twtTextShare" class="textarea_box2  textarea_text twtTextShare"><?php echo $tweetmadeLoan; ?></textarea>
-												</td>
-											</tr>
-											<tr>
-												<td align="center" style="padding-top:10px;">
-													<a href="javascript:void(0)" onClick="twtshare();"><img src="images/layout/popup/tweet_button.png" /></a>
-												</td>
-											</tr>
-										</table>
-									</div>
-
-									<div class="shareTab3Detail" style="<?php if(!isset($_SESSION['shareEmailValidate']) || isset($_SESSION['ShareEmailSent'])) {echo 'display:none';} ?>">
-										<form name="bidform1" action="process.php" method="post">
-											<table class="form_text" align="center" cellpadding="0" cellspacing="0" width="100%">
-												<tr>
-													<td valign="top" class="paddign_right_prop">TO</td>
-													<td>
-														<input name="to_email" type="text" class="input_box" value="<?php echo $form->value('to_email'); ?>"/>
-														<div><?php echo $form->error('to_email'); ?></div>
-													</td>
-												</tr>
-												<tr><td class="top_padding_prop">&nbsp;</td></tr>
-												<tr>
-													<td valign="top" class="paddign_right_prop">NOTE</td>
-													<td>
-														<textarea name="note" class="textarea_box"><?php echo $form->value('note'); ?></textarea>
-														<div><?php echo $form->error('note'); ?></div>
-													</td>
-												</tr>
-												<tr>
-													<td>&nbsp;</td>
-													<td style="padding-top:10px;">
-														<div>
-															<div class="left">
-																<div class="left"><input name="sendme" type="checkbox" /></div>
-																<div class="right" style="font-family:Arial;margin-top:3px;">Send me a copy</div>
-																<div class="clear"></div>
-															</div>
-															<div class="right" style="margin-right:5px;">
-																<input type="hidden" id="sendShareEmail" name="sendShareEmail" />
-																<input type="hidden" name="user_guess" value="<?php echo generateToken('sendShareEmail'); ?>"/>
-																<input type="hidden" name="uid" value="<?php echo $ud ?>" />
-																<input type="hidden" name="lid" value="<?php echo $loanid ?>" />
-																<?php 
-																	unset($_SESSION['lender_bid_success1']);
-																	unset($_SESSION['lender_bid_success2']);
-																	?>
-																<input type="hidden" name="formbidpos" value="<?php echo $showShareBox ?>" />
-																<input type="hidden" name="email_sub" value="<?php echo $madeLoan ?>" />
-																<input type="hidden" name="loan_use" value="<?php echo $loan_use ?>" />
-																<?php unset($_SESSION['shareEmailValidate']);?>
-																<input type="image" src="images/layout/popup/send_button.png" name="Send"/>
-															</div>
-															<div class="clear"></div>
-														</div>
-													</td>
-												</tr>
-											</table>
-										</form>
-									</div>
-									<div class='mail_sent_section' >
-											<?php 
-													if(isset($_SESSION['ShareEmailSent'])){ 
-													echo"<div class='black_text_emailSent'>";
-														echo"Your email has been sent.";
-														unset($_SESSION['ShareEmailSent']);
-													echo"</div>";
-													echo"<div style='margin-top:30px'><input type='image' src='images/layout/popup/send_another_button.png' name='Send Again' onClick='showBox(3)' value=' '></div>";
-												}?>
-									</div>
-								</div><!--form closed -->
-								<div class="clear"></div><!--clear closed -->
-							</div><!--data closed -->
-						</div><!--lower closed -->
-					</div><!--containt closed -->
-				</div><!--mid_strip closed -->
-				<div id="bottom_strip"></div><!--bottom_strip closed -->
-			</div><!--container closed -->
-		</div>		
-	</div>
- </body>
-<?php
-	}
-?>
-<!-- end share box -->
-
+</div>
 </div> <!-- span16 -->
-
-<script type="text/javascript">
-<!--
-	function submit_form(form)
-	{	
-	<?php 
-		if(isset($_SESSION['bidPaymentSuccess']))
-		{
-			 if(!empty($pamount1)) {?>
-				document.bidform1.submit();
-			<?php 
-			 }else 
-			{ ?>
-				document.bidform.submit();
-		<?php 
-			} 
-	}
-?>
-}
-//-->
-
-</script>
-<?php unset($_SESSION['bidPaymentSuccess']);?>
-<script type="text/javascript">
-<!--
-	function forgive_popup(lid, ud) {
-	var newWin= window.open('includes/forgive.php?loanid='+lid+'&ud='+ud+'','forgivewindow','width=400,height=200,left=200,top=200,screenX=100,screenY=100,scrollbars=yes');
-		if(newWin == null || typeof(newWin)=="undefined" || !newWin) {
-			$.facebox({ div: '#pop-upblocked' });
-		} else {
-			newWin.onload = function() {
-				setTimeout(function() {
-					if (newWin.screenX === 0)
-						$.facebox({ div: '#pop-upblocked' });
-				}, 0);
-			};
-		}
-	}
-//-->
-
-</script>
-<div class="" id="pop-upblocked" style="background-color:#E3E5EA;display:none">
-	<div class='autolend_space'>
-	<div></div>
-		<div class='auto_lend_text'>
-			<?php echo $lang['loanstatn']['pop-upblocked_text'];?>
-		</div><br/>
-		<div align="right" style="padding-right:40px">
-		</div>
-	</div>
-</div>
-<script language="JavaScript">
-  var ids = new Array('feedback', 'pcomment', 'txtcomment');
-  var values = new Array('','', '');
-  var needToConfirm = true;
-
-</script>
-<script type="text/JavaScript" src="includes/scripts/navigateaway.js"></script>
-<script language="JavaScript">
-  populateArrays();
-</script>
-<div id='donotforgive' style='display:none;' >
-	<table  class='detail' style="padding:15px;width:470px">
-		<tbody>
-			<tr height='10px'>
-			</tr>
-			<tr style="font-size:16px;">
-				<td colspan=2><div id='forgiveText' style="text-align:justify"><?php echo $lang['loanstatn']['donotforgive_confirmation']?></div></td>
-			</tr>
-			<tr height='10px'>
-			</tr>
-				<?php 
-					$originUrl = parse_url($RequestUrl);
-					$originUrlpath = $originUrl['path'];
-					$qStr = $originUrl['query']; //$_SERVER['QUERY_STRING']
-					$key="dntfrg";
-					parse_str($qStr,$originUrl);
-					$redir_url = $originUrlpath.'?'.http_build_query(array_diff_key($originUrl,array($key=>"1")));
-					unset($originUrl['v']);
-					unset($originUrl['lid']);
-					unset($originUrl['dntfrg']);
-					$cancel = $originUrlpath;
-				?>	
-				<td><a href="<?php echo $redir_url?>" class='btn'>Confirm that I do not wish to forgive this loan</a></td>
-				<td><a href="<?php echo $cancel?>" class='btn' onclick="$.facebox.close();">Cancel</a></td>
-			<tr>
-			</tr>
-		</tbody>
-	</table>
-</div>
