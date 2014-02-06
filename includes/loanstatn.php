@@ -1004,8 +1004,10 @@ if($brw2['active'] == LOAN_REPAID)
 				?>
 				
 			</div>
-		</div><!-- /row -->
-	</div>	
+		
+		
+
+</div><!-- /span10 -->
 
 	<div class="span5 right_column">
 
@@ -1861,8 +1863,8 @@ if($brw2['active'] == LOAN_REPAID)
 		} ?>
 
 	</div> <!-- /span5 -->
-
-	</div><!-- /span10 -->
+</div>
+</div><!-- /row -->
 
 
 <!-- share box script -->
