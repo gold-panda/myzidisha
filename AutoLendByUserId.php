@@ -185,7 +185,7 @@ function placeAutobid($preference, $loansToAutolend, $possibleBids, $lenderId, $
 												
 												$biddedAmnt=($loan['reqdamt']*$status)/100;
 												$reqAmnt=$loan['reqdamt']-$biddedAmnt;
-												$amntToLend = min($lastBidAmnt, $reqAmnt, AUTO_LEND_AMT);
+												$amntToLend = min($lastBidAmnt, $reqAmnt);
 												$LoanbidId=$session->placebid($loan['loanid'], $loan['borrowerid'], $amntToLend, $intToPlaceBid, 1, true,$lenderId);
 										}											
 									}
