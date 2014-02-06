@@ -8,7 +8,7 @@
  *
  */
 /* Reset.less
- * Props to Eric Meyer (meyerweb.com) for his CSS reset file. We're using an adapted version here that cuts out some of the reset HTML elements we will never need here (i.e., dfn, samp, etc).
+ * Props to Eric Meyer (meyerweb.com) for his CSS reset file. We're using an adapted version here	that cuts out some of the reset HTML elements we will never need here (i.e., dfn, samp, etc).
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 html, body {
   margin: 0;
@@ -187,7 +187,10 @@ src: url("HATTEN.TTF") /* TTF file for CSS3 browsers */
 .row .span5 {
   float: left;
   width: 280px;
-  margin-left: 20px;
+  margin-top: 0;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
 .row .span5:first-child {
   margin-left: 0;
@@ -227,7 +230,9 @@ src: url("HATTEN.TTF") /* TTF file for CSS3 browsers */
 .row .span10 {
   float: left;
   width: 580px;
-  margin-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 25px;
+  margin-left: 0px;
 }
 .row .span10:first-child {
   margin-left: 0;
@@ -799,15 +804,15 @@ form label {
 }
 .login-form label
 {
-  padding-top: 0px;
-  font-family: inherit;
-  font-size: 12px;
-  line-height: 18px;
-  float: none;
-  width: auto;
-  text-align: left;
-  color: gray;
-  padding-left:2px;
+	padding-top: 0px;
+	font-family: inherit;
+	font-size: 12px;
+	line-height: 18px;
+	float: none;
+	width: auto;
+	text-align: left;
+	color: gray;
+	padding-left:2px;
 }
 .custom_label {
   padding-top: 6px;
@@ -2033,295 +2038,295 @@ footer a:hover, footer a:active {
 /* ADDITIONAL CUSTOM STYLES */
 
 .button-twitter {
-  clear: none; 
-  margin: 10px 0 0 0;
+	clear: none; 
+	margin: 10px 0 0 0;
 }
 .button-facebook {
-  clear: none; 
-  margin: 10px 0 0 0;
+	clear: none; 
+	margin: 10px 0 0 0;
 }
 
 .meta { font-size: 12px; font-style: italic; font-family:'TradeGothicW01-LightObl',"Helvetica Neue", Helvetica, Arial, sans-serif; }
 .blue { color: #00aeef; }
 
 #nav {
-  width: 940px; 
-  height: 41px; 
-  background: url(../../images/bg-headings.png) repeat-x;
-  list-style: none;
-  margin: 10px 0 20px;
-  padding: 4px 0px; 
-  clear: both;
-  overflow:hidden;
+	width: 940px; 
+	height: 41px; 
+	background: url(../../images/bg-headings.png) repeat-x;
+	list-style: none;
+	margin: 10px 0 20px;
+	padding: 4px 0px; 
+	clear: both;
+	overflow:hidden;
 }
 
 #nav ul {
-  list-style: none;
-  margin-left:35px;
+	list-style: none;
+	margin-left:35px;
 }
 #nav ul li {
-  display: inline;
-  float: left;
-  clear: none;
-  font-weight: normal;
-  color: #000;
-  font-family: 'TradeGothicNextW01-BdCm',  Impact;
-  /*font-family: 'TradeGothicNextW01-BdCm', 'Haettenschweiler', sans-serif;*/
-    font-size: 28px;
-    text-transform: uppercase;
-    padding: 11px 0px 10px 0px; 
+	display: inline;
+	float: left;
+	clear: none;
+	font-weight: normal;
+	color: #000;
+	font-family: 'TradeGothicNextW01-BdCm',  Impact;
+	/*font-family: 'TradeGothicNextW01-BdCm', 'Haettenschweiler', sans-serif;*/
+  	font-size: 28px;
+  	text-transform: uppercase;
+  	padding: 11px 0px 10px 0px; 
 }
 
 #nav ul li a, #nav ul li a:visited {
-  color: #000;
-  text-decoration: none;
+	color: #000;
+	text-decoration: none;
 }
 #nav ul li a:hover, #nav ul li a:active, #nav ul li a.current {
-  color: #ff8b00;
-  text-decoration: none;
+	color: #ff8b00;
+	text-decoration: none;
 }
 
 #nav .nav-table{
-  padding-top: 13px;
-   padding-left: 20px;
-   border-collapse: separate;
-   margin-bottom: 0px;
+	padding-top: 13px;
+	 padding-left: 20px;
+	 border-collapse: separate;
+	 margin-bottom: 0px;
 }
 #nav .nav-table td{
-  font-weight: normal;
-  color: #000;
-  font-family: 'TradeGothicNextW01-BdCm',  Impact;
-  /*font-family: 'TradeGothicNextW01-BdCm', 'Haettenschweiler', sans-serif;*/
-    font-size: 28px;
-    text-transform: uppercase;
-    padding: 0; 
-  border-bottom: none;
-  text-align: center;
+	font-weight: normal;
+	color: #000;
+	font-family: 'TradeGothicNextW01-BdCm',  Impact;
+	/*font-family: 'TradeGothicNextW01-BdCm', 'Haettenschweiler', sans-serif;*/
+  	font-size: 28px;
+  	text-transform: uppercase;
+  	padding: 0; 
+	border-bottom: none;
+	text-align: center;
     vertical-align: middle;
 }
 
 #nav .nav-table td a, #nav .nav-table td a:visited {
-  color: #000;
-  text-decoration: none;
+	color: #000;
+	text-decoration: none;
 }
 #nav .nav-table td a:hover, #nav .nav-table td a:active, #nav .nav-table td a.current {
-  color: #ff8b00;
-  text-decoration: none;
+	color: #ff8b00;
+	text-decoration: none;
 }
 
 #top-right {
-  float: right; 
-  clear: none;
-  margin-top: 15px;
-  font-size: 13px;
-  color: #dfdcdc;
-  
+	float: right; 
+	clear: none;
+	margin-top: 15px;
+	font-size: 13px;
+	color: #dfdcdc;
+	
 }
 #top-links a {
-  color: gray;
-  font-weight:bold;
+	color: gray;
+	font-weight:bold;
 }
 #top-links span {
-  color: #444444;
+	color: #444444;
 }
 .top-language {
-  float: right; 
-  clear: none;
-  margin: 0;
-  font-size: 13px;
-  color: #dfdcdc;
+	float: right; 
+	clear: none;
+	margin: 0;
+	font-size: 13px;
+	color: #dfdcdc;
 }
 .top-language li{
-  list-style-type: none; 
-  float:left;
-  margin-left:20px;
+	list-style-type: none; 
+	float:left;
+	margin-left:20px;
 }
 .top-language li a{
-  line-height:20px;
+	line-height:20px;
 }
 #logo{
-  position:absolute;
-  top:0;
+	position:absolute;
+	top:0;
 }
 #logo h1 a {
-  display: block;
-  float: left;
-  clear: none;
-  margin: 33px 0 20px 0;
-  width: 220px;
-  height: 60px;
-  background: url(../../images/logo.png) no-repeat;
-  text-indent: -9000px;
-  position:absolute;
+	display: block;
+	float: left;
+	clear: none;
+	margin: 33px 0 20px 0;
+	width: 220px;
+	height: 60px;
+	background: url(../../images/logo.png) no-repeat;
+	text-indent: -9000px;
+	position:absolute;
 }
 
 #welcome {
-  float: right; 
-  clear: none;
-  margin: 15px 0;
-  width: 350px;
-  text-align: right;
+	float: right; 
+	clear: none;
+	margin: 15px 0;
+	width: 350px;
+	text-align: right;
 }
 
 #welcome h4 {
-  font-size: 24px;
-  font-weight: normal;
-  text-transform: uppercase;
-  text-align: right;
-  float: right;
-  color: #000;
-  margin: 4px 0 0 0;
-  clear: none;
+	font-size: 24px;
+	font-weight: normal;
+	text-transform: uppercase;
+	text-align: right;
+	float: right;
+	color: #000;
+	margin: 4px 0 0 0;
+	clear: none;
 }
 
 
 #login {
-  float: right; 
-  clear: none;
-  width: 500px;
-  margin: 15px 0;
+	float: right; 
+	clear: none;
+	width: 500px;
+	margin: 15px 0;
 }
 
 #login h4 {
-  font-size: 22px;
-  font-weight: normal;
-  text-transform: uppercase;
-  color: gray;
-  display: inline;
-  margin: 4px 6px 0 40px;
-  float: left;
-  clear: none;
+	font-size: 22px;
+	font-weight: normal;
+	text-transform: uppercase;
+	color: gray;
+	display: inline;
+	margin: 4px 6px 0 40px;
+	float: left;
+	clear: none;
 }
 .login-label
 {
-  font-size: 22px;
-  font-weight: normal;
-  text-transform: uppercase;
-  color: gray;
-  display: inline;
-  clear: none;
-  line-height: 24px;
-  font-family: 'TradeGothicNextW01-BdCm',"Helvetica Neue",Helvetica,Arial,sans-serif;
-  position:relative;
-  top:3px;
-  right:10px;
+	font-size: 22px;
+	font-weight: normal;
+	text-transform: uppercase;
+	color: gray;
+	display: inline;
+	clear: none;
+	line-height: 24px;
+	font-family: 'TradeGothicNextW01-BdCm',"Helvetica Neue",Helvetica,Arial,sans-serif;
+	position:relative;
+	top:3px;
+	right:10px;
 }
 #login p {
-  padding: 0;
-  margin: 5px 0 0 0;
-  font-size: 12px;
-  color: gray;
+	padding: 0;
+	margin: 5px 0 0 0;
+	font-size: 12px;
+	color: gray;
 }
 
 #sortbar {
-  border-top: 1px solid #dfdcdc;
-  border-bottom: 1px solid #dfdcdc;
-  height: 35px; 
-  padding: 7px 5px 0 5px; 
+	border-top: 1px solid #dfdcdc;
+	border-bottom: 1px solid #dfdcdc;
+	height: 35px; 
+	padding: 7px 5px 0 5px; 
     font-size: 15px;
     clear: both;
     margin-bottom: 20px;
 }
 
 #sortbar form select {
-  display: inline;
-  clear: none;
-  float: left;
-  margin-top: 2px;
+	display: inline;
+	clear: none;
+	float: left;
+	margin-top: 2px;
 }
 
 .sorttext {
-  display: inline;
-  clear: none;
-  float: left;
-  padding-top: 4px;
-  margin-right: 85px;
+	display: inline;
+	clear: none;
+	float: left;
+	padding-top: 4px;
+	margin-right: 85px;
 }
 .sortsearch {
-  display: inline;
-  clear: none;
-  float: right; 
+	display: inline;
+	clear: none;
+	float: right;	
 }
 
 .browse-listing {
-  display: block;
-  clear: both;
+	display: block;
+	clear: both;
 }
 
 .browse-listing img {
-  float: left;
-  display: block;
-  padding: 5px;
-  width: 235px;
-  border: 1px solid #dfdcdc;
-  margin: 0;
+	float: left;
+	display: block;
+	padding: 5px;
+	width: 235px;
+	border: 1px solid #dfdcdc;
+	margin: 0;
 }
 .starimg{
-  display: block !important;
-  padding: 0px !important;
-  width: 15px !important;
-  border: none !important;
-  margin-top: 2px !important;
+	display: block !important;
+	padding: 0px !important;
+	width: 15px !important;
+	border: none !important;
+	margin-top: 2px !important;
 
 }
 .divider {
-  clear: both;
-  float: left;
-  border-top: 1px solid #dfdcdc;
-  width: 100%;
-  height: 1px;
-  margin: 30px 0;
+	clear: both;
+	float: left;
+	border-top: 1px solid #dfdcdc;
+	width: 100%;
+	height: 1px;
+	margin: 30px 0;
 }
 
 .progress {
-  width: 230px;
-  height: 15px;
-  margin: 2px 5px 20px 0;
-  background: #e0dfde;
-  clear: none;
-  float: left;
+	width: 180px;
+	height: 15px;
+	margin: 2px 5px 20px 0;
+	background: #e0dfde;
+	clear: none;
+	float: left;
 }
 
 .fundingLoanBar {
-  height: 15px;
-  background: #55c325;
+	height: 15px;
+	background: #55c325;
 }
 .repaidLoanBar {
-  height: 15px;
-  background: #999999;
+	height: 15px;
+	background: #999999;
 }
 .expiredLoanBar {
-  height: 15px;
-  background: red;
+	height: 15px;
+	background: red;
 }
 .browse-listing .btn {
-  float: left;
-  clear: both;
-  padding-left: 30px;
-  padding-right: 30px;
+	float: left;
+	clear: both;
+	padding-left: 30px;
+	padding-right: 30px;
 }
 
 .browse-listing .clear {
-  width: 100%;
-  height: 20px;
-  float: left;
+	width: 100%;
+	height: 20px;
+	float: left;
 }
 
 .listing-info {
-  clear: none;
-  float: right;
-  width: 440px;
+	clear: none;
+	float: right;
+	width: 440px;
 }
 
 /* USER ACCOUNT PAGES  */
  
 
 .user-account-img {
-  float: right;
-  padding: 5px;
-  width: auto;
-  border: 1px solid #dfdcdc;
-  margin: 0 0 10px 20px;
+	float: right;
+	padding: 5px;
+	width: auto;
+	border: 1px solid #dfdcdc;
+	margin: 0 0 10px 20px;
 }
 
 #user-account h3 {
@@ -2332,10 +2337,10 @@ footer a:hover, footer a:active {
 }
 
 #user-account td {
-  font-size: 14px;
+	font-size: 14px;
 }
 #user-account tr {
-  border: none;
+	border: none;
 }
 
 #user-account table {
@@ -2376,8 +2381,8 @@ footer a:hover, footer a:active {
 }
 
 #user-account .bid-table {
-  padding: 20px 0;
-  margin-bottom: 0;
+	padding: 20px 0;
+	margin-bottom: 0;
 }
 
 #user-account .bid-table table th, #user-account .bid-table table td {
@@ -2396,24 +2401,24 @@ footer a:hover, footer a:active {
  
 
 .loan-profile{
-  float: right;
-  padding: 5px;
-  width: auto;
-  max-width:330px;
-  border: 1px solid #dfdcdc;
-  margin: 0 0 10px 0px;
+	float: left;
+	padding: 15px;
+	width: 100%;
+  border:1px solid #DFDCDC;
+	margin: 0 0 10px 0px;
+  background-color: #f9f9f9;
 }
 #b-activation {
-  float: right;
-  padding: 5px;
-  width: 235px;
-  border: 1px solid #dfdcdc;
-  margin: -40px 0 10px 15px;
+	float: right;
+	padding: 5px;
+	width: 235px;
+	border: 1px solid #dfdcdc;
+	margin: -40px 0 10px 15px;
 }
 #loan-profile h3 {
-  font-size: 24px;
-  color: #00aeef;
-  margin-bottom: 15px;
+	font-size: 24px;
+	color: #00aeef;
+	margin-bottom: 15px;
 }
 
 .detail-category {
@@ -2424,10 +2429,10 @@ footer a:hover, footer a:active {
 }
 
 #loan-profile td {
-  font-size: 14px;
+	font-size: 14px;
 }
 #loan-profile tr {
-  border: none;
+	border: none;
 }
 
 #loan-profile table {
@@ -2468,8 +2473,11 @@ footer a:hover, footer a:active {
 }
 
 #loan-profile table.funding-status {
-  width: 350px;
-  margin: 10px 0;
+  float: right;
+  width: 100%;
+  margin-right: 10px;
+  margin-bottom: 25px;
+  margin-left: 0px;
   padding: 5px 0;
   border-collapse: separate;
   font-size: 14px;
@@ -2484,7 +2492,14 @@ footer a:hover, footer a:active {
 }
 
 #loan-profile h4 {
-  font-size: 22px;
+  font-size: 24px;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: gray;
+  display: inline;
+  margin: 0 70px 0 0;
+  float: left;
+  clear: none;
 }
 
 
@@ -2508,15 +2523,15 @@ footer a:hover, footer a:active {
 .newdetail_text{color:#000}
 
 #loan-profile .btn, .bid-table .btn {
-  font-size: 24px;
-  padding: 8px 30px;
-  float: left;
-  clear: both;
+	font-size: 24px;
+	padding: 8px 30px;
+	float: left;
+	clear: both;
 }
 
 .bid-table {
-  padding: 20px 0;
-  margin-bottom: 30px;
+	padding: 20px 0;
+	margin-bottom: 10px;
 }
 
 .bid-table table th, .bid-table table td {
@@ -2536,17 +2551,6 @@ footer a:hover, footer a:active {
   width: 940px;
   margin-top: 20px;
   margin-bottom: 20px;
-}
-
-#promote h4 {
-  font-size: 24px;
-  font-weight: normal;
-  text-transform: uppercase;
-  color: gray;
-  display: inline;
-  margin: 0 70px 0 0;
-  float: left;
-  clear: none;
 }
 
 #promote .widget {
@@ -2596,7 +2600,7 @@ h3.subhead .right {
   font-size: 16px;
 }
 
-.top {  
+.top {	
   padding-top: 10px;
 }
 
@@ -2624,17 +2628,17 @@ h3.subhead .right {
   padding:0;
 }
 #static h4 {
-  font-size: 21px;
-  line-height: 24px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+	font-size: 21px;
+	line-height: 24px;
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
 #static h3 {
-  color:#FF8B00;
-  font-size: 24px;
-  line-height: 24px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+	color:#FF8B00;
+	font-size: 24px;
+	line-height: 24px;
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
 
 #static p {
@@ -2644,10 +2648,10 @@ h3.subhead .right {
 
 
 .image-right {
-  float: right;
-  padding: 0 10px 10px;
-  margin-left:10px;
-  margin-bottom:5px;
+	float: right;
+	padding: 0 10px 10px;
+	margin-left:10px;
+	margin-bottom:5px;
 }
 #acc ul {list-style: none; }
 #acc ul li {list-style-type: none; }
@@ -2668,11 +2672,11 @@ ul.acc { list-style: none; }
 ul.acc li { margin-left: -23px; }
 .clear
 {
-  clear: both;
+	clear: both;
 }
 .blankDiv
 {
-  height:300px;
+	height:300px;
 }
 #zidisha-connect {
     display: inline;
@@ -2687,7 +2691,7 @@ ul.acc li { margin-left: -23px; }
 }
 #list-footer-connect li{
     margin-bottom: 10px;
-  list-style-image: none;
+	list-style-image: none;
     list-style-type: none;
     margin-left: 0;
 }
@@ -2699,8 +2703,8 @@ ul.acc li { margin-left: -23px; }
     font-size: 12px;
     line-height: 30px;
     padding-left: 10px;
-  font-weight:bold;
-  height:30px !important;
+	font-weight:bold;
+	height:30px !important;
 }
 #list-footer-connect li a .icon-footer-twitter, #list-footer-connect li a .icon-footer-facebook, #list-footer-connect li a .icon-footer-team,#list-footer-connect li a .icon-footer-blog, #list-footer-connect li a .icon-footer-interns,a .icon-footer-lending_group {
     margin-right: 10px;
@@ -2793,8 +2797,8 @@ vertical-align:top;
 }
 .collapse
 {
-  text-align:justify;
-  padding-top:5px;
+	text-align:justify;
+	padding-top:5px;
 }
 
 .detail_new td{
@@ -2807,28 +2811,28 @@ vertical-align:top;
 }
 #acc li
 {
-  margin-top:10px;
+	margin-top:10px;
 }
 #acc li .collapse
 {
-  font-family: 'Trade Gothic W01 Light';
+	font-family: 'Trade Gothic W01 Light';
 }
 #acc li .expand
 {
-  font-family: 'Trade Gothic W01 Bold';
-  font-size:14px;
+	font-family: 'Trade Gothic W01 Bold';
+	font-size:14px;
 }
 .my_port_img
 {
-  margin:-5px 3px -5px -10px;
+	margin:-5px 3px -5px -10px;
 }
 .expand a:hover
 {
-  text-decoration:none;
+	text-decoration:none;
 }
 .email
 {
-  background-color: #ECECEC !important;
+	background-color: #ECECEC !important;
     background-image: -moz-linear-gradient(center top , #FEFEFE 0%, #ECECEC 100%) !important;
     border-color: #E2E2E2 #BFBFBF #B9B9B9 #E2E2E2 !important;
     border-radius: 2px !important;
@@ -2843,42 +2847,42 @@ vertical-align:top;
     height: 18px !important;
     line-height: 20px !important;
     margin-left: 1px !important;
-  margin-top:0px;
+	margin-top:0px;
     overflow: hidden !important;
     padding: 0 9px !important;
     text-align: center !important;
     text-shadow: -1px 1px 0 #FFFFFF !important;
     vertical-align: top !important;
     white-space: nowrap !important;
-  width:35px;
-  }
+	width:35px;
+	}
 .view-more-less {
-  font-size: 18px;
-  font-weight: normal;
-  line-height: inherit;
-  margin-bottom: 0px;
-  float:right;
-  margin-top:0px;
-  background-color:#cccccc;
-  padding:5px 5px 5px 30px;
-  background-image: url("../../images/layout/icons/collapse-large-green-Shapes4FREE.png");
-  background-repeat:no-repeat; 
-  background-position: 8px 7px; 
-  width:65px;
-  height:19px;
-  border-radius: 5px;
-  cursor: pointer;
-  cursor: hand;
+	font-size: 18px;
+	font-weight: normal;
+	line-height: inherit;
+	margin-bottom: 0px;
+	float:right;
+	margin-top:0px;
+	background-color:#cccccc;
+	padding:5px 5px 5px 30px;
+	background-image: url("../../images/layout/icons/collapse-large-green-Shapes4FREE.png");
+	background-repeat:no-repeat; 
+	background-position: 8px 7px;	
+	width:65px;
+	height:19px;
+	border-radius: 5px;
+	cursor: pointer;
+	cursor: hand;
 }
 .view-more {
-  background-image: url("../../images/layout/icons/collapse-large-green-Shapes4FREE.png") !important;
+	background-image: url("../../images/layout/icons/collapse-large-green-Shapes4FREE.png") !important;
 }
 .view-less {
-  background-image: url("../../images/layout/icons/expand-large-green-Shapes4FREE.png") !important; 
+	background-image: url("../../images/layout/icons/expand-large-green-Shapes4FREE.png") !important;	
 }
 .bold
 {
-  font-weight:bold;
+	font-weight:bold;
 }
 .ascHeader {
   cursor: pointer;
@@ -2893,107 +2897,107 @@ vertical-align:top;
   background-position:right center;
 }
 .pg-normal {
-  color: blue;
-  font-weight: normal;
-  text-decoration: none;
-  cursor: pointer;
+	color: blue;
+	font-weight: normal;
+	text-decoration: none;
+	cursor: pointer;
 }
 .pg-selected {
-  color: blue;
-  font-weight: bold;
-  text-decoration: underline;
-  cursor: pointer;
+	color: blue;
+	font-weight: bold;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 /* fonts type */
 
 .type1
 {
-  font-family: 'Trade Gothic W01 Bold';
+	font-family: 'Trade Gothic W01 Bold';
 }
 .type2
 {
-  font-family: 'TradeGothicW01-BoldCn20 675334';
+	font-family: 'TradeGothicW01-BoldCn20 675334';
 }
 .type3
 {
-  font-family: 'TradeGothicW01-BoldCn20 675337';
+	font-family: 'TradeGothicW01-BoldCn20 675337';
 }
 .type4
 {
-  font-family: 'Trade Gothic W01 Bold 2';
+	font-family: 'Trade Gothic W01 Bold 2';
 }
 .type5
 {
-  font-family: 'TradeGothicW01-Bold2Obl';
+	font-family: 'TradeGothicW01-Bold2Obl';
 }
 .type6
 {
-  font-family: 'TradeGothicW01-BoldObl';
+	font-family: 'TradeGothicW01-BoldObl';
 }
 .type7
 {
-  font-family: 'Trade Gothic W01 Cn 18';
+	font-family: 'Trade Gothic W01 Cn 18';
 }
 .type8
 {
-  font-family: 'TradeGothicW01-Cn18Obl';
+	font-family: 'TradeGothicW01-Cn18Obl';
 }
 .type9
 {
-  font-family: 'Trade Gothic W01 Light';
+	font-family: 'Trade Gothic W01 Light';
 }
 .type10
 {
-  font-family: 'TradeGothicW01-LightObl';
+	font-family: 'TradeGothicW01-LightObl';
 }
 .type11
 {
-  font-family: 'Trade Gothic W01 Obl';
+	font-family: 'Trade Gothic W01 Obl';
 }
 .type12
 {
-  font-family: 'Trade Gothic W01 Roman';
+	font-family: 'Trade Gothic W01 Roman';
 }
 .type13
 {
-  font-family: 'TradeGothicW02-BoldCn20 675505';
+	font-family: 'TradeGothicW02-BoldCn20 675505';
 }
 .type14
 {
-  font-family: 'TradeGothicW02-BoldCn20 675508';
+	font-family: 'TradeGothicW02-BoldCn20 675508';
 }
 .type15
 {
-  font-family: 'Trade Gothic W02 Bold 2';
+	font-family: 'Trade Gothic W02 Bold 2';
 }
 .type16
 {
-  font-family: 'TradeGothicW02-Bold2Obl';
+	font-family: 'TradeGothicW02-Bold2Obl';
 }
 .type17
 {
-  font-family: 'Trade Gothic W02 Cn 18';
+	font-family: 'Trade Gothic W02 Cn 18';
 }
 .type18
 {
-  font-family: 'TradeGothicW02-Cn18Obl';
+	font-family: 'TradeGothicW02-Cn18Obl';
 }
 .type19
 {
-  font-family: 'TradeGothicNextW01-BdCm';
+	font-family: 'TradeGothicNextW01-BdCm';
 }
 .type20
 {
-  font-family: 'TradeGothicW01-Extended';
+	font-family: 'TradeGothicW01-Extended';
 }
 .type21
 {
-  font-family: 'TradeGothicW01-BoldExte';
+	font-family: 'TradeGothicW01-BoldExte';
 }
 #recaptcha_response_field
 {
-  left:0px;
+	left:0px;
 }
 
 .small_link_col a{
@@ -3022,7 +3026,7 @@ float:left;
 margin-left:370px;
 margin-top:10px;
  }
-#static h1, .title {
+#static h1 {
   font-family: 'Trade Gothic W01 Light',"Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   color: #00aeef;
@@ -3045,16 +3049,16 @@ margin-top:10px;
   padding:0;
 }
 .banner_btn {
-  float: right;
-  margin-top: -33px;
-  position: relative;
-  right: -71px;
-  top: 15px;
+	float: right;
+	margin-top: -33px;
+	position: relative;
+	right: -71px;
+	top: 15px;
 }
 .fileType_hide{
-  height: 0px;
-  width: 0px;
-  overflow:hidden;
+	height: 0px;
+	width: 0px;
+	overflow:hidden;
 }
 .customfiletype {
    position: relative;

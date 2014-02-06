@@ -63,7 +63,7 @@ $(document).ready(function() {
 //added by Julia 7-11-2013
 			$vm_level= $database->getUserLevelbyid($brw['mentor_id']);
 			$vmcurrentloanid= $database->getCurrentLoanid($brw['mentor_id']);
-			if($vm_level==BORROWER_LEVEL){
+			if($vm_level==BORROWER_LEVEL && !empty($vm_name) && !empty($vmcurrentloanid)){
 
 				$vm_comments= $session->formMessage($lang['profile']['vm_comment_text'], $params);
 
@@ -74,7 +74,6 @@ $(document).ready(function() {
 			}
 		}
 		echo $vm_comments; ?>
-		
 	</div>
 	<div style="clear:both;border-top:1px solid #DFDCDC">&nbsp;</div>
 	<div>
@@ -220,28 +219,35 @@ $(document).ready(function() {
 										});
 									</script>
 					<?php			$senderid1=$commns['senderid'];
+
 									$receiverid=$commns['receiverid'];
 									$level =$database->getUserLevelbyid($senderid1);
-									if($level==BORROWER_LEVEL || $level==PARTNER_LEVEL)
+
+									if($level==BORROWER_LEVEL){
 										$name12=$database->getNameById($senderid1);
-									else { 
+										if (!empty($senderloanid)){
+											$sender_url= getLoanprofileUrl($senderid1,$senderloanid);
+										}else{
+											$sender_url='';
+										}
+									}else { 
+										$sender_url=getUserProfileUrl($senderid1);
 										$sublevel=$database->getUserSublevelById($senderid1);
-										if($sublevel==LENDER_GROUP_LEVEL)
+										if($sublevel==LENDER_GROUP_LEVEL){
 											$name12=$database->getNameById($senderid1);
-										else 
+										}else {
 											$name12=$database->getUserNameById($senderid1);
-										
+										}
 
 									}?>
 									<table class="zebra-striped">
 										<tbody>
 											<tr>
-												<td style="width:200px">
+												<td style="width:200px;border-top:1px solid #DFDCDC;border-bottom:1px solid #DFDCDC;border-left:1px solid #DFDCDC">
 													<img src="library/getimagenew.php?id=<?php echo $senderid1;?>&width=200&height=200">
-													<?php $prurl = getUserProfileUrl($senderid1);?>
-													<p style="margin-top:10px;text-align:center;"><?php echo "<a href='$prurl'>$name12</a>";?></p>
+													<p style="margin-top:10px;text-align:center;"><?php echo "<a href='$sender_url'>$name12</a>";?></p>
 												</td>
-												<td style="width:100%;border-right:1px solid #DFDCDC">
+												<td style="width:100%;border-top:1px solid #DFDCDC;border-right:1px solid #DFDCDC;border-bottom:1px solid #DFDCDC">
 													<strong><?php echo $name12;?></strong>&nbsp;<?php echo $lang['profile']['comments_on'] ?>&nbsp;<?php echo date("M d, Y", $commns['pub_date']);?><br/><br/>
 													<?php echo nl2br($msg1);?>
 													<br/>

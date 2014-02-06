@@ -2,11 +2,10 @@
 $lang['loanstatn']['about_b']="About Borrower";
 $lang['loanstatn']['annual_income'] = "Annual Income"; 
 $lang['loanstatn']['amt_stil_need']="Amount Still Needed";
-$lang['loanstatn']['amt_bid'] ="Amount Bid"; 
-$lang['loanstatn']['amt_accept'] ="Amount Accepted";
+$lang['loanstatn']['amt_accept'] ="Amount";
 $lang['loanstatn']['bid_close'] ="Bidding Closes"; 
 $lang['loanstatn']['bid_amount'] ="Bid Amount";
-$lang['loanstatn']['bid_int'] ="Bid Interest"; 
+$lang['loanstatn']['bid_int'] ="Interest"; 
 $lang['loanstatn']['bsincedate'] = "Borrower Since"; 
 $lang['loanstatn']['bid_detail'] ="Bidding Details"; 
 $lang['loanstatn']['b_currency']="Borrower Currency";
@@ -47,7 +46,7 @@ $lang['loanstatn']['lheader'] ="Current Loan Details";
 $lang['loanstatn']['lender'] ="Lender"; 
 $lang['loanstatn']['lender_name']="Lender Name"; 
 $lang['loanstatn']['loan_status']="Loan Status"; 
-$lang['loanstatn']['lender_int'] = "Proposed Lender Interest"; 
+$lang['loanstatn']['lender_int'] = "Interest"; 
 $lang['loanstatn']['lender_int_annual'] = "Proposed Annual Interest Rate for Lenders";
 $lang['loanstatn']['req_loan_amt'] ="Requested Loan Amount"; 
 $lang['loanstatn']['loan_p_not_gen'] = "Page called without loanid or loan page is not generated yet";
@@ -84,7 +83,7 @@ $lang['loanstatn']['total_bids'] ="Total Bids";
 $lang['loanstatn']['tot_amount']="Total Amount Due";
 $lang['loanstatn']['total_reypay']="Total Repayment"; 
 $lang['loanstatn']['tot_int_due_lend']="Total Interest Due to Lenders";
-$lang['loanstatn']['totrepay_due']="Total repayments as of";
+$lang['loanstatn']['totrepay_due']="Total repaid as of";
 $lang['loanstatn']['tot_paid_amount']="Total Paid Amount";
 $lang['loanstatn']['totToPay'] = "Total Annual Interest and Fees"; 
 $lang['loanstatn']['tba']  = "Total Amount (Including Interest and Transaction Fee) to be Repaid";
@@ -107,7 +106,7 @@ All interest rates displayed on the Zidisha website are expressed as flat percen
 The expression of interest rates as flat percentages of loan principal amounts is intended to make calculation of interest amounts more intuitive for borrowers and for lenders, and to facilitate comparison with other microfinance loans in borrowers' communities, the majority of which also use the flat rate methodology to express interest rates.";
 
 $lang['loanstatn']['tooltip_crncy_risk']='Under Zidisha\'s lending model, loan values are fixed in local currency upon disbursement, and the lenders assume currency risk. Exchange rates fluctuate and this can cause the US Dollar value of the loans to either increase or decrease during the course of the repayment period, leading to monetary gains or losses for lenders. Since exchange rate fluctuations often go both ways for multiple currencies during the same time period, spreading lending activity across multiple countries may help lenders hedge against currency risk.';
-$lang['loanstatn']['webfee']  ="Borrower Transaction Fee"; 
+$lang['loanstatn']['webfee']  ="Service Fee"; 
 $lang['loanstatn']['wcomments']='Post A Comment';
 $lang['loanstatn']['chars_remain']='characters remaining';
 $lang['loanstatn']['forgive_my_share']='I would like to forgive my share of this loan.';
@@ -221,4 +220,7 @@ $lang['loanstatn']['edit_bid1']='You may increase the amount or reduce the inter
 							Click';
 $lang['loanstatn']['here']= 'here';
 $lang['loanstatn']['edit_bid2']='to place a new bid.';
+$lang['loanstatn']['about']='About';
+$lang['loanstatn']['about_loan']='About This Loan';
+$lang['loanstatn']['report_violation']='Report this profile to Zidisha';
 ?>
