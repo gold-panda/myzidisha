@@ -7969,6 +7969,10 @@ function forgiveReminder(){
 		if(!empty($bdetail['rec_form_offcr_name']) && !empty($telnumber))
 
 			$this->ContactConfirmation($bdetail['rec_form_offcr_name']." ".$bdetail['rec_form_offcr_num'], $country, $telnumber, $language, $userid);
+		
+		if(!empty($bdetail['mentor_id']) && !empty($telnumber))
+
+			$this->VMConfirmation($bdetail['mentor_id'], $userid);
 
 	}
 
@@ -8607,6 +8611,23 @@ function sendMixpanelEvent($event_label){
 	$mp->track($event_label); // track an event
 
 }
+
+
+function VMConfirmation($mentorid, $userid)
+	{
+		global $database;
+		$From=EMAIL_FROM_ADDR;
+		$templet="editables/email/simplemail.html";
+		require ("editables/mailtext.php");
+		$mentor_email=$database->getEmailB($mentorid);
+		$params['uname']=$mentor_email['name'];
+		$res_BEmail=$database->getEmailB($userid);
+		$params['bname']=$res_BEmail['name'];
+		$params['link']=getUserProfileUrl($userid);
+		$emailsubject= $this->formMessage($lang['mailtext']['vm_confirmation_sub'], $params);
+		$emailmssg=$this->formMessage($lang['mailtext']['vm_confirmation'], $params);
+		$reply=$this->mailSendingHtml($From,'',$mentor_email , $emailsubject, '', $emailmssg, 0, $templet, 3);		
+	}
 
 /***** end here ******/
 

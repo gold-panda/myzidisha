@@ -585,4 +585,12 @@ Zidisha Team";
 
 $lang['mailtext']['eligible_invite_sms']="Congratulations! You now qualify for the Zidisha invite program. To participate, login to your account at Zidisha.org and follow the invite instructions.";
 
+//confirmation sent to VMs of new applicants 
+$lang['mailtext']['vm_confirmation_subject']="New assigned member: %bname%";
+
+$lang['mailtext']['vm_confirmation']="Dear %uname%,<br/><br/>
+%bname% has applied to join Zidisha and has selected you as a Volunteer Mentor. We encourage you to review %bname%'s profile here: %link%<br/><br/>
+If you have any concerns about the information %bname% has provided, please let us know by replying to this email.<br/><br/>
+Thank you,<br/><br/>
+Zidisha Team";
 ?>
