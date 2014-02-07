@@ -271,9 +271,9 @@ $(document).ready(function() {
 																<input type='hidden' name='fb' value='<?php echo $fb;?>' />
 															</form>
 												<?php	}
-														echo "</div>";
+														echo "</div>"; //style width:106px
 													}
-													echo "</div>";
+													echo "</div>"; //line 254
 													if($msg1 != $msgorg1)
 													{
 														if(!empty($translate_user_name)){
@@ -357,7 +357,8 @@ if(isset($session->userid) && $session->userid!=$senderid1)
 											<form name="feedback" method="POST" action='./updatefeedback.php' enctype="multipart/form-data">
 												<div style="float:left;width:52%">
 													<p><strong><?php echo $lang['profile']['comment'];?></strong></p>
-													<div><textarea name="message"  style="width:95%;height:140px"></textarea></div>
+													<div><textarea name="message"  style="width:95%;height:140px"></textarea>
+													</div>
 												</div>
 												<div style="float:right;padding-top:30px;width:48%" align="right">
 													<p>Upload File1: <input type="file" name="file1[]" id="file11" /></p>
@@ -382,12 +383,13 @@ if(isset($session->userid) && $session->userid!=$senderid1)
 												<div style="clear:both"></div>
 											</form>
 											<p>&nbsp;</p>
-										</div>
+										</div> <!-- slickbox -->
 										<div id="editbox<?php echo $incr;?>" style="border-bottom:1px solid #DFDCDC;display:none">
 											<form name="feedback" method="POST" action='./updatefeedback.php' enctype="multipart/form-data">
 												<div style="float:left;width:52%">
 													<p><strong><?php echo $lang['profile']['comment'];?></strong></p>
-													<div><textarea name="message" id='editmessage' style="width:95%;height:140px"><?php echo $msgorg1; ?></textarea></div>
+													<div><textarea name="message" id='editmessage' style="width:95%;height:140px"><?php echo $msgorg1; ?></textarea>
+													</div>
 												</div>
 												<div style="float:right;padding-top:30px;width:48%" align="right">
 													<p>Upload File1: <input type="file" name="file1[]" id="file11" /></p>
@@ -412,7 +414,7 @@ if(isset($session->userid) && $session->userid!=$senderid1)
 												<div style="clear:both"></div>
 											</form>
 											<p>&nbsp;</p>
-										</div>
+										</div> <!-- editbox -->
 							<?php	}	?>
 								</div>
 						<?php	}
@@ -429,7 +431,7 @@ if(isset($session->userid) && $session->userid!=$senderid1)
 				{
 					echo"";
 				}	?>
-			</div>
-		</div>
-	</div>
-</div>
+			</div> <!-- /div on line 115 -->
+		</div> <!-- /user_comment_desc -->
+	</div> <!-- /div on line 78 -->
+</div> <!-- /maincontainer -->

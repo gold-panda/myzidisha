@@ -1046,9 +1046,11 @@ if($brw2['active'] == LOAN_REPAID)
 							</table>
 						</form>
 			<?php	}
-				}	?>
-			</div><!-- /bid-table -->
 
+				}	?>
+				
+			</div><!-- /bid-table -->
+	</div><!-- /row -->
 		
 
 <?php
@@ -1070,7 +1072,6 @@ if($brw2['active'] == LOAN_REPAID)
 			</div>
 		
 		</div>
-
 
 
 
@@ -1179,12 +1180,12 @@ if($brw2['active'] == LOAN_REPAID)
 										</div>
 										<div style="padding-top:63px;width:200px;text-align:left">
 
-<strong>
+											<strong>
 											<a href="javascript:void(0)" onclick="$.facebox.close();" class=''>
 											No Thanks</a>
 
-<br/><br/>
-<a href='javascript:void(0)' onclick='sharebox_off_submit(<?php echo $userid;?>,<?php echo $ud;?>,<?php echo $ld;?>,1)'>Do Not Display Share Invite Again</a>
+											<br/><br/>
+											<a href='javascript:void(0)' onclick='sharebox_off_submit(<?php echo $userid;?>,<?php echo $ud;?>,<?php echo $ld;?>,1)'>Do Not Display Share Invite Again</a>
 
 										</div>
 									</div>
@@ -1273,8 +1274,8 @@ if($brw2['active'] == LOAN_REPAID)
 				</div><!--mid_strip closed -->
 				<div id="bottom_strip"></div><!--bottom_strip closed -->
 			</div><!--container closed -->
-		</div>		
-	</div>
+		</div>	<!-- /style="width:100%" -->	
+	</div> <!-- /shareform -->
  </body>
 <?php
 	}
@@ -1311,7 +1312,8 @@ if($brw2['active'] == LOAN_REPAID)
 			</tr>
 		</tbody>
 	</table>
-</div>
+</div> <!-- /donotforgive -->
+
 
 </div><!-- /span10 -->
 
