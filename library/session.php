@@ -8624,7 +8624,7 @@ function VMConfirmation($mentorid, $userid)
 		$res_BEmail=$database->getEmailB($userid);
 		$params['bname']=$res_BEmail['name'];
 		$params['link']=getUserProfileUrl($userid);
-		$emailsubject= $this->formMessage($lang['mailtext']['vm_confirmation_sub'], $params);
+		$emailsubject= $this->formMessage($lang['mailtext']['vm_confirmation_subject'], $params);
 		$emailmssg=$this->formMessage($lang['mailtext']['vm_confirmation'], $params);
 		$reply=$this->mailSendingHtml($From,'',$mentor_email , $emailsubject, '', $emailmssg, 0, $templet, 3);		
 	}
