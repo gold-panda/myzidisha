@@ -10373,10 +10373,13 @@ class genericClass
 
         {
 
-            $q="SELECT * FROM ".TBL_BORROWER.", ".TBL_LOANAPPLIC." WHERE ".$oftype." borrowers.userid=loanapplic.borrowerid AND loanapplic.adminDelete = ? ORDER BY RAND()";
+            if($type==2){
+            $limit='limit 0,1000';
+            }else{
+            $limit='';
+            }
 
-
-
+            $q="SELECT * FROM ".TBL_BORROWER.", ".TBL_LOANAPPLIC." WHERE ".$oftype." borrowers.userid=loanapplic.borrowerid AND loanapplic.adminDelete = ? ORDER BY RAND() $limit";
             $result=$db->getAll($q, array(0));
 
         }
