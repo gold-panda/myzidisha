@@ -1048,7 +1048,7 @@ if($brw2['active'] == LOAN_REPAID)
 			<?php	}
 
 				}	?>
-				
+
 			</div><!-- /bid-table -->
 	</div><!-- /row -->
 		
@@ -1634,6 +1634,14 @@ if($brw2['active'] == LOAN_REPAID)
 							</td>
 						</tr>
 						<?php if($showLoanDetail==1){ ?>
+						<tr>
+							<td><strong><?php echo $lang['loanstatn']['bid_close'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['loanstatn']['biding_close'] ?></span><span class='bottom'></span></span></a></strong></td>
+							<td><?php echo $bot ?></td>
+						</tr>
+						<tr height="15">
+							<td colspan="2">
+							</td>
+						</tr>
 						<tr>
 							<td style="width:250px"><strong><?php echo $lang['loanstatn']['requested'] ?>:</strong></td>
 							<td style="width:205px">USD <?php echo $damountX ?></td>
