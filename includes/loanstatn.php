@@ -77,6 +77,27 @@ else
 	});
 </script>
 
+
+<?php
+//social share modal box that displays upon completion of a loan bid
+$showShareBox=0;
+$userid = $session->userid;
+$sharebox_preference = $database->sharebox_preference($userid); //check if lender has selected not to display the sharebox anymore
+
+if((isset($_SESSION['lender_bid_success1']) || isset($_SESSION['lender_bid_success2']) || isset($_SESSION['shareEmailValidate'])) && $sharebox_preference != 1) {
+	$showShareBox=1;
+	if(isset($_SESSION['shareEmailValidate'])) {
+		$formbidpos=$_SESSION['shareEmailValidate'];
+	}	
+	if(isset($_SESSION['lender_bid_success1']))
+		$showShareBox=1;
+	elseif(isset($_SESSION['lender_bid_success2']))
+		$showShareBox=2;
+	else
+		$showShareBox=$formbidpos;
+} ?>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 	$('#busi_desc_org').click(function() {
@@ -129,7 +150,7 @@ else
 	$('#viewassignedmember').click(function() {
 		$('#viewassignedmember_desc').slideToggle("slow");
 	});
-	<?php if($showShareBox) { ?>
+	<?php if($showShareBox != 0) { ?>
 		jQuery.facebox({ div: '#shareForm' });
 	<?php } ?>
 });
@@ -176,25 +197,8 @@ function showBox(box)
 
 <div class="span16" style="position:relative;">
 
+
 <?php
-//social share modal box that displays upon completion of a loan bid
-$showShareBox=0;
-$userid = $session->userid;
-$sharebox_preference = $database->sharebox_preference($userid); //check if lender has selected not to display the sharebox anymore
-
-if((isset($_SESSION['lender_bid_success1']) || isset($_SESSION['lender_bid_success2']) || isset($_SESSION['shareEmailValidate'])) && $sharebox_preference != 1) {
-	$showShareBox=1;
-	if(isset($_SESSION['shareEmailValidate'])) {
-		$formbidpos=$_SESSION['shareEmailValidate'];
-	}	
-	if(isset($_SESSION['lender_bid_success1']))
-		$showShareBox=1;
-	elseif(isset($_SESSION['lender_bid_success2']))
-		$showShareBox=2;
-	else
-		$showShareBox=$formbidpos;
-} 
-
 //lender loan forgiveness opt-in or opt-out 
 $loanid=$_GET['l'];
 $ud=$_GET['u'];
@@ -1080,7 +1084,7 @@ if($brw2['active'] == LOAN_REPAID)
 }
 ?>
 <?php
-	if($showShareBox)
+	if($showShareBox != 0)
 	{	
 		if($stilneed > 0) {
 			$bidmsg ='The applicant will have the opportunity to accept all bids and receive<br /> his or her disbursement once this loan is fully funded.';
