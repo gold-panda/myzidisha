@@ -18,12 +18,10 @@
 			offset: 0
 		});
 
-			
 	});
 </script>
 <?php
 include_once("library/session.php");
-include_once("./editables/withdraw.php");
 $path=	getEditablePath('withdraw.php');
 include_once("editables/".$path);
 ?>
@@ -32,14 +30,19 @@ include_once("editables/".$path);
 	@import url(library/tooltips/btnew.css);
 </style>
 <div class='span12'>
+
+
+<div align='left' class='static'><h1><?php echo $lang['withdraw']['add_withdraw_funds'] ?></h1></div>
+	
+
 <?php
 if(isset($_SESSION['success'])){
-	echo "<div align='center'><font color=green><b>Thank you! Your payment has been processed and funds credited to your lender account.  If you made a donation, we have sent a receipt which may be used for tax purposes to your registered email address.</b></font></div>";
+	echo "<div align='center'><font color=green><b>Thank you! Your payment has been processed and funds credited to your lender account.</b></font></div>";
 	unset($_SESSION['success']);
 }
 if(!$session->checkLogin())
 {
-	echo "Please login to add or withdraw funds";
+	echo "Please log in to add or withdraw funds";
 	exit;
 }
 if(isset($_GET['err']) && $_GET['err'] >0)
@@ -48,6 +51,17 @@ if(isset($_GET['err']) && $_GET['err'] >0)
 	echo "<font color='white'>".$errorArray[$_GET['err']]."</font>";
 	echo "</td></tr></table>";
 }
+if(isset($_GET['v']))
+{
+	$v = $_GET['v'];
+	$error = $_SESSION['error_array']['cardRedeemError'];
+	if($v == 0)
+		echo "<font color='red'>".$error."</font><br/><br/>";
+	if($v == 1)
+		echo "<font color='green'>A gift card of USD ".$_GET['amt']." has been credited to your lender account.</font><br/><br/>";
+}	
+
+
 if($session->userlevel == LENDER_LEVEL)
 {
 	$country=$database->getCountryCodeById($session->userid);
@@ -70,14 +84,9 @@ if($session->userlevel == LENDER_LEVEL)
 		  echo "</div>";
 	}
 ?>
-	<div align='left' class='static'><h1><?php echo $lang['withdraw']['add_withdraw_funds'] ?></h1></div>
-	<p><?php echo $lang['withdraw']['total_avl_amt'].": USD ".number_format($availAmt, 2, ".", ","); ?></p>
-	<!--
-<p><?php echo $lang['withdraw']['amt_invested'].": USD ".number_format($investAmtDisplay, 2, ".", ","); ?></p>
-	-->
+	<p><br/><strong><?php echo $lang['withdraw']['total_avl_amt'].": USD ".number_format($availAmt, 2, ".", ","); ?></strong></p>
 	<p>&nbsp;</p>
 	<h3 class="subhead"><?php echo $lang['withdraw']['add_funds'] ?></h3>
-	<!-- <p><?php echo $lang['withdraw']['add_fund_below'];?></p> -->	
 	<p>&nbsp;</p>
 <?php
 	$j=1;
@@ -117,21 +126,6 @@ if($session->userlevel == LENDER_LEVEL)
 							</span>
 						</div>
 						<br/>
-
-	
-
-
-
-
-
-
-
-
-
-
-
-	
-
 						</a></td>
 						<td><input type="text" size=5 name="paypal_donation" id="paypal_donation" value="15.00"></td>
 					</tr>
@@ -229,15 +223,6 @@ if($session->userlevel == LENDER_LEVEL)
 
 	<br>
 	<form action="updateprocess.php" method="post">
-<?php		if(isset($_GET['v']))
-		{
-			$v = $_GET['v'];
-			$error = $_SESSION['error_array']['cardRedeemError'];
-			if($v == 0)
-				echo "<font color='red'>*** ".$error."</font><br/><br/>";
-			if($v == 1)
-				echo "<font color='green'>Congratulations! USD ".$_GET['amt']." has been credited to your lender account.</font><br/><br/>";
-		}	?>
 		<table class="detail">
 			<tbody>
 				<tr>
@@ -251,10 +236,6 @@ if($session->userlevel == LENDER_LEVEL)
 		</table>
 	</form>
 
-
-
-
-
 	<p>&nbsp;</p>
 
 <!-- withdrawal disabled for userid 14830 per email instructions Dec 28, 2013 -->
@@ -263,20 +244,15 @@ if($session->userlevel == LENDER_LEVEL)
 
 	<h3 class="subhead"><?php echo $lang['withdraw']['withdraw_fund'] ?></h3>
 <br />
-	<p><?php echo $lang['withdraw']['total_avl_amt'].": USD ".number_format($availAmt, 2, ".", ","); ?></p><br />
-
+	
 <?php
-	if($country != COUNTRY)
-	{
-		$withdrawAmt = $database->getwithdraw($session->userid);
-	}
-	else
-	{
-		$withdrawAmt = $database->getpaysimplewithdraw($session->userid);
-	}
-	if($country != COUNTRY)
+if($country != COUNTRY)
 	{	?>
 		<form action="updateprocess.php" method="post">
+
+			<p><?php echo $lang['withdraw']['withdraw_paypal']; ?></p><br />
+			<p><?php echo $lang['withdraw']['total_avl_amt'].": USD ".number_format($availAmt, 2, ".", ","); ?></p><br />
+
 			<table class='detail'>
 				<tbody>
 					<tr>
@@ -305,6 +281,10 @@ if($session->userlevel == LENDER_LEVEL)
 	else
 	{	?>
 		<form action="updateprocess.php" method="post">
+
+			<p><?php echo $lang['withdraw']['withdraw_check']; ?></p><br />
+			<p><?php echo $lang['withdraw']['total_avl_amt'].": USD ".number_format($availAmt, 2, ".", ","); ?></p><br />
+
 			<table class='detail'>
 				<tbody>
 					<tr>
@@ -407,7 +387,6 @@ else if($session->userlevel  == ADMIN_LEVEL )
 	if($paymentselect == "paypal")
 	{
 		$set=$database->getwithdraw();
-		//$set=$database->getotherwithdraw();
 	}
 	else
 	{
@@ -449,7 +428,6 @@ else if($session->userlevel  == ADMIN_LEVEL )
 		<?php	foreach($set as $row )
 				{	
 					$userid=$row['userid'];
-//added by Julia 24 Oct 2013
 					$Detail=$database->getEmail($userid);
 					$city=$Detail['City'];
 					$country =$Detail['Country'];								$email=$Detail['email'];

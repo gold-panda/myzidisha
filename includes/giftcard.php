@@ -1,14 +1,17 @@
 
 <script type="text/javascript" src="includes/scripts/giftajax.js?q=<?php echo RANDOM_NUMBER ?>"></script>
 <script src="includes/scripts/jquery.custom.min.js" type="text/javascript"></script>
+<script type="text/javascript">$(document).ready(function() {
+	$(".giftcard_thumbnail label").live("click", function () {
+	$(this).parents("div").parents(".giftcard_row").find(".giftcard_thumbnail").removeClass("selected");
+  	$(this).parents("div").toggleClass("selected");
+});
+	$(".giftcard_thumbnail:first").addClass("selected");
+});</script>
 <style type="text/css">
 	@import url(library/tooltips/btnew.css);
 </style>
  <?php include_once("library/session.php");   /*   created by chetan   */
-
-  /* please do not change value of any id  it is recommended   */
-
-
  include_once("./editables/admin.php");
  include_once("./editables/giftcard.php");
  $path=	getEditablePath('giftcard.php');
@@ -25,16 +28,64 @@ else{
  if(1)
 {
 ?>
-<div class="span12">
+<div class="span15">
 	<input type='hidden' name='exp_date' id='exp_date' value='<?php echo $exp_date; ?>'>
-	<!--<div align='right' style='float:right; margin-left:10px;'><a href='gift_card_sample.html' target='_blank'>View Sample Card</a></div> -->
+	
 	<div align='left' class='static'><h1><?php echo $lang['giftcard']['gift_cards'] ?></h1></div>
-	<!--<div align='left'><i><?php echo $lang['giftcard']['notice'] ?></i></div><br>-->
-	<div align='left'> <?php echo $lang['giftcard']['giftcard_text']?><br/><br/><a href="<?php echo $RequestUrl.'#giftcard_terms'; ?>" rel="facebox"><?php echo $lang['giftcard']['terms_use']; ?></a></div>
+	
+	<div align='left'><br/><?php echo $lang['giftcard']['giftcard_text']?><br/><br/></div>
+	
 	<form name='giftform' id='giftform' action='updateprocess.php' method='post'>
-	<div id='container' child='1'>
-		<div id='form-1' style="margin-top:20px;">
-			<div align='center' style='margin-right: 20px; margin-left: 10px; margin-top:10px;font-size:15px'><strong><?php echo $lang['giftcard']['purchase_gift_card'] ?></strong></div><br/>
+	<div id='container' child='1' style="width: auto !important;">
+		<div id='form-1' class='giftcard_row' style="margin-top:20px;">
+			<div style='margin-right: 20px; margin-left: 10px; margin-top:30px;font-size:20px'>
+				<strong>Step One: Select An Image</strong>
+			</div><br/><br/>
+					<tr>
+						<td>
+							<div id="giftcard-4-1" class="giftcard_thumbnail">
+								<label for="giftcard_template_radio-4-1" ><img src="images/gift_card/image4.png"/></label>
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-4-1" value="image4" checked="checked" type="radio">
+							</div>
+							<div id="giftcard-3-1" class="giftcard_thumbnail">
+								<label for="giftcard_template_radio-3-1" ><img src="images/gift_card/image3.png"/></label>
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-3-1" value="image3" checked="checked" type="radio">
+							</div>
+							<div id="giftcard-2-1" class="giftcard_thumbnail">
+								<label for="giftcard_template_radio-2-1" ><img src="images/gift_card/image2.png"/></label>
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-2-1" value="image2" checked="checked" type="radio">
+							</div>
+							<div id="giftcard-5-1" class="giftcard_thumbnail">
+								<label for="giftcard_template_radio-5-1" ><img src="images/gift_card/image5.png"/></label>
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-5-1" value="image5" checked="checked" type="radio">
+							</div>
+							<div id="giftcard-6-1" class="giftcard_thumbnail">
+								<label for="giftcard_template_radio-6-1" ><img src="images/gift_card/image6.png"/></label>
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-6-1" value="image6" checked="checked" type="radio">
+							</div>
+							<div id="giftcard-7-1" class="giftcard_thumbnail">
+								<label for="giftcard_template_radio-7-1" ><img src="images/gift_card/image7.png"/></label>
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-7-1" value="image7" checked="checked" type="radio">
+							</div>
+							<div id="giftcard-8-1" class="giftcard_thumbnail">
+								<label for="giftcard_template_radio-8-1" ><img src="images/gift_card/image8.png"/></label>
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-8-1" value="image8" checked="checked" type="radio">
+							</div>
+							<div id="giftcard-9-1" class="giftcard_thumbnail">
+								<label for="giftcard_template_radio-9-1" ><img src="images/gift_card/image9.png"/></label>
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-9-1" value="image9" checked="checked" type="radio">
+							</div>
+							<br style="clear:left;" />
+						</td>
+						<td width='10%'><div align='right' id='delete-1' style='margin-right: 20px;'><button class='btn' type="button" id='delete-1' onClick='javascript:deletediv(this.id);'><?php echo $lang['giftcard']['cancel'] ?></button></div></td>
+					</tr>
+
+
+
+
+			<div style='margin-right: 20px; margin-left: 10px; margin-top:30px;font-size:20px'><strong>
+				<br/><br/>Step Two: Customize Gift Card</strong>
+			</div><br/>
 			<div align='right' style='margin-right: 20px; margin-top:10px;float:right'><a id='preview-1' onClick='javascript:preview(this.id);' style='cursor:pointer'><u><?php echo $lang['giftcard']['preview_gift_card'] ?></u></a></div>
 			<table class="detail">
 				<tbody>
@@ -42,6 +93,7 @@ else{
 						<td width='20%'style='padding-left:10px'><label for="giftamt-1"><?php echo $lang['giftcard']['amount'] ?>:</label></td>
 						<td>
 							<select name="giftamt[]" id="giftamt-1" onChange='javascript:setGiftAmt();'>
+								<option value="1">$1</option>
 								<option value="25">$25</option>
 								<option value="50">$50</option>
 								<option value="75">$75</option>
@@ -117,12 +169,8 @@ else{
 }
 else
 {
-	echo "<div class='span12'>";
-	echo $lang['admin']['allow'];
-	echo "<br />";
-	echo $lang['admin']['Please'];
-	echo "<a href='index.php'>click here</a>".$lang['admin']['for_more']. "<br />";
-	echo "</div>";
+	echo "Please log in to continue.
+	";
 }	?>
 <?php 
 include_once("./editables/order-tnc.php");

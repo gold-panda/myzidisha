@@ -10,6 +10,10 @@
 		$order_detail = $database->GetOrderDetailByCardCode($id,$card_code);
 		if($order_detail)
 		{
+			$template = $order_detail['template'];
+			if($template == null || $template == 0)
+				{ $template = 1; }
+			$template = "card" . $template;
 			$amt = number_format($order_detail['card_amount']);
 			$to = $order_detail['to_name'];
 			$from = $order_detail['from_name'];
@@ -21,17 +25,19 @@
 		}
 		else
 		{
-			echo "Sorry, No Gift Card available. Please contact to Zidisha.";
+			echo "There was an error in processing this transaction. Please reload the page and try again.";
 			$flag2=0;
 		}
 	}
 	else if(isset($_GET['amt']))
 	{
-		$amt = $_GET['amt'];
+		$template = stripslashes($_GET['template']);
+		$template = str_replace("image", "card", $template);
+		$amt = stripslashes($_GET['amt']);
 		$to = stripslashes($_GET['to']);
 		$from =stripslashes($_GET['from']);
 		$msg = stripslashes(nl2br(urldecode($_GET['msg'])));
-		$exp_date=$_GET['exp_date'];
+		$exp_date=stripslashes($_GET['exp_date']);
 		$rdm_code = "XXX-XXX-XXX-XXX";
 		
 	}	
@@ -40,7 +46,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Zidisha Gift Certificate</title>
+<title>Zidisha Gift Card</title>
 <style type="text/css">
 @media print{.show{display:none; text-decoration:none;}}
 @media screen{.show{display:block; text-decoration:none;}}
@@ -56,14 +62,14 @@ margin-left:9px;
 <body>
 <?php if($flag2==1)
 {
-echo "<img width='725' src='images/gift_card/card1.png' />";
+echo "<img width='725' src='images/gift_card/".$template.".png' />";
 
 if($flag == 1)
 {
 	echo "<div style='position: absolute; top: 20px;  left: 750px;'><button type='button' onClick='javascript:window.print();' class='print show'>Print Gift Card</button></div>";
 } 
 }?>
-<div style="position: absolute; top: 77px; left: 590px; font-size: 42px; color: #0095F2; "><?php echo $amt; ?></div>
+<div style="position: absolute; top: 77px; left: 590px; font-size: 42px; color: #00AEEF; "><?php echo $amt; ?></div>
 <div style="position: absolute; top: 128px; left: 530px; text-align:left; font-size: 19px;"><?php echo $to; ?></div>
 <div style="position: absolute; top: 162px; left: 530px; text-align:left; font-size: 19px;"><?php echo $from; ?></div>
 <div style="position: absolute; top: 210px; left: 472px; width: 245px; text-align:justify;font-size: 15px;"><?php echo nl2br(htmlentities(strip_tags($msg))); ?></div>

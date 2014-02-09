@@ -21251,13 +21251,13 @@ class genericClass
 
     }
 
-    function setGiftTransaction($userid,$order_type, $order_cost, $total_cost, $cards, $recipients, $tos, $froms, $msgs, $senders, $date, $ip)
+    function setGiftTransaction($userid,$template,$order_type, $order_cost, $total_cost, $cards, $recipients, $tos, $froms, $msgs, $senders, $date, $ip)
 
     {
 
         global $db;
 
-        Logger_Array("cvError",$userid,$order_type, $order_cost, $total_cost, $cards, $recipients, $tos, $froms, $msgs, $senders, $date, $ip);
+        Logger_Array("cvError",$userid,$template,$order_type, $order_cost, $total_cost, $cards, $recipients, $tos, $froms, $msgs, $senders, $date, $ip);
 
         $exp_date=strtotime ('+1 year', $date);
 
@@ -21307,13 +21307,17 @@ class genericClass
 
                 $tos[$i] = stripslashes(sanitize($tos[$i]));
 
+                $template[$i] = stripslashes(sanitize($template[$i]));
+
+                $template[$i] = str_replace("image", "", $template[$i]);
+
                 $froms[$i] = stripslashes(sanitize($froms[$i]));
 
                 $msgs[$i] = nl2br(stripslashes(strip_tags(trim($msgs[$i]))));
 
-                $p="INSERT INTO ! (txn_id,order_type,card_amount,recipient_email,to_name,from_name,message,sender,date,exp_date,card_code) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+                $p="INSERT INTO ! (txn_id,template,order_type,card_amount,recipient_email,to_name,from_name,message,sender,date,exp_date,card_code) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 
-                $res2=$db->query($p, array('gift_cards',$id,$order_type,$order_cost[$i],$recipients[$i],$tos[$i], $froms[$i], $msgs[$i], $senders[$i], $date,$exp_date, $card_code));
+                $res2=$db->query($p, array('gift_cards',$id,$template[$i],$order_type,$order_cost[$i],$recipients[$i],$tos[$i], $froms[$i], $msgs[$i], $senders[$i], $date,$exp_date, $card_code));
 
                 Logger_Array("cvError_res2",$res2);
 

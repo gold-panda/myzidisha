@@ -2,13 +2,14 @@ function preview(preview_id)
 {	
 	var pos = preview_id.indexOf("-");
 	var no = preview_id.substr(pos+1,preview_id.length-1);
+	var template = $("#form-" + no).find(".giftcard_thumbnail input[type='radio']:checked").val();
 	var amt=$('#giftamt-'+no).val();
 	var toName = $('#toName-'+no).val();
 	var fromName = $('#fromName-'+no).val();
 	var msg = $('#msg-'+no).val();		
 	var exp_date = $('#exp_date').val();
 	var base = GetBase();
-	url = base+"cardimage.php?amt="+amt+"&to="+toName+"&from="+fromName+"&msg="+escape(msg)+"&exp_date="+exp_date;
+	url = base+"cardimage.php?template="+template+"&amt="+amt+"&to="+toName+"&from="+fromName+"&msg="+escape(msg)+"&exp_date="+exp_date;
 	window.open(url, "_blank");
 	
 }
@@ -108,7 +109,7 @@ $(document).ready(function(){
 			$('#recmaillbl-'+i).hide();		
 			$('#recmailerror-'+i).hide();
 		}		
-														/*  add jquery start */
+		/*  add jquery start */
 		$('#add').click(function() {			
 			var container = $("#container");				
 			var line = $('#form-1').clone().attr("id", "form")
@@ -131,7 +132,7 @@ $(document).ready(function(){
 			line.find(":radio").each(function() { 
 			   $(this).attr("id", $(this).attr("id").substr(0,$(this).attr("id").length-2) + "-" + lineCount);
 			   $(this).attr("name", $(this).attr("name").substr(0,$(this).attr("name").length-2) + "-" + lineCount);
-			   $(this).val("");
+			   //$(this).val("");
 			});
 			line.find("div").each(function() { 
 			   $(this).attr("id", $(this).attr("id").substr(0,$(this).attr("id").length-2) + "-" + lineCount);       
@@ -180,7 +181,7 @@ $(document).ready(function(){
 
 
 		$('#tabs-1').click(function() {
-			var var_name = $("input[@name='email_print_radio-1']:checked").val();	
+			var var_name = $("input[name='email_print_radio-1']:checked").val();	
 			var count = parseInt($("#container").attr("child"));		
 			
 			if(var_name=='email')

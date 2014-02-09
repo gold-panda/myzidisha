@@ -124,7 +124,8 @@ You have a new message on your Zidisha loan page.<br/><br/>
 //gift card receipt
 $lang['mailtext']['gift_order_subject'] = 'Your Zidisha Gift Card Order Confirmation';
 
-$lang['mailtext']['gift_order_msg_header'] = 'Thanks for your gift card purchase! Please review your order details below : <br/><br/>';
+$lang['mailtext']['gift_order_msg_header'] = '<center>Email not displaying correctly?  <a href="%card_link%">View it in your browser.</a></center><br/><br/>'.
+'Thanks for your gift card purchase! Please review your order details below : <br/><br/>';
 
 $lang['mailtext']['gift_order_msg_body'] = 'Order Placed on : %date% <br/>'.
 'Gift Card Amount : %amount% <br/>'.
@@ -140,10 +141,11 @@ $lang['mailtext']['gift_order_msg_footer'] = 'If you have any questions or conce
 
 
 //gift card email to recipient
-$lang['mailtext']['gift_card_subject'] = 'You received a Zidisha gift card !';
+$lang['mailtext']['gift_card_subject'] = 'Zidisha gift card from %from_name%';
 
-$lang['mailtext']['gift_card_msg_body'] = "If you do not yet have a Zidisha lender account, you may redeem this gift card by entering the redemption code in the <a href='%link_1%' target='_blank'>New Account</a> page at our website.<br/><br/>".
-"If you are already registered as a lender, you may enter the redemption code in the <a href='%link_2%' target='_blank'>Add or Withdraw Funds</a> page when logged in to credit the gift card value to your account.<br/><br/>".
+$lang['mailtext']['gift_card_anonymous_subject'] = 'You received a Zidisha gift card';
+
+$lang['mailtext']['gift_card_msg_body'] = "You may redeem this card by entering the redemption code in the <a href='%link_2%' target='_blank'>Add or Withdraw Funds</a> page when logged in.<br/><br/>".
 "If you have any questions or concerns, please contact us by replying to this email at service@zidisha.org. Thanks and happy lending!<br/><br/>".
 "The Zidisha Team<br/>";
 

@@ -954,7 +954,12 @@ class updateProcess
 		global $session;
 		//$_POST = sanitize_custom($_POST);
 		$cards = count($_POST['giftamt']);
-		$result=$session->giftCardOrder($_POST['email_print_radio-1'], $_POST['giftamt'], $cards, $_POST['recmail'], $_POST['toName'], $_POST['fromName'], $_POST['msg'], $_POST['sendmail'], time());
+		$template = array();
+		foreach ($_POST as $key => $value)
+		{
+		    if(strpos($key, "giftcard_template_radio") !== false) { array_push($template, $value); }
+		}
+		$result=$session->giftCardOrder($template, $_POST['email_print_radio-1'], $_POST['giftamt'], $cards, $_POST['recmail'], $_POST['toName'], $_POST['fromName'], $_POST['msg'], $_POST['sendmail'], time());
 	}
 	function redeemCard()
 	{

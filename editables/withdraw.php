@@ -1,14 +1,13 @@
 <?php 
 $lang['withdraw']['add_withdraw_funds'] = 'Add or Withdraw Funds';
 $lang['withdraw']['add_funds'] = 'Add Funds';
-$lang['withdraw']['total_avl_amt']='Balance available for lending or withdrawal';
-$lang['withdraw']['amt_invested']='Amount invested in different active bids';
+$lang['withdraw']['total_avl_amt']='Balance available';
+$lang['withdraw']['amt_invested']='Amount invested in active bids';
 $lang['withdraw']['rdn_gift_card']='Redeem Gift Card';
-$lang['withdraw']['add_fund']='<b>Please enter the US Dollar amount you wish to upload to your lender account.<br/><br/>Funds may be uploaded here with a Visa, MasterCard or Discover card. The transaction will be processed by USA ePay, a secure third-party merchant account service. The full amount uploaded will be immediately credited to your lender account.</b>';
-$lang['withdraw']['add_fund_below']='<i>IMPORTANT NOTICE TO LENDERS RESIDING OUTSIDE THE UNITED STATES: Zidisha processes cash payouts by check for United States residents, and through PayPal for non-United States residents. Lenders residing outside the United States must be able to accept PayPal payments in order to withdraw funds from their lender accounts.</i>';
-$lang['withdraw']['option1']='Upload Funds Via ACH Debit (E-Check)';
-$lang['withdraw']['upload_desc1']='You may upload funds via e-check or an automated debit from your US bank account, and the amount uploaded will be credited instantly to your lender account.  The payment will be processed by Check Gateway, a secure third-party payment gateway.';
 $lang['withdraw']['upload_amt']='Please enter the US Dollar amount you<br/> wish to upload to your lender account';
+$lang['withdraw']['withdraw_paypal']='You may request withdrawal of your available balance here. The requested withdrawal amount will be transferred to your PayPal account.';
+$lang['withdraw']['withdraw_check']='You may request withdrawal of your available balance here. We will mail a check for the amount requested to the address you specify below.';
+$lang['withdraw']['next']='Next';
 $lang['withdraw']['donation_amt']='Optional Donation to Zidisha\'s Operating Costs';
 $lang['withdraw']['next']='Next';
 $lang['withdraw']['tot_amt']='Total amount to be charged to your account';

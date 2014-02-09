@@ -1,6 +1,9 @@
 <?php
 $lang['news']['zidisha_in_news']='Zidisha in the News';
 
+$lang['news']['techrep']='TechRepublic, February 6, 2014';
+$lang['news']['techrep_pdf']='10 things to know about how microfinancing is using tech to empower global entrepreneurs';
+
 $lang['news']['tc']='TechCrunch, January 23, 2014';
 $lang['news']['tc_pdf']='Zidisha Launches A Kickstarter-Style Micro-Lending Platform For Low-Income Entrepreneurs In Developing Countries';
 

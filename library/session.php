@@ -5033,7 +5033,7 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			}
 		}
 	}
-	function giftCardOrder($order_type, $order_cost, $cards, $recipients, $tos, $froms, $msgs, $senders, $date)
+	function giftCardOrder($template, $order_type, $order_cost, $cards, $recipients, $tos, $froms, $msgs, $senders, $date)
 	{
 		global $database, $session;
 		traceCalls(__METHOD__, __LINE__);
@@ -5044,14 +5044,14 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 		{
 			$total_cost += $order_cost[$i];
 		}
-		$res = $database->setGiftTransaction($userid,$order_type, $order_cost, $total_cost, $cards, $recipients, $tos, $froms, $msgs, $senders, $date, $ip);
+		$res = $database->setGiftTransaction($userid,$template, $order_type, $order_cost, $total_cost, $cards, $recipients, $tos, $froms, $msgs, $senders, $date, $ip);
 		if($res)
 		{
 			header("Location: index.php?p=27");
 		}
 		else
 		{
-			echo "There was some problem please try again <a href='microfinance/gift-cards.html'>click here</a>";
+			echo "There was an error processing this transaction. Please contact service@zidisha.org for assistance.";
 		}
 	}
 	function redeemCard($card_code, $id=0)
@@ -6748,22 +6748,22 @@ function forgiveReminder(){
 				if($flag)
 				{
 					$card_info = array();
-					$card_info['card_amount'] = number_format($row['card_amount']);
-					$card_info['to_name'] = $row['to_name'];
-					$card_info['from_name'] = $row['from_name'];
-					$card_info['message'] = $row['message'];
 					$card_info['card_code'] = $row['card_code'];
-					$card_info['exp_date'] = date ( 'F j, Y', $row['exp_date']);
-					$card_info['card_link'] = SITE_URL."cardimage.php?id_no=".$row['txn_id']."&card_code=".$row['card_code'];
+					$card_info['image_src'] = SITE_URL."cardimage.php?id_no=".$row['txn_id']."&card_code=".$row['card_code'];
 					$From = EMAIL_FROM_ADDR;
-					$emailsubject = $lang['mailtext']['gift_card_subject'];
-					$templet="editables/email/giftmail.html";
+					$templet="editables/email/hero.html";
 					$To = "";
 					$params['link_1'] = SITE_URL."index.php?p=1&sel=2";
 					$params['link_2'] = SITE_URL."index.php?p=17";
+					if(!empty($row['from_name']))
+					{
+						$params['from_name'] = $row['from_name'];
+						$emailsubject = $this->formMessage($lang['mailtext']['gift_card_subject'], $params);
+					}else{
+						$emailsubject = $this->formMessage($lang['mailtext']['gift_card_anonymous_subject'], $params);
+					}
 					$emailmssg = $this->formMessage($lang['mailtext']['gift_card_msg_body'], $params);
-																								/*  0 for no attachment, 1 for HTML mail */
-					$reply=$this->mailSendingHtml($From, $To, $row['recipient_email'], $emailsubject, '', $emailmssg,0,$templet,1,INVITE_TO_JOIN_TAG,$card_info);
+					$reply=$this->mailSendingHtml($From, $To, $row['recipient_email'], $emailsubject, '', $emailmssg,0,$templet,3,INVITE_TO_JOIN_TAG,$card_info);
 					if($reply)
 						Logger_Array("Gift Card mail sent",'email, To', $row['recipient_email'], $To);
 				}

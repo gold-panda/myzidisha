@@ -3090,3 +3090,25 @@ height: 25px;
 padding-left: 3px;
 padding-top: 3px;
 }
+
+/* thumbnail images in gift card order form */
+.giftcard_thumbnail { 
+  float:left; 
+}
+.giftcard_thumbnail label { 
+  width: auto !important;
+}
+.giftcard_thumbnail img { 
+  width: 175px; 
+  border: 4px solid #666;
+  border-radius: 25px;
+  margin-right: 6px;
+  margin-left: 6px;
+  margin-bottom: 6px;
+}
+.giftcard_thumbnail input[type="radio"] { 
+  display: none; 
+}
+.giftcard_thumbnail img:hover, .giftcard_thumbnail.selected img {
+  border-color: #0099FF;
+}
