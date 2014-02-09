@@ -124,8 +124,7 @@ You have a new message on your Zidisha loan page.<br/><br/>
 //gift card receipt
 $lang['mailtext']['gift_order_subject'] = 'Your Zidisha Gift Card Order Confirmation';
 
-$lang['mailtext']['gift_order_msg_header'] = '<center>Email not displaying correctly?  <a href="%card_link%">View it in your browser.</a></center><br/><br/>'.
-'Thanks for your gift card purchase! Please review your order details below : <br/><br/>';
+$lang['mailtext']['gift_order_msg_header'] = 'Thanks for your gift card purchase! Please review your order details below : <br/><br/>';
 
 $lang['mailtext']['gift_order_msg_body'] = 'Order Placed on : %date% <br/>'.
 'Gift Card Amount : %amount% <br/>'.
@@ -145,9 +144,21 @@ $lang['mailtext']['gift_card_subject'] = 'Zidisha gift card from %from_name%';
 
 $lang['mailtext']['gift_card_anonymous_subject'] = 'You received a Zidisha gift card';
 
-$lang['mailtext']['gift_card_msg_body'] = "You may redeem this card by entering the redemption code in the <a href='%link_2%' target='_blank'>Add or Withdraw Funds</a> page when logged in.<br/><br/>".
-"If you have any questions or concerns, please contact us by replying to this email at service@zidisha.org. Thanks and happy lending!<br/><br/>".
-"The Zidisha Team<br/>";
+$lang['mailtext']['gift_card_header'] = '%from_name% has given you a Zidisha gift card.';
+
+$lang['mailtext']['gift_card_anonymous_header'] = 'You received a Zidisha gift card.';
+
+$lang['mailtext']['gift_card_msg_body'] = 
+"<strong>%to_name%<br/><br/>
+%message%<br/><br/>
+%from_name%</strong><br/><br/><br/>
+Use this gift card to make a loan to a small business owner from around the world.
+Communicate directly with him or her as the business you funded grows. Then relend your funds to another individual of your choice, spreading opportunity while getting to know some of the world's most remarkable entrepreneurs.
+<br/><br/>
+Amount: $%card_amount%<br/><br/>
+Redemption Code: %card_code%<br/><br/>
+<i>Redeem this card by making a loan <a href='%link%'>here</a>. You may enter the redemption code in the Lending Cart after choosing an entrepreneur to support.</i>
+";
 
 
 //lender invite email for specific loan

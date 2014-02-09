@@ -28,6 +28,9 @@ var google_conversion_value = 0;
 			stayOnContent: true,
 			offset: 0
 		});
+	$('#redeem').click(function() {
+		$('#redeem_desc').slideToggle("slow");
+		});
 });
 </script>
 <script type="text/javascript" src="includes/scripts/generic.js?q=<?php echo RANDOM_NUMBER ?>"></script>
@@ -249,7 +252,40 @@ if(!empty($Lendingcart) && $cont == 0 ) {
 					<td ><strong>USD <span id="tot_amt_cart"><?php echo number_format($totAmt, 2, ".", ",");?></span></strong></td>
 					<td></td>
 				</tr>
+
 				<tr height="60px"></tr>
+
+				<?php
+				if(isset($_GET['v']))
+				{
+					$v = $_GET['v'];
+					$error = $_SESSION['error_array']['cardRedeemError'];
+					if($v == 0)
+						echo "<font color='red'>".$error."</font><br/><br/>";
+					if($v == 1)
+						echo "<font color='green'>A gift card of USD ".$_GET['amt']." has been credited to your lender account.</font><br/><br/>";
+				}	?>
+
+			
+					<tr>
+						<td colspan="3">
+							<div id="redeem" style="cursor:pointer;" ><a>Redeem Gift Card</a></div>
+						</td>
+					</tr>
+				<div id="redeem_desc" style="display:none">
+					<form action="updateprocess.php" method="post">
+						<tr>
+							<td>Enter Gift Card Code:</td>
+							<td><input type="text" name="card_code" value="<?php echo $form->value("card_code"); ?>"></td>
+							<td><input type="hidden" name="redeemCard" id="redeemCard">
+							<input type="hidden" name="user_guess" value="<?php echo generateToken('redeemCard'); ?>"/>
+							<input class='btn' type="submit" value="Submit"></td>
+						</tr>
+					</form>
+				</div>
+
+				<tr height="60px"></tr>
+	
 				<tr>
 					<td>Payment method(s):</td>
 					<td ></td>

@@ -970,12 +970,12 @@ class updateProcess
 		{
 			$amt = $database->GetGiftCardAmount($_POST['card_code']);
 			$amt = number_format($amt, 2, '.', ',');
-			header("Location: index.php?p=17&v=1&amt=$amt");
+			header("Location: index.php?p=75&v=1&amt=$amt");
 		}
 		else
 		{
 			$_SESSION['error_array'] = $form->getErrorArray();
-			header("Location: index.php?p=17&v=0");
+			header("Location: index.php?p=75&v=0");
 		}
 	}
 	function donate_card()

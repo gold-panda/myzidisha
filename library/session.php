@@ -6747,23 +6747,30 @@ function forgiveReminder(){
 				}
 				if($flag)
 				{
-					$card_info = array();
-					$card_info['card_code'] = $row['card_code'];
-					$card_info['image_src'] = SITE_URL."cardimage.php?id_no=".$row['txn_id']."&card_code=".$row['card_code'];
+					$template = $row['template'];
+					if ($template > 1){
+						$params['image_src'] = SITE_URL."images/gift_card/image".$template.".png";
+					}else{
+						$params['image_src'] = "images/gift_card/combined_img.png";
+					}
 					$From = EMAIL_FROM_ADDR;
 					$templet="editables/email/hero.html";
-					$To = "";
-					$params['link_1'] = SITE_URL."index.php?p=1&sel=2";
-					$params['link_2'] = SITE_URL."index.php?p=17";
+					$params['to_name'] = $row['to_name'].",";
+					$params['from_name'] = $row['from_name'];
+					$params['message'] = $row['message'];
+					$params['card_code'] = $row['card_code'];
+					$params['card_amount'] = number_format($row['card_amount']);
+					$params['link'] = SITE_URL."microfinance/lend.html";
 					if(!empty($row['from_name']))
 					{
-						$params['from_name'] = $row['from_name'];
+						$header = $this->formMessage($lang['mailtext']['gift_card_header'], $params);
 						$emailsubject = $this->formMessage($lang['mailtext']['gift_card_subject'], $params);
 					}else{
-						$emailsubject = $this->formMessage($lang['mailtext']['gift_card_anonymous_subject'], $params);
+						$header = $lang['mailtext']['gift_card_anonymous_header'];
+						$emailsubject = $lang['mailtext']['gift_card_anonymous_subject'];
 					}
 					$emailmssg = $this->formMessage($lang['mailtext']['gift_card_msg_body'], $params);
-					$reply=$this->mailSendingHtml($From, $To, $row['recipient_email'], $emailsubject, '', $emailmssg,0,$templet,3,INVITE_TO_JOIN_TAG,$card_info);
+					$reply=$this->mailSendingHtml($From, '', $row['recipient_email'], $emailsubject, $header, $emailmssg,0,$templet,3,INVITE_TO_JOIN_TAG, $params);
 					if($reply)
 						Logger_Array("Gift Card mail sent",'email, To', $row['recipient_email'], $To);
 				}
