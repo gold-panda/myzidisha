@@ -97,6 +97,9 @@ class updateProcess
 		else if(isset($_POST['redeemCard'])){
 			$this->redeemCard();
 		}
+		else if(isset($_POST['redeemCardLendingCart'])){
+			$this->redeemCardLendingCart();
+		}
 		else if(isset($_POST['donate_card'])){
 			$this->donate_card();
 		}
@@ -970,12 +973,31 @@ class updateProcess
 		{
 			$amt = $database->GetGiftCardAmount($_POST['card_code']);
 			$amt = number_format($amt, 2, '.', ',');
-			header("Location: index.php?p=75&v=1&amt=$amt");
+			header("Location: index.php?p=17&v=1&amt=$amt");
 		}
 		else
 		{
 			$_SESSION['error_array'] = $form->getErrorArray();
-			header("Location: index.php?p=75&v=0");
+			header("Location: index.php?p=17&v=0");
+		}
+	}
+	function redeemCardLendingCart()
+	{
+		global $session, $database, $form;
+		$_POST = sanitize_custom($_POST);
+		$result=$session->redeemCard($_POST['card_code']);
+		if($result ==1)
+		{
+			$amt = $database->GetGiftCardAmount($_POST['card_code']);
+			$amt = number_format($amt, 2, '.', ',');
+			echo $amt;
+		}
+		else
+		{
+			$_SESSION['error_array'] = $form->getErrorArray();
+			http_response_code(400);
+			$error = $_SESSION['error_array']['cardRedeemError'];
+			echo $error;
 		}
 	}
 	function donate_card()

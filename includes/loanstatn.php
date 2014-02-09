@@ -1095,7 +1095,7 @@ if($brw2['active'] == LOAN_REPAID)
 		$tweetmadeLoan= "I just made a loan to ".$name." in ".$location."."." @zidishainc";
 		$madeLoan= "I just made a loan to ".$name." in ".$location.".";
 		$short_url = "https%3A%2F%2Fwww.zidisha.org%2Findex.php%3Fp%3D14%26u%3D".$ud."%26l%3D".$ld;
-		$sharephoto= SITE_URL."images/client/".$ud.".jpg";
+		$sharephoto= $imagesrc;
 		$loan_use= substr($loanuse, 0, 90);
 		$loanprurl = getLoanprofileUrl($ud,$ld);
 		$twtUrl = SITE_URL.$loanprurl;
@@ -1166,7 +1166,7 @@ if($brw2['active'] == LOAN_REPAID)
 										<div class="space">
 											<div class="left">
 												<?php if (file_exists(USER_IMAGE_DIR.$ud.".jpg")){ ?>
-													<img class="loan-profile" src="library/getimagenew.php?id=<?php echo $ud ?>&width=120&height=87" alt="<?php echo $name ?>"/>
+													<img src="<?php echo $imagesrc; ?>" height="100px" alt="<?php echo $name ?>"/>
 												<?php } ?>
 											</div>
 											<div class="left testi_text">

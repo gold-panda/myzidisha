@@ -292,21 +292,9 @@ if($language==''){
 
 <a href="http://www.amazon.com/Venture-Collection-Microfinance-Stories-ebook/dp/B009JC6V12" target="_blank"><?php echo $lang['menu']['ebook'] ?></a> &nbsp;<span>|</span>&nbsp;
 
-<a href="microfinance/microfinance.html"><?php echo $lang['menu']['abt_microfinance'] ?></a> &nbsp;<span>|</span>&nbsp;
+<a href="microfinance/gift-cards.html"><?php echo $lang['menu']['gift_cards'] ?></a> &nbsp;<span>|</span>&nbsp; 
 
 <a href="<?= SITE_URL ?>index.php?p=80">Lending Groups</a> &nbsp;<span>|</span>&nbsp;
-
-<!--
-					<a href="microfinance/gift-cards.html"><?php echo $lang['menu']['gift_cards'] ?></a> &nbsp;<span>|</span>&nbsp; 
--->
-					 
-<!-- 
-<a href="microfinance/newsletter.html"><?php echo $lang['menu']['newsletter'] ?></a> &nbsp;<span>|</span>&nbsp; 
--->
-					   
-					<!-- <a href="intern.html"><?php echo $lang['menu']['interns'] ?></a> &nbsp;<span>|</span>&nbsp;  -->
-
-<!-- <a href="microfinance/donate.html"><?php echo $lang['menu']['donate'] ?></a> &nbsp;<span>|</span>&nbsp; -->
 
 <a href="http://zidisha.org/forum/"><?php echo $lang['menu']['user_forum'] ?></a> &nbsp;<span>|</span>&nbsp; <a href="microfinance/contact.html"><?php echo $lang['menu']['contact_us'] ?></a> &nbsp;<span>|</span>&nbsp; <a href="javascript:void(0)" id="setLanguage"><?php echo $language1 ?></a> <a style="position:relative;top:-2px;left:-6px" href="javascript:void(0)" id="langPointer"><img border='0' style='cursor:pointer' src='images/layout/table_show/asc.gif' alt=''/></a>
 				</div>
@@ -947,26 +935,16 @@ if($language==''){
 
 <a href="microfinance/newsletter.html"><?php echo $lang['menu']['newsletter'] ?></a> &nbsp;<span>|</span>&nbsp;
 
-					<a href="microfinance/gift-cards.html"><?php echo $lang['menu']['gift_cards'] ?></a> &nbsp;<span>|</span>&nbsp; 
-					 
+<a href="microfinance/gift-cards.html"><?php echo $lang['menu']['gift_cards'] ?></a> &nbsp;<span>|</span>&nbsp; 
 
 <a href="microfinance/donate.html"><?php echo $lang['menu']['donate'] ?></a> &nbsp;<span>|</span>&nbsp; 
 
 <a href="microfinance/contact.html"><?php echo $lang['menu']['contact_us'] ?></a>
 
 
-<!--
-
-
-
-<a href="microfinance/microfinance.html"><?php echo $lang['menu']['abt_microfinance'] ?></a> &nbsp;<span>|</span>&nbsp;
-
--->
-
-
 			<p>
 				<em>
-					Zidisha is the first peer-to-peer microlending service to offer direct interaction between lenders and borrowers across international borders. We are a United States 501(c)(3) nonprofit organization.
+					Direct peer-to-peer lending across the international wealth divide.
 				</em><br/><br/>
 				<em>&copy; 2009 - 2014 Zidisha Inc.</em>
 			</p>
