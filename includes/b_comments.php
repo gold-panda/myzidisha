@@ -15,6 +15,7 @@ $(document).ready(function() {
 		$(this).text($(this).text() == "View More" ? "View Less" : "View More");
 		$(this).toggleClass("view-less"); 
 	});
+	
 });
 </script>
 <style>
@@ -223,7 +224,7 @@ $(document).ready(function() {
 										});
 									</script>
 					<?php			$senderid1=$commns['senderid'];
-
+									$imagesrc_comment=$database->getProfileImage($senderid1);
 									$receiverid=$commns['receiverid'];
 									$level =$database->getUserLevelbyid($senderid1);
 
@@ -247,8 +248,8 @@ $(document).ready(function() {
 									<table class="zebra-striped">
 										<tbody>
 											<tr>
-												<td style="width:200px;border-top:1px solid #DFDCDC;border-bottom:1px solid #DFDCDC;border-left:1px solid #DFDCDC">
-													<img src="library/getimagenew.php?id=<?php echo $senderid1;?>&width=200&height=200">
+												<td style="width:100px;border-top:1px solid #DFDCDC;border-bottom:1px solid #DFDCDC;border-left:1px solid #DFDCDC">
+													<img style="max-width:100px" src="<?php echo $imagesrc_comment; ?>">
 													<p style="margin-top:10px;text-align:center;"><?php echo "<a href='$sender_url'>$name12</a>";?></p>
 												</td>
 												<td style="width:100%;border-top:1px solid #DFDCDC;border-right:1px solid #DFDCDC;border-bottom:1px solid #DFDCDC">
@@ -291,7 +292,7 @@ $(document).ready(function() {
 														<?php echo nl2br($msgorg1);?>
 														<p>&nbsp;</p>
 													</div>
-												</td>
+												
 										<?php	if(isset($session->userid))
 												{	
 													if(!empty($commns['tr_message'])){
@@ -299,14 +300,16 @@ $(document).ready(function() {
 													}else{
 														$translate='Add translation';
 													}?>
-												<td style="width:110px;border-right:1px solid #DFDCDC">
-									<?php								
-	echo "<p><a id='slick-toggle".$incr."' href='$RequestUrl#c".($incr+1)."' style='color: #000000;text-decoration:underline'>Reply</a></p>";												
-	echo "<p><a style='text-decoration:underline' href='index.php?p=24&c_id=".$commns['id']."&ref=1'>$translate</a></p>";
-											
+												
+												<form action='./updatefeedback.php' method='POST'>
+												<?php								
+													echo "<br/><br/><p><a id='slick-toggle".$incr."' href='$RequestUrl#c".($incr+1)."' style='text-decoration:underline'>Reply</a>												
+													&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+													<a style='text-decoration:underline' href='index.php?p=24&c_id=".$commns['id']."&ref=1'>$translate</a>
+													&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";										
 
-if(isset($session->userid) && $session->userid!=$senderid1)
-														{
+												if(isset($session->userid) && $session->userid!=$senderid1)
+																										{
 															if($commns['publish']==1)
 															{
 																$pulishType="Feature on homepage";
@@ -315,7 +318,7 @@ if(isset($session->userid) && $session->userid!=$senderid1)
 															{
 																$pulishType="Remove from homepage";
 															}	?>
-															<form action='./updatefeedback.php' method='POST'>
+															
 																<input type="submit" class="submitLink" value="<?php echo $pulishType;?>">
 																<input type='hidden' name='MessType' value='<?php echo $pulishType;?>'>
 																<input type='hidden' name='loanid' value='<?php echo $ld;?>'>
@@ -336,6 +339,7 @@ if(isset($session->userid) && $session->userid!=$senderid1)
 														{
 															$deleteValue="DeleteReal";
 														}	?>
+														<a id='edit-toggle<?php echo $incr;?>' href="<?php echo $RequestUrl?>#c<?php echo ($incr+1);?>" style='text-decoration:underline'>Edit</a>
 														<form action='./updatefeedback.php' method='POST' name='delform<?php echo $incr;?>'>
 															<p><a href='javascript:void(0)' onclick='Deletearow<?php echo $incr;?>(<?php echo $incr;?>)' style='text-decoration:underline;'>Delete</a></p>
 															<input type='hidden' name='MessType' value='<?php echo $deleteValue; ?>'>
@@ -349,8 +353,8 @@ if(isset($session->userid) && $session->userid!=$senderid1)
 															<input type='hidden' name='backComment' value='c<?php echo ($incr-1);?>' />
 															<input type='hidden' name='fb' value='<?php echo $fb;?>' />
 														</form>
-														<p><a id='edit-toggle<?php echo $incr;?>' href="<?php echo $RequestUrl?>#c<?php echo ($incr+1);?>" style='color: #000000;text-decoration:underline'>Edit</a></p>
-												<?php														}	?>
+														
+												<?php	}	?>
 												</td>
 										<?php	}	?>
 											</tr>
