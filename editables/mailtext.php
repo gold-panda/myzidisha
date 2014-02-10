@@ -176,7 +176,9 @@ $lang['mailtext']['promote_body3'] ="Zidisha.org is a US-based nonprofit that le
 //lender invite email - general
 $lang['mailtext']['invite_subject'] = "Invite from %name%";
 
-$lang['mailtext']['invite_body_l'] = "No intermediaries between you and the borrower = lower cost for the borrower + direct connection with the entrepreneur you are helping.";
+$lang['mailtext']['invite_body_l'] = 'Join the global peer-to-peer microlending movement.
+
+No intermediaries between you and the borrower = lower cost for the borrower + direct connection with the entrepreneur you are helping.';
 
 $lang['mailtext']['invite_body'] =
 "%user_msg%<br/><br/>

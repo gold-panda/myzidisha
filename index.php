@@ -85,7 +85,7 @@
 		<BASE href="<?php echo SITE_URL.$language?>/">
 	<?php } ?>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="description" content="Zidisha Microfinance is the first peer-to-peer microlending service to offer direct interaction between lenders and borrowers across international borders."/>
+	<meta name="description" content="Peer-to-peer lending across the international wealth divide."/>
 	<meta name="author" content=""/>
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 	<!--[if lt IE 9]>
@@ -944,7 +944,7 @@ if($language==''){
 
 			<p>
 				<em>
-					Direct peer-to-peer lending across the international wealth divide.
+					Peer-to-peer lending across the international wealth divide.
 				</em><br/><br/>
 				<em>&copy; 2009 - 2014 Zidisha Inc.</em>
 			</p>

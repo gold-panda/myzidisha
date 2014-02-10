@@ -68,12 +68,14 @@ if($session->userlevel==LENDER_LEVEL || empty($session->userid))
 					<td><?php echo $text1 ?></td>
 					<td><textarea name='frnds_emails' id='frnds_emails' class='textareaEmail' style='width:300px' ><?php echo $frnds_emails; ?></textarea><br/><div id="error"><?php echo $form->error("emailError"); ?></div></td>
 				</tr>
+				<!--
 				<tr>
 					<td></td>
 					<td>
 						<a href="javascript:void(0)" onClick="window.open('inviter.php','mywindow','width=400,height=200,left=200,top=200,screenX=0,screenY=100,scrollbars=yes')"><?php echo $lang['invite']['import_contacts'] ?></a>
 					</td>
 				</tr>
+				-->
 				<tr><td><br/></td></tr>
 				<tr>
 					<td><?php echo $lang['invite']['enter_user_name'] ?></td>

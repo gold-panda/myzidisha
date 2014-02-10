@@ -1084,27 +1084,40 @@ if($brw2['active'] == LOAN_REPAID)
 }
 ?>
 <?php
-	if($showShareBox != 0)
-	{	
-		if($stilneed > 0) {
-			$bidmsg ='The applicant will have the opportunity to accept all bids and receive<br /> his or her disbursement once this loan is fully funded.';
+	//if($showShareBox != 0)
+	//{	
+		if($_SESSION['lender_bid_success_amt'] == 0){
+			$title = "  Share!";
+			$bidMessage =$brw['FirstName']." needs only $".number_format($stilneed, 2, '.', ',')." more to be fully funded.<br/><br/>
+			Help ".$brw['FirstName']." raise the remaining amount by inviting others to match your loan contribution.";
+			
+		} elseif($stilneed > 0) {
+			$title = "Thank You!";
+			$bidmsg ="Now ".$brw['FirstName']." needs only $".number_format($stilneed, 2, '.', ',')." more to be fully funded.<br/><br/>
+			Help ".$brw['FirstName']." raise the remaining amount by inviting others to match your loan contribution.";
+			$bidMessage= "Your loan of $".number_format($_SESSION['lender_bid_success_amt'], 2, ".", ",")." has been credited to ".$brw['FirstName']."'s loan application.<br />".$bidmsg."";
+			
 		}else {
-			$bidmsg ='Your bid has been successfully submitted. The loan will be disbursed to the applicant after he or she accepts the bids.';
+			$title = "Thank You!";
+			$bidmsg ="Thanks to you, ".$brw['FirstName']."'s loan application is 100% funded!";
+			$bidMessage= "Your loan of $".number_format($_SESSION['lender_bid_success_amt'], 2, ".", ",")." has been credited to ".$brw['FirstName']."'s loan application.<br />".$bidmsg."";
+			
 		}
-		$bidMessage= "Your bid to fund USD ".number_format($_SESSION['lender_bid_success_amt'], 2, ".", ",")." of this loan at ".number_format($_SESSION['lender_bid_success_int'], 2, ".", ",")."% interest has been placed. <br />".$bidmsg."";
-		$tweetmadeLoan= "I just made a loan to ".$name." in ".$location."."." @zidishainc";
-		$madeLoan= "I just made a loan to ".$name." in ".$location.".";
+		$newstext="Help raise ".$brw['FirstName']."'s loan";
+		$tweetmadeLoan= "Help me raise a loan for ".$brw['FirstName']." in ".$database->mysetCountry($brw['Country'])."."." $".number_format($stilneed)." still needed!";
+		$madeLoan= "Help me raise a loan for ".$brw['FirstName']." in ".$database->mysetCountry($brw['Country'])."!";
 		$short_url = "https%3A%2F%2Fwww.zidisha.org%2Findex.php%3Fp%3D14%26u%3D".$ud."%26l%3D".$ld;
 		$sharephoto= $imagesrc;
 		$loan_use= substr($loanuse, 0, 90);
 		$loanprurl = getLoanprofileUrl($ud,$ld);
 		$twtUrl = SITE_URL.$loanprurl;
 	?>
+
 	<script type="text/javascript">
 		var twtUrl= "<?php echo $twtUrl; ?>";
 		function fbshare()
 		{
-			var fburl="http://www.facebook.com/sharer.php?s=100&p[title]=<?php echo urlencode($madeLoan);?>&p[url]=<?php echo $short_url; ?>&p[images][0]=<?php echo urlencode($sharephoto); ?>&p[summary]=<?php echo urlencode(strip_tags($loanuse));?>";
+			var fburl="http://www.facebook.com/sharer.php?s=100&p[url]=<?php echo $short_url; ?>&p[images][0]=<?php echo urlencode($sharephoto); ?>";
 			window.open(fburl,'','width=600,height=450,left=200,top=200');
 		}
 		function twtshare()
@@ -1128,7 +1141,7 @@ if($brw2['active'] == LOAN_REPAID)
 					<div id="containt">
 						<div id="upper" class="padding_prop" style="padding-top:5px;">
 							<div class="left">
-								<div class="thankyou_text left">Thank you!</div>
+								<div class="thankyou_text left" style="margin-top:20px; margin-left:10px"><?php echo $title; ?></div>
 								<div class="upper_text right"><?php echo $bidMessage; ?></div>
 								<div class="clear"></div>
 							</div><!--left closed -->
@@ -1137,7 +1150,7 @@ if($brw2['active'] == LOAN_REPAID)
 						</div><!--upper closed -->
 						<div id="lower" class="padding_prop">
 							<div>
-								<div class="left news_text">Now Share The News</div>
+								<div class="left news_text" style="margin-left:30px"><?php echo $newstext; ?></div>
 								<div class="left" style="padding-top:5px;">
 									<div class="block2 shareTab1 <?php if(!isset($_SESSION['shareEmailValidate'])) { echo 'tab2'; } ?>" onClick="showBox(1);" style="cursor:pointer">
 										<div  class="tab_space2" align="center">
@@ -1160,13 +1173,12 @@ if($brw2['active'] == LOAN_REPAID)
 							<div id="slant">&nbsp;</div><!--slant closed -->
 							<div id="data">
 								<div class="left testi">
-									<div class="black_small_text"><?php echo $madeLoan; ?></div>
 									<div class="link_text"><a href="<?php echo SITE_URL;?>">www.zidisha.org</a></div>
 									<div align="left" id="bubble">
 										<div class="space">
 											<div class="left">
-												<?php if (file_exists(USER_IMAGE_DIR.$ud.".jpg")){ ?>
-													<img src="<?php echo $imagesrc; ?>" height="100px" alt="<?php echo $name ?>"/>
+												<?php if (!empty($imagesrc)){ ?>
+													<img src="<?php echo $imagesrc; ?>" style="max-height:100px;max-width:130px" alt="<?php echo $name ?>"/>
 												<?php } ?>
 											</div>
 											<div class="left testi_text">
@@ -1196,7 +1208,7 @@ if($brw2['active'] == LOAN_REPAID)
 									<div class="shareTab2Detail" style="display:none">
 										<table class="form_text" align="center" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
-												<td valign="top" class="paddign_right_prop">NOW SHARE THE NEWS</td>
+												<td valign="top" class="paddign_right_prop"><?php echo $newstext; ?></td>
 											</tr>
 											<tr>
 												<td style="padding-top:5px;"> 
@@ -1282,7 +1294,7 @@ if($brw2['active'] == LOAN_REPAID)
 	</div> <!-- /shareform -->
  </body>
 <?php
-	}
+//	}
 ?>
 <!-- end share box -->
 
@@ -1415,12 +1427,9 @@ if($brw2['active'] == LOAN_REPAID)
 							<input type="hidden" id="borrowerid1" name="bid" value="<?php echo $ud ?>" />
 							<input type="hidden" name="lid" value="<?php echo $loanid ?>" />
 							<input  class="btn" type="submit" onclick="needToConfirm = false;" value="<?php echo $lang['loanstatn']['lend'];?>"  />
-							
-							<?php if($showShareBox==1) { ?>
-								
-								<p  style="padding-left:130px"><a  href="<?php echo $RequestUrl?>#shareForm" rel="facebox"><strong>Share This</strong></a></p>
+							<br/>
+							<p  style="padding-left:150px"><a  href="<?php echo $RequestUrl?>#shareForm" rel="facebox"><strong>Share</strong></a></p>
 
-							<?php } ?>
 						<div style="clear:both"></div>
 					</form>
 
@@ -2030,7 +2039,7 @@ if($brw2['active'] == LOAN_REPAID)
 						<?php if(empty($val)){?>
 							<input class="btn" type="submit" id="act" value="<?php echo $lang['loanstatn']['lend'];?>" />
 						<?php if($showShareBox==2) { ?>
-							<p  style="padding-left:130px"><a  href="<?php echo $RequestUrl?>#shareForm" rel="facebox"><span class="btn_share">Share This</span></a></p>
+							<p  style="padding-left:130px"><a  href="<?php echo $RequestUrl?>#shareForm" rel="facebox"><span class="btn_share">Share</span></a></p>
 						<?php } ?>
 						<?php }else{ ?>
 							<input class="btn" type="submit" id="act" value="<?php echo $lang['loanstatn']['bid_save'];?>" />

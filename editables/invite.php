@@ -1,8 +1,8 @@
 <?php 
 $lang['invite']['invite_friends'] = 'Send Invite';
-$lang['invite']['enter_emails'] = 'Enter your friends\' email addresses here, separated by commas. We\'ll send them an invite to Zidisha in your name.';
-$lang['invite']['enter_emails_1']="Enter your friends' email addresses here, separated by commas. We'll send them an invite to view";
-$lang['invite']['enter_emails_2']="Enter your friends' email addresses here, separated by commas. We'll send them an invite in your name to check out";
+$lang['invite']['enter_emails'] = 'Enter your friends\' email addresses here, separated by commas.';
+$lang['invite']['enter_emails_1']="Enter your friends' email addresses here, separated by commas.";
+$lang['invite']['enter_emails_2']="Enter your friends' email addresses here, separated by commas.";
 $lang['invite']['import_contacts'] = 'Import Your Contacts';
 $lang['invite']['invite_msg'] = 'Optional invite message';
 $lang['invite']['chars_remain'] = 'characters remaining';

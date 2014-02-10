@@ -111,6 +111,7 @@ This is a wrapper function for sending emails
 	}
 	if($html == 1)
 	{
+		$templet = str_replace('%image%',$info['image'],$templet);
 		$templet = str_replace('%card_amount%',$info['card_amount'],$templet);
 		$templet = str_replace('%to_name%',$info['to_name'],$templet);
 		$templet = str_replace('%from_name%',$info['from_name'],$templet);
@@ -148,8 +149,8 @@ This is a wrapper function for sending emails
 
 		if (!empty($info['image_src'])){
 
-			$templet = str_replace('%image_src%', "<img src='".$info['image_src']."' style='max-width: 600px;' class='center'>", $templet);
-		
+			$templet = str_replace('%image_src%', '<img class="" id="mainImage" src="'.$info['image_src'].'" style="width:100%; cursor:auto" width="100%">', $templet);
+			
 		}else{
 
 			$templet = str_replace('%image_src%','',$templet);
