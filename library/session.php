@@ -8630,7 +8630,8 @@ function VMConfirmation($mentorid, $userid)
 		$params['uname']=$mentor_email['name'];
 		$res_BEmail=$database->getEmailB($userid);
 		$params['bname']=$res_BEmail['name'];
-		$params['link']=getUserProfileUrl($userid);
+		$profile = getUserProfileUrl($userid);
+		$params['link']= "https://www.zidisha.org/".$profile;
 		$emailsubject= $this->formMessage($lang['mailtext']['vm_confirmation_subject'], $params);
 		$emailmssg=$this->formMessage($lang['mailtext']['vm_confirmation'], $params);
 		$reply=$this->mailSendingHtml($From,'',$mentor_email , $emailsubject, '', $emailmssg, 0, $templet, 3);		
