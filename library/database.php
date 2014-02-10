@@ -14601,7 +14601,17 @@ class genericClass
     }
 
 
+    function getInvitedMemberJoins($userid){
 
+        global $db;
+
+        $q="select invitee_id, date, email from ! where userid=? AND invitee_id>0";
+
+        $res= $db->getAll($q, array('invites', $userid));
+
+        return $res;
+
+    }
 
 
     function getInviteCredit($userid){
@@ -22403,7 +22413,25 @@ class genericClass
 
     }
 
+    function inviteReportLenders(){
 
+        
+
+        global $db;
+
+
+
+        $q="SELECT DISTINCT lenders.userid, lenders.FirstName, lenders.LastName, lenders.City, lenders.Email, lenders.Country, u.last_login FROM ! LEFT JOIN invites as inv on inv.userid=lenders.userid LEFT JOIN users as u on u.userid=lenders.userid WHERE active=1 AND inv.userid IS NOT NULL";
+
+ 
+
+        $res= $db->getAll($q, array('lenders'));
+
+        
+
+        return $res;
+
+    }
 
 
 
