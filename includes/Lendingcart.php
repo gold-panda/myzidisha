@@ -50,7 +50,7 @@ var google_conversion_value = 0;
   				var currentAmountAvailable = parseFloat($("#amountavail_usd").text());
   				var newAmountAvailable = currentAmountAvailable + parseFloat(data);
   				$("#creditavailable").val(newAmountAvailable);
-  				$("#amountavail_usd").text(newAmountAvailable);
+  				$("#amountavail_usd").text(Number(newAmountAvailable).toFixed(2));
   				$("#redeem_message").show();
   				$("#paypal_donation_cart").keyup();
   			},
@@ -324,7 +324,7 @@ if(!empty($Lendingcart) && $cont == 0 ) {
 				}?>
 
 				
-				<tr id="amountavail" <?php if($amountavail > 0) { echo "style='display: none;'"; } ?>>
+				<tr id="amountavail" <?php if($amountavail == 0) { echo "style='display: none;'"; } ?>>
 					<td>Credit Available:<br/>
 					(Current Balance: USD <span id="amountavail_usd"><?php echo number_format($amountavail, 2, ".", ",");?></span>)
 					</td>
