@@ -43,34 +43,39 @@ $(document).ready(function() {
 		<h3 class="subhead" style="border-bottom:none;margin-bottom:0px"><?php echo"<a style='padding-right:20px' id='slick-toggle' href='$RequestUrl#'>".$lang['profile']['wcomments']."</a>";?><p id="user_comment" class="view-more-less">View Less</p></h3>
 	</div><br/>
 	<?php 
+
+	$vmcurrentloanid= $database->getCurrentLoanid($brw['mentor_id']);
+	$params['brwr_name']= $name;
+	$params['invitedby']= $invitedby;
+	$params['invited_tooltip']=$lang['profile']['tooltip_invited'];
+	$params['brwr_name']= $name;
+	$params['mentor']= $mentor;
+	$params['vm_tooltip']=$lang['profile']['tooltip_mentor'];
 			
-	if(!empty($invcurrentloanid)){
+	if(!empty($invcurrentloanid) && empty($vmcurrentloanid)){
 
-			$params['brwr_name']= $name;
-			$params['invitedby']= $invitedby;
-			$params['invited_tooltip']=$lang['profile']['tooltip_invited'];
-			$vm_comments= $session->formMessage($lang['profile']['invited_text'], $params);
+		$vm_comments= $session->formMessage($lang['profile']['invited_text'], $params);
 
-	} elseif(!empty($mentor_id)){
+	} elseif(!empty($vmcurrentloanid) && empty($invcurrentloanid)){
+
+
+	$params['vm_name']= $vm_name;
+	$params['vm_url']=$vm_url; 
+	$params['vm_tooltip']=$lang['profile']['tooltip_mentor'];
 		
-			$params['brwr_name']= $name;
-			$params['vm_name']= $vm_name;
-			$params['vm_url']=$vm_url; 
-			$params['vm_tooltip']=$lang['profile']['tooltip_mentor'];
+		$vm_comments= $session->formMessage($lang['profile']['vm_comment_text'], $params);
 
-//added by Julia 7-11-2013
-			$vm_level= $database->getUserLevelbyid($brw['mentor_id']);
-			$vmcurrentloanid= $database->getCurrentLoanid($brw['mentor_id']);
-			if($vm_level==BORROWER_LEVEL && !empty($vm_name) && !empty($vmcurrentloanid)){
+	} elseif(!empty($mentor_id) && !empty($invcurrentloanid)){
+		
+		$vm_comments= $session->formMessage($lang['profile']['inv_vm_text'], $params);	
+	
+	} else {
 
-				$vm_comments= $session->formMessage($lang['profile']['vm_comment_text'], $params);
+		$vm_comments = "";
+	}
 
-			} else {
 
-				$vm_comments= "";
-
-			}
-	}?>
+	?>
 	<div style="float:left;padding-bottom: 15px;">
 		<?php echo $vm_comments; ?>
 	</div>
