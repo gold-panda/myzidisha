@@ -8362,7 +8362,6 @@ class genericClass
 
         $paiddate= $db->getOne($s , array('repaymentschedule_actual',$id2));
 
-        
 
         //limits results to installments that fell due before today and before the final payment was made
 
@@ -14292,9 +14291,9 @@ class genericClass
 
         global $db;
 
-        $q= "select * from ! where borrowerid=? and active IN(?, ?, ?)";
+        $q= "select * from ! where borrowerid=?";
 
-        $res= $db->getAll($q, array('loanapplic', $userid,LOAN_ACTIVE,LOAN_REPAID,LOAN_DEFAULTED));
+        $res= $db->getAll($q, array('loanapplic', $userid));
 
         return $res;
 
@@ -23185,6 +23184,24 @@ function getProfileImage($userid){
          }
          return $imagesrc;
  }
+
+
+//gets the amount of the last payment made toward this loan
+ function getLastInstallmentAmt($userid, $loanid){
+        global $db;
+
+        $r="SELECT MAX(id) FROM ! WHERE userid=? and loanid=?";
+
+        $id2= $db->getOne($r , array('repaymentschedule_actual',$userid,$loanid));
+
+        $s="SELECT paidamt FROM ! WHERE id=?";
+
+        $lastinst_amt= $db->getOne($s , array('repaymentschedule_actual',$id2));
+
+        return $lastinst_amt;
+ }
+
+
 /* End here */
 
 };
