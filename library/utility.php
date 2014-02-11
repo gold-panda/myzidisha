@@ -629,4 +629,17 @@ function array_sort($array, $psort, $order='SORT_DESC',$s_sort='project_no'){
   }
   return $array;
  }
-?>
+
+function fbshare_url($url, $image, $summary = null, $title = null) {
+    $fburl = 'https://www.facebook.com/sharer/sharer.php?s=100';
+    $fburl .= '&p[url]=' . urlencode($url);
+    $fburl .= '&p[images][0]=' . urlencode($image);
+    if ($summary !== null) {
+        $fburl .= '&p[summary]=' . urlencode($summary);
+    }
+    if ($title !== null) {
+        $fburl .= '&p[title]=' . urlencode($title);
+    }
+    
+    return $fburl;
+}
