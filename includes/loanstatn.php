@@ -1915,8 +1915,7 @@ if($brw2['active'] == LOAN_REPAID)
 
 										echo "<td>".number_format($acceptedAmt, 2, '.',',') ."</td>";
 										echo "<td>".number_format($bidint, 2, '.',',')."<input type='hidden' size=2 name=$name2  id=$name2 value='".number_format($bidint, 2, '.','')."'/>%<br /><div id=$error2 name=$error2></div></td>";
-										echo "<td><input type='hidden' size=2 name=$name3 id=$name3 value='".$bidddid."'/><img SRC='images/layout/icons/edit.png' alt='Edit bid' style='cursor:pointer' title='Edit My Bid'></td>";
-
+										echo "<td><input type='hidden' size=2 name=$name3 id=$name3 value='".$bidddid."'/></td>";/*<img SRC='images/layout/icons/edit.png' alt='Edit bid' style='cursor:pointer' title='Edit My Bid'></td>";*/
 										$i=++$i;
 									}
 									else
