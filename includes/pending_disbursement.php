@@ -275,6 +275,31 @@ if($isvolunteer==1 || $session->userlevel==ADMIN_LEVEL){
 					echo "<td>$number</td>";
 					echo "<td>$bid_notes<br/><br/>";
 
+					$sift_score_num = $database->getSiftScore($userid);
+					$sift_score = (number_format($sift_score_num*100));
+					$sift_profile = "https://siftscience.com/console/users/".$userid;
+
+
+					if (!empty($sift_score) && $sift_score >50 && $sift_score <75){
+
+						?>
+						<strong>This member has a Sift Score of <?php echo $sift_score; ?>, indicating an unusually high level of risk. <br/><br/>
+
+						Please conduct a telephone interview of the member and the community leader before disbursing this loan.<br/><br/>
+
+						<?php echo "<a href='".$sift_profile."' target='_blank'>View Sift Science profile</a></strong>"; 
+
+					} elseif (!empty($sift_score) && $sift_score >=75){
+
+						?>
+						<strong>This applicant has a Sift Score of <?php echo $sift_score; ?>, indicating a very high level of risk. <br/><br/>
+
+						Please consult the director before disbursing this loan.</strong><br/><br/>
+
+						<?php echo "<a href='".$sift_profile."' target='_blank'>View Sift Science profile</a>"; 
+
+					} 
+
 				/* 
 				If borrower was activated since the date we removed the ID card 
 				and recommendation form from pre-activation requirements, display 
