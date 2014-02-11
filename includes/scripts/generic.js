@@ -9,7 +9,7 @@ $(document).ready(function(){
 		 var err1 = 'erramt'+ic;
 		 var err2 = 'errint'+ic;
 		 $("#pamount").get(0).value = $('#'+v1).val();
-		 $("#pinterest").get(0).value = $('#'+v2).val();
+		 $("#pinterest")[0].selectedIndex = $('#'+v2).val();
 		 $("#bidid").get(0).value = $('#'+v3).val();
 		 $("#act").get(0).value = 'Save Your Bid';
 		 $("#editBidAmount").val($('#'+v1).val());

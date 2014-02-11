@@ -1913,9 +1913,9 @@ if($brw2['active'] == LOAN_REPAID)
 										$error1 = 'erramt'.$i;
 										$error2 = 'errint'.$i;
 
-										echo "<td>".number_format($acceptedAmt, 2, '.',',') ."</td>";
-										echo "<td>".number_format($bidint, 2, '.',',')."<input type='hidden' size=2 name=$name2  id=$name2 value='".number_format($bidint, 2, '.','')."'/>%<br /><div id=$error2 name=$error2></div></td>";
-										echo "<td><input type='hidden' size=2 name=$name3 id=$name3 value='".$bidddid."'/><img SRC='images/layout/icons/edit.png' alt='Edit bid' style='cursor:pointer' title='Edit My Bid'></td>";
+									echo "<td>".number_format($acceptedAmt, 2, '.',',') ."<input type='hidden' size=5 name=$name1 id=$name1 value='".number_format($acceptedAmt, 2, '.','')."'/><br /><div id=$error1 name=$error1></div></td>";
+									echo "<td>".number_format($bidint, 2, '.',',')."<input type='hidden' size=2 name=$name2  id=$name2 value='".number_format($bidint, 2, '.','')."'/>%<br /><div id=$error2 name=$error2></div></td>";
+									echo "<td><input type='hidden' size=2 name=$name3 id=$name3 value='".$bidddid."'/><img SRC='images/layout/icons/edit.png' alt='Edit bid' style='cursor:pointer' title='Edit My Bid'></td>";
 
 										$i=++$i;
 									}
@@ -1963,7 +1963,7 @@ if($brw2['active'] == LOAN_REPAID)
 						
 						<input class="medium" id="pamount" name="pamount" size="20" type="text" value="<?php echo $pamount; ?>">
 						
-						<div class="input inputex" id="pamounterr">
+						<div class="input inputex" id="pamounterr" style="margin-left:0px;margin-top:10px;">
 							<?php echo $form->error('pamount'); ?>
 						</div>
 						<br/>
@@ -1988,26 +1988,16 @@ if($brw2['active'] == LOAN_REPAID)
 
 						<!-- drop-down menu for lenders to select interest rate -->
 						<select class"medium" style="width:150px" id="pinterest" name="pinterest">
-
 								<?php
-
 								$int_range = range(0, $maxInterestRate);
-
 								$i=0;
-
 								foreach($int_range as $int_option) {  ?>
-
 									<option value='<?php echo $int_option; ?>' <?php if($form->value("$pinterest1")==$int_option) echo "Selected='true'" ?>><?php echo $int_option ?>%</option>
-
 									<?php		
-
 									$i++;
-
 								} ?>
-
 						</select>
 						<br/><br/>
-						
 						<div class="input inputex" id="pintrerr"><?php echo $form->error('pinterest'); ?></div>
 						
 				<?php	if(isset($_SESSION['lender_bid_success2']))
