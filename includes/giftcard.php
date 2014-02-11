@@ -49,31 +49,31 @@ else{
 							</div>
 							<div id="giftcard-3-1" class="giftcard_thumbnail">
 								<label for="giftcard_template_radio-3-1" ><img src="images/gift_card/image3.png"/></label>
-								<input name="giftcard_template_radio-1" id="giftcard_template_radio-3-1" value="image3" checked="checked" type="radio">
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-3-1" value="image3" type="radio">
 							</div>
 							<div id="giftcard-2-1" class="giftcard_thumbnail">
 								<label for="giftcard_template_radio-2-1" ><img src="images/gift_card/image2.png"/></label>
-								<input name="giftcard_template_radio-1" id="giftcard_template_radio-2-1" value="image2" checked="checked" type="radio">
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-2-1" value="image2" type="radio">
 							</div>
 							<div id="giftcard-5-1" class="giftcard_thumbnail">
 								<label for="giftcard_template_radio-5-1" ><img src="images/gift_card/image5.png"/></label>
-								<input name="giftcard_template_radio-1" id="giftcard_template_radio-5-1" value="image5" checked="checked" type="radio">
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-5-1" value="image5" type="radio">
 							</div>
 							<div id="giftcard-6-1" class="giftcard_thumbnail">
 								<label for="giftcard_template_radio-6-1" ><img src="images/gift_card/image6.png"/></label>
-								<input name="giftcard_template_radio-1" id="giftcard_template_radio-6-1" value="image6" checked="checked" type="radio">
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-6-1" value="image6" type="radio">
 							</div>
 							<div id="giftcard-7-1" class="giftcard_thumbnail">
 								<label for="giftcard_template_radio-7-1" ><img src="images/gift_card/image7.png"/></label>
-								<input name="giftcard_template_radio-1" id="giftcard_template_radio-7-1" value="image7" checked="checked" type="radio">
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-7-1" value="image7" type="radio">
 							</div>
 							<div id="giftcard-8-1" class="giftcard_thumbnail">
 								<label for="giftcard_template_radio-8-1" ><img src="images/gift_card/image8.png"/></label>
-								<input name="giftcard_template_radio-1" id="giftcard_template_radio-8-1" value="image8" checked="checked" type="radio">
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-8-1" value="image8" type="radio">
 							</div>
 							<div id="giftcard-9-1" class="giftcard_thumbnail">
 								<label for="giftcard_template_radio-9-1" ><img src="images/gift_card/image9.png"/></label>
-								<input name="giftcard_template_radio-1" id="giftcard_template_radio-9-1" value="image9" checked="checked" type="radio">
+								<input name="giftcard_template_radio-1" id="giftcard_template_radio-9-1" value="image9" type="radio">
 							</div>
 							<br style="clear:left;" />
 						</td>
@@ -93,6 +93,9 @@ else{
 						<td>
 							<br/>
 							<select name="giftamt[]" id="giftamt-1" onChange='javascript:setGiftAmt();'>
+								<option value="1">$1</option> 
+								<option value="5">$5</option>
+								<option value="10">$10</option>
 								<option value="25">$25</option>
 								<option value="30">$30</option>
 								<option value="50">$50</option>
@@ -175,7 +178,7 @@ else{
 	</div>
 	<br>
 	<div align='center'><a id='add' style='cursor: pointer;'><u><?php echo $lang['giftcard']['add_card'] ?></u></a></div><br>
-	<div id='dollar_total' style='float:right; margin-right:150px'><font color='green'>25.00</font></div>
+	<div id='dollar_total' style='float:right; margin-right:150px'><font color='green'>1.00</font></div>
 	<div style='float:right'><font color='green'><?php echo $lang['giftcard']['ord_tot']?>: USD&nbsp;</font></div>
 	<div style="clear:both"></div><br/>
 	<input type='hidden' name='lastformvalue' id='lastformvalue' value='1'>
