@@ -1117,7 +1117,7 @@ if($brw2['active'] == LOAN_REPAID)
 		var twtUrl= "<?php echo $twtUrl; ?>";
 		function fbshare()
 		{
-			var fburl="http://www.facebook.com/sharer.php?s=100&p[url]=<?php echo $short_url; ?>&p[images][0]=<?php echo urlencode($sharephoto); ?>&p[summary]=<?php echo urlencode($tweetmadeLoan); ?>";
+			var fburl="<?php echo fbshare_url($short_url, $sharephoto, $tweetmadeLoan); ?>";
 			window.open(fburl,'','width=600,height=450,left=200,top=200');
 		}
 		function twtshare()
