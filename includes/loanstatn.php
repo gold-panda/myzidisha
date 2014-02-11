@@ -477,12 +477,6 @@ else
 			$summary=$brw2['summary'];
 		else
 			$summary=$brw2['tr_summary'];
-	
-		if(strlen($summary) >70){
-			$summary=substr($summary, 0, strpos($summary, ' ', 70))."...";
-	    }
-	}else{
-		$summary=substr($loanuse, 0, strpos($loanuse, ' ', 70))."...";
 	}
 
 	$weekly_inst=$brw2['weekly_inst']; //if set to 1, installments are due weekly, otherwise monthly
@@ -608,9 +602,6 @@ else
 	
 <div class="span16">
 	<div id="static">
-		<!-- removing summary title for now
-		<h1><?php echo $summary; ?></h1>
-		-->
 		<?php echo "<br/>" ?>
 	</div>
 </div>
@@ -666,7 +657,10 @@ else
 	
 		<tr>
 			<td colspan=2 style="text-align:justify;line-height:18px">
-				<?php echo $loanuse ?>
+				<?php if (!empty($summary)){
+					echo $summary."<br/><br/>";
+				}
+				echo $loanuse ?>
 			</td>
 		</tr>
 			<tr>
@@ -1108,7 +1102,11 @@ if($brw2['active'] == LOAN_REPAID)
 		$madeLoan= "Help me raise a loan for ".$brw['FirstName']." in ".$database->mysetCountry($brw['Country'])."!";
 		$short_url = "https%3A%2F%2Fwww.zidisha.org%2Findex.php%3Fp%3D14%26u%3D".$ud."%26l%3D".$ld;
 		$sharephoto= $imagesrc;
-		$loan_use= substr($loanuse, 0, 90);
+		if (!empty($summary)){
+			$loan_use = $summary;
+		} else {
+			$loan_use= substr($loanuse, 0, 90);
+		}
 		$loanprurl = getLoanprofileUrl($ud,$ld);
 		$twtUrl = SITE_URL.$loanprurl;
 	?>
@@ -1117,7 +1115,7 @@ if($brw2['active'] == LOAN_REPAID)
 		var twtUrl= "<?php echo $twtUrl; ?>";
 		function fbshare()
 		{
-			var fburl="<?php echo fbshare_url($short_url, $sharephoto, $tweetmadeLoan); ?>";
+			var fburl="<?php echo fbshare_url($short_url, $sharephoto, $loan_use, $tweetmadeLoan); ?>";
 			window.open(fburl,'','width=600,height=450,left=200,top=200');
 		}
 		function twtshare()

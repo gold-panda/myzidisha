@@ -376,31 +376,7 @@ function truncate_num($num,$decimal_place)    /*   created by chetan    */
 	$num = bcdiv($num , $mul_no,2);
     return $num;
 }
-function getCardCode16($date,$no=0)    /*   created by chetan    */
-{
-    /* please do not modify anything below and do not remove any space*/
-    $charMapping = "CHETANVRSY";
-    $char =" ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $date = (string)$date;
-    $rand1=$charMapping[rand(0,9)];
-    $rand2=$charMapping[rand(0,9)];
-    $rand3=$charMapping[rand(0,9)];
-    $rand4=$charMapping[rand(0,9)];
-    $rand5=$charMapping[rand(0,9)];
-    $rand6=$charMapping[rand(0,9)];
-    if($no==1 || $no==5)
-        $code = "Z$date[0]$date[1]$rand1-$date[2]$rand2$date[3]$date[4]-$date[5]$date[6]$rand3$date[7]-$rand4$date[8]$date[9]$char[$no]";
-    else if($no==2 || $no==6)
-        $code = "Z$date[0]$rand1$date[1]-$rand2$date[2]$date[3]$date[4]-$date[5]$rand3$date[6]$date[7]-$date[8]$date[9]$rand4$char[$no]";
-    else if($no==3 || $no==7)
-        $code = "Z$rand1$date[0]$date[1]-$date[2]$date[3]$date[4]$rand2-$rand3$date[5]$date[6]$date[7]-$date[8]$rand4$date[9]$char[$no]";
-    else if($no==4  || $no==8)
-        $code = "Z$date[0]$date[1]$rand1-$date[2]$date[3]$rand2$date[4]-$date[5]$date[6]$date[7]$rand3-$rand4$date[8]$date[9]$char[$no]";
-    else
-        $code = "$rand1$date[0]$date[1]$date[2]-$date[3]$rand2$date[4]$rand3-$rand4$date[5]$rand5$date[6]-$date[7]$date[8]$date[9]$rand6";
-
-    return $code;
-}
+ 
 function getCardCode12($card_no) {
 
 // Updated 18-12-2013. Take the current time in microseconds, append a "pepper" (random string that is hard to guess), and make a hash (jumbling the letters and numbers in a deterministic way).  Then make the base-16 number base-36 (0-9A-F becomes 0-9A-Z).  Then take the first 12 characters and add dashes in between.
