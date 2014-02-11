@@ -222,8 +222,8 @@ if(!empty($openloans))
         {
                 $userid=$row['userid'];
                 $is_volunteer= $database->isBorrowerAlreadyAccess($userid);
-                $bfrstloan=$database->getBorrowerFirstLoan($userid);
-                $RepayRate=$session->RepaymentRate($userid);
+                $bfrstloan=$database->getBorrowerFirstLoan($userid); 
+                $repayrate_disp = $session->repayRateDisplay($userid);
                 
 
 //added by Julia 15-10-2013
@@ -284,19 +284,11 @@ if(!empty($openloans))
                                 <h4><?php echo $name?></h4>
                                 <p><?php if($is_volunteer){?><img class='starimg' src="images/star.png" ></img>&nbsp;&nbsp;&nbsp;Volunteer Mentor<br/><?php } 
 
-//modified by Julia to add number of months repayments were due 15-10-2013
-
-                if($bfrstloan){ echo  $lang['loaners']['repayrate']?>: <?php echo number_format($RepayRate); ?>% (<?php echo number_format($totalTodayinstallment)?>)
-
-<?php }
-
-/* removed by Julia 15-10-2013
-
-                if($bfrstloan){ if($f!=''){echo number_format($f); ?>% Positive Feedback&nbsp;(<a href="<?php echo $prurl?>?fdb=2"><?php echo $cf-1; ?></a>)<?php } }
-
-*/
-
-                else        echo 'New Member'; ?> 
+                                if($bfrstloan){ 
+                                    echo  $lang['loaners']['repayrate']?>: <?php echo $repayrate_disp; 
+                                } else {
+                                    echo 'New Member'; 
+                                }?> 
                                 
                                 <br /><br /><?php echo $city.", ".$country;?></p>
                                 <p>

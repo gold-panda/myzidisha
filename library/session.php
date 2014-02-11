@@ -65,8 +65,6 @@ class Session
 			
 		}
 
-		//$this->sendMixpanelUser();
-
 	}
 
 	function redirect($url)
@@ -4194,8 +4192,6 @@ function register_b($uname, $namea, $nameb, $pass1, $pass2, $post, $city, $count
 			logger('lender registerd id '.$id);
 			$database->IsUserinvited($id, $email); // check if the registered user invited by any other existing user and save it in invitees table for future tracking.
 
-			//$this->sendMixpanelEvent('lender signup');
-
 		}
 			return $retVal;
 		}
@@ -6013,7 +6009,6 @@ function forgiveReminder(){
 				}
 			}
 			
-			//$this->sendMixpanelEvent('lend');	
 		}
 		$GiftcardsinCart = $database->getGiftcardsFromCart($userid);
 		$availamount=$this->amountToUseForBid($userid);
@@ -8569,57 +8564,6 @@ function languageSetting($lang_code,$country_code){
 }
 
 
-function sendMixpanelUser(){
-
-	require_once 'extlibs/mixpanel-php-master/lib/Mixpanel.php';
-
-	// get the Mixpanel class instance, replace with your project token
-	$mp = Mixpanel::getInstance(MIXPANEL_PROJECT_TOKEN);
-
-	$userid = $this->userid;
-
-	if ($this->userlevel == 1){
-		$userlevel = "Borrower";
-	}elseif ($this->userlevel == 4){
-		$userlevel = "Lender";
-	}elseif ($this->userlevel == 9){
-		$userlevel = "Admin";
-	}else {
-		$userlevel = $this->userlevel;
-	}
-			
-	$mp->people->set($userid, array(
-    	'$first_name' => $this->fullname,
-    	'userlevel' => $userlevel
-	));
-		
-
-}
-
-
-function sendMixpanelEvent($event_label){
-
-	require_once 'extlibs/mixpanel-php-master/lib/Mixpanel.php';
-
-	// get the Mixpanel class instance, replace with your project token
-	$mp = Mixpanel::getInstance(MIXPANEL_PROJECT_TOKEN);
-
-	if($event_label=='lender signup') {
-
-		$userid = $this->userid;
-
-		$mp->createAlias($userid, array(
-	    '$first_name' => "Guest",
-	    'userlevel' => GUEST_LEVEL
-		));
-	}
-
-	// track an event
-	$mp->track($event_label); // track an event
-
-}
-
-
 function VMConfirmation($mentorid, $userid)
 	{
 		global $database;
@@ -8637,8 +8581,19 @@ function VMConfirmation($mentorid, $userid)
 		$reply=$this->mailSendingHtml($From,'',$mentor_email , $emailsubject, '', $emailmssg, 0, $templet, 3);		
 	}
 
-/***** end here ******/
 
+function repayRateDisplay($userid)
+	{
+		global $database;
+		$RepayRate=$this->RepaymentRate($userid);
+		$totalTodayinstallment=$database->getTotalInstalAllLoans($userid);
+		if(!empty($totalTodayinstallment) && $totalTodayinstallment != 0){ 
+			$repayrate_disp = number_format($RepayRate)."% (".number_format($totalTodayinstallment).")";
+		}else{
+			$repayrate_disp = "None (New Member)";
+		}
+		return $repayrate_disp;
+	}
 
 }
 $session=new Session;

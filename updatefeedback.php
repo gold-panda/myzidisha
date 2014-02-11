@@ -87,7 +87,6 @@ if(isset($_POST['feedback']))
 			$emailContAttr[]= $userid;
 			$emailContAttr[]=$comment;
 			$emailContAttr[]=$resParent;
-			//$database->addEvent(COMMENT_POST_EVENT, $emailContAttr);
 			}
 	}
 	else if($_POST["MessType"]=="Update")
