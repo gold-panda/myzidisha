@@ -2291,14 +2291,11 @@ footer a:hover, footer a:active {
   height: 15px;
   background: #55c325;
 }
-.repaidLoanBar {
+.repaidLoanBar, .expiredLoanBar {
   height: 15px;
   background: #999999;
 }
-.expiredLoanBar {
-  height: 15px;
-  background: red;
-}
+
 .browse-listing .btn {
   float: left;
   clear: both;
