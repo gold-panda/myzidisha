@@ -602,7 +602,6 @@ else
 	}else{
 		$translator_url = getUserProfileUrl($translate_user_id);
 	}
-
 	?>
 
 	
@@ -1889,6 +1888,8 @@ if($brw2['active'] == LOAN_REPAID)
 										$lusername=$lname;
 									else
 										$lusername=$rows['username'];
+									$karma_score = number_format($database->getKarmaScore($lendid));
+									$karma_tooltip = $lang['profile']['karma_tooltip'];
 									$bidamount=$rows['bidamount'];
 									$kamount=convertToNative($bidamount, $CurrencyRate);
 									$bidint=$rows['bidint'];
@@ -1903,7 +1904,8 @@ if($brw2['active'] == LOAN_REPAID)
 
 									echo "<tr>";
 									echo "<td>".date('M d', $biddate)."</td>";
-									echo "<td><a href='$lendprurl'>$lusername</a></td>";
+									echo "<td><a href='$lendprurl'>$lusername</a> <br/><a style='cursor:pointer' class='tt'>($karma_score)<span class='tooltip'><span class='top'></span><span class='middle'>$karma_tooltip</span><span class='bottom'></span></span></a>
+									</td>";
 									if($lendid==$session->userid)
 									{
 										$name1 = 'bidamt' .$i;
@@ -2055,13 +2057,17 @@ if($brw2['active'] == LOAN_REPAID)
 											$sublevel=$database->getUserSublevelById($leid);
 											if($sublevel==LENDER_GROUP_LEVEL)
 												$lusername=$lname;
+											$karma_score = number_format($database->getKarmaScore($lendid));
+											$karma_tooltip = $lang['profile']['karma_tooltip'];
 											$kamount=$rows['bidamount'];
 											$bidint=$rows['bidint'];
 											$leprurl = getUserProfileUrl($leid);
 											$lamt = convertToDollar($brw2['AmountGot'] ,($CurrencyRate));
 											$percentFinanced = ($bidamount* 100)/$lamt ;
 											echo "<tr>";
-												echo "<td><a href='$leprurl'>$lusername</a></td>";
+												echo "<td>
+													<a href='$lendprurl'>$lusername</a> <br/><a style='cursor:pointer' class='tt'>($karma_score)<span class='tooltip'><span class='top'></span><span class='middle'>$karma_tooltip</span><span class='bottom'></span></span></a>
+												</td>";
 												echo "<td>".number_format($bidamount, 2, ".",",")."</td>";
 												echo "<td>".number_format($bidint, 2, ".",",")." %</td>";
 											echo "</tr>";

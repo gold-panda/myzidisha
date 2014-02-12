@@ -92,8 +92,8 @@ if(!empty($set['lenders'])) { ?>
 				$impact = $database->getMyImpact($userid);
 				$total_invested=$database->totalAmountLend($userid);
 				$amtinactivebids = $database->amountInActiveBidsDisplay($userid);
-				$totlat_impact = number_format($total_invested + $amtinactivebids + $impact['invite_AmtLent']+$impact['Giftrecp_AmtLent'], 2, '.', ',');
-				$totlat_impactToSort = round(($total_invested + $impact['invite_AmtLent']+$impact['Giftrecp_AmtLent']),0);
+				$totlat_impact = number_format($impact, 2, '.', ',');
+				$totlat_impactToSort = round(($impact),0);
 				$prurl = getUserProfileUrl($userid);
 				if($availAmt>0 && empty($deactivatedmsg)) {
 					$active1="<form name='activeform".$userid."' method='post' action='process.php'>".

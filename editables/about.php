@@ -11,17 +11,6 @@ Julia holds a master\'s degree in International Economics from the George Washin
 
 <br />
 
-<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/analinjsaturria.html" target="_blank">ANALIN SATURRIA</a>, Country Liaison Manager</h4>
-							
-							
-							<p style="margin-top:10px;">Analin was born and raised in Santo Domingo in the Dominican Republic. Her upbringing included extended traveling through rural Dominican Republic, which made her aware of the greater economic and social challenges the poor experience. This knowledge, and her experiences volunteering and working for a microfinance organization, helped her to choose international development as a lifelong career. Her work in the nonprofit sector has taken her around the Dominican Republic and southeast Haiti. 
-A strong microfinance supporter, Analin is hoping to learn more about borrowers\' business activities in other countries and help Zidisha build a strong community of lenders that remain engaged and enthusiastic. 
- 
-She obtained a law degree from Pontificia Universidad Catolica Madre y Maestra, and a Master of Laws in Sustainable International Development from the University of Washington. She is proficient in Spanish, English and French. She currently resides in Shanghai, China with her husband. In her free time, Analin enjoys cooking, traveling, watching sports and reading. </p>
-							
-							<br />
-
-
 	
 	
 <h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/MienDeGraeve.html" target="_blank">MIEN DE GRAEVE</a>, Burkina Faso Client Relationship Manager  &nbsp; &nbsp; &nbsp; <a href="http://translate.google.com/translate?sl=nl&tl=en&js=n&prev=_t&hl=en&ie=UTF-8&layout=2&eotf=1&u=http%3A%2F%2Fwww.mo.be%2Fwereldblog%2Fmien-de-graeve%2F&act=url" target="_blank">View Weblog</a></h4>
@@ -54,7 +43,26 @@ She obtained a law degree from Pontificia Universidad Catolica Madre y Maestra, 
 							
 							<br />
 
-											
+
+							<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/analinjsaturria.html" target="_blank">ANALIN SATURRIA</a>, Country Liaison Manager</h4>
+							
+							
+							<p style="margin-top:10px;">Analin was born and raised in Santo Domingo in the Dominican Republic. Her upbringing included extended traveling through rural Dominican Republic, which made her aware of the greater economic and social challenges the poor experience. This knowledge, and her experiences volunteering and working for a microfinance organization, helped her to choose international development as a lifelong career. Her work in the nonprofit sector has taken her around the Dominican Republic and southeast Haiti. 
+A strong microfinance supporter, Analin is hoping to learn more about borrowers\' business activities in other countries and help Zidisha build a strong community of lenders that remain engaged and enthusiastic. 
+ 
+She obtained a law degree from Pontificia Universidad Catolica Madre y Maestra, and a Master of Laws in Sustainable International Development from the University of Washington. She is proficient in Spanish, English and French. She currently resides in Shanghai, China with her husband. In her free time, Analin enjoys cooking, traveling, watching sports and reading. </p>
+							
+							<br />
+
+
+<h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/michaela.html" target="_blank">MICHAELA LADSTAETTER</a>, Accountant</h4>
+							
+							
+							<p style="margin-top:10px;">Michaela is located in the North of Italy. She holds degrees in business management and in political economy at the University of Innsbruck (Austria) and works as an Italian certified auditor and tax consultant. She speaks German, Italian and English. She arrived to Zidisha as a lender and soon felt that she would like to contribute more to the growth of this innovative model.</p>
+
+							<br />
+
+	
 
 <h4 style="display:inline"><a href="' . SITE_URL . 'microfinance/profile/VincentC.html">VINCENT CASANOVA</a>, Francophone Country Liaison Intern</h4>
 							

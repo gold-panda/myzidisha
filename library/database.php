@@ -17950,8 +17950,6 @@ class genericClass
 
             }
 
-
-
         }
 
         $res['Giftrecp_AmtLent'] = 0;
@@ -17966,7 +17964,10 @@ class genericClass
 
         }
 
-        return $res;
+        $total_invested=$this->totalAmountLend($userid); //total amount this lender has lent for loans already funded
+        $amtinactivebids = $this->amountInActiveBidsDisplay($userid); //total amount in not yet funded bids
+        $total_impact = $total_invested + $amtinactivebids + $res['invite_AmtLent'] + $res['Giftrecp_AmtLent'];
+        return $total_impact;
 
     }
 
@@ -23199,6 +23200,29 @@ function getProfileImage($userid){
         $lastinst_amt= $db->getOne($s , array('repaymentschedule_actual',$id2));
 
         return $lastinst_amt;
+ }
+
+
+function getUserCommentCount($userid) {
+
+        global $db;
+
+        $query = "select count(id) from ! where senderid = ?";
+
+        $commentcount = $db->getOne($query,array('zi_comment',$userid));
+
+        return $commentcount;
+
+    }
+
+
+ function getKarmaScore($userid){
+
+        $total_impact = $this->getMyImpact($userid);
+        $total_comments = $this->getUserCommentCount($userid);
+        $karma = ($total_impact / 10) + $total_comments;
+        return $karma;
+
  }
 
 

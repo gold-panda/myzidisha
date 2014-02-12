@@ -28,6 +28,8 @@ $loanDetail=$database->getLastloan($ud);
 			{
 				$sendid=$commns['partid'];
 				$name=$database->getNameById($sendid);
+				$karma_score = number_format($database->getKarmaScore($sendid));
+				$karma_tooltip = $lang['profile']['karma_tooltip'];						
 				$lendername = $commns['lender'];
 				$amt = $commns['amount'];
 				if($commns['loneid']) {
@@ -92,7 +94,8 @@ $loanDetail=$database->getLastloan($ud);
 							<td style="width:150px">
 								<?php $prurl = getUserProfileUrl($sendid);?>
 								<a href='<?php echo $prurl ?>'><img src="library/getimagenew.php?id=<?php echo $sendid;?>&width=150&height=150" border=0></a>
-								<p style="text-align:center"><?php echo "<a href='$prurl'>".$name."</a>";?></p>
+								<p style="text-align:center"><?php echo "<a href='$prurl'>".$name."</a> <br/><a style='cursor:pointer' class='tt'>($karma_score)<span class='tooltip'><span class='top'></span><span class='middle'>$karma_tooltip</span><span class='bottom'></span></span></a>
+									";?></p>
 															</td>
 							<td>
 								<div style="border-bottom:1px solid #cccccc;padding-bottom:5px">
@@ -218,14 +221,16 @@ $loanDetail=$database->getLastloan($ud);
 							$trColor=$repColor2;
 						$sendid1name = $database->getUserNameById($sendid1);
 						$prurl = getUserProfileUrl($sendid1);
-			?>
+					?>
 						<div style="margin-left:50px">
 							<table class="zebra-striped">
 								<tbody>
 									<tr>
 										<td style="width:100px;background-color:<?php echo $trColor;?>">
 											<a href="<?php echo $prurl?>"><img src="library/getimagenew.php?id=<?php echo $sendid1;?>&width=100&height=100" border=0></a>
-											<p style="text-align:center"><?php echo "<a href='$prurl'>$name1</a>";?></p>
+											<p style="text-align:center">
+												<?php echo "<a href='$prurl'>$name1</a><br/><a style='cursor:pointer' class='tt'>($karma_score)<span class='tooltip'><span class='top'></span><span class='middle'>$karma_tooltip</span><span class='bottom'></span></span></a>"; ?>
+											</p>
 										</td>
 										<td style="background-color:<?php echo $trColor;?>">
 											<div><strong><?php echo $name1;?></strong>&nbsp;replied on &nbsp;<?php echo date("M d, Y", $eachreply['editdate']);?></div>

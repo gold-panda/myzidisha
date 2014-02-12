@@ -19,6 +19,8 @@
 	$photo=$data['PhotoPath'];
 	if(empty($hideamt))
 		$totallendamt=$database->totalAmountLend($id);
+
+	$karma_score = $database->getKarmaScore($id);
 	?>
 
 	<h3 class="subhead top"><?php echo $lang['profile']['lender_detail'] ?></h3>
@@ -50,6 +52,13 @@
 					<td><?php echo $website;?></td>
 				</tr>
 				<?php } ?>
+				<tr>
+					<td>
+						<strong><?php echo $lang['profile']['karma'] ?>: <a style='cursor:pointer' class='tt'><img src='library/tooltips/help.png' style='border-style: none;' /><span class='tooltip'><span class='top'></span><span class='middle'><?php echo $lang['profile']['karma_tooltip'] ?></span><span class='bottom'></span></span></a></strong></td>
+					<td>
+						<?php echo number_format($karma_score); ?>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 <?php	if(!empty($desc)){?>

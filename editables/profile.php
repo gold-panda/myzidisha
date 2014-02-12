@@ -117,4 +117,6 @@ $lang['profile']['endorser_fb']='View Facebook Profile';
 $lang['profile']['endorser_know']='How do you know ';
 $lang['profile']['endorser_conf']='What makes you confident that ';
 $lang['profile']['endorser_conf2']=' can be entrusted with a loan from our community?';
+$lang['profile']['karma']='Karma Score';
+$lang['profile']['karma_tooltip']='The Karma Score is calculated on the basis of the total amount lent by the new members this member has recruited to Zidisha via email invites or gift cards, the number of comments this member has posted in the Zidisha website, and the total amount lent by this member.';
 ?>
