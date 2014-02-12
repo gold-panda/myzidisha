@@ -730,7 +730,14 @@ if(isset($_GET['checkLoanAppAmount'])) {
 	$currency=$database->getUserCurrency($session->userid);
 	$rate=$database->getCurrentRate($session->userid);
 	//$usdmaxBorrowerAmt=$database->getAdminSetting('maxBorrowerAmt');//website fee rate		
-	$usdmaxBorrowerAmt = $session->getCurrentCreditLimit($session->userid,true); // function created by julia 08-12-13 used by Mohit
+
+	$loanstatus=$database->getLoanStatus($session->userid);
+	if($loanstatus == LOAN_OPEN){					
+						$usdmaxBorrowerAmt = $session->getCurrentCreditLimit($session->userid,false); // function created by julia 12-02-14 used by Mohit
+					}else{
+						$usdmaxBorrowerAmt = $session->getCurrentCreditLimit($session->userid,true); // function created by julia 08-12-13 used by Mohit
+					}
+	
 	$maxBorrowerAmt= ceil($usdmaxBorrowerAmt); /* It is in native currency */
 	$usdminBorrowerAmt=$database->getAdminSetting('minBorrowerAmt');//website fee rate
 	$minBorrowerAmt= ceil(convertToNative($usdminBorrowerAmt, $rate));

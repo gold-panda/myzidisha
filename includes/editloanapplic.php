@@ -97,7 +97,12 @@ else
 						$grace_p = $form->value('gperiod');
 					$webfee=number_format($loandata['WebFee'],0,'.','');//website fee rate
 					$maxLoanAppInterest=($database->getAdminSetting('maxLoanAppInterest') + $database->getAdminSetting('fee'));
-					$usdmaxBorrowerAmt = $session->getCurrentCreditLimit($session->userid,true);//website fee rate
+					if($loanstatus == LOAN_OPEN){
+						$usdmaxBorrowerAmt = $session->getCurrentCreditLimit($session->userid,false);//website fee rate
+					}else{
+						$usdmaxBorrowerAmt = $session->getCurrentCreditLimit($session->userid,true);//website fee rate
+					}
+					
 					$usdminBorrowerAmt=$database->getAdminSetting('minBorrowerAmt');//website fee rate
 					$maxBorrowerAmt= ceil($usdmaxBorrowerAmt); /* It is in native currency */
 					$minBorrowerAmt= ceil(convertToNative($usdminBorrowerAmt, $rate));

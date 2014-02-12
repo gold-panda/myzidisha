@@ -9996,7 +9996,7 @@ class genericClass
 
         traceCalls(__METHOD__, __LINE__);
 
-        $q="SELECT loanid FROM ! WHERE borrowerid=? AND (active=3 OR active=5 OR active=2 ) "; // Added OR active=2 by mohit to use in current credit limit
+        $q="SELECT loanid FROM ! WHERE borrowerid=? AND (active=3 OR active=5) "; // Added OR active=2 by mohit to use in current credit limit
 
         $result=$db->getOne($q,array('loanapplic',$borrowerid));
 

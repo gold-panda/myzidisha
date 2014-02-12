@@ -8243,6 +8243,9 @@ function forgiveReminder(){
 						if($addCreditearned==false){
 							
 							$currentlimit= ceil(($currentloanamt * $percentincrease) / 100);
+							if($loanstatus == LOAN_OPEN){ 			
+									$currentlimit=$currentloanamt;	// added by mohit to fic credit limit on edit loan page							
+							}
 											
 						}else{
 
