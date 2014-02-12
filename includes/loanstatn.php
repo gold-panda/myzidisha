@@ -2057,7 +2057,7 @@ if($brw2['active'] == LOAN_REPAID)
 											$sublevel=$database->getUserSublevelById($leid);
 											if($sublevel==LENDER_GROUP_LEVEL)
 												$lusername=$lname;
-											$karma_score = number_format($database->getKarmaScore($lendid));
+											$karma_score = number_format($database->getKarmaScore($leid));
 											$karma_tooltip = $lang['profile']['karma_tooltip'];
 											$kamount=$rows['bidamount'];
 											$bidint=$rows['bidint'];

@@ -252,7 +252,12 @@ $(document).ready(function() {
 											<tr>
 												<td style="width:100px;border-top:1px solid #DFDCDC;border-bottom:1px solid #DFDCDC;border-left:1px solid #DFDCDC">
 													<img style="max-width:100px" src="<?php echo $imagesrc_comment; ?>">
-													<p style="margin-top:10px;text-align:center;"><?php echo "<a href='$sender_url'>$name12</a><br/><a style='cursor:pointer' class='tt'>($karma_score)<span class='tooltip'><span class='top'></span><span class='middle'>$karma_tooltip</span><span class='bottom'></span></span></a>";?></p>
+													<p style="margin-top:10px;text-align:center;"><?php if($level==LENDER_LEVEL){
+														echo "<a href='$sender_url'>$name12</a><br/><a style='cursor:pointer' class='tt'>($karma_score)<span class='tooltip'><span class='top'></span><span class='middle'>$karma_tooltip</span><span class='bottom'></span></span></a>";
+													} else {
+														echo "<a href='$sender_url'>$name12</a>";
+													} ?>
+													</p>
 												</td>
 												<td style="width:100%;border-top:1px solid #DFDCDC;border-right:1px solid #DFDCDC;border-bottom:1px solid #DFDCDC">
 													<strong><?php echo $name12;?></strong>&nbsp;<?php echo $lang['profile']['comments_on'] ?>&nbsp;<?php echo date("M d, Y", $commns['pub_date']);?><br/><br/>
