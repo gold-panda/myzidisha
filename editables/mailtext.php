@@ -100,7 +100,7 @@ Zidisha Team';
 //comment posting notification to lender
 $lang['mailtext']['comment-subject'] = 'New Message: %bname%';
 
-$lang['mailtext']['comment-msg'] = '%mname% comments on %date%<br/><br/>
+$lang['mailtext']['comment-msg'] = 'Posted by %mname% in %location%<br/><br/>
 %message% <br/><br/>
 %images% <br/><br/>
 We welcome your participation. Please click <a href=" %link% ">here</a> to view the comment and post a response.<br/><br/>

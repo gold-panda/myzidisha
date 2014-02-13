@@ -6485,7 +6485,7 @@ function forgiveReminder(){
 		}
 		return $msg;
 	}
-	public function sendBulkMails($emailadd, $selected_radio, $emailmssg, $emailsubject, $emailheader, $image_src, $link, $anchor)
+	public function sendBulkMails($emailadd, $selected_radio, $emailmssg, $emailmssg2, $emailmssg3, $emailsubject, $emailheader, $image_src, $image_src2, $image_src3, $link, $link2, $link3, $anchor, $anchor2, $anchor3)
 	{
 		global $database, $form;
 		$path=  getEditablePath('error.php');
@@ -6507,10 +6507,18 @@ function forgiveReminder(){
 		}
 
 		$emailmssg = nl2br($emailmssg);
+		$params['emailmssg2'] = nl2br($emailmssg2);
+		$params['emailmssg3'] = nl2br($emailmssg3);
 		$emailheader=nl2br($emailheader);
 		$params['image_src'] = $image_src;
 		$params['link'] = $link;
 		$params['anchor'] = $anchor;
+		$params['image_src2'] = $image_src2;
+		$params['link2'] = $link2;
+		$params['anchor2'] = $anchor2;
+		$params['image_src3'] = $image_src3;
+		$params['link3'] = $link3;
+		$params['anchor3'] = $anchor3;
 		
 		if($selected_radio == 'Others')
 		{
@@ -6548,7 +6556,7 @@ function forgiveReminder(){
 			require ("editables/mailtext.php");
 			$otheremail = $rows['Email'];
 			$From       = EMAIL_FROM_ADDR;
-			$templet    = "editables/email/simplemail.html";
+			$templet    = "editables/email/hero.html";
 			$Subject    = $emailsubjct;
 			$To         = $otheremail;
 			$reply      = $this->mailSendingHtml($From, $To, $otheremail, $emailsubject, '', $emailmssg, 0, $templet, 3, BULK_ANNOUNCEMENTS_TAG, $params);
@@ -6897,12 +6905,21 @@ function forgiveReminder(){
 		$params['link'] = SITE_URL.$loanprurl ;
 		$params['message'] = $msg;
 		$params['images'] =  $imgtag;
-		$params['date'] =  date("M d, Y ",$cmts['pub_date']);
 		$params['mname'] = $database->getUserNameById($cmts['senderid']);
 		$ulevel=$database->getUserLevel($params['mname']);
 		if($ulevel==BORROWER_LEVEL)
 			$borrower_name = $database->getNameById($cmts['senderid']);
 			$params['mname']=ucwords(strtolower($borrower_name));
+		$user_citycountry=$database->getUserCityCountry($cmts['senderid']);
+		$u_city=$user_citycountry['City'];
+		$u_country=$user_citycountry['Country'];
+		$u_country=$database->mysetCountry($u_country);
+		if (!empty ($u_city)){
+			$params['location'] = $u_city.", ".$u_country;
+		} else {
+			$params['location'] = $u_country;
+		} 
+		
 		$emailmssg=$this->formMessage($lang['mailtext']['comment-msg'], $params);
 
 		$reply=$this->mailSendingHtml($From,$To,$adminemail , $emailsubject, '', $emailmssg, 0, $templet, 3, LENDER_COMMENT_NOTIFICATION_TAG);
