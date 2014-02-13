@@ -26,9 +26,9 @@
 						$usermessage=$commns['message'];
 						if(!empty($commns['tr_message']))
 							$usermessage=$commns['tr_message'];
-						if(strlen($usermessage) >350)
+						if(strlen($usermessage) >5000)
 						{
-							$usermessage=substr($usermessage,0,350);
+							$usermessage=substr($usermessage,0,5000);
 							$pos1= strrpos ($usermessage , ' ');
 							if($pos1 !==false) {
 								$usermessage=substr($usermessage,0,$pos1)."....\" <a href='".$url."'>Read More</a>";
@@ -97,9 +97,9 @@
 						$usermessage=$commns['message'];
 						if(!empty($commns['tr_message']))
 							$usermessage=$commns['tr_message'];
-						if(strlen($usermessage) >350)
+						if(strlen($usermessage) >5000)
 						{
-							$usermessage=substr($usermessage,0,350);
+							$usermessage=substr($usermessage,0,5000);
 							$pos1= strrpos ($usermessage , ' ');
 							if($pos1 !==false) {
 								$usermessage=substr($usermessage,0,$pos1)."....\" <a href='".$url."'>Read More</a>";
