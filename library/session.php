@@ -8226,7 +8226,7 @@ function forgiveReminder(){
 //case where last loan was repaid on time, overall repayment rate is above threshold and loan held for long enough to qualify for credit limit increase
 
 					$lastinst_amt = $database->getLastInstallmentAmt($userid, $loanid);
-					if ($lastinst_amt>($currentloanamt * 0.1) && convertToDollar($lastinst_amt) > 100) { //case where more than 30% and $100 of last loan was paid in the last installment
+					if ($lastinst_amt>($currentloanamt * 0.1) && convertToDollar($lastinst_amt,$rate) > 100) { //case where more than 30% and $100 of last loan was paid in the last installment
 
 						if(!$addCreditearned){
 
@@ -8244,7 +8244,7 @@ function forgiveReminder(){
 							
 							$currentlimit= ceil(($currentloanamt * $percentincrease) / 100);
 							if($loanstatus == LOAN_OPEN){ 			
-									$currentlimit=$currentloanamt;	// added by mohit to fic credit limit on edit loan page							
+									$currentlimit=$currentloanamt;	// added by mohit to fix credit limit on edit loan page							
 							}
 											
 						}else{
