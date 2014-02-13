@@ -2,7 +2,9 @@
 
 require_once ("library/init.php");
 require_once 'extlibs/vendor/autoload.php';
-use Mailgun\Mailgun;
+//use Mailgun\Mailgun;
+require_once 'extlibs/sendwithus_php-master/lib/API.php';
+use sendwithus\API;
 
 function clearPost($post_val) // remove email headder injects
 {
@@ -57,8 +59,8 @@ function clearPost($post_val) // remove email headder injects
 
 
 	return $post_val;
-} //function clearPost
-//mailSender($From, $To, $row['email'], $Subject, $message);
+} 
+
 
 function forReadFile($templet) {
 // For PHP 5 and up
@@ -75,6 +77,9 @@ return $contents ;
 function mailSender ( $hdr_from, $hdr_to, $email, $subject, $header, $body, $attachment='',$templet = 0,$html=0, $tag=0, $info=0 ,$replyTo=null) {
 	global $database,$session;
 	Logger("ZDISHAEMAILSENTTEST");
+
+	$body_orig = $body;
+
 	
 /*
 This is a wrapper function for sending emails
@@ -109,19 +114,7 @@ This is a wrapper function for sending emails
 	} else {
 		$templet = forReadFile("editables/email/simplemail.html");
 	}
-	if($html == 1)
-	{
-		$templet = str_replace('%image%',$info['image'],$templet);
-		$templet = str_replace('%card_amount%',$info['card_amount'],$templet);
-		$templet = str_replace('%to_name%',$info['to_name'],$templet);
-		$templet = str_replace('%from_name%',$info['from_name'],$templet);
-		$templet = str_replace('%message%',$info['message'],$templet);
-		$templet = str_replace('%card_code%',$info['card_code'],$templet);
-		$templet = str_replace('%exp_date%',$info['exp_date'],$templet);
-		$templet = str_replace('%card_link%',$info['card_link'],$templet);
-		$templet = str_replace('%content_mail%',$body,$templet);
-	}
-	else if($html==2)
+	if($html==2)
 	{
 		$templet = str_replace('%user_msg%',$info['user_msg'],$templet);
 		$templet = str_replace('%image_link%',$info['image_link'],$templet);
@@ -140,7 +133,7 @@ This is a wrapper function for sending emails
 		$templet = str_replace('%interest%',$info['interest'],$templet);
 		$templet = str_replace('%statusbar%',$info['statusbar'],$templet);
 		$templet = str_replace('%content_mail%',$body,$templet);
-			/*   print_r($templet);exit;   */
+			
 	}
 	else if($html==3)
 	{
@@ -165,6 +158,41 @@ This is a wrapper function for sending emails
 
 			$templet = str_replace('%linked_text%','',$templet);
 		
+		}
+
+		if (!empty($info['footer'])){
+
+			$footer = $info['footer'];
+		
+		}else{
+
+			$footer = "View our latest loan projects here!";
+		
+		}
+
+		if (!empty($info['button_url'])){
+
+			$button_url = $info['button_url'];
+		
+		}else{
+
+			$button_url = "https://www.zidisha.org/microfinance/lend.html";
+		
+		}
+
+		if ($templet == $hero){
+		
+			if (!empty($info['button_text'])){
+
+				$button_text = $info['button_text'];
+			
+			}else{
+
+				$button_text = "View Loans";
+			}
+		} else {
+
+				$button_text = "";
 		}
 
 	}
@@ -223,15 +251,7 @@ This is a wrapper function for sending emails
 
 		$body = str_replace('#content#', $body,$templet);
 		
-		//$body = str_replace('#email_hdr_left#', $smarty->fetch('email_hdr_left.tpl'), $body);
-		
-		//$smarty->assign('message', $body);
-		//$smarty->assign('subject', stripslashes($subject));
-
-		//$body = $smarty->fetch('html_emails.tpl');
 	}
-
-	//$body = str_replace('#AdminName#', $config['admin_name'], $body);
 
 	$siteurl = str_replace('cronjobs/','',HTTP_METHOD . $_SERVER['SERVER_NAME'] . DOC_ROOT) ;
 
@@ -240,38 +260,6 @@ This is a wrapper function for sending emails
 	$body = str_replace('#SiteUrl#', $siteurl,$body);
 
 
-	/*if (!$html) {
-
-		$body = str_replace('<br>',$crlf,$body);
-		$body = str_replace('<br />',$crlf,$body);
-		$body = str_replace('<br/>',$crlf,$body);
-
-		// replace site link with full URL
-
-		//global $config;
-
-		//$body = str_replace('#SiteUrlLogin#', $siteurl.'login.php',str_replace("#AdminEmail#",ADMIN_EMAIL_ADDR, hdr_text )).$body;
-
-
-		$site_name = $config['site_name'];
-		$site_url = 'http://' . $_SERVER['SERVER_NAME'] . DOC_ROOT;
-		$site_link = '<a href="' . $site_url . '">' . $site_name . '</a>';
-
-		$body = str_replace( $site_link, $site_url, $body );
-
-		// remove any final tags
-		$body = strip_tags( $body );
-
-		$mime->setTXTBody($body);
-
-	} else {*/
-		
-		//$body = str_replace("#SiteUrlLogin#",$siteurl.'login.php',str_replace("MAIL_HDR",str_replace("#AdminEmail#",ADMIN_EMAIL_ADDR,hdr_html),$body));
-
-		/* Add banner advertisement if set in configuration settings */
-		/*if (($config['banner_in_emails'] == 'Y' || $config['banner_in_emails'] == '1') && $bannerURL != '') {
-			$body = $body.'<font style="font-size: 9px;"><br>Advertisement</font><br>'.str_replace('banclick.php',$siteurl.'banclick.php',$bannerURL);
-		}*/
 
 		$parserfile = 'css_parser.php';
 		require_once($parserfile);
@@ -291,11 +279,9 @@ This is a wrapper function for sending emails
 
 		$page = str_replace('#SiteUrl#', $siteurl,$page);
 
-		//$page = str_replace('#SkinName#', $config['skin_name'],$page);
-
 		$mime->setHTMLBody($page);
 
-	/*}*/
+	
 
 
 	if (!is_array($attachment) ) {
@@ -312,7 +298,6 @@ This is a wrapper function for sending emails
 	}
 
 	$body = $mime->get();
-	//echo "<br/>" . $body . "<br/>";
 	$hdrs = $mime->headers($headers);
 
     $params = false;
@@ -334,11 +319,6 @@ This is a wrapper function for sending emails
 	}
 
 
-	//include_once (PEAR_DIR.'Mail.php');////////////////
-	//$mail_object =& Mail::factory( $mail_type, $params );
-//	print_r($mail_object);
-
-
 	if (ECHO_EMAILS === true)
 	{
 		echo $email . "<br/>";
@@ -348,16 +328,12 @@ This is a wrapper function for sending emails
 	}
 	else 
 	{
+		/* old Mailgun integration
 		if(defined('IS_LOCALHOST') && IS_LOCALHOST)
 		$rc = 1;
 		else {
-			//$rc = $mail_object->send($email, $hdrs, $body);
+			
 			$mgClient = new Mailgun(MAILGUN_API_KEY);
-
-			//print($headers['From']); print("<br />");
-			//print($email); print("<br />");
-			//print($headers['Subject']); print("<br />");
-			//print($body); print("<br />");
 
 			$domain = "zidisha.org";
 			
@@ -365,7 +341,6 @@ This is a wrapper function for sending emails
 			if($tag != 0) { 
 			$tagForMailgun = array($tag); 
 			}
-
 
 			try { $result = $mgClient->sendMessage("$domain",
                   array('from'    => $headers['From'],
@@ -377,12 +352,40 @@ This is a wrapper function for sending emails
                         ));
 					if($result->http_response_code == 200) { $rc = 1; }
 				} catch (Exception $e) { Logger("Error sending email, {$e->getMessage()}"); }
-			
+		}	
+			*/
 
-		}
-			
+				$sendwithus_api = new API(SENDWITHUS_API_KEY);
+				 
+				$email_data = array(
+					'subject' => $headers['Subject'],
+					'image_src' => $info['image_src'],
+				    'header' => $header,
+				    'content' => $body_orig,
+				    'link' => array(
+				        'text' => $info['anchor'],
+				        'url' => $info['link']
+				    ),
+				    'footer' => $footer,
+				    'button' => array(
+				        'url' => $button_url,
+				        'text' => $button_text
+				    )
+				);
+				 
+				 
+				// Send the Hero template to julia@zidisha.org
+				$result = $sendwithus_api->send(
+				    SENDWITHUS_TEMPLATE_HERO, 
+				    array(  // Recipient information
+				    	
+				        'address' => $email
+				    ),
+				    $email_data
+					);
+				$rc =1;
 	}
-
 	return $rc;
+
 }
 ?>

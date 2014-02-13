@@ -277,37 +277,40 @@ if(!empty($openloans))
                         $statusMsg=$lang['loaners']['status'];
                 $loanprurl = getLoanprofileUrl($userid,$loanid);
                 $prurl = getUserProfileUrl($userid);
+                $repayrate_tooltip = $lang['loanstatn']['tooltip_RepayRate'];
         ?>
                 <div class="browse-listing">
                         <a href="<?php echo $loanprurl?>"><img src="<?php echo $photo?>" alt="<?php echo $name?>" /></a>
                         <div class="listing-info">
-                                <h4><?php echo $name?></h4>
-                                <p><?php if($is_volunteer){?><img class='starimg' src="images/star.png" ></img>&nbsp;&nbsp;&nbsp;Volunteer Mentor<br/><?php } 
+                            <?php if(strlen($summary) < 70){ ?>
 
-                                if($bfrstloan){ 
-                                    echo  $lang['loaners']['repayrate']?>: <?php echo $repayrate_disp; 
-                                } else {
-                                    echo 'New Member'; 
-                                }?> 
+                                <h4><?php echo $summary?></h4>
+                                <p> 
+
+                                <?php echo  $name." ".$repayrate_disp; ?>   
+
+                            <?php } else { ?>
+                                
+                                <h4><?php echo $name?></h4>
+                                
+                                <p><?php 
+
+                                echo  $lang['loaners']['repayrate']?>: <?php echo $repayrate_disp; 
+                            
+                            } ?>
+                                </strong>
+
+                            <?php if($is_volunteer){?>
+
+                                <img class='starimg' src="images/star.png" ></img>&nbsp;&nbsp;&nbsp;Volunteer Mentor<br/><?php } 
+                                    
+                                    ?>
                                 
                                 <br /><br /><?php echo $city.", ".$country;?></p>
                                 <p>
-                                        <?php if(!empty($summary)){
-
-                                                echo $summary." <a href='$loanprurl'>Read More</a>";
-
-                                        }else{
-
-                                                if(strlen($loanuse) >200){
-
-                                                        echo substr($loanuse,0,200)." <a href='$loanprurl'>Read More</a>";
+                                    <?php echo substr($loanuse,0,200)." <a href='$loanprurl'>Read More</a>";
                                                   
-                                                }else{
-
-                                                        echo $loanuse." <a href='$loanprurl'>Read More</a>";
-                                                }
-                                        
-                                        } ?>
+                                    ?>
                                 </p>
                                 <p><strong><?php echo $lang['loaners']['amount_requested']?>:</strong> <?php echo $amount; ?> USD<br /><strong><?php echo $lang['loaners']['interest']; ?>:</strong> <?php echo number_format($interest, 2, '.', ','); ?>%</p>
                                 <p><?php echo $statusbar ?></p>

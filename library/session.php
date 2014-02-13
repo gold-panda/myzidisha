@@ -8608,7 +8608,7 @@ function repayRateDisplay($userid)
 		if(!empty($totalTodayinstallment) && $totalTodayinstallment != 0){ 
 			$repayrate_disp = number_format($RepayRate)."% (".number_format($totalTodayinstallment).")";
 		}else{
-			$repayrate_disp = "None (New Member)";
+			$repayrate_disp = "(New Member)";
 		}
 		return $repayrate_disp;
 	}

@@ -362,14 +362,25 @@ This is a notification that your Zidisha loan application is due to expire on %e
 Zidisha provides a platform whereby our members can raise loans by proposing mutually beneficial terms to lenders.  Lenders choose from many competing applications, and your loan will only be funded if it succeeds in appealing to lenders.  Here are some tips members have used to make their loan applications more attractive to lenders:<br/><br/>
 <ol>
 	<li>
-		Ensure that your photo is of good quality. Most people prefer to have lending relationships with people whose photos are clear, close up, and smiling. Photos that are not well lit, too far away or not smiling are less attractive to lenders. You may change your photo by uploading a new one in the <a href="%editlink%">Edit Profile</a> page.	
-	</li><br/> 
-	<li>
-		Consider your offered interest rate. Most lenders try to ensure their loan funds earn enough interest to compensate for their money transfer costs and inflation, so that their value is preserved for future borrowers who will receive the funds that you repay.  You may increase your offered interest in the <a href="%loanappliclink%">Loan Application</a> page after your loan application is posted for funding.
-	</li><br/> 
-	<li>
-		Make sure that you include enough detail in your "Use of Loan" description.  Lenders want to know exactly what items will be bought with the loan, and exactly how this will help your business grow.  You may edit this field in the <a href="%loanappliclink%">Loan Application</a> page as well.
+		<strong>Ensure you are smiling in your profile photo.  Members who smile in their photos are five times more likely to have their loans funded.</strong> 
+Ensure that your photo is of good quality. Most people prefer to have lending relationships with people whose photos are clear, close up, and smiling. Photos that are not well lit, too far away or not smiling are less attractive to lenders. You may change your photo by uploading a new one in the <a href="index.php?p=13">Edit Profile</a> page.
 	</li>
+	<br/>
+
+	<li>
+		Offer a high enough interest rate to lenders. If you have not yet built up a high on-time repayment rate score, then it will probably be necessary to offer a higher interest rate to make your application attractive to potential lenders.
+	</li>
+	<br/>
+
+	<li>
+		 Use a title that tells lenders what you will do or purchase with the loan funds. 
+	</li>
+	<br/>
+	
+	<li>
+		 Make sure that you include a clear explanation in your "Use of Loan" description. Lenders want to know exactly what items will be bought with the loan, and exactly how this will help your business grow. 
+	</li>
+	<br/>
 </ol>
 <br/><br/>
 Best wishes,<br/><br/>
