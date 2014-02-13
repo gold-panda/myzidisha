@@ -8365,9 +8365,8 @@ class genericClass
 
         //limits results to installments that fell due before today and before the final payment was made
 
-        $q1="SELECT COUNT( id ) FROM  ! WHERE duedate <= ? AND duedate <= ? AND loanid =? AND userid =? AND amount >?";
-
-        $res=$db->getOne($q1, array('repaymentschedule', time(), $paiddate, $loanid, $userid, 0));
+        $q1="SELECT COUNT( id ) FROM  ! WHERE duedate <= ? AND loanid =? AND userid =? AND amount >?"; //Remove 'AND duedate <= ?' & $paiddate, on date 13-02 
+        $res=$db->getOne($q1, array('repaymentschedule', time(), $loanid, $userid, 0));
 
         return $res;
 
