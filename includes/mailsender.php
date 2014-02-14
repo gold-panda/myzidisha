@@ -78,6 +78,8 @@ function mailSender ( $hdr_from, $hdr_to, $email, $subject, $header, $body, $att
   Logger("ZDISHAEMAILSENTTEST");
 
   $body_original = $body;
+  $body2 = $info['emailmssg2'];
+  $body3 = $info['emailmssg3'];
 
 /*
 This is a wrapper function for sending emails
@@ -192,7 +194,7 @@ This is a wrapper function for sending emails
     if (empty($tag)){
       $tag = ACCOUNT_NOTIFICATIONS_TAG;
     }
-    
+
     if ($tag == ACCOUNT_NOTIFICATIONS_TAG){
       $template = SENDWITHUS_TEMPLATE_ACCOUNT;
     }
@@ -367,11 +369,13 @@ This is a wrapper function for sending emails
             'text' => $info['anchor'],
             'url' => $info['link']
         ),
+        'image_src2' => $info['image_src2'],
         'content2' => $body2,
         'link2' => array(
             'text2' => $info['anchor2'],
             'url2' => $info['link2']
         ),
+        'image_src3' => $info['image_src3'],
         'content3' => $body3,
         'link3' => array(
             'text3' => $info['anchor3'],
