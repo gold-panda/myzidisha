@@ -57,7 +57,7 @@ include_once("./editables/".$path);
 							<tbody>
 								<tr>
 									<td style="width:200px">
-										<a href='<?php echo $loanprurl?>'><img src="library/getimagenew.php?id=<?php echo $userid;?>&width=60&height=60"></a>
+										<a href='<?php echo $loanprurl?>'><img src="library/getimagenew.php?id=<?php echo $userid;?>&width=300&height=300"></a>
 									</td>
 									<td style="width:100%;">
 										<?php echo $usermessage;?>

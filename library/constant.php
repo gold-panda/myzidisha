@@ -271,3 +271,11 @@ define("LENDER_COMMENT_NOTIFICATION_TAG","Lender comment notifications");
 define("LENDER_NEW_APP_NOTIFICATION_TAG","New app by previous borrower notifications");
 define("BULK_ANNOUNCEMENTS_TAG","Bulk announcements to users");
 define("INVITE_TO_JOIN_TAG","Invites to join Zidisha");
+
+//Sendwithus
+define("SENDWITHUS_API_KEY", "live_fb8f691744bd32d2e23e7f3a5a8c6179fd00d61d");
+define("SENDWITHUS_TEMPLATE_HERO", "MGyfaX2kfbNwrVF97xdfFB");
+define("ACCOUNT_NOTIFICATIONS_TAG","Account notifications");
+define("COMMENT_NOTIFICATIONS_TAG","Comment notifications");
+define("NEWS_TAG","Zidisha news");
+define("NEW_THIS_WEEK_TAG","New this week");

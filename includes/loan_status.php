@@ -246,6 +246,8 @@ $(document).ready(function() {
 			</table>
 		</div>
 		<br/><br/><br/>
+
+		<!--
 		<div class="row">
 			<?php
 				include_once("./editables/profile.php");
@@ -255,7 +257,7 @@ $(document).ready(function() {
 			?>
 		</div>
 		<br/><br/>
-
+		-->
 
 
 		<h3 class="subhead"><?php echo $lang['loan_status']['act_bid']; ?><p id="active_bids" class="view-more-less">View Less</p></h3>

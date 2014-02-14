@@ -19482,11 +19482,8 @@ class genericClass
 
         if(!empty($bIds)) {
 
-            $time=time() - (30 * 24 * 60 * 60);
-
-            $q="SELECT * FROM zi_comment  WHERE receiverid IN($bIds) AND pub_date > $time AND status = 0 union SELECT * FROM zi_comment  WHERE senderid IN($bIds) AND pub_date > $time AND status = 0 order by id desc";
-
-            $result=$db->getAll($q);
+            $q="SELECT * FROM ! WHERE receiverid IN ($bIds) ORDER BY id DESC LIMIT ?";
+            $result=$db->getAll($q, array('zi_comment', 100));
 
         }
 

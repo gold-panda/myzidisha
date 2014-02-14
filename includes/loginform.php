@@ -92,14 +92,17 @@ if($session->logged_in)
                 $myimapctSec = $database->getMyImpact($session->userid);
 ?>
                 <h2><?php echo $lang['loginform']['my_account'];?></h2>
-                <p><strong><a href="index.php?p=19&u=<?php echo $session->userid;?>"><?php echo $lang['loginform']['myportfolio'] ?></a></p>
+                <p><strong><a href="index.php?p=119&u=<?php echo $session->userid;?>">Comments on My Loans</a></p>
+                <p><a href="index.php?p=26"><font color="purple">New!</font> Gift Cards</a></p>
+                <p><a href="index.php?p=19&u=<?php echo $session->userid;?>"><?php echo $lang['loginform']['myportfolio'] ?></a></p>
                 <p><a href="<?php echo $prurl?>"><?php echo $lang['loginform']['profile'] ?></a></p>
                 <p><a href="index.php?p=13"><?php echo $lang['loginform']['eprofile'] ?></a></p>
+                <p><a href="index.php?p=30"><?php echo $lang['loginform']['invite_frnds'] ?></a></p>
+                <p><a href='index.php?p=80'><?php echo $lang['loginform']['lendingGroups']?></a></p>
                 <p><a href="index.php?p=16&u=<?php echo $session->userid;?>"><?php echo $lang['loginform']['tran_hist'] ?></a></p>
                 <p><a href="index.php?p=17"><?php echo $lang['loginform']['lender_withdraw'] ?></a></p>
-                <p><a href="index.php?p=74"><?php echo $lang['loginform']['auto_lend'] ?></a></p>
-                <p><a href="index.php?p=30"><?php echo $lang['loginform']['invite_frnds'] ?></a></p>
-                <p><a href='index.php?p=80'><?php echo $lang['loginform']['lendingGroups']?></a></strong></p>
+                <p><a href="index.php?p=74"><?php echo $lang['loginform']['auto_lend'] ?></a></strong></p>
+                
                 <?php if($co_access==1) {
                         $country_code=$database->getCountryCodeById($session->userid); 
                 ?>

@@ -282,25 +282,16 @@ if(!empty($openloans))
                 <div class="browse-listing">
                         <a href="<?php echo $loanprurl?>"><img src="<?php echo $photo?>" alt="<?php echo $name?>" /></a>
                         <div class="listing-info">
-                            <?php if(strlen($summary) < 70){ ?>
+                            <?php if(!empty ($summary) && (strlen($summary) < 70)){ ?>
 
-                                <h4><?php echo $summary?></h4>
+                                <h4><?php echo $summary; ?></h4>
                                 <p> 
+                            <?php }
 
-                                <?php echo  $name." ".$repayrate_disp; ?>   
+                                echo  $name." ".$repayrate_disp;   
 
-                            <?php } else { ?>
-                                
-                                <h4><?php echo $name?></h4>
-                                
-                                <p><?php 
 
-                                echo  $lang['loaners']['repayrate']?>: <?php echo $repayrate_disp; 
-                            
-                            } ?>
-                                </strong>
-
-                            <?php if($is_volunteer){?>
+                                if($is_volunteer){?>
 
                                 <img class='starimg' src="images/star.png" ></img>&nbsp;&nbsp;&nbsp;Volunteer Mentor<br/><?php } 
                                     

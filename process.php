@@ -225,7 +225,7 @@ class Process
 		$_POST_ORG=$_POST;
 		$_POST = sanitize_custom($_POST);
 
-		$reply = $session->sendBulkMails($_POST['emailaddress'], $_POST['radio_useroption'], $_POST['emailmessage'], $_POST['emailsubject'],  $_POST['emailheader'],  $_POST['image_src'],  $_POST['link'],  $_POST['anchor']);
+		$reply = $session->sendBulkMails($_POST['emailaddress'], $_POST['radio_useroption'], $_POST['emailmessage'], $_POST['emailmessage2'], $_POST['emailmessage3'], $_POST['emailsubject'],  $_POST['emailheader'],  $_POST['image_src'],  $_POST['image_src2'], $_POST['image_src3'], $_POST['link'],  $_POST['link2'],  $_POST['link3'],  $_POST['anchor'],  $_POST['anchor2'],  $_POST['anchor3']);
 		if(!$reply){
 			$_SESSION['value_array'] = $_POST_ORG;
 			$_SESSION['error_array'] = $form->getErrorArray();
@@ -296,12 +296,12 @@ class Process
 						if(isset($_GET["language"]))
 						{
 							$language = $_GET["language"];
-							$ref=SITE_URL.$language.'/index.php?p=19';
+							$ref=SITE_URL.$language.'/index.php?p=119';
 						}
 						else
-							$ref=SITE_URL.'index.php?p=19';
+							$ref=SITE_URL.'index.php?p=119';
 					}else{
-						$ref=SITE_URL.'index.php?p=19';	
+						$ref=SITE_URL.'index.php?p=119';	
 					}
 				}
 				else
@@ -310,11 +310,11 @@ class Process
 					if(isset($_GET["language"]))
 					{
 						$language = $_GET["language"];
-						$ref=SITE_URL.$language.'/index.php?p=19';
+						$ref=SITE_URL.$language.'/index.php?p=119';
 					}
 					//12-19-2012 Anupam checks if isset($paramerter['fg']) if it is logging in for forgiving his loan he should redirected to the page he comes from 
 					else if(!isset($paramerter['fg'])) {
-						$ref=SITE_URL.'index.php?p=19';
+						$ref=SITE_URL.'index.php?p=119';
 					}
 				}
 
