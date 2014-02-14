@@ -195,7 +195,7 @@ if($session->userlevel==ADMIN_LEVEL)
 				<tr><td>Footer (Optional):</td></tr>
 				<tr>
 					<td>
-						<input type="text" id="footer" name="footer" style="width:350px;" value="<?php echo $form->value("anchor3"); ?>"/>
+						<input type="text" id="footer" name="footer" style="width:350px;" value="<?php echo $form->value("footer"); ?>"/>
 					</td>
 				</tr>
 				<tr><td></td></tr>
@@ -204,7 +204,7 @@ if($session->userlevel==ADMIN_LEVEL)
 				<tr><td>Button URL (Optional):</td></tr>
 				<tr>
 					<td>
-						<input type="text" id="button_url" name="button_url" style="width:350px;" value="<?php echo $form->value("anchor3"); ?>"/>
+						<input type="text" id="button_url" name="button_url" style="width:350px;" value="<?php echo $form->value("button_url"); ?>"/>
 					</td>
 				</tr>
 				<tr><td></td></tr>
@@ -213,7 +213,7 @@ if($session->userlevel==ADMIN_LEVEL)
 				<tr><td>Button Text (Optional):</td></tr>
 				<tr>
 					<td>
-						<input type="text" id="button_text" name="button_text" style="width:350px;" value="<?php echo $form->value("anchor3"); ?>"/>
+						<input type="text" id="button_text" name="button_text" style="width:350px;" value="<?php echo $form->value("button_text"); ?>"/>
 					</td>
 				</tr>
 				<tr><td></td></tr>
