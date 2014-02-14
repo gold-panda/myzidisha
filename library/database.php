@@ -398,6 +398,8 @@ class genericClass
 
                 $rtn['userlevel']==LENDER_LEVEL;
 
+                $rtn['regdate']=$result['regdate'];
+
             }
 
             else if($res['userlevel']==BORROWER_LEVEL)
@@ -23227,6 +23229,18 @@ function getUserCommentCount($userid) {
 
  }
 
+
+ function getJoinDate($userid){
+
+        global $db;
+
+        $q= 'SELECT regdate FROM ! where userid = ?';
+
+        $res = $db->getOne($q, array('users',$userid));
+
+        return $res;
+
+ }
 
 /* End here */
 
