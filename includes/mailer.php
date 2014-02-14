@@ -119,6 +119,106 @@ if($session->userlevel==ADMIN_LEVEL)
 				</tr>
 				<tr><td></td></tr>
 
+
+				<tr><td>Image URL 2 (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="image_src2" name="image_src2" style="width:350px;" value="<?php echo $form->value("image_src2"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+						
+
+				<tr><td>Body 2 (Optional):</td></tr>
+				<tr>
+					<td>
+						<textarea id="emailmessage2" name="emailmessage2" style="width:352px;height:170px"><?php echo $form->value("emailmessage2"); ?></textarea><br/>
+						<?php echo $form->error("emailmessage"); ?>
+					</td>
+				</tr>
+				<tr>
+				<tr><td></td></tr>
+
+				<tr><td>Link 2 (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="link2" name="link2" style="width:350px;" value="<?php echo $form->value("link2"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+
+				<tr><td>Anchor 2 (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="anchor2" name="anchor2" style="width:350px;" value="<?php echo $form->value("anchor2"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+
+
+				<tr><td>Image URL 3 (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="image_src3" name="image_src3" style="width:350px;" value="<?php echo $form->value("image_src3"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+						
+
+				<tr><td>Body 3 (Optional):</td></tr>
+				<tr>
+					<td>
+						<textarea id="emailmessage3" name="emailmessage3" style="width:352px;height:170px"><?php echo $form->value("emailmessage3"); ?></textarea><br/>
+						<?php echo $form->error("emailmessage"); ?>
+					</td>
+				</tr>
+				<tr>
+				<tr><td></td></tr>
+
+				<tr><td>Link 3 (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="link3" name="link3" style="width:350px;" value="<?php echo $form->value("link3"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+
+				<tr><td>Anchor 3 (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="anchor3" name="anchor3" style="width:350px;" value="<?php echo $form->value("anchor3"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+				
+
+				<tr><td>Footer (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="footer" name="footer" style="width:350px;" value="<?php echo $form->value("anchor3"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+
+
+				<tr><td>Button URL (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="button_url" name="button_url" style="width:350px;" value="<?php echo $form->value("anchor3"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+
+
+				<tr><td>Button Text (Optional):</td></tr>
+				<tr>
+					<td>
+						<input type="text" id="button_text" name="button_text" style="width:350px;" value="<?php echo $form->value("anchor3"); ?>"/>
+					</td>
+				</tr>
+				<tr><td></td></tr>
+
+
 					<td><input type="hidden" name="sendbulkmails" value='1' /><br/>
 						<input type="hidden" name="user_guess" value="<?php echo generateToken('sendbulkmails'); ?>"/><br/>
 						<input class='btn' type="submit" name="Send" value="<?php echo $lang['admin']['send']; ?>"/>

@@ -6485,7 +6485,7 @@ function forgiveReminder(){
 		}
 		return $msg;
 	}
-	public function sendBulkMails($emailadd, $selected_radio, $emailmssg, $emailmssg2, $emailmssg3, $emailsubject, $emailheader, $image_src, $image_src2, $image_src3, $link, $link2, $link3, $anchor, $anchor2, $anchor3)
+	public function sendBulkMails($emailadd, $selected_radio, $emailmssg, $emailmssg2, $emailmssg3, $emailsubject, $emailheader, $image_src, $image_src2, $image_src3, $link, $link2, $link3, $anchor, $anchor2, $anchor3, $footer, $button)
 	{
 		global $database, $form;
 		$path=  getEditablePath('error.php');
@@ -6519,6 +6519,9 @@ function forgiveReminder(){
 		$params['image_src3'] = $image_src3;
 		$params['link3'] = $link3;
 		$params['anchor3'] = $anchor3;
+		$params['footer'] = $footer;
+		$params['button_url'] = $button_url;
+		$params['button_text'] = $button_text;
 		
 		if($selected_radio == 'Others')
 		{

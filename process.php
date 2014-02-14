@@ -225,7 +225,7 @@ class Process
 		$_POST_ORG=$_POST;
 		$_POST = sanitize_custom($_POST);
 
-		$reply = $session->sendBulkMails($_POST['emailaddress'], $_POST['radio_useroption'], $_POST['emailmessage'], $_POST['emailmessage2'], $_POST['emailmessage3'], $_POST['emailsubject'],  $_POST['emailheader'],  $_POST['image_src'],  $_POST['image_src2'], $_POST['image_src3'], $_POST['link'],  $_POST['link2'],  $_POST['link3'],  $_POST['anchor'],  $_POST['anchor2'],  $_POST['anchor3']);
+		$reply = $session->sendBulkMails($_POST['emailaddress'], $_POST['radio_useroption'], $_POST['emailmessage'], $_POST['emailmessage2'], $_POST['emailmessage3'], $_POST['emailsubject'],  $_POST['emailheader'],  $_POST['image_src'],  $_POST['image_src2'], $_POST['image_src3'], $_POST['link'],  $_POST['link2'],  $_POST['link3'],  $_POST['anchor'],  $_POST['anchor2'],  $_POST['anchor3'],  $_POST['footer'],  $_POST['button_url'],  $_POST['button_text']);
 		if(!$reply){
 			$_SESSION['value_array'] = $_POST_ORG;
 			$_SESSION['error_array'] = $form->getErrorArray();
