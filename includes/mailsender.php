@@ -189,6 +189,23 @@ This is a wrapper function for sending emails
 
     }
 
+    if (empty($tag)){
+      $tag = ACCOUNT_NOTIFICATIONS_TAG;
+    }
+    
+    if ($tag == ACCOUNT_NOTIFICATIONS_TAG){
+      $template = SENDWITHUS_TEMPLATE_ACCOUNT;
+    }
+    elseif($tag == COMMENT_NOTIFICATIONS_TAG){
+      $template = SENDWITHUS_TEMPLATE_COMMENTS;
+    }
+    elseif($tag == NEWS_TAG){
+      $template = SENDWITHUS_TEMPLATE_NEWS;
+    }
+    elseif($tag == NEW_THIS_WEEK_TAG){
+      $template = SENDWITHUS_TEMPLATE_3FEATURES;
+    }
+
   }
   $hdr_from = stripslashes(clearPost($hdr_from));
   $hdr_to = stripslashes(clearPost($hdr_to));
@@ -338,9 +355,8 @@ This is a wrapper function for sending emails
         'button' => array(
             'url' => $button_url,
             'text' => $button_text
-        )
+        ),
       );
-      $template = SENDWITHUS_TEMPLATE_HERO;
     } else {
       $email_data = array(
         'subject' => $headers['Subject'],
