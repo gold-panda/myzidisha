@@ -13958,7 +13958,13 @@ class genericClass
 
             else
 
-                $repaidPercent = $res['paidtotal']/$res['amttotal']*100;
+             $repaidPercent = $res['paidtotal']/$res['amttotal']*100;
+			 //$brwrandLoandetail['repaidPercent'] = round($repaidPercent,0);
+			 $p_rounded=round($repaidPercent);
+			 if($repaidPercent < 100 && $p_rounded>=100) {
+					$repaidPercent='99';
+					$repaidPercent=number_format($repaidPercent, 0, ".", ",");
+			 }
 
             $brwrandLoandetail['repaidPercent'] = round($repaidPercent,0);
 

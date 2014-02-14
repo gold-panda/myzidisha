@@ -5504,7 +5504,7 @@ function forgiveReminder(){
 					$text=$text."<th>".$lang['loanstatn']['tot_paid_amount']."</th>";
 					if($displyall)
 					{
-						$text=$text."<th>".number_format(round_local($totalPaidAmt), 0, '.', ',')."</th>";
+						$text=$text."<th>".number_format($totalPaidAmt, 0, '.', ',')."</th>"; // round_local($totalPaidAmt)
 					}
 					else
 					{
