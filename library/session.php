@@ -6662,21 +6662,22 @@ function forgiveReminder(){
 		$params['name'] = $lender_name;
 		$params['user_msg']= $frnds_msg;
 		$Subject = $this->formMessage($lang['mailtext']['invite_subject'], $params);
+		$params['footer'] = "Click here to accept:";
+		$params['button_text'] = "Accept Invite";
 		if(!empty($email_subject) &&  !empty($invitemsg)) {
 			$Subject = trim($email_subject);
 			for($i=0; $i<count($email_ids); $i++) {
-				$params['zidisha_link'] = SITE_URL."index.php?refid=$ids[$i]";
-				$invite_link = $this->formMessage($lang['mailtext']['invite_link'], $params);
-				$invitemessg = $invitemsg."<br/><br/>".$invite_link;
+				$params['zidisha_link'] = $params['button_url'] = SITE_URL."index.php?refid=$ids[$i]";
+				$invitemessg = $invitemsg;
 				$message = $this->formMessage($invitemessg, $params);
-				$reply = $this->mailSendingHtml($From, $To, $email_ids[$i], $Subject, '', $message, 0, $templet, 3, NEWS_TAG);
+				$reply = $this->mailSendingHtml($From, $To, $email_ids[$i], $Subject, '', $message, 0, $templet, 3, NEWS_TAG, $params);
 			}
 		}
 		else {
 			for($i=0; $i<count($email_ids); $i++) {
-				$params['zidisha_link']= SITE_URL."index.php?refid=$ids[$i]";
+				$params['zidisha_link']=  $params['button_url'] = SITE_URL."index.php?refid=$ids[$i]";
 				$message = $this->formMessage($lang['mailtext']['invite_body'], $params);
-				$reply=$this->mailSendingHtml($From, $To, $email_ids[$i], $Subject, '', $message, 0, $templet, 3, NEWS_TAG);
+				$reply=$this->mailSendingHtml($From, $To, $email_ids[$i], $Subject, '', $message, 0, $templet, 3, NEWS_TAG, $params);
 			}
 		}
 		return $reply;
@@ -7152,7 +7153,7 @@ function forgiveReminder(){
 
 		$Subject=$lang['mailtext']['LenderReg-subject'];
 		$message = $lang['mailtext']['LenderReg-msg'];
-		$reply=$this->mailSendingHtml($From, '', $email, $Subject, '', $message, 0, $templet, 3, NEWS_TAG);
+		$reply=$this->mailSendingHtml($From, '', $email, $Subject, '', $message, 0, $templet, 3);
 
 	}
 
@@ -8639,6 +8640,29 @@ function repayRateDisplay($userid)
 		return $repayrate_disp;
 	}
 
+
+//sends confirmation email to the member who invited a new lender
+function sendLenderInviteConf($inviteeid){
+		global $database;
+		$From=EMAIL_FROM_ADDR;
+		require ("editables/mailtext.php");
+		$templet="editables/email/hero.html";
+		$invitor_id = $database->getInvitee($inviteeid);
+		$invitor_details = $database->getEmail($invitor_id);
+		$invitor_email= "julia@zidisha.org";
+		$invitee_details = $database->getEmail($inviteeid);
+		$params['imail']="inviteemail";
+		$emailsubject= $this->formMessage($lang['mailtext']['lender_invite_conf_subject'], $params);
+		$emailmssg=$this->formMessage($lang['mailtext']['lender_invite_conf'], $params);
+		$params['footer'] = "Thought of someone else to invite?";
+		$params['button_text'] = "Send Invite";
+		$params['button_url'] = "https://www.zidisha.org/index.php?p=30";
+		$reply=$this->mailSendingHtml($From,'',$invitor_email , $emailsubject, '', $emailmssg, 0, $templet, 3, ACCOUNT_NOTIFICATIONS_TAG, $params);		
+	}
+
+
+
+//end
 }
 $session=new Session;
 $form = new Form;

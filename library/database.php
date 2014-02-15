@@ -2406,8 +2406,6 @@ class genericClass
 
         
 
-        } 
-
 
 
         /* removing this for now because links were being used by other than the invited recipient
@@ -2432,29 +2430,24 @@ class genericClass
 
         */
 
+            $user_level = $this->getUserLevelbyid($userid);
 
+            if ($user_level == BORROWER_LEVEL){
 
-        if(!empty($res)){
+                $invited_by = $this->getInvitee($userid);
+                $session->sendInviteAlert($userid);
+                $session->getBInviteSiftData($userid,$invited_by);
 
+            } elseif ($user_level == LENDER_LEVEL){
 
+                //$session->sendLenderInviteConf($userid);
 
-            $invited_by = $this->getInvitee($userid);
-
-
-
-            $session->sendInviteAlert($userid);
-
-
-
-            $session->getBInviteSiftData($userid,$invited_by);
-
-
-
-        }
-
+            }
 
 
         return $res;
+
+        } 
 
     }
 
