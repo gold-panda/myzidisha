@@ -5,34 +5,26 @@
 
 {block name=slides}
 <ul class="slides">
-  <li class="slide" style="background-image:url(/static/images/flickr/7170421686_3ed348bf8d_k.jpg);">
+  <li class="slide" style="background-image:url(/static/images/flickr/melita.jpg);">
     <div class="info">
       <h2>Lend Melita <strong>$100</strong> for a diary cow.</h2>
-      <p>Joing the global <strong>person-to-person</strong> microlending movement.</p>
+      <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
       <a href="#" class="btn blue large">Lend</a>
     </div>
     <div class='bg'></div>
   </li>
-  <li class="slide" style="background-image:url(/static/images/flickr/5367321226_cd7d6492f9_o.jpg);">
+  <li class="slide" style="background-image:url(/static/images/flickr/visionking.jpg);">
     <div class="info">
       <h2>Lend Pherister <strong>$200</strong> for a new schoolroom.</h2>
-      <p>Joing the global <strong>person-to-person</strong> microlending movement.</p>
+      <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
       <a href="#" class="btn blue large">Lend</a>
     </div>
     <div class='bg'></div>
   </li>
-  <li class="slide" style="background-image:url(/static/images/flickr/5366743581_4b789af0cb_o.jpg);">
-    <div class="info">
-      <h2>Lend Stephen <strong>$100</strong> for a new motorcycle.</h2>
-      <p>Joing the global <strong>person-to-person</strong> microlending movement.</p>
-      <a href="#" class="btn blue large">Lend</a>
-    </div>
-    <div class='bg'></div>
-  </li>
-  <li class="slide" style="background-image:url(/static/images/flickr/3828356031_03ae86313f_o.jpg);">
-    <div class="info">
-      <h2>Lend Pherister <strong>$200</strong> for a new steer.</h2>
-      <p>Joing the global <strong>person-to-person</strong> microlending movement.</p>
+  <li class="slide" style="background-image:url(/static/images/flickr/mary.jpg);">
+    <div class="info"> 
+      <h2>Lend Mary <strong>$100</strong> for a delivery wagon.</h2>
+      <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
       <a href="#" class="btn blue large">Lend</a>
     </div>
     <div class='bg'></div>
