@@ -11,7 +11,8 @@ function ProcessAutoBidding(){
 		if(!empty($result)){
 			foreach($result as $key=>$value) {				
 				$database->updateAutoLend($value['lender_id']);
-				AutoLendByUserId($value['lender_id']);							
+				AutoLendByUserId($value['lender_id']); //use to process autobids from all users
+				//AutoLendByUserId(16127); //use to process autobids from zidishap2p matching fund only
 			}
 		}else{
 			echo "No Lender is available for autolending.";

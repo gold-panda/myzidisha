@@ -23241,9 +23241,9 @@ function getLenderGiftCards($userid){
 
         global $db;
 
-        $q="select order_type, card_amount, recipient_email, to_name, gc.date, claimed from ! as gc JOIN gift_transaction as gt on gt.txn_id = gc.txn_id WHERE gt.userid=?";
+        $q="select order_type, card_amount, recipient_email, to_name, gc.date, claimed from ! as gc join ! as gt on gc.txn_id = gt.id where gt.userid = ? AND gt.status = 1";
 
-        $res= $db->getAll($q, array('gift_cards', $userid));
+        $res= $db->getAll($q, array('gift_cards', 'gift_transaction', $userid));
 
         return $res;
 

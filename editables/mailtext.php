@@ -176,13 +176,10 @@ $lang['mailtext']['promote_body3'] ="Zidisha.org is a US-based nonprofit that le
 //lender invite email - general
 $lang['mailtext']['invite_subject'] = "Invite from %name%";
 
-$lang['mailtext']['invite_body_l'] = 'Join the global peer-to-peer microlending movement.
-
-No intermediaries between you and the borrower = lower cost for the borrower + direct connection with the entrepreneur you are helping.';
+$lang['mailtext']['invite_body_l'] = 'No intermediaries between you and the borrower = lower cost for the borrower + direct connection with the entrepreneur you are helping.';
 
 $lang['mailtext']['invite_body'] =
-"%user_msg%<br/><br/>
-<a href='%zidisha_link%'>www.zidisha.org</a>";
+"%user_msg%";
 
 
 //withdraw request confirmation
@@ -409,10 +406,6 @@ Best regards,<br/><br/>
 Zidisha Team';
 
 
-//invite link
-$lang['mailtext']['invite_link'] = "Check out <a href='%zidisha_link%' target='_blank'>www.zidisha.org</a> to learn more.";
-
-
 //lending group comment notification
 $lang['mailtext']['grpcomment-subject'] = 'New Message: %gname% Lending Group';
 
@@ -611,6 +604,7 @@ Zidisha Team";
 
 $lang['mailtext']['eligible_invite_sms']="Congratulations! You now qualify for the Zidisha invite program. To participate, login to your account at Zidisha.org and follow the invite instructions.";
 
+
 //confirmation sent to VMs of new applicants 
 $lang['mailtext']['vm_confirmation_subject']="New assigned member: %bname%";
 
@@ -619,4 +613,13 @@ $lang['mailtext']['vm_confirmation']="Dear %uname%,<br/><br/>
 If you have any concerns about the information %bname% has provided, please let us know by replying to this email.<br/><br/>
 Thank you,<br/><br/>
 Zidisha Team";
+
+
+//confirmation sent to invitors of new lenders 
+$lang['mailtext']['lender_invite_conf_subject']="Your invite to %imail% is accepted";
+
+$lang['mailtext']['lender_invite_conf']="
+The invite you sent to %imail% has just been accepted. Zidisha has a new member!<br/><br/>
+Watch your total impact grow with each loan that happens because of your action.<br/><br/>
+";
 ?>

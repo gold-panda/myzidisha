@@ -93,12 +93,14 @@ if($session->logged_in)
 ?>
                 <h2><?php echo $lang['loginform']['my_account'];?></h2>
                 <p><strong><a href="index.php?p=119&u=<?php echo $session->userid;?>">Comments on My Loans</a></p>
-                <p><a href="index.php?p=26"><font color="purple">New!</font> Gift Cards</a></p>
-                <p><a href="index.php?p=19&u=<?php echo $session->userid;?>"><?php echo $lang['loginform']['myportfolio'] ?></a></p>
                 <p><a href="<?php echo $prurl?>"><?php echo $lang['loginform']['profile'] ?></a></p>
                 <p><a href="index.php?p=13"><?php echo $lang['loginform']['eprofile'] ?></a></p>
+                <p><a href="index.php?p=26"><font color="purple">New!</font> Gift Cards</a></p>
+                <p><a href="index.php?p=121"><font color="purple">New!</font> Track My Gift Cards</a></p>
                 <p><a href="index.php?p=30"><?php echo $lang['loginform']['invite_frnds'] ?></a></p>
+                <p><a href="index.php?p=120"><font color="purple">New!</font> Track My Invites</a></p>
                 <p><a href='index.php?p=80'><?php echo $lang['loginform']['lendingGroups']?></a></p>
+                <p><a href="index.php?p=19&u=<?php echo $session->userid;?>"><?php echo $lang['loginform']['myportfolio'] ?></a></p>
                 <p><a href="index.php?p=16&u=<?php echo $session->userid;?>"><?php echo $lang['loginform']['tran_hist'] ?></a></p>
                 <p><a href="index.php?p=17"><?php echo $lang['loginform']['lender_withdraw'] ?></a></p>
                 <p><a href="index.php?p=74"><?php echo $lang['loginform']['auto_lend'] ?></a></strong></p>
@@ -134,15 +136,14 @@ if($session->logged_in)
                         <ul> 
                             <li><a href="https://sites.google.com/a/zidisha.org/zidisha-staff/home/country-liaison-intern-guide" target="_blank"><?php echo $lang['loginform']['volunteer_guide'];?></a></li>
                             <li><a href="http://zidisha.org/forum/categories/volunteer-conversations.26/" target="_blank"><?php echo $lang['loginform']['volunteer_forum'];?></a></li>                                   
-                            <li><a href="index.php?p=102"><?php echo $lang['loginform']['find_brwr'] ?></a></li>
-                            <li><a href="index.php?p=99"><?php echo $lang['loginform']['pending_disbursed'];?></a></li>
+                            <li><a href="index.php?p=11&a=3&type=1&ord=ASC">Look Up Lender Account</a></li>
+                            <li><a href="index.php?p=102">Look Up Borrower Account</a></li>
+                            <li><a href="index.php?p=39">Reset Passwords</a></li>
+                            <li><a href="index.php?p=99">Disburse Loans</a></li>
                             <li><a href="index.php?p=11&a=1&type=1&ord=ASC"><?php echo $lang['loginform']['view_b'];?></a></li>
-                            <li><a href="index.php?p=84"><?php echo $lang['loginform']['community_organizer'] ?></a></li>
-                            <li><a href="index.php?p=25">Activate Volunteers</a></li>
-                            <li><a href="index.php?p=39"><?php echo $lang['loginform']['change_password'];?></a></li>
-                            <li><a href="index.php?p=11&a=3&type=1&ord=ASC"><?php echo $lang['loginform']['view_l'];?></a></li>
-                            <li><a href="index.php?p=31"><?php echo $lang['loginform']['repay_report'];?></a></li>
-                            <li><a href="index.php?p=23"><?php echo $lang['loginform']['pfreport'];?></a></li>
+                            <li><a href="index.php?p=31">Borrower Repayment Tracking</a></li>
+                            <li><a href="index.php?p=84">Manage Volunteer Mentors</a></li>
+                            <li><a href="index.php?p=25">View Active Staff</a></li>
                         </ul>
                         </div>
                     </div>

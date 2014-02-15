@@ -11,7 +11,7 @@
 		});
 });
 	$(function() {		
-		$(".tablesorter_pending_borrowers").tablesorter({sortList:[[2,1]], widgets: ['zebra']});
+		$(".tablesorter_pending_borrowers").tablesorter({sortList:[[0,1]], widgets: ['zebra']});
 	});	
 </script>
 <script type="text/javascript" src="includes/scripts/generic.js?q=<?php echo RANDOM_NUMBER ?>"></script>
@@ -56,10 +56,10 @@ $invite_details = $database->getLenderImpact($userid);
 <table class="zebra-striped tablesorter_pending_borrowers">
 		<thead>
 			<tr>
+				<th>Date Gifted</th>
 				<th>Name</th>
 				<th>Delivery Method</th>
 				<th>Recipient Email</th>
-				<th>Date Gifted</th>
 				<th>Amount</th>
 				<th>Status</th>
 			</tr>
@@ -75,14 +75,14 @@ $invite_details = $database->getLenderImpact($userid);
 				}?>
 
 				<tr>
-					<td><?php echo $rows['to_name'] ?></td>
-					<td><?php echo $rows['order_type'] ?></td>
-					<td><?php echo $rows['recipient_email']?></td>
 					<td>
 						<span style='display:none'><?php echo $rows['date'] ?></span>
 						<?php echo date('F d, Y',$rows['date']) ?>
 					</td>
-					<td><?php echo $rows['card_amount']?></td>
+					<td><?php echo $rows['to_name'] ?></td>
+					<td><?php echo ucfirst($rows['order_type']) ?></td>
+					<td><?php echo $rows['recipient_email']?></td>
+					<td><?php echo "$".number_format($rows['card_amount']) ?></td>
 					<td><?php echo $status; ?></td>
 				</tr>
 	<?php	}

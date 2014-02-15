@@ -11,7 +11,7 @@
 		});
 });
 	$(function() {		
-		$(".tablesorter_pending_borrowers").tablesorter({sortList:[[2,1]], widgets: ['zebra']});
+		$(".tablesorter_pending_borrowers").tablesorter({sortList:[[0,1]], widgets: ['zebra']});
 	});	
 </script>
 <script type="text/javascript" src="includes/scripts/generic.js?q=<?php echo RANDOM_NUMBER ?>"></script>
@@ -25,19 +25,38 @@ $path=	getEditablePath('invite.php');
 include_once("editables/".$path);
 
 $userid=$session->userid;
+$invite_details = $database->getLenderImpact($userid);
 $invitedmember= $database->getInvitedMember($userid);
 
 ?>
 <div class='span12'>
 <div align='left' class='static'><h1>Track My Invites</h1></div><br/>
-Introduction<br/><br/><br/>
-
+		
+<table class = 'detail'>
+	<tr>
+		<td width="25%">Invites Sent:</td>
+		<td>
+			<?php echo $invite_details['invite_sent'];?>						
+		</td>
+		<td>
+			<strong><a href="index.php?p=30" style="font-size:16px">Send Invite</a></strong>
+		</td>
+	</tr>
+	<tr><td></td></tr>
+	<tr>
+		<td>Invites Accepted:</td>
+		<td><?php echo $invite_details['invite_accptd']?></td>
+		<td></td>
+	</tr>
+</table>
+	
+<br/><br/><br/>
 
 <table class="zebra-striped tablesorter_pending_borrowers">
 		<thead>
 			<tr>
-				<th><?php echo $lang['invite']['email'] ?></th>
 				<th>Date Invited</th>
+				<th><?php echo $lang['invite']['email'] ?></th>
 				<th><?php echo $lang['invite']['status'] ?></th>
 			</tr>
 		</thead>
@@ -55,11 +74,11 @@ Introduction<br/><br/><br/>
 				}?>
 
 				<tr>
-					<td><?php echo $rows['email']?></td>
 					<td>
 						<span style='display:none'><?php echo $rows['date'] ?></span>
 						<?php echo date('F d, Y',$rows['date']) ?>
 					</td>
+					<td><?php echo $rows['email']?></td>
 					<td><?php echo $status; ?></td>
 				</tr>
 	<?php	}
