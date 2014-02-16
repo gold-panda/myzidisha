@@ -2,7 +2,7 @@
   <header id="topheader">
     <nav class='alignright'>
       <ul>
-        <li><a class='btn small grey' href="/index.php?p=116">Login</a></li>
+        <li>{php} include_once("includes/_login.header.php"); {/php}</li>
       </ul>
     </nav>
 
