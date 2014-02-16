@@ -3,11 +3,8 @@
     <div id="menu_trigger" class="mobile">menu</div>
       <nav>
         <ul>
-          <li><a href="index.php">About</a></li>
           <li><a href="portfolio.php">Lend</a></li>
           <li><a href="about.php">Borrow</a></li>
-          <li><a href="services.php">Volunteer</a></li>
-          <li><a href="blog.php">Blog</a></li>
           <li>
             <a href="shortcodes-with-sidebar.php">
               Learn More <span class="drops"></span></a>
@@ -18,6 +15,7 @@
                 <li><a href="">FAQ</a></li>
                 <li><a href="">How it Works</a></li>
                 <li><a href="">Why Zidisha?</a></li>
+                <li><a href="">Press</a></li>
                 <li><a href="">Book</a></li>
 
                 <li>
@@ -35,7 +33,6 @@
               </ul>
             </div>
           </li>
-          <li><a href="contact.php">Contact</a></li>
         </ul>
       </nav>
       

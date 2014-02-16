@@ -24,20 +24,18 @@
         -->
 
         <div class="widget widget_menu">
-          <h3 class="widgettitle">About</h3>
+          <h3 class="widgettitle">Explore</h3>
             <ul>
                 <li><a href="">FAQ</a></li>
                 <li><a href="">How it Works</a></li>
                 <li><a href="">Why Zidisha?</a></li>
                 <li><a href="">Press</a></li>
                 <li><a href="">Book</a></li>
-                <li><a href="">Contact Us</a></li>
-                <li><a href="">Terms of Use</a></li>
             </ul>
         </div>
 
         <div class="widget widget_menu">
-          <h3 class="widgettitle">Take Action</h3>
+          <h3 class="widgettitle">Act</h3>
             <ul>
               <li><a href="portfolio.php">Lend</a></li>
               <li><a href="about.php">Borrow</a></li>
@@ -48,7 +46,7 @@
         </div>
 
         <div class="widget widget_menu">
-          <h3 class="widgettitle">Get Involved</h3>
+          <h3 class="widgettitle">Connect</h3>
             <ul>
               <li><a href="">Groups</a></li>
               <li><a href="">Forum</a></li>
@@ -78,13 +76,12 @@
 
     <section class="bottom">
       <p class="copyrights">Copyright &copy; 2009 - 2014 Zidisha Inc.</p>
-      <!--
+      
       <ul>
-        <li><a href="about.php">About</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="contact.php">Contact</a></li>
+        <li><a href="">Terms of Use</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
-    -->
+    
     </section><!-- /bottom -->
 
   </footer><!-- /footer -->
