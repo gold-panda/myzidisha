@@ -1,14 +1,18 @@
-<?php if(empty($session->userid))
+<?php 
+
+  include_once("library/session.php");
+  global $database, $session;
+
+  if(empty($session->userid))
 
       { ?>
-        <!-- 31-10-2012 Anupam, Ebook link (requested to remove) -->
-        <!--        <div style='float:left;margin-top:20px;margin-left:200px;'><strong><a href="http://www.amazon.com/Venture-Collection-Microfinance-Stories-ebook/dp/B009JC6V12/ref=sr_1_13?s=digital-text&amp;ie=UTF8&amp;qid=1349104493&amp;sr=1-13&amp;keywords=microfinance" target="_blank"><?php echo $lang['loginform']['ebooklink']?></a></strong></div> -->
         <div id="login" align="left">
 
           <p href="/index.php?p=116">Login</p>
 
             <p style="text-align:right">
-              <?php   $Lendingcart = $database->getLendingCart(); 
+              <?php   
+                  $Lendingcart = $database->getLendingCart(); 
                   if(!empty($Lendingcart)) {
               ?>
               <a href='index.php?p=75'><img src='images/layout/icons/cart.gif'> Lending Cart</a>
@@ -26,7 +30,6 @@
   <?php }
       else
       {   ?> 
-        <!--<div style='float:left;margin-top:20px;margin-left:200px;'><strong><a href="http://www.amazon.com/Venture-Collection-Microfinance-Stories-ebook/dp/B009JC6V12/ref=sr_1_13?s=digital-text&ie=UTF8&qid=1349104493&amp;sr=1-13&amp;keywords=microfinance" target="_blank"><?php echo $lang['loginform']['ebooklink']?></a></strong></div> -->
         <div id="welcome">
           <?php $prurl = getUserProfileUrl($session->userid);
           $username=$database->getUserNameById($session->userid); ?>
@@ -56,6 +59,6 @@
         ?>
         &nbsp;&nbsp;&nbsp;&nbsp;<a href='process.php'><?php echo $lang['loginform']['Logout']?></a>
             
-          </div>
-        </div>
+          </div> <!-- /margin-top:10px -->
+        </div> <!-- /welcome -->
   <?php } ?>
