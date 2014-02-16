@@ -24,7 +24,7 @@
           {block name=slides}{/block}
         </div>
 
-        {include file='_social.tpl'}
+        {include file='_header.tpl'}
         {include file='_menu.tpl'}
 
       </div><!-- /home_header -->
