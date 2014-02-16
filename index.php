@@ -23,11 +23,6 @@
 	include_once("./editables/menu.php");
 	$path=	getEditablePath('menu.php');
 	include_once("./editables/".$path);
-
-	// Grabs translated strings for login form.
-	include_once("./editables/loginform.php");
-	$path=	getEditablePath('loginform.php');
-	include_once("./editables/".$path);
 	
 	$page=0;
 	if(isset($_GET["p"])){
@@ -97,7 +92,7 @@
 
 	// If it's a new style page, use this:
 	if  	  ($page==0  ){$smarty->display('home.tpl');return;}
-	//else if ($page==6  ){$smarty->display('contact.tpl');return;}
+	else if ($page==6  ){$smarty->display('contact.tpl');return;}
 
 	// TODO
 	// page=2 / loaners

@@ -49,6 +49,7 @@ In order to increase your maximum loan size, you must:<br/><br/>
 <ul style='padding: 0 0 0 2.0em;' ><li>Maintain a %MinRepayRate%% on-time repayment rate for all monthly installments since joining Zidisha.</li>
 <li>Make the final repayment installment of the current loan on time.</li>
 <li>Hold the current loan for at least %TimeThrshld% months.</li></ul>
+<li>Distribute your repayments over a series of regular installments, rather than repaying the entire amount in a single large payment.</li></ul>
 <br/><br/>
 The current credit limit increase progression for Zidisha members who fulfill the above criteria is as follows:<br/><br/>
 	<p>%firstLoanVal%%nxtLoanvalue%</p>
