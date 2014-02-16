@@ -18,7 +18,7 @@
   <div id="wrapper_content">
       
     {include file='_oldbrowser.tpl'}
-    {include file='_social.tpl'}
+    {include file='_header.tpl'}
     {include file='_menu.tpl'}
 
     <div id="featured">

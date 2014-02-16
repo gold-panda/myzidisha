@@ -3,38 +3,53 @@
 
     <section class="top">
       <div class="info">
-          <a href="#" class="ir" id="logo_footer">Zidisha</a>
+          <a href="http://zidisha.org" class="ir" id="logo_footer">Zidisha</a>
+
           <ul class="socials">
-            <li><a href="https://twitter.com/bestpsdfreebies" class="ir twitter">Twitter</a></li>
-            <li><a href="https://www.facebook.com/bestpsdfreebies" class="ir facebook">Facebook</a></li>
-            <li><a href="http://feeds.feedburner.com/bestpsdfreebies" class="ir rss">RSS</a></li>
+            <li><a href="https://twitter.com/ZidishaInc" class="ir twitter">Twitter</a></li>
+            <li><a href="http://www.facebook.com/ZidishaInc?sk=wall" class="ir facebook">Facebook</a></li>
+            <li><a href="http://p2p-microlending-blog.zidisha.org/" class="ir rss">RSS</a></li>
           </ul>
-        <p>Zidisha is a nonprofit organization that enables direct peer-to-peer lending to low-income entrepreneurs in developing countries.</p>
+          
+        <p>Zidisha is an online community that enables direct person-to-person lending to entrepreneurs in developing countries.</p>
       </div>
 
       <div class="widgets">
-
-        <div class="widget widget_text">
-          <h3 class="widgettitle">Contact Info</h3>
-          <div class="textwidget">
-            <p>21900 Muirfield Circle, #302<br>Sterling, Virginia<br>USA 20164</p>
-            <p>service@zidisha.org</p>
-            <h4>1.555.555.5555</h4>
-          </div>
-        </div>
-
         <div class="widget widget_menu">
-          <h3 class="widgettitle">Quick Links</h3>
+          <h3 class="widgettitle">Explore</h3>
             <ul>
-              <li><a href="portfolio.php">Lend</a></li>
-              <li><a href="about.php">Borrow</a></li>
-              <li><a href="archive.php">Volunteer</a></li>
-              <li><a href="blog.php">Blog</a></li>
-              <li><a href="services.php">Services</a></li>
-              <li><a href="contact.php">Contact Us</a></li>
+                <li><a href="/microfinance/faq.html">FAQ</a></li>
+                <li><a href="/microfinance/how-it-works.html">How it Works</a></li>
+                <li><a href="/microfinance/why-zidisha.html">Why Zidisha?</a></li>
+                <li><a href="microfinance/testimonials.html">Activity Feed</a></li>
+                <li><a href="/microfinance/press.html">Press</a></li>
+                <li><a href="http://www.amazon.com/Venture-Collection-Microfinance-Stories-ebook/dp/B009JC6V12">Book</a></li>
             </ul>
         </div>
 
+        <div class="widget widget_menu">
+          <h3 class="widgettitle">Act</h3>
+            <ul>
+              <li><a href="/microfinance/lend.html">Lend</a></li>
+              <li><a href="/microfinance/borrow.html">Borrow</a></li>
+              <li><a href="/microfinance/intern.html">Volunteer</a></li>
+              <li><a href="/microfinance/gift-cards.html">Gift Cards</a></li>
+              <li><a href="/microfinance/donate.html">Donate</a></li>
+            </ul>
+        </div>
+
+        <div class="widget widget_menu">
+          <h3 class="widgettitle">Connect</h3>
+            <ul>
+              <li><a href="/index.php?p=80">Groups</a></li>
+              <li><a href="https://www.zidisha.org/forum/">Forum</a></li>
+              <li><a href="http://p2p-microlending-blog.zidisha.org/">Blog</a></li>
+              <li><a href="/microfinance/team.html">Team</a></li>
+              <li><a href="/microfinance/newsletter.html">Newsletter</a></li>
+            </ul>
+        </div>
+
+        <!--
         <div class="widget widget_newsletter">
           <h3 class="widgettitle">Newsletter</h3>
           <div class="textwidget">
@@ -47,17 +62,18 @@
               </form>
           </div>
         </div>
-
+        -->
       </div><!-- /widgets -->
     </section><!-- /top -->
 
     <section class="bottom">
-      <p class="copyrights">Copyright &copy; 2009 - 2014 Zidisha Inc.</p>
+      <p class="copyrights">Copyright &copy; 2009 - 2014 Zidisha Inc. Zidisha is a 501(c)(3) nonprofit organization.</p>
+      
       <ul>
-        <li><a href="about.php">About</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="contact.php">Contact</a></li>
+        <li><a href="/index.php?p=5">Terms of Use</a></li>
+        <li><a href="/microfinance/contact.html">Contact</a></li>
       </ul>
+    
     </section><!-- /bottom -->
 
   </footer><!-- /footer -->

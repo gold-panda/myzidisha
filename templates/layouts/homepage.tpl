@@ -11,6 +11,7 @@
 
   <link href="/static/css/styles.css" rel="stylesheet">
   <script src="/static/js/libs/modernizr-2.6.2.min.js"></script>
+  <link rel="alternate" type="application/rss+xml" title="Zidisha: P2P Microfinance » Feed" href="http://p2p-microlending-blog.zidisha.org/feed/">
 </head>
 
 <body class="home">
@@ -23,7 +24,7 @@
           {block name=slides}{/block}
         </div>
 
-        {include file='_social.tpl'}
+        {include file='_header.tpl'}
         {include file='_menu.tpl'}
 
       </div><!-- /home_header -->
