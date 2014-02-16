@@ -51,6 +51,7 @@
 
         <div class="col col_2_3 last" style="align:center">
           <h3>How It Works</h3>
+        </div>
         <div class="col col_2_3 last">
           <img src="/static/images/worksdirect.png" alt="" style="padding:20px 0 0 0;" />
         </div>
