@@ -39,8 +39,9 @@
 <div class="wrapper">
   <section class="call_action">
     <div>
-      <h2>Peer-to-peer lending across the international wealth divide.</h2>
-      <p>Zidisha is a nonprofit organization that enables direct peer-to-peer lending to low-income entrepreneurs in developing countries.  100% of the lender's loan is disbursed directly to the borrower's business. </p>
+      <h2>P2P lending across the international wealth divide.</h2>
+      <p>We are pioneering the first online microlending community to connect lenders and borrowers directly across international borders - overcoming previously insurmountable barriers of geography, wealth and circumstance.<br/><br/>
+      </p>
     </div>
   </section>
 
