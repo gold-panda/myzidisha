@@ -115,7 +115,8 @@
 {/block}
 
 {block name=call_to_action_bottom}
-<h2>Volunteer or Intern With Zidisha Microfinance</h2>
-<p>Gain hands-on experience in microfinance and international development, while extending life-changing business growth opportunities to entrepreneurs in some of the the world's most disadvantaged locations.</p>
-<p><a href="/microfinance/intern.html" class="btn">Volunteer</a></p>
+<h2>Join Us</h2>
+<p>Explore our loan projects to start making a difference. You can find an entrepreneur to support, invite friends to join, and dialogue with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>
+</p>
+<p><a href="/microfinance/intern.html" class="btn">Explore Loans</a></p>
 {/block}
