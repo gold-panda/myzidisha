@@ -92,7 +92,9 @@
 
 	// If it's a new style page, use this:
 	if  	  ($page==0  ){$smarty->display('home.tpl');return;}
+	else if ($page==3  ){$smarty->display('how-works.tpl');return;}
 	else if ($page==6  ){$smarty->display('contact.tpl');return;}
+
 
 	// TODO
 	// page=2 / loaners

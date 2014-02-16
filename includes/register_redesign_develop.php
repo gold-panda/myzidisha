@@ -5,6 +5,10 @@
 <?php include_once("library/session.php");
 include_once("./editables/admin.php");
 require_once('library/recaptcha/recaptchalib.php');
+
+// Load Smarty
+require_once($_SERVER['DOCUMENT_ROOT'].'/extlibs/smarty/Zidisha.php'); 
+
 $select=0;
 if(isset($_GET["sel"])){
 	$select=$_GET["sel"];
@@ -25,9 +29,7 @@ include_once("./editables/register.php");
 $path=	getEditablePath('register.php');
 include_once("./editables/".$path);
 ?>
-<script type="text/javascript" src="includes/scripts/submain.js?q=<?php echo RANDOM_NUMBER ?>"></script>
-<script type="text/javascript" src="includes/scripts/generic.js?q=<?php echo RANDOM_NUMBER ?>"></script>
-<script type="text/javascript">
+ <script type="text/javascript">
 	function refC(){
 		document.getElementById('ci').src = 'library/captcha/captcha.php?'+Math.random();
 	}

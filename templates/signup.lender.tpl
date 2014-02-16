@@ -1,37 +1,36 @@
 {extends file="content.tpl"}
 
-{block name=title}Lender Account Creation{/block}
+{block name=title}Create A Lender Account{/block}
 {block name=classname}form_page{/block}
 {block name=description}{/block}
 
 {block name=content}
-<h3>We're so glad you're here.</h3>
-<p>When you support microfinance through social investments in a Zidisha entrepreneur, you not only fund a microfinance project, but you also fight poverty in that entrepreneur's family and community.</p>     
+
+<h3>Create A Lender Account</h3>     
 
 <div id="success" class="alert_box success" style="display:none"><p>Form was submitted.</p></div>
 
-<form action="ajaxform.php" method="post" name="contact" id="contact">
+<form enctype="multipart/form-data" method="post" id="sub-lender" name="sub-lender" action="process.php">
   <fieldset>
-    <label class="label">Username <span class="req">*</span></label>
-    <small class="note">Your username will be displayed to the public, and cannot be changed.</small>
-    <small class="error">Username required.</small>
+    <label class="label">Display Name</label>
+    <small class="error">Required Field</small>
     <input type="text" id="" name="">
   </fieldset>
 
   <fieldset>
-    <label class="label">Create Password <span class="req">*</span></label>
-    <small class="error">Password required.</small>
+    <label class="label">Password</label>
+    <small class="error">Required Field</small>
     <input type="password" id="" name="">
   </fieldset>
   
   <fieldset>
-    <label class="label">Email Address <span class="req">*</span></label>
+    <label class="label">Email</label>
     <small class="error">Incorrect email address format.</small>
     <input type="email" id="" name="">
   </fieldset>
 
   <fieldset>
-    <label class="label">Country <span class="req">*</span></label>
+    <label class="label">Country</label>
     <select id="lcountry" class="custom_select" name="lcountry" >
           <option value='US'>United States</option>
           <option value='AF' >Afghanistan</option>
@@ -241,17 +240,31 @@
   </fieldset>
 
   <fieldset>
-    <label class="label">Accept Terms of Use <span class="req">*</span></label>
+    <div id="basic-modal-content" align="left" class="terms_of_use">
+        <p class="terms_of_use_modal blue_color uppercase"><?php echo $lang['register']['t_c'];?></p>
+        
+         {php}
+              include_once("./editables/lenderagreement.php");
+              $path1= getEditablePath('lenderagreement.php');
+              include_once("./editables/".$path1);
+              echo $lang['lenderagreement']['l_tnc'];
+         {/php} 
+    </div> 
     <label>
       <INPUT TYPE="checkbox" name="agree" id="agree" value="1" tabindex="3" />I have read and agree to the <a class="terms_of_use_action" href="#">Zidisha Terms of Use</a>.
     </label>
-    <small class="error">Please accept the terms of use.</small>
+    <small class="error">Please accept the Terms of Use in order to continue.</small>
   </fieldset>
 
   <fieldset class="submit">
-    <input type="submit" value="Join Zidisha" class="btn">
+
+    <input type="hidden" name="reg-lender" />
+      <input type="hidden" name="tnc"  id="tnc" value=0 />
+      <input type="hidden" name="member_type"  id="member_type" value="2"/>
+      <input type="submit" value="Join Zidisha" class="btn" id="lender_submit_btn" onclick="return verifyTnC()">
   </fieldset>
 </form>
+
 {/block}
 
 {block name=sidebar}
