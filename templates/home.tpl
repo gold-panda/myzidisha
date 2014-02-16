@@ -37,8 +37,7 @@
   <section class="call_action">
     <div>
       <h2>P2P lending across the international wealth divide.</h2>
-      <p>We are pioneering the first online microlending community to connect lenders and borrowers directly across international borders - overcoming previously insurmountable barriers of geography, wealth and circumstance.<br/><br/>
-      </p>
+      <p>We are pioneering the first online microlending community to connect lenders and borrowers directly across international borders - overcoming previously insurmountable barriers of geography, wealth and circumstance.</p>
     </div>
   </section>
 
@@ -50,7 +49,7 @@
           <p>Unlike other internet microfinance websites that simply allow web users to fund microfinance programs, we offer the ability to interact directly with the entrepreneurs. Lenders can post questions and comments, while borrowers share the progress of their micro investments and let lenders know about the impact that their microfinance investing provides.</p>
         </div>
         <div class="col col_2_3 last">
-          <h3>About Deliver</h3>
+          <h3>Di</h3>
           <img src="/static/images/worksdirect.png" alt="" style="padding:20px 0 0 0;" />
         </div>
         <div class="clearfix"></div>
@@ -111,7 +110,7 @@
 
 {block name=call_to_action_bottom}
 <h2>Become A Lender</h2>
-<p>Create a lender account to start making a difference. You can explore entrepreneur stories, find a loan project to support, and connect with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>
+<p>Create a lender account to start making a difference. You can explore entrepreneur stories, find a loan project to support, and connect with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.
 </p>
 <p><a href="/microfinance/intern.html" class="btn">Join</a></p>
 {/block}

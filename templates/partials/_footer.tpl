@@ -5,24 +5,14 @@
       <div class="info">
           <a href="#" class="ir" id="logo_footer">Zidisha</a>
           <ul class="socials">
-            <li><a href="https://twitter.com/bestpsdfreebies" class="ir twitter">Twitter</a></li>
-            <li><a href="https://www.facebook.com/bestpsdfreebies" class="ir facebook">Facebook</a></li>
-            <li><a href="http://feeds.feedburner.com/bestpsdfreebies" class="ir rss">RSS</a></li>
+            <li><a href="https://twitter.com/zidishainc" class="ir twitter">Twitter</a></li>
+            <li><a href="https://www.facebook.com/ZidishaInc" class="ir facebook">Facebook</a></li>
+            <li><a href="http://p2p-microlending-blog.zidisha.org/feed/" class="ir rss">RSS</a></li>
           </ul>
         <p>Zidisha is a nonprofit organization that enables direct peer-to-peer lending to entrepreneurs in developing countries.</p>
       </div>
 
       <div class="widgets">
-        <!--
-        <div class="widget widget_text">
-          <h3 class="widgettitle">Contact</h3>
-          <div class="textwidget">
-            <p>21900 Muirfield Circle, #302<br>Sterling, Virginia<br>USA 20164</p>
-            <p>service@zidisha.org</p>
-          </div>
-        </div>
-        -->
-
         <div class="widget widget_menu">
           <h3 class="widgettitle">Explore</h3>
             <ul>
@@ -70,7 +60,6 @@
           </div>
         </div>
         -->
-
       </div><!-- /widgets -->
     </section><!-- /top -->
 
