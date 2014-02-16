@@ -46,10 +46,13 @@
       <div class="entry">
         <div class="col col_1_3">
           <h3>The Difference</h3>
-          <p>Unlike other internet microfinance websites that simply allow web users to fund microfinance programs, we offer the ability to interact directly with the entrepreneurs. Lenders can post questions and comments, while borrowers share the progress of their micro investments and let lenders know about the impact that their microfinance investing provides.</p>
+          <p>Zidisha is unique in that we offer the ability to interact directly with the entrepreneurs. While other microfinance services charge borrowers interest rates of 40% or more, our direct person-to-person lending model reduces the cost of the loans to just a fraction of this. The lower interest rates translate into greater profits for the entrepreneurs - profits that go directly towards the well-being of their families and their communities.</p>
+        </div>
+
+        <div class="col col_2_3 last" style="align:center">
+          <h3>How It Works</h3>
         </div>
         <div class="col col_2_3 last">
-          <h3>Di</h3>
           <img src="/static/images/worksdirect.png" alt="" style="padding:20px 0 0 0;" />
         </div>
         <div class="clearfix"></div>
