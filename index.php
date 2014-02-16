@@ -97,7 +97,7 @@
 
 	// If it's a new style page, use this:
 	if  	  ($page==0  ){$smarty->display('home.tpl');return;}
-	else if ($page==6  ){$smarty->display('contact.tpl');return;}
+	//else if ($page==6  ){$smarty->display('contact.tpl');return;}
 
 	// TODO
 	// page=2 / loaners
@@ -143,6 +143,10 @@
 	else if($page==5)
 	{
 		include_once("includes/legal_info.php");
+	}
+	else if($page==6)
+	{
+		include_once("includes/contacts.php");
 	}
 	else if($page==7)
 	{
