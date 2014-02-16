@@ -9,7 +9,8 @@
     <div class="info">
       <h2>Lend Melita <strong>$100</strong> for a diary cow.</h2>
       <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
-      <a href="#" class="btn blue large">Lend</a>
+      <a href="/microfinance/lend.html" class="btn blue large">Lend</a> 
+      <a href="/microfinance/lend.html" class="btn grey large">Learn More</a>
     </div>
     <div class='bg'></div>
   </li>
@@ -17,7 +18,8 @@
     <div class="info">
       <h2>Lend Pherister <strong>$200</strong> for a new schoolroom.</h2>
       <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
-      <a href="#" class="btn blue large">Lend</a>
+      <a href="/microfinance/lend.html" class="btn blue large">Lend</a>
+      <a href="/microfinance/lend.html" class="btn grey large">Learn More</a>
     </div>
     <div class='bg'></div>
   </li>
@@ -25,7 +27,8 @@
     <div class="info"> 
       <h2>Lend Mary <strong>$50</strong> for a delivery wagon.</h2>
       <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
-      <a href="#" class="btn blue large">Lend</a>
+      <a href="/microfinance/lend.html" class="btn blue large">Lend</a>
+      <a href="/microfinance/lend.html" class="btn grey large">Learn More</a>
     </div>
     <div class='bg'></div>
   </li>
@@ -37,83 +40,81 @@
   <section class="call_action">
     <div>
       <h2>Peer-to-peer lending across the international wealth divide.</h2>
-      <p>100% of the lender's loan is disbursed directly to the borrower's business. Lenders set their own interest rates and are paid back in weekly installments. Lenders and borrowers can also communicate directly with one another through the website. </p>
+      <p>Zidisha is a nonprofit organization that enables direct peer-to-peer lending to low-income entrepreneurs in developing countries.  100% of the lender's loan is disbursed directly to the borrower's business. </p>
     </div>
   </section>
+
 <!--
   <div id="content" class="full">
     <article class="post">
       <div class="entry">
         <div class="col col_1_3">
-          <div class="centered">
-            <p><img src="/static/images/ico_home_service_1.png" alt=""></p>
-            <h3>Responsive Design</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur praseinti adipiscing elit. Praesent lato justo ligula, interdu ut lobortis quis dolor amet.</p>
-            <p><a href="index.php">Find Out More</a></p>
-          </div>
+          <h3>The Difference</h3>
+          <p>Unlike other internet microfinance websites that simply allow web users to fund microfinance programs, we offer the ability to interact directly with the entrepreneurs. Lenders can post questions and comments, while borrowers share the progress of their micro investments and let lenders know about the impact that their microfinance investing provides.</p>
         </div>
-        <div class="col col_1_3">
-          <div class="centered">
-            <p><img src="/static/images/ico_home_service_2.png" alt=""></p>
-            <h3>Filterable Portfolio</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur praseinti adipiscing elit. Praesent lato justo ligula, interdu ut lobortis quis dolor amet.</p>
-            <p><a href="portfolio.php">Find Out More</a></p>
-          </div>
-        </div>
-        <div class="col col_1_3 last">
-          <div class="centered">
-            <p><img src="/static/images/ico_home_service_3.png" alt=""></p>
-            <h3>Parallax Slider</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur praseinti adipiscing elit. Praesent lato justo ligula, interdu ut lobortis quis dolor amet.</p>
-            <p><a href="index.php">Find Out More</a></p>
-          </div>
+        <div class="col col_2_3 last">
+          <h3>About Deliver</h3>
+          <img src="/static/images/worksdirect.png" alt="" style="padding:20px 0 0 0;" />
         </div>
         <div class="clearfix"></div>
       </div>
     </article>
-  </div><!-- /content -->
-</div><!-- /wrapper -->
-
-<div id="works" class="package_page">
-  <div class="blocks">
-    <div class="works block">
-      <section class="call_action">
-        <div>
-          <h2>Featured Entrepreneurs</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent justo ligula, interdum ut lobortis quis, interdum vitae metus. Proin fringilla metus non nulla cursus, sit amet rutrum est pretium.</p>
-        </div>
-      </section>
-      <div class="wrapper">
-        <div class="work">
-          <a href="portfolio_item.php"><img src="/static/images/pic_project_5.jpg" alt="">
-            <span class="mask"></span>
-          </a>
-          <h4>Person 1</h4>
-        </div>
-        <div class="work">
-          <a href="portfolio_item.php"><img src="/static/images/pic_project_5.jpg" alt="">
-            <span class="mask"></span>
-          </a>
-          <h4>Person 2</h4>
-        </div>
-        <div class="work last">
-          <a href="portfolio_item.php"><img src="/static/images/pic_project_5.jpg" alt="">
-            <span class="mask"></span>
-          </a>
-          <h4>Person 3</h4>
-        </div>
-        <div class="clear"></div>
-      </div>
-    </div>
   </div>
-</div><!-- /works 
-<!--
-{/block}
+-->
 
+  <div id="content" class="full">
+    <article class="post">
+      <div class="entry">
+        <div class="col col_1_2">
+          <div class='clear'>
+            <img src="/static/images/ico_process_01.png" alt="" class="alignleft">
+            <h3>Borrowers Apply</h3>
+            <p>A borrower logs into Zidisha and posts a loan request to help fund his/her business.</p>
+          </div>
+
+          <div class='clear'>
+          <img src="/static/images/ico_process_02.png" alt="" class="alignleft">
+          <h3>Lenders Choose</h3>
+          <p>A lender selects an available loan and bids to provide all or part of the funding.</p>
+          </div>
+
+          <div class='clear'>
+          <img src="/static/images/ico_process_03.png" alt="" class="alignleft">
+          <h3>Set the Interest</h3>
+          <p>Lenders propose their own interest rate for the funds that they offer to loan.</p>
+          </div>
+        </div>
+
+        <div class="col col_1_2 last">
+          <div class='clear'>
+          <img src="/static/images/ico_process_04.png" alt="" class="alignleft">
+          <h3>Direct Payment</h3>
+          <p>100% of the lender's loan is disbursed directly to the borrower's business.</p>
+          </div>
+
+          <div class='clear'>
+          <img src="/static/images/ico_process_05.png" alt="" class="alignleft">
+          <h3>Direct Communication</h3>
+          <p>Lenders and borrowers can stay in touch on the impact of the loan.</p>
+          </div>
+
+          <div class='clear'>
+          <img src="/static/images/ico_process_06.png" alt="" class="alignleft">
+          <h3>Virtuous Cycle</h3>
+          <p>Loans are repaid in regular installments and can be reinvested immediately.</p>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </article>
+  </div><!-- /content -->
+
+</div><!-- /wrapper -->
+{/block}
 
 {block name=call_to_action_bottom}
 <h2>Volunteer or Intern With Zidisha Microfinance</h2>
-<p>Zidisha volunteers and interns enjoy a unique opportunity to gain hands-on experience in microfinance and international development, while extending life-changing business growth opportunities to entrepreneurs in some of the the world's most disadvantaged locations.</p>
-<p><a href="#" class="btn">Volunteer</a></p>
+<p>Gain hands-on experience in microfinance and international development, while extending life-changing business growth opportunities to entrepreneurs in some of the the world's most disadvantaged locations.</p>
+<p><a href="/microfinance/intern.html" class="btn">Volunteer</a></p>
 {/block}
--->

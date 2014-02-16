@@ -850,6 +850,10 @@ img.wp-smiley{ padding: 0; border: none; }
 	width: 30%;
 	margin: 0 5% 0 0;
 }
+.entry .col_2_3{
+	width: 60%;
+	margin: 0 5% 0 0;
+}
 .entry .col_1_2{
 	width: 45%;
 	margin: 0 10% 0 0;
@@ -1908,7 +1912,6 @@ code br{
 }
 .clear{
 	clear: both;
-	line-height: 0;
 }
 .sticky{}
 .gallery-caption{}
@@ -1964,6 +1967,7 @@ code br{
 	font-weight: bold;
 	border: 0;
 	cursor: pointer;
+	margin:0 10px;
 }
 .btn:hover, .entry .btn:hover{
 	text-decoration: none;
