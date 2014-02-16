@@ -3,9 +3,9 @@
 	define('SMARTY_DIR', $_SERVER['DOCUMENT_ROOT'].'/extlibs/smarty/');
 	define('TEMPLATES_DIR', $_SERVER['DOCUMENT_ROOT'].'/templates');
 
-	require_once(SMARTY_DIR . 'Smarty.class.php');
+	require_once(SMARTY_DIR . 'SmartyBC.class.php');
 
-	$smarty = new Smarty();
+	$smarty = new SmartyBC();
 
 	$smarty->setTemplateDir(array(
     TEMPLATES_DIR,

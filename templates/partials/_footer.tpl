@@ -11,7 +11,7 @@
             <li><a href="http://p2p-microlending-blog.zidisha.org/" class="ir rss">RSS</a></li>
           </ul>
           
-        <p>Zidisha is a nonprofit organization that enables direct person-to-person lending to entrepreneurs in developing countries.</p>
+        <p>Zidisha is an online community that enables direct person-to-person lending to entrepreneurs in developing countries.</p>
       </div>
 
       <div class="widgets">
@@ -67,7 +67,7 @@
     </section><!-- /top -->
 
     <section class="bottom">
-      <p class="copyrights">Copyright &copy; 2009 - 2014 Zidisha Inc.</p>
+      <p class="copyrights">Copyright &copy; 2009 - 2014 Zidisha Inc. Zidisha is a 501(c)(3) nonprofit organization.</p>
       
       <ul>
         <li><a href="/index.php?p=5">Terms of Use</a></li>
