@@ -5,17 +5,17 @@
 
 {block name=slides}
 <ul class="slides">
-  <li class="slide" style="background-image:url(/static/images/flickr/melita.jpg);">
+  <li class="slide" style="background-image:url(/static/images/flickr/visionking.jpg);">
     <div class="info">
-      <h2>Lend <strong>Melita</strong> $100 for a diary cow</h2>
+      <h2>Lend <strong>Pherister</strong> $200 for a new school</h2>
       <p>and join the global <strong>person-to-person</strong> microlending movement.</p>
       <a href="/microfinance/lend.html" class="btn blue large">View Our Entrepreneurs</a>
     </div>
     <div class='bg'></div>
   </li>
-  <li class="slide" style="background-image:url(/static/images/flickr/visionking.jpg);">
+  <li class="slide" style="background-image:url(/static/images/flickr/melita.jpg);">
     <div class="info">
-      <h2>Lend <strong>Pherister</strong> $200 for a new schoolroom</h2>
+      <h2>Lend <strong>Melita</strong> $100 for a diary cow</h2>
       <p>and join the global <strong>person-to-person</strong> microlending movement.</p>
       <a href="/microfinance/lend.html" class="btn blue large">View Our Entrepreneurs</a>
     </div>
