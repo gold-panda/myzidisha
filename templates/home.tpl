@@ -112,5 +112,5 @@
 <h2>Become A Lender</h2>
 <p>Create a lender account to start making a difference. You can explore entrepreneur stories, find a loan project to support, and connect with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.
 </p>
-<p><a href="/microfinance/intern.html" class="btn">Join</a></p>
+<p><a href="/microfinance/lend.html" class="btn">Join</a></p>
 {/block}

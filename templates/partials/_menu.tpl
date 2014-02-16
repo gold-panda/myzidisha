@@ -3,8 +3,8 @@
     <div id="menu_trigger" class="mobile">menu</div>
       <nav>
         <ul>
-          <li><a href="portfolio.php">Lend</a></li>
-          <li><a href="about.php">Borrow</a></li>
+          <li><a href="microfinance/lend.html">Lend</a></li>
+          <li><a href="microfinance/borrow.html">Borrow</a></li>
           <li>
             <a href="shortcodes-with-sidebar.php">
               Learn More <span class="drops"></span></a>
@@ -12,12 +12,12 @@
             <div class="drop">
               <div class="top"></div>
               <ul>
-                <li><a href="">FAQ</a></li>
-                <li><a href="">How it Works</a></li>
-                <li><a href="">Why Zidisha?</a></li>
-                <li><a href="">Press</a></li>
-                <li><a href="">Book</a></li>
-
+                <li><a href="microfinance/faq.html">FAQ</a></li>
+                <li><a href="microfinance/how-it-works.html">How it Works</a></li>
+                <li><a href="microfinance/why-zidisha.html">Why Zidisha?</a></li>
+                <li><a href="microfinance/press.html">Press</a></li>
+                <li><a href="http://www.amazon.com/Venture-Collection-Microfinance-Stories-ebook/dp/B009JC6V12">Book</a></li>
+                <!--
                 <li>
                   <a href="shortcodes-full-width.php">Full Width & Shortcodes <span class="drops"></span></a>
                   <div class="drop">
@@ -30,6 +30,7 @@
                   </div>
                 </li>
                 <li class="last"><a href="404.php">404 Page</a></li>
+                -->
               </ul>
             </div>
           </li>
