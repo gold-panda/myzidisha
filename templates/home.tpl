@@ -23,7 +23,7 @@
   </li>
   <li class="slide" style="background-image:url(/static/images/flickr/mary.jpg);">
     <div class="info"> 
-      <h2>Lend Mary <strong>$100</strong> for a delivery wagon.</h2>
+      <h2>Lend Mary <strong>$50</strong> for a delivery wagon.</h2>
       <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
       <a href="#" class="btn blue large">Lend</a>
     </div>
@@ -40,7 +40,7 @@
       <p>100% of the lender's loan is disbursed directly to the borrower's business. Lenders set their own interest rates and are paid back in weekly installments. Lenders and borrowers can also communicate directly with one another through the website. </p>
     </div>
   </section>
-
+<!--
   <div id="content" class="full">
     <article class="post">
       <div class="entry">
@@ -79,7 +79,7 @@
     <div class="works block">
       <section class="call_action">
         <div>
-          <h2>Meet the Entrepreneurs of Zidisha </h2>
+          <h2>Featured Entrepreneurs</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent justo ligula, interdum ut lobortis quis, interdum vitae metus. Proin fringilla metus non nulla cursus, sit amet rutrum est pretium.</p>
         </div>
       </section>
@@ -106,7 +106,8 @@
       </div>
     </div>
   </div>
-</div><!-- /works -->
+</div><!-- /works 
+<!--
 {/block}
 
 
@@ -115,3 +116,4 @@
 <p>Zidisha volunteers and interns enjoy a unique opportunity to gain hands-on experience in microfinance and international development, while extending life-changing business growth opportunities to entrepreneurs in some of the the world's most disadvantaged locations.</p>
 <p><a href="#" class="btn">Volunteer</a></p>
 {/block}
+-->
