@@ -36,8 +36,9 @@
 <div class="wrapper">
   <section class="call_action">
     <div>
-      <h2>Peer-to-peer lending across the international wealth divide.</h2>
-      <p>Zidisha is a nonprofit organization that enables direct peer-to-peer lending to low-income entrepreneurs in developing countries.  100% of the lender's loan is disbursed directly to the borrower's business. </p>
+      <h2>P2P lending across the international wealth divide.</h2>
+      <p>We are pioneering the first online microlending community to connect lenders and borrowers directly across international borders - overcoming previously insurmountable barriers of geography, wealth and circumstance.<br/><br/>
+      </p>
     </div>
   </section>
 
@@ -109,7 +110,8 @@
 {/block}
 
 {block name=call_to_action_bottom}
-<h2>Volunteer or Intern With Zidisha Microfinance</h2>
-<p>Gain hands-on experience in microfinance and international development, while extending life-changing business growth opportunities to entrepreneurs in some of the the world's most disadvantaged locations.</p>
-<p><a href="/microfinance/intern.html" class="btn">Volunteer</a></p>
+<h2>Become A Lender</h2>
+<p>Create a lender account to start making a difference. You can explore entrepreneur stories, find a loan project to support, and connect with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>
+</p>
+<p><a href="/microfinance/intern.html" class="btn">Join</a></p>
 {/block}
