@@ -115,8 +115,8 @@
 {/block}
 
 {block name=call_to_action_bottom}
-<h2>Join Us</h2>
-<p>Explore our loan projects to start making a difference. You can find an entrepreneur to support, invite friends to join, and dialogue with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>
+<h2>Become A Lender</h2>
+<p>Create a lender account to start making a difference. You can explore entrepreneur stories, find a loan project to support, and connect with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>
 </p>
-<p><a href="/microfinance/intern.html" class="btn">Explore Loans</a></p>
+<p><a href="/microfinance/intern.html" class="btn">Join</a></p>
 {/block}
