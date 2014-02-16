@@ -15,6 +15,7 @@
                 <li><a href="microfinance/faq.html">FAQ</a></li>
                 <li><a href="microfinance/how-it-works.html">How it Works</a></li>
                 <li><a href="microfinance/why-zidisha.html">Why Zidisha?</a></li>
+                <li><a href="microfinance/testimonials.html">Activity Feed</a></li>
                 <li><a href="microfinance/press.html">Press</a></li>
                 <li><a href="http://www.amazon.com/Venture-Collection-Microfinance-Stories-ebook/dp/B009JC6V12">Book</a></li>
                 <!--
