@@ -13,16 +13,6 @@
       </div>
 
       <div class="widgets">
-        <!--
-        <div class="widget widget_text">
-          <h3 class="widgettitle">Contact</h3>
-          <div class="textwidget">
-            <p>21900 Muirfield Circle, #302<br>Sterling, Virginia<br>USA 20164</p>
-            <p>service@zidisha.org</p>
-          </div>
-        </div>
-        -->
-
         <div class="widget widget_menu">
           <h3 class="widgettitle">Explore</h3>
             <ul>
@@ -70,7 +60,6 @@
           </div>
         </div>
         -->
-
       </div><!-- /widgets -->
     </section><!-- /top -->
 

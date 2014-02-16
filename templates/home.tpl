@@ -37,8 +37,7 @@
   <section class="call_action">
     <div>
       <h2>P2P lending across the international wealth divide.</h2>
-      <p>We are pioneering the first online microlending community to connect lenders and borrowers directly across international borders - overcoming previously insurmountable barriers of geography, wealth and circumstance.<br/><br/>
-      </p>
+      <p>We are pioneering the first online microlending community to connect lenders and borrowers directly across international borders - overcoming previously insurmountable barriers of geography, wealth and circumstance.</p>
     </div>
   </section>
 
@@ -49,8 +48,10 @@
           <h3>The Difference</h3>
           <p>Zidisha is unique in that we offer the ability to interact directly with the entrepreneurs. While other microfinance services charge borrowers interest rates of 40% or more, our direct person-to-person lending model reduces the cost of the loans to just a fraction of this. The lower interest rates translate into greater profits for the entrepreneurs - profits that go directly towards the well-being of their families and their communities.</p>
         </div>
+
         <div class="col col_2_3 last" style="align:center">
           <h3>How It Works</h3>
+        <div class="col col_2_3 last">
           <img src="/static/images/worksdirect.png" alt="" style="padding:20px 0 0 0;" />
         </div>
         <div class="clearfix"></div>
@@ -111,7 +112,7 @@
 
 {block name=call_to_action_bottom}
 <h2>Become A Lender</h2>
-<p>Create a lender account to start making a difference. You can explore entrepreneur stories, find a loan project to support, and connect with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.<br/><br/>
+<p>Create a lender account to start making a difference. You can explore entrepreneur stories, find a loan project to support, and connect with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.
 </p>
 <p><a href="/microfinance/lend.html" class="btn">Join</a></p>
 {/block}
