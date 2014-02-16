@@ -7,28 +7,25 @@
 <ul class="slides">
   <li class="slide" style="background-image:url(/static/images/flickr/melita.jpg);">
     <div class="info">
-      <h2>Lend Melita <strong>$100</strong> for a diary cow.</h2>
-      <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
-      <a href="/microfinance/lend.html" class="btn blue large">Lend</a> 
-      <a href="/microfinance/lend.html" class="btn grey large">Learn More</a>
+      <h2>Lend <strong>Melita</strong> $100 for a diary cow</h2>
+      <p>and join the global <strong>person-to-person</strong> microlending movement.</p>
+      <a href="/microfinance/lend.html" class="btn blue large">View Our Entrepreneurs</a>
     </div>
     <div class='bg'></div>
   </li>
   <li class="slide" style="background-image:url(/static/images/flickr/visionking.jpg);">
     <div class="info">
-      <h2>Lend Pherister <strong>$200</strong> for a new schoolroom.</h2>
-      <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
-      <a href="/microfinance/lend.html" class="btn blue large">Lend</a>
-      <a href="/microfinance/lend.html" class="btn grey large">Learn More</a>
+      <h2>Lend <strong>Pherister</strong> $200 for a new schoolroom</h2>
+      <p>and join the global <strong>person-to-person</strong> microlending movement.</p>
+      <a href="/microfinance/lend.html" class="btn blue large">View Our Entrepreneurs</a>
     </div>
     <div class='bg'></div>
   </li>
   <li class="slide" style="background-image:url(/static/images/flickr/mary.jpg);">
     <div class="info"> 
-      <h2>Lend Mary <strong>$50</strong> for a delivery wagon.</h2>
-      <p>And join the global <strong>person-to-person</strong> microlending movement.</p>
-      <a href="/microfinance/lend.html" class="btn blue large">Lend</a>
-      <a href="/microfinance/lend.html" class="btn grey large">Learn More</a>
+      <h2>Lend <strong>Mary</strong> $50 for a delivery wagon</h2>
+      <p>and join the global <strong>person-to-person</strong> microlending movement.</p>
+      <a href="/microfinance/lend.html" class="btn blue large">View Our Entrepreneurs</a>
     </div>
     <div class='bg'></div>
   </li>
@@ -44,7 +41,6 @@
     </div>
   </section>
 
-<!--
   <div id="content" class="full">
     <article class="post">
       <div class="entry">
@@ -60,7 +56,6 @@
       </div>
     </article>
   </div>
--->
 
   <div id="content" class="full">
     <article class="post">
