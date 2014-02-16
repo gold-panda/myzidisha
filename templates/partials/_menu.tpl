@@ -38,10 +38,14 @@
       </nav>
       
       <div class="search">
-        <form method="post" action="#" id="search_form">
+        <form method="post" action="updateprocess.php" id="search_form">
           <fieldset>
-          <input type="text" id="search_text" placeholder="Search">
-          <input type="submit" value="GO" id="search_submit">
+          <input type="text" name="searchLoan" placeholder="Search">
+          <input type="hidden" name="searchSort">
+          <input type='hidden' name='get_loans'/>
+          <input type="hidden" name="user_guess" value="{php} echo generateToken('get_loans'); {/php}"/>
+                        
+          <input id="goSubmit" type="submit" value="GO" id="search_submit">
           <p class="btn_search">search</p>
           </fieldset>
         </form>
