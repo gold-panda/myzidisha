@@ -100,10 +100,9 @@ Zidisha Team';
 //comment posting notification to lender
 $lang['mailtext']['comment-subject'] = 'New Message: %bname%';
 
-$lang['mailtext']['comment-msg'] = 'Posted by %mname% in %location%<br/><br/>
+$lang['mailtext']['comment-msg'] = '%postedby%<br/><br/>
 %message% <br/><br/>
 %images% <br/><br/>
-We welcome your participation. Please click <a href=" %link% ">here</a> to view the comment and post a response.<br/><br/>
 If this comment was posted in a local language, please stay tuned! We will send another email notification when a translation is available.<br/><br/>
 Best wishes,<br/><br/>
 The Zidisha Team<br/> <br/>';
@@ -114,9 +113,9 @@ $lang['mailtext']['comment-subject_b'] = 'You Received a Message at Zidisha';
 
 $lang['mailtext']['comment-msg_b'] = 'Dear %name%,<br/><br/>
 You have a new message on your Zidisha loan page.<br/><br/>
-%mname% posted on %date%<br/><br/>
+%postedby%<br/><br/>
 %message%<br/><br/> %images% <br/> <br/>'.
-'Please log in to your account at <a href="%zidisha_link%" target="_blank">www.zidisha.org</a> and click "Post a comment" to respond to this message.<br/><br/>'.
+'Please log in to your account at www.zidisha.org and click "Post a comment" to respond to this message.<br/><br/>'.
 'Thank you,<br/><br/>'.
 'Zidisha Team ';
 

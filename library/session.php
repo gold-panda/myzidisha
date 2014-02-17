@@ -6874,98 +6874,110 @@ function forgiveReminder(){
 	public function sendCommentMails($loanid, $userid, $comment, $cid)
 	{
 		global $database;
+		global $session;
 		$lender_email=$database->getLenderEmailByLoanid($loanid);
-		$p_detail=$database->getBorrowerPartner($userid);
-		$p_email='';
-		if(!empty($p_detail['email']) && $p_detail['postcomment'] == 1)
-		{
-			$p_email=$p_detail['email'];
-
-			$p_name=$p_detail['name'];
-		}
-		$loanprurl = getLoanprofileUrl($userid, $loanid);
 		$res_BEmail=$database->getEmailB($userid);
 		$b_email=$res_BEmail['email'];
 		$b_name=$res_BEmail['name'];
+		$bname_format=ucwords(strtolower($b_name));
+		$loanprurl = getLoanprofileUrl($userid, $loanid);
 		$From=EMAIL_FROM_ADDR;
-		global $session;
 		$imgs = $database->getCommentFile(0,$userid,$cid);
-		
 		$cmts = $database->getCommentFromId($cid);
-                //mohit 25 Oct - incorrect dates being sent in the mail.		
-		if(!empty($cmts)){
-		
-		require ("editables/mailtext.php");
-		$p['bname'] = $b_name;
-		$emailsubject=  $this->formMessage($lang['mailtext']['comment-subject'], $p);
-		$msg = nl2br($comment);
-		$imgtag = '';
-		for($i = 0; $i < sizeof($imgs); $i++)
-		{
-			/*  $imgtag .= '<img src="' . 'https://www.zidisha.org/includes/image.php?imgid='.urlencode($imgs[$i]['uploadfile']) . '">';*/
-			/*  $imgtag .="<img src='".SITE_URL."includes/image.php?imgid=".urlencode($imgs[$i]['uploadfile'])."'>";*/
-			$imgtag .="<a target='_blank' href='".SITE_URL."images/uploadComment/".$imgs[$i]['uploadfile']."'><img src='".SITE_URL."images/uploadComment/".$imgs[$i]['uploadfile']."' width='100' style='border:none'></a>";
-			$imgtag .="<br>";
-		 }
+        if(!empty($cmts)){
+			require_once ("editables/mailtext.php");
+			
+			//message content
+			$templet="editables/email/hero.html";
+			$ulevel=$database->getUserLevel($cmts['senderid']);
+			if($ulevel==BORROWER_LEVEL){
+				$borrower_name = $database->getNameById($cmts['senderid']);
+				$sender_name=ucwords(strtolower($borrower_name));
+			}else{
+				$sender_name=$database->getUserNameById($cmts['senderid']);	
+			}
+			$user_citycountry=$database->getUserCityCountry($cmts['senderid']);
+			$u_city=$user_citycountry['City'];
+			$u_country=$user_citycountry['Country'];
+			$u_country=$database->mysetCountry($u_country);
+			if (!empty ($u_city)){
+				$location = $u_city.", ".$u_country;
+			} else {
+				$location = $u_country;
+			} 
+			$b_name=$res_BEmail['name'];
+			$bname_format=ucwords(strtolower($b_name));
+			if ($cmts['senderid'] != $userid){ 
+				$params['postedby'] = "Posted at the profile of ".$bname_format." by ".$sender_name." in ".$location;	
+												
+			} else { 
+				$params['postedby'] = "Posted by ".$bname_format." in ".$location;	
+			}
+			$msg = nl2br($comment);
+			$imgtag = '';
+			for($i = 0; $i < sizeof($imgs); $i++)
+			{
+				/*  $imgtag .= '<img src="' . 'https://www.zidisha.org/includes/image.php?imgid='.urlencode($imgs[$i]['uploadfile']) . '">';*/
+				/*  $imgtag .="<img src='".SITE_URL."includes/image.php?imgid=".urlencode($imgs[$i]['uploadfile'])."'>";*/
+				$imgtag .="<a target='_blank' href='".SITE_URL."images/uploadComment/".$imgs[$i]['uploadfile']."'><img src='".SITE_URL."images/uploadComment/".$imgs[$i]['uploadfile']."' width='100' style='border:none'></a>";
+				$imgtag .="<br>";
+			 }
+			$params['message'] = $msg;
+			$params['images'] =  $imgtag;
+			
+			//MESSAGE TO LENDER
+			foreach($lender_email as $rows)
+			{	
+				if($cmts['senderid']!=$rows['userid']) {
 
-		//MESSAGE TO ADMIN
-		$templet="editables/email/hero.html";
-		$To=ADMIN_FROM_NAME;
-		$adminemail=ADMIN_EMAIL_ADDR;
-		$params['link'] = SITE_URL.$loanprurl ;
-		$params['message'] = $msg;
-		$params['images'] =  $imgtag;
-		$params['mname'] = $database->getUserNameById($cmts['senderid']);
-		$ulevel=$database->getUserLevel($params['mname']);
-		if($ulevel==BORROWER_LEVEL)
-			$borrower_name = $database->getNameById($cmts['senderid']);
-			$params['mname']=ucwords(strtolower($borrower_name));
-		$user_citycountry=$database->getUserCityCountry($cmts['senderid']);
-		$u_city=$user_citycountry['City'];
-		$u_country=$user_citycountry['Country'];
-		$u_country=$database->mysetCountry($u_country);
-		if (!empty ($u_city)){
-			$params['location'] = $u_city.", ".$u_country;
-		} else {
-			$params['location'] = $u_country;
-		} 
-		
-		$emailmssg=$this->formMessage($lang['mailtext']['comment-msg'], $params);
-
-		$reply=$this->mailSendingHtml($From,$To,$adminemail , $emailsubject, '', $emailmssg, 0, $templet, 3, COMMENT_NOTIFICATIONS_TAG);
-
-		//MESSAGE TO BORROWER
-		if($b_email!='' && $cmts['senderid']!=$userid)
-		{	
-
-			$templet="editables/email/simplemail.html";
-			$To=$b_name;
-			$params['zidisha_link']= SITE_URL."index.php";
-			$params['name'] = $To;
-			$params['link'] = SITE_URL.$loanprurl;
-			$emailmssg=$this->formMessage($lang['mailtext']['comment-msg_b'], $params);
-			$borroweremail=$b_email;
-			$bemailsubject=$lang['mailtext']['comment-subject_b'];
-			$reply=$this->mailSendingHtml($From,$To,$borroweremail , $bemailsubject, '', $emailmssg, 0, $templet, 3);
-		}
-		
-		//MESSAGE TO LENDER
-		foreach($lender_email as $rows)
-		{	
-			if($cmts['senderid']!=$rows['userid']) {
-
-				$templet="editables/email/hero.html";
-				$lenderemail=$rows['Email'];
-				$params['link'] = SITE_URL.$loanprurl ;
-				$emailmssg=$this->formMessage($lang['mailtext']['comment-msg'], $params);
-				if($lenderemail){
-					$reply=$this->mailSendingHtml($From,'',$lenderemail , $emailsubject, '', $emailmssg, 0, $templet, 3, COMMENT_NOTIFICATIONS_TAG);
+					$templet="editables/email/hero.html";
+					//subject
+					$p['bname'] = $bname_format;
+					$emailsubject=  $this->formMessage($lang['mailtext']['comment-subject'], $p);
+					//content
+					$emailmssg=$this->formMessage($lang['mailtext']['comment-msg'], $params);
+					$params['footer'] = "View and respond to the comment here:";
+					$params['button_url'] = SITE_URL.$loanprurl;
+					$params['button_text'] = "View Comment";
+					$lenderemail=$rows['Email'];
+					if($lenderemail){
+						$reply=$this->mailSendingHtml($From,'',$lenderemail , $emailsubject, '', $emailmssg, 0, $templet, 3, COMMENT_NOTIFICATIONS_TAG, $params);
+					}
 				}
 			}
-		}
-	   }	
 
+			//MESSAGE TO ADMIN
+			$To=ADMIN_FROM_NAME;
+			$adminemail=ADMIN_EMAIL_ADDR;
+			$templet="editables/email/hero.html";
+			//subject
+			$p['bname'] = $b_name;
+			$emailsubject=  $this->formMessage($lang['mailtext']['comment-subject'], $p);
+			//content
+			$emailmssg=$this->formMessage($lang['mailtext']['comment-msg'], $params);
+			$params['footer'] = "View and respond to the comment here:";
+			$params['button_url'] = SITE_URL.$loanprurl ;
+			$params['button_text'] = "View Comment";
+			$reply=$this->mailSendingHtml($From,$To,$adminemail, $emailsubject, '', $emailmssg, 0, $templet, 3, COMMENT_NOTIFICATIONS_TAG, $params);
+	
+
+			//MESSAGE TO BORROWER
+			if($b_email!='' && $cmts['senderid']!=$userid)
+			{	
+				$templet="editables/email/simplemail.html";
+				$To=$b_name;
+				$params['name'] = $To;
+				$emailmssg=$this->formMessage($lang['mailtext']['comment-msg_b'], $params);
+				$borroweremail=$b_email;
+				$bemailsubject=$lang['mailtext']['comment-subject_b'];
+				$params['footer'] = "View and respond to the comment here:";
+				$params['button_url'] = SITE_URL.$loanprurl ;
+				$params['button_text'] = "View Comment";
+				$reply=$this->mailSendingHtml($From,$To,$borroweremail, $bemailsubject, '', $emailmssg, 0, $templet, 3, COMMENT_NOTIFICATIONS_TAG, $params);
+			}	
+	    }	
 	}
+
 	public function sendTranslateCommentMails($cid, $comment)
 	{
 		global $database;
