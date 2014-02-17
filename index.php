@@ -91,25 +91,16 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/extlibs/smarty/Zidisha.php'); 
 
 	// If it's a new style page, use this:
-	if  	  ($page==0  ){$smarty->display('home.tpl');return;}
+	if ($page==0  ){$smarty->display('home.tpl');return;}
 	else if ($page==3  ){$smarty->display('how-works.tpl');return;}
 	else if ($page==5  ){$smarty->display('terms_of_use.tpl');return;}
 	else if ($page==6  ){$smarty->display('contact.tpl');return;}
-	//else if ($page==7  ){$smarty->display('pending_activation.tpl');return;}
-	//else if ($page==9  ){$smarty->display('loan_application.tpl');return;}
+	else if ($page==48  ){$smarty->display('why_zidisha.tpl');return;}
 	
 
 	// TODO - DESIGN PENDING
 	// page=2 / loaners
 	// page=14  / loaner profile page
-
-	// TODO - NEED TO FIGURE OUT INTEGRATION
-	// page=1 / registration forms
-	// page=4 / faq
-	// page=9 / loan application
-	// page=11 / admin settings
-	// page=12 / profile
-	// page=13 / edit profile
 
 
 
