@@ -3777,27 +3777,3 @@ img.mfp-img {
          url('/static/fonts/HelveticaNeue-BoldItalic.svg##HelveticaNeue') format('svg');
     font-weight: bold;
     font-style: italic;
-
-  /* START - Terms of use */
-	#agree{
-		width:20px !important;
-		position:relative;
-		top:2px;
-	}
-	.terms_of_use{
-		margin-bottom:0;
-	}
-	.terms_of_use_modal{
-		margin-bottom:20px;
-		font-size:20px;
-	}
-	.terms_of_use_action{
-		color:#0099FF;
-		text-decoration: underline;
-		cursor:pointer;
-		width:auto !important;
-	}
-	.radio_group{
-		clear:both;
-	}
-/* END - Terms of use */

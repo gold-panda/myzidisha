@@ -53,14 +53,6 @@
 
     {block name=more}{/block}
 
-    <div class="wrapper">
-      <section class="call_action bottom">
-        <div>
-          {block name=call_to_action_bottom}{/block}
-        </div>
-      </section>
-    </div><!-- /wrapper -->
-
   </div><!-- /wrapper_content -->
 
   {include file='_footer.tpl'}

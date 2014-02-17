@@ -93,13 +93,17 @@
 	// If it's a new style page, use this:
 	if  	  ($page==0  ){$smarty->display('home.tpl');return;}
 	else if ($page==3  ){$smarty->display('how-works.tpl');return;}
+	else if ($page==5  ){$smarty->display('terms_of_use.tpl');return;}
 	else if ($page==6  ){$smarty->display('contact.tpl');return;}
 
 
-	// TODO
+	// TODO - DESIGN PENDING
 	// page=2 / loaners
 	// page=14  / loaner profile page
-	// page=
+
+	// TODO - JULIA TO FIGURE OUT INTEGRATION
+	// page=1 / registration forms
+	// page=4 / faq
 
 	// If old style page. 
 	else{
@@ -129,21 +133,9 @@
 		include_once("includes/loaners.php");
 	}
 
-	else if($page==3)
-	{
-		include_once("includes/how-works.php");
-	}
 	else if($page==4)
 	{
 		include_once("includes/faqs.php");
-	}
-	else if($page==5)
-	{
-		include_once("includes/legal_info.php");
-	}
-	else if($page==6)
-	{
-		include_once("includes/contacts.php");
 	}
 	else if($page==7)
 	{
