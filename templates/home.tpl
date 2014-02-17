@@ -58,16 +58,17 @@
           <img src="/static/images/worksdirect.png" alt="" style="padding:20px 0 0 0;" />
         </div>
         <div class="clearfix"></div>
+          {php} include_once("includes/how-works_infographic.php"); {/php}
+        
       </div>
     </article>
   </div>
-
-  {php} include_once("includes/how-works_infographic.php"); {/php}
-
 </div><!-- /wrapper -->
 {/block}
 
 {block name=call_to_action_bottom}
+<div class="clearfix"></div>
+<section class="call_action"></section>
 <h2>Become A Lender</h2>
 <p>Create a lender account to start making a difference. You can explore entrepreneur stories, find a loan project to support, and connect with others who share the vision of a world where responsible and motivated people have the opportunity to pursue their goals regardless of their location.
 </p>
