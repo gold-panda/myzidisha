@@ -1,7 +1,7 @@
 <?php
 
-	define('SMARTY_DIR', $_SERVER['DOCUMENT_ROOT'].'/extlibs/smarty/');
-	define('TEMPLATES_DIR', $_SERVER['DOCUMENT_ROOT'].'/templates');
+	define('SMARTY_DIR', 'extlibs/smarty/');
+	define('TEMPLATES_DIR', 'templates');
 
 	require_once(SMARTY_DIR . 'SmartyBC.class.php');
 

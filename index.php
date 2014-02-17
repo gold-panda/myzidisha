@@ -1,4 +1,5 @@
 <?php
+
 	include("library/session.php");
 	
 	//Anupam 22-11-201 redirect https://www.zidisha.org/index.php to https://www.zidisha.org/
@@ -88,7 +89,7 @@
 
 <?php
 	// Load Smarty
-	require_once($_SERVER['DOCUMENT_ROOT'].'/extlibs/smarty/Zidisha.php'); 
+	require_once('extlibs/smarty/Zidisha.php'); 
 
 	// If it's a new style page, use this:
 	if ($page==0  ){$smarty->display('home.tpl');return;}

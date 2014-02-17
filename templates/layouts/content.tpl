@@ -12,6 +12,7 @@
   <link href="/static/css/styles.css" rel="stylesheet">
   <script src="/static/js/libs/modernizr-2.6.2.min.js"></script>
   <script type="text/javascript" >var base_url='http://<?php echo $_SERVER['HTTP_HOST'].substr(str_replace(basename($_SERVER['SCRIPT_FILENAME']), '', $_SERVER['SCRIPT_NAME']), 0, -1);?>/'</script>
+  {block name=headerscripts} {/block}
 </head>
 
 <body>
