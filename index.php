@@ -95,22 +95,29 @@
 	else if ($page==3  ){$smarty->display('how-works.tpl');return;}
 	else if ($page==5  ){$smarty->display('terms_of_use.tpl');return;}
 	else if ($page==6  ){$smarty->display('contact.tpl');return;}
-
+	//else if ($page==7  ){$smarty->display('pending_activation.tpl');return;}
+	//else if ($page==9  ){$smarty->display('loan_application.tpl');return;}
+	
 
 	// TODO - DESIGN PENDING
 	// page=2 / loaners
 	// page=14  / loaner profile page
 
-	// TODO - JULIA TO FIGURE OUT INTEGRATION
+	// TODO - NEED TO FIGURE OUT INTEGRATION
 	// page=1 / registration forms
 	// page=4 / faq
+	// page=9 / loan application
+	// page=11 / admin settings
+	// page=12 / profile
+	// page=13 / edit profile
+
+
 
 	// If old style page. 
 	else{
 		include("includes/_oldheader.php");
 		include("includes/_statslogic.php");
 	}
-
 
 
 	if($page==1)
@@ -141,22 +148,15 @@
 	{
 		include_once("includes/inactive-b.php");
 	}
-	else if($page==8)
-	{
-		include_once("includes/active-b.php");
-	}
 	else if($page==9)
 	{
 		include_once("includes/loanapplic.php");
-	}
-	else if($page==10)
-	{
-		include_once("includes/loanstat.php");
 	}
 	else if($page==11)
 	{
 		include_once("includes/admin.php");
 	}
+	//redirects to borrower, lender or partner profile
 	else if($page==12)
 	{
 		include_once("includes/profile.php");
@@ -169,10 +169,6 @@
 	{ // Loaner profles
 		include_once("includes/loanstatn.php");
 	}
-	else if($page==15)
-	{
-		include_once("includes/loanstatnew.php");
-	}
 	else if($page==16)
 	{
 		include_once("includes/payment.php");
@@ -181,10 +177,6 @@
 	{
 		include_once("includes/withdraw.php");
 	}
-	/* else If($page==18)
-	{
-		include_once("editables/lender_terms.php");
-	} */
 	else If($page==19)
 	{
 		include_once("includes/loan_status.php");
@@ -304,10 +296,6 @@
 	else If($page==47)
 	{
 		include_once("includes/borrow.php");
-	}
-	else If($page==48)
-	{
-		include_once("includes/why-zidisha.php");
 	}
 	else If($page==49)
 	{
