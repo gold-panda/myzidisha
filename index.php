@@ -94,17 +94,31 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 	require_once('extlibs/smarty/Zidisha.php'); 
 
 	// If it's a new style page, use this:
-	if ($page==0  ){$smarty->display('home.tpl');return;}
-	else if ($page==3  ){$smarty->display('how-works.tpl');return;}
+	$smarty->assign('body_class', 'default');
+
+	if ($page == 0) {
+		$smarty->display('home.tpl');
+	} elseif ($page == 3) {
+		$smarty->assign('body_class', 'how-it-works');
+		$smarty->display('how-works.tpl');
 	else if ($page==4  ){
 		$lang = $session->getTranslatedLabels("faqs");
 		$smarty->assign("lang", $lang);
-		$smarty->display('faqs.tpl');return;
+		$smarty->assign('body_class', 'faqs');
+		$smarty->display('faqs.tpl');
+	} elseif ($page == 5) {
+		$smarty->assign('body_class', 'terms-of-use');
+		$smarty->display('terms_of_use.tpl');
+	} elseif ($page == 6) {
+		$smarty->assign('body_class', 'contact');	
+		$smarty->display('contact.tpl');
+	} elseif ($page == 48) {
+		$smarty->assign('body_class', 'why-zidisha');
+		$smarty->display('why_zidisha.tpl');
+	} elseif ($page == 67) {
+		$smarty->assign('body_class', 'interns');
+		$smarty->display('interns.tpl');
 	}
-	else if ($page==5  ){$smarty->display('terms_of_use.tpl');return;}
-	else if ($page==6  ){$smarty->display('contact.tpl');return;}
-	else if ($page==48  ){$smarty->display('why_zidisha.tpl');return;}
-	
 
 	// TODO - DESIGN PENDING
 	// page=2 / loaners
@@ -112,8 +126,10 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 
 
-	// If old style page. 
-	else{
+	// if new style page stop otherwise load old page includes
+	if ($smarty->get_template_vars('body_class')) {
+		return;
+	} else {
 		include("includes/_oldheader.php");
 		include("includes/_statslogic.php");
 	}

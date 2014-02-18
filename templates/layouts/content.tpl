@@ -15,7 +15,7 @@
   {block name=headerscripts} {/block}
 </head>
 
-<body>
+<body class="{nocache}{$body_class}{/nocache}">
   <div id="wrapper_content">
       
     {include file='_oldbrowser.tpl'}
