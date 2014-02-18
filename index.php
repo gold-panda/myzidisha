@@ -96,7 +96,8 @@
 	$smarty->assign('body_class', 'default');
 	
 	if ($page == 0) {
-		$smarty->display('home.tpl');
+		$smarty->assign('body_class', 'home');
+		$smarty->display('home.tpl');		
 	} elseif ($page == 3) {
 		$smarty->assign('body_class', 'how-it-works');
 		$smarty->display('how-works.tpl');
@@ -120,9 +121,8 @@
 	// page=14  / loaner profile page
 
 
-
 	// if new style page stop otherwise load old page includes
-	if ($smarty->get_template_vars('body_class')) {
+	if ($smarty->get_template_vars('body_class') !== 'default') {
 		return;
 	} else {
 		include("includes/_oldheader.php");
