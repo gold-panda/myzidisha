@@ -1,6 +1,9 @@
 <?php
-
-	include("library/session.php");
+ini_set("display_errors", 1);
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+	global $database,$session;
+	require_once("library/session.php");
+	require_once("library/constant.php");
 	
 	//Anupam 22-11-201 redirect https://www.zidisha.org/index.php to https://www.zidisha.org/
 	if ($_SERVER['REQUEST_URI']=='/index.php')
@@ -8,7 +11,6 @@
 		header("HTTP/1.1 301 Moved Permanently");
 		header("Location: ".SITE_URL);
 	}
-	global $database,$session;
 
 	RedirectLoanprofileurl();
 	RedirectUserprofileurl();
@@ -94,6 +96,11 @@
 	// If it's a new style page, use this:
 	if ($page==0  ){$smarty->display('home.tpl');return;}
 	else if ($page==3  ){$smarty->display('how-works.tpl');return;}
+	else if ($page==4  ){
+		$lang = $session->getTranslatedLabels("faqs");
+		$smarty->assign("lang", $lang);
+		$smarty->display('faqs.tpl');return;
+	}
 	else if ($page==5  ){$smarty->display('terms_of_use.tpl');return;}
 	else if ($page==6  ){$smarty->display('contact.tpl');return;}
 	else if ($page==48  ){$smarty->display('why_zidisha.tpl');return;}

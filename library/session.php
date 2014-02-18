@@ -8673,6 +8673,14 @@ function sendLenderInviteConf($inviteeid){
 	}
 
 
+function getTranslatedLabels($page){
+	include("./editables/".$page.".php");
+	$path=	getEditablePath('".$page.".php');
+	include("./editables/".$path);
+	return $lang;
+}
+
+
 
 //end
 }
