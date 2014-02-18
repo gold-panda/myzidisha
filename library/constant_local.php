@@ -144,25 +144,6 @@ IPN doesn't include highly sensitive data, it's still recommended when available
 $sandbox_ssl = true;
 $production_ssl = true;
 
-/* payment gateway*/
-//This file can be placed inside include folder
-/* Config file for FirstData Payment Gateway */
-define("FDAPI_URL","https://ws.merchanttest.firstdataglobalgateway.com/fdggwsapi/services/order.wsdl");
-// URL for test store test payment.
-//############## OR ###############
-//define("FDAPI_URL", "https://ws.firstdataglobalgateway.com/fdggwsapi/services/order.wsdl");// URL for live store for actual payment.
-define("FD_USERPWD", "WS1909555842._.1:hFTW5b5D");
-//Replace WSXXXXXXXXX._.1:XXXXXXXX with actual username:password
-define("FD_SSLCERT", FULL_PATH."certificate_test/WS1001249660._.1.pem");
-//replace WSXXXXXXXX._.1.pem with actual pem file
-define("FD_SSLKEY", FULL_PATH."certificate_test/WS1001249660._.1.key");
-//replace WSXXXXXXXXX._.1.key with actual key file.
-define("FD_SSLKEYPASSWD", "ckp_1287731569");
-//Replace "ckp_1284657964" key with your store key . You can download all these from your store after loged into your account
-
-define("ACH_URL","https://epn.checkgateway.com/epnpublic/achxml.aspx");
-define("ACH_LOGIN","999999");
-define("ACH_PASS","demoacct");
 //donation type
 define("ECHECK",1);
 define("PAYPAL",2);
@@ -180,10 +161,5 @@ define("fixdate", "12/31/2008");
 define("PAGINATION", 100);
 define("RESENDINGDAYS", 30);
 define("EXTEND_PERIOD_MULTIPLY",6);
-define("RECAPCHA_PUBLIC_KEY","6Lej9M0SAAAAAJ6LQfRiraYHaa_t_QFpLDrOOv5j");
-define("RECAPCHA_PRIVATE_KEY","6Lej9M0SAAAAAEgOXV_21hTUzoYRlckoeANlMHhc");
 define("COOKIE_SECURE",false);
-define("MAIL_CHIMP_API_KEY","bf45ecd13320a538e685744547ca9d39-us4");
-define("MAIL_CHIMP_LIST_ID","a85a6c06ac");
-define("MAIL_CHIMP_EMAIL","saran@codefire.in");
 ?>
