@@ -101,12 +101,13 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
 	} elseif ($page == 3) {
 		$smarty->assign('body_class', 'how-it-works');
 		$smarty->display('how-works.tpl');
-	else if ($page==4  ){
-		$lang = $session->getTranslatedLabels("faqs");
-		$smarty->assign("lang", $lang);
-		$smarty->assign('body_class', 'faqs');
-		$smarty->display('faqs.tpl');
-	} elseif ($page == 5) {
+	//} elseif ($page==4  ){
+	//	$lang = $session->getTranslatedLabels("faqs");
+	//	$smarty->assign("lang", $lang);
+	//	$smarty->assign('body_class', 'faqs');
+	//	$smarty->display('faqs.tpl');
+	} 
+	elseif ($page == 5) {
 		$smarty->assign('body_class', 'terms-of-use');
 		$smarty->display('terms_of_use.tpl');
 	} elseif ($page == 6) {
