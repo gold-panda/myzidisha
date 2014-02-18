@@ -24,9 +24,10 @@
           {block name=slides}{/block}
         </div>
 
-        {include file='_header.tpl'}
-        {include file='_menu.tpl'}
-
+		{nocache}
+		  {include file='_header.tpl'}
+		  {include file='_menu.tpl'}
+		{/nocache}
       </div><!-- /home_header -->
 
       {block name=content}{/block}
