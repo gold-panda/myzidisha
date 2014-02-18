@@ -2,7 +2,7 @@ zidisha
 =======
 <a href="www.zidisha.org">Zidisha</a> is the first person-to-person lending platform to bridge the international wealth divide.  We are a nonprofit community that enables direct P2P lending to small business owners in developing countries.  
 
-We are also the first microlending service to operate without any brick-and-mortar offices.  Zidisha is managed Wikipedia-style by an global network of over 60 volunteers, located on every inhabitable continent.  
+We are also the first microlending service to operate without any brick-and-mortar offices.  Zidisha is managed Wikipedia-style by a global network of over 60 volunteers, located on every inhabitable continent.  
 
 Finally, we are the world's only open-source person-to-person lending platform.  Your contributions to our project will not only help our thousands of members access opportunities to improve their lives, but also serve as a resource for people and organizations everywhere that wish to build on our work.
 
